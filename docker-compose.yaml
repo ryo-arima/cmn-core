@@ -2,7 +2,7 @@ services:
   dns:
     image: strm/dnsmasq
     container_name: cmn-dns
-    # No ARM64 image available; run via emulation
+    platform: linux/amd64
     ports:
       - "8053:8080"  # dnsmasq Web UI
     environment:
@@ -11,16 +11,16 @@ services:
     cap_add:
       - NET_ADMIN
     restart: unless-stopped
-    command: >
-      --address=/cmn.local/10.88.0.10 \
-      --address=/mail.cmn.local/10.88.0.10 \
-      --address=/roundcube.cmn.local/10.88.0.11 \
-      --mx-host=cmn.local,mail.cmn.local,10 \
-      --txt-record=cmn.local,"v=spf1 mx a ip4:10.88.0.10 ~all" \
-      --txt-record=_dmarc.cmn.local,"v=DMARC1; p=none; rua=mailto:dmarc@cmn.local" \
-      --host-record=10.88.0.10.in-addr.arpa,mail.cmn.local \
-      --log-queries \
-      --no-resolv
+    command:
+      - --address=/cmn.local/10.88.0.10
+      - --address=/mail.cmn.local/10.88.0.10
+      - --address=/roundcube.cmn.local/10.88.0.11
+      - --mx-host=cmn.local,mail.cmn.local,10
+      - --txt-record=cmn.local,v=spf1 mx a ip4:10.88.0.10 ~all
+      - --txt-record=_dmarc.cmn.local,v=DMARC1; p=none; rua=mailto:dmarc@cmn.local
+      - --host-record=10.88.0.10.in-addr.arpa,mail.cmn.local
+      - --log-queries
+      - --no-resolv
     networks:
       cmn-network:
         ipv4_address: 10.88.0.53
@@ -75,7 +75,7 @@ services:
     platform: ${DOCKER_PLATFORM:-linux/arm64}
     ports:
       - "6379:6379"
-    command: ["redis-server", "--port", "6379", "--requirepass", "mysecretpassword", "--user", "default", "on", ">mysecretpassword", "+@all", "~*"]
+    command: ["redis-server", "--port", "6379", "--requirepass", "mysecretpassword", "--user", "default", "on", ">mysecretpassword", "+@all", "~*", "&*"]
     tmpfs:
       - /data
     networks:

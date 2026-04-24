@@ -7,18 +7,26 @@
 CREATE DATABASE keycloak;
 CREATE USER keycloak WITH PASSWORD 'keycloak';
 GRANT ALL PRIVILEGES ON DATABASE keycloak TO keycloak;
+\c keycloak
+GRANT ALL ON SCHEMA public TO keycloak;
 
 -- ---- roundcube ---------------------------------------------------------------
 CREATE DATABASE roundcube;
 CREATE USER roundcube WITH PASSWORD 'roundcube';
 GRANT ALL PRIVILEGES ON DATABASE roundcube TO roundcube;
+\c roundcube
+GRANT ALL ON SCHEMA public TO roundcube;
 
 -- ---- authentik ---------------------------------------------------------------
 CREATE DATABASE authentik;
 CREATE USER authentik WITH PASSWORD 'authentik';
 GRANT ALL PRIVILEGES ON DATABASE authentik TO authentik;
+\c authentik
+GRANT ALL ON SCHEMA public TO authentik;
 
 -- ---- cmn_core (application) --------------------------------------------------
 -- The default POSTGRES_DB=cmn_core is already created by the container.
 -- Grant the default user (user) full access.
 GRANT ALL PRIVILEGES ON DATABASE cmn_core TO "user";
+\c cmn_core
+GRANT ALL ON SCHEMA public TO "user";
