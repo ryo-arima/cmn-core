@@ -1,10 +1,18 @@
-.PHONY: s bootstrap dev-up dev-down dev-api docs localstack logs test clean
+.PHONY: s bootstrap build dev-up dev-down dev-api docs localstack logs test clean
 
 # Git shortcut
 s:
 	git add .
 	commit-emoji
 	git push origin main
+
+# Build binaries into .bin/
+build:
+	mkdir -p .bin
+	go build -o .bin/admin-client    ./cmd/client/admin
+	go build -o .bin/app-client      ./cmd/client/app
+	go build -o .bin/anonymous-client ./cmd/client/anonymous
+	go build -o .bin/server   ./cmd/server
 
 # Development environment (core + IdP + mail; docs/localstack excluded)
 dev-up:

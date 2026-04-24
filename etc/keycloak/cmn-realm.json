@@ -73,13 +73,112 @@
       "realmRoles": ["admin"]
     },
     {
-      "username": "testuser",
-      "email": "test1@cmn.local",
+      "username": "user01",
+      "email": "user01@cmn.local",
       "enabled": true,
-      "firstName": "Test",
-      "lastName": "User",
+      "firstName": "User",
+      "lastName": "01",
       "credentials": [
-        { "type": "password", "value": "TestPassword123!", "temporary": false }
+        { "type": "password", "value": "UserPassword123!", "temporary": false }
+      ],
+      "realmRoles": ["app"]
+    },
+    {
+      "username": "user02",
+      "email": "user02@cmn.local",
+      "enabled": true,
+      "firstName": "User",
+      "lastName": "02",
+      "credentials": [
+        { "type": "password", "value": "UserPassword123!", "temporary": false }
+      ],
+      "realmRoles": ["app"]
+    },
+    {
+      "username": "user03",
+      "email": "user03@cmn.local",
+      "enabled": true,
+      "firstName": "User",
+      "lastName": "03",
+      "credentials": [
+        { "type": "password", "value": "UserPassword123!", "temporary": false }
+      ],
+      "realmRoles": ["app"]
+    },
+    {
+      "username": "user04",
+      "email": "user04@cmn.local",
+      "enabled": true,
+      "firstName": "User",
+      "lastName": "04",
+      "credentials": [
+        { "type": "password", "value": "UserPassword123!", "temporary": false }
+      ],
+      "realmRoles": ["app"]
+    },
+    {
+      "username": "user05",
+      "email": "user05@cmn.local",
+      "enabled": true,
+      "firstName": "User",
+      "lastName": "05",
+      "credentials": [
+        { "type": "password", "value": "UserPassword123!", "temporary": false }
+      ],
+      "realmRoles": ["app"]
+    },
+    {
+      "username": "user06",
+      "email": "user06@cmn.local",
+      "enabled": true,
+      "firstName": "User",
+      "lastName": "06",
+      "credentials": [
+        { "type": "password", "value": "UserPassword123!", "temporary": false }
+      ],
+      "realmRoles": ["app"]
+    },
+    {
+      "username": "user07",
+      "email": "user07@cmn.local",
+      "enabled": true,
+      "firstName": "User",
+      "lastName": "07",
+      "credentials": [
+        { "type": "password", "value": "UserPassword123!", "temporary": false }
+      ],
+      "realmRoles": ["app"]
+    },
+    {
+      "username": "user08",
+      "email": "user08@cmn.local",
+      "enabled": true,
+      "firstName": "User",
+      "lastName": "08",
+      "credentials": [
+        { "type": "password", "value": "UserPassword123!", "temporary": false }
+      ],
+      "realmRoles": ["app"]
+    },
+    {
+      "username": "user09",
+      "email": "user09@cmn.local",
+      "enabled": true,
+      "firstName": "User",
+      "lastName": "09",
+      "credentials": [
+        { "type": "password", "value": "UserPassword123!", "temporary": false }
+      ],
+      "realmRoles": ["app"]
+    },
+    {
+      "username": "user10",
+      "email": "user10@cmn.local",
+      "enabled": true,
+      "firstName": "User",
+      "lastName": "10",
+      "credentials": [
+        { "type": "password", "value": "UserPassword123!", "temporary": false }
       ],
       "realmRoles": ["app"]
     }

@@ -90,3 +90,151 @@ entries:
       provider: !Find [authentik_providers_saml.samlprovider, [name, cmn-core-saml]]
       meta_launch_url: "http://localhost:8000"
       policy_engine_mode: any
+
+  # ── Groups ─────────────────────────────────────────────────────────────────
+  - model: authentik_core.group
+    state: present
+    identifiers:
+      name: admins
+    attrs:
+      name: admins
+
+  - model: authentik_core.group
+    state: present
+    identifiers:
+      name: users
+    attrs:
+      name: users
+
+  # ── Users ──────────────────────────────────────────────────────────────────
+  - model: authentik_core.user
+    state: present
+    identifiers:
+      username: admin
+    attrs:
+      name: Admin User
+      email: admin@cmn.local
+      is_active: true
+      password: AdminPassword123!
+      groups:
+        - !Find [authentik_core.group, [name, admins]]
+
+  - model: authentik_core.user
+    state: present
+    identifiers:
+      username: user01
+    attrs:
+      name: User 01
+      email: user01@cmn.local
+      is_active: true
+      password: UserPassword123!
+      groups:
+        - !Find [authentik_core.group, [name, users]]
+
+  - model: authentik_core.user
+    state: present
+    identifiers:
+      username: user02
+    attrs:
+      name: User 02
+      email: user02@cmn.local
+      is_active: true
+      password: UserPassword123!
+      groups:
+        - !Find [authentik_core.group, [name, users]]
+
+  - model: authentik_core.user
+    state: present
+    identifiers:
+      username: user03
+    attrs:
+      name: User 03
+      email: user03@cmn.local
+      is_active: true
+      password: UserPassword123!
+      groups:
+        - !Find [authentik_core.group, [name, users]]
+
+  - model: authentik_core.user
+    state: present
+    identifiers:
+      username: user04
+    attrs:
+      name: User 04
+      email: user04@cmn.local
+      is_active: true
+      password: UserPassword123!
+      groups:
+        - !Find [authentik_core.group, [name, users]]
+
+  - model: authentik_core.user
+    state: present
+    identifiers:
+      username: user05
+    attrs:
+      name: User 05
+      email: user05@cmn.local
+      is_active: true
+      password: UserPassword123!
+      groups:
+        - !Find [authentik_core.group, [name, users]]
+
+  - model: authentik_core.user
+    state: present
+    identifiers:
+      username: user06
+    attrs:
+      name: User 06
+      email: user06@cmn.local
+      is_active: true
+      password: UserPassword123!
+      groups:
+        - !Find [authentik_core.group, [name, users]]
+
+  - model: authentik_core.user
+    state: present
+    identifiers:
+      username: user07
+    attrs:
+      name: User 07
+      email: user07@cmn.local
+      is_active: true
+      password: UserPassword123!
+      groups:
+        - !Find [authentik_core.group, [name, users]]
+
+  - model: authentik_core.user
+    state: present
+    identifiers:
+      username: user08
+    attrs:
+      name: User 08
+      email: user08@cmn.local
+      is_active: true
+      password: UserPassword123!
+      groups:
+        - !Find [authentik_core.group, [name, users]]
+
+  - model: authentik_core.user
+    state: present
+    identifiers:
+      username: user09
+    attrs:
+      name: User 09
+      email: user09@cmn.local
+      is_active: true
+      password: UserPassword123!
+      groups:
+        - !Find [authentik_core.group, [name, users]]
+
+  - model: authentik_core.user
+    state: present
+    identifiers:
+      username: user10
+    attrs:
+      name: User 10
+      email: user10@cmn.local
+      is_active: true
+      password: UserPassword123!
+      groups:
+        - !Find [authentik_core.group, [name, users]]
