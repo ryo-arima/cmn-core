@@ -1,0 +1,50 @@
+Application:
+  Common: {}
+  Server:
+    port: 8080
+    admin:
+      emails:
+        - "admin@test.local"
+    jwt_secret: "test_jwt_secret_for_unit_tests"
+    log_level: "debug"
+    jwt:
+      key: "test_secret"
+    tmp:
+      letters: ""
+      length: 6
+  Client:
+    HomePath: "test/.cmn"
+    ServerEndpoint: "http://localhost:8080"
+    UserEmail: "test@test.local"
+    UserPassword: "TestPassword123!"
+    HomeDir: "test/.cmn"
+    TemplatesDir: "pkg/client/repository/templates/"
+  Mail:
+    host: "localhost"
+    port: 587
+    username: "noreply@test.local"
+    password: "TestMailPassword123!"
+    from: "noreply@test.local"
+    use_tls: true
+
+MySQL:
+  host: "localhost"
+  user: "testuser"
+  pass: "testpass"
+  port: "3306"
+  db: "testdb"
+
+Redis:
+  host: "localhost"
+  port: 6379
+  user: "default"
+  pass: "testredispass"
+  db: 0
+
+Logger:
+  component: "test-component"
+  service: "test-service"
+  level: "DEBUG"
+  structured: false
+  enable_caller: true
+  output: "stdout"

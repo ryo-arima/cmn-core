@@ -1,0 +1,92 @@
+# Authentik blueprint for cmn-core
+# Place this file in the Authentik blueprints directory or apply via the UI.
+# Reference: https://docs.goauthentik.io/docs/customize/blueprints/
+
+version: 1
+metadata:
+  name: cmn-core
+  labels:
+    blueprints.goauthentik.io/instantiate: "true"
+
+entries:
+  # ── Flows ──────────────────────────────────────────────────────────────────
+  - model: authentik_flows.flow
+    state: present
+    identifiers:
+      slug: cmn-authentication
+    attrs:
+      name: cmn-core Authentication Flow
+      title: Sign in to cmn-core
+      designation: authentication
+      policy_engine_mode: any
+      compatibility_mode: false
+
+  # ── Certificate (SAML signing key) ────────────────────────────────────────
+  - model: authentik_crypto.certificatekeypair
+    state: present
+    identifiers:
+      name: cmn-core-saml-cert
+    attrs:
+      name: cmn-core-saml-cert
+
+  # ── OIDC Provider ──────────────────────────────────────────────────────────
+  - model: authentik_providers_oauth2.oauth2provider
+    state: present
+    identifiers:
+      name: cmn-core-oidc
+    attrs:
+      name: cmn-core-oidc
+      authorization_flow: !Find [authentik_flows.flow, [slug, cmn-authentication]]
+      client_type: confidential
+      client_id: cmn-core
+      # Set client_secret via UI or environment variable AUTHENTIK_BOOTSTRAP_TOKEN
+      # client_secret: cmn-core-client-secret-change-in-production
+      access_code_validity: minutes=1
+      access_token_validity: hours=1
+      refresh_token_validity: days=30
+      sub_mode: hashed_user_id
+      include_claims_in_id_token: true
+      issuer_mode: global
+      redirect_uris: "http://localhost:8000/v1/share/auth/oidc/callback"
+      signing_key: !Find [authentik_crypto.certificatekeypair, [name, cmn-core-saml-cert]]
+      property_mappings:
+        - !Find [authentik_providers_oauth2.scopemapping, [managed, goauthentik.io/providers/oauth2/scope-openid]]
+        - !Find [authentik_providers_oauth2.scopemapping, [managed, goauthentik.io/providers/oauth2/scope-email]]
+        - !Find [authentik_providers_oauth2.scopemapping, [managed, goauthentik.io/providers/oauth2/scope-profile]]
+
+  # ── SAML Provider ──────────────────────────────────────────────────────────
+  - model: authentik_providers_saml.samlprovider
+    state: present
+    identifiers:
+      name: cmn-core-saml
+    attrs:
+      name: cmn-core-saml
+      authorization_flow: !Find [authentik_flows.flow, [slug, cmn-authentication]]
+      acs_url: "http://localhost:8000/v1/share/auth/saml/callback"
+      issuer: "cmn-core"
+      sp_binding: post
+      signing_kp: !Find [authentik_crypto.certificatekeypair, [name, cmn-core-saml-cert]]
+
+  # ── Application (OIDC) ─────────────────────────────────────────────────────
+  - model: authentik_core.application
+    state: present
+    identifiers:
+      slug: cmn-core-oidc
+    attrs:
+      name: cmn-core (OIDC)
+      slug: cmn-core-oidc
+      provider: !Find [authentik_providers_oauth2.oauth2provider, [name, cmn-core-oidc]]
+      meta_launch_url: "http://localhost:8000"
+      policy_engine_mode: any
+
+  # ── Application (SAML) ─────────────────────────────────────────────────────
+  - model: authentik_core.application
+    state: present
+    identifiers:
+      slug: cmn-core-saml
+    attrs:
+      name: cmn-core (SAML)
+      slug: cmn-core-saml
+      provider: !Find [authentik_providers_saml.samlprovider, [name, cmn-core-saml]]
+      meta_launch_url: "http://localhost:8000"
+      policy_engine_mode: any

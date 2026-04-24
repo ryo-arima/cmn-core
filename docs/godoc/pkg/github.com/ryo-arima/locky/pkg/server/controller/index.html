@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>controller - Go Documentation Server</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../../lib/godoc/style.css">
+
+<script>window.initFuncs = [];</script>
+<script src="../../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.24.3";</script>
+<script src="../../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/pkg/">Go Documentation Server</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/pkg/">GoDoc</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package controller
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+
+
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/ryo-arima/locker/pkg/server/controller"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+
+
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+
+
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+
+
+
+
+
+				<dd><a href="index.html#CommonControllerForInternal">type CommonControllerForInternal</a></dd>
+
+
+					<dd>&nbsp; &nbsp; <a href="index.html#NewCommonControllerForInternal">func NewCommonControllerForInternal(commonRepository repository.CommonRepository) CommonControllerForInternal</a></dd>
+
+
+
+
+				<dd><a href="index.html#CommonControllerForPrivate">type CommonControllerForPrivate</a></dd>
+
+
+					<dd>&nbsp; &nbsp; <a href="index.html#NewCommonControllerForPrivate">func NewCommonControllerForPrivate(commonRepository repository.CommonRepository) CommonControllerForPrivate</a></dd>
+
+
+
+
+				<dd><a href="index.html#CommonControllerForPublic">type CommonControllerForPublic</a></dd>
+
+
+					<dd>&nbsp; &nbsp; <a href="index.html#NewCommonControllerForPublic">func NewCommonControllerForPublic(userRepository repository.UserRepository, commonRepository repository.CommonRepository) CommonControllerForPublic</a></dd>
+
+
+
+
+				<dd><a href="index.html#GroupControllerForInternal">type GroupControllerForInternal</a></dd>
+
+
+					<dd>&nbsp; &nbsp; <a href="index.html#NewGroupControllerForInternal">func NewGroupControllerForInternal(groupRepository repository.GroupRepository, commonRepository repository.CommonRepository) GroupControllerForInternal</a></dd>
+
+
+
+
+				<dd><a href="index.html#GroupControllerForPrivate">type GroupControllerForPrivate</a></dd>
+
+
+					<dd>&nbsp; &nbsp; <a href="index.html#NewGroupControllerForPrivate">func NewGroupControllerForPrivate(groupRepository repository.GroupRepository, commonRepository repository.CommonRepository) GroupControllerForPrivate</a></dd>
+
+
+
+
+				<dd><a href="index.html#GroupControllerForPublic">type GroupControllerForPublic</a></dd>
+
+
+					<dd>&nbsp; &nbsp; <a href="index.html#NewGroupControllerForPublic">func NewGroupControllerForPublic(groupRepository repository.GroupRepository, commonRepository repository.CommonRepository) GroupControllerForPublic</a></dd>
+
+
+
+
+				<dd><a href="index.html#MemberControllerForInternal">type MemberControllerForInternal</a></dd>
+
+
+					<dd>&nbsp; &nbsp; <a href="index.html#NewMemberControllerForInternal">func NewMemberControllerForInternal(memberRepository repository.MemberRepository, commonRepository repository.CommonRepository) MemberControllerForInternal</a></dd>
+
+
+
+
+				<dd><a href="index.html#MemberControllerForPrivate">type MemberControllerForPrivate</a></dd>
+
+
+					<dd>&nbsp; &nbsp; <a href="index.html#NewMemberControllerForPrivate">func NewMemberControllerForPrivate(memberRepository repository.MemberRepository, commonRepository repository.CommonRepository) MemberControllerForPrivate</a></dd>
+
+
+
+
+				<dd><a href="index.html#MemberControllerForPublic">type MemberControllerForPublic</a></dd>
+
+
+					<dd>&nbsp; &nbsp; <a href="index.html#NewMemberControllerForPublic">func NewMemberControllerForPublic(memberRepository repository.MemberRepository, commonRepository repository.CommonRepository) MemberControllerForPublic</a></dd>
+
+
+
+
+				<dd><a href="index.html#UserControllerForInternal">type UserControllerForInternal</a></dd>
+
+
+					<dd>&nbsp; &nbsp; <a href="index.html#NewUserControllerForInternal">func NewUserControllerForInternal(userRepository repository.UserRepository, commonRepository repository.CommonRepository) UserControllerForInternal</a></dd>
+
+
+
+
+				<dd><a href="index.html#UserControllerForPrivate">type UserControllerForPrivate</a></dd>
+
+
+					<dd>&nbsp; &nbsp; <a href="index.html#NewUserControllerForPrivate">func NewUserControllerForPrivate(userRepository repository.UserRepository, commonRepository repository.CommonRepository) UserControllerForPrivate</a></dd>
+
+
+
+
+				<dd><a href="index.html#UserControllerForPublic">type UserControllerForPublic</a></dd>
+
+
+					<dd>&nbsp; &nbsp; <a href="index.html#NewUserControllerForPublic">func NewUserControllerForPublic(userRepository repository.UserRepository, commonRepository repository.CommonRepository) UserControllerForPublic</a></dd>
+
+
+
+
+			</dl>
+			</div><!-- #manual-nav -->
+
+
+
+
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+
+				<a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/server/controller/common_internal.go">common_internal.go</a>
+
+				<a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/server/controller/common_private.go">common_private.go</a>
+
+				<a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/server/controller/common_public.go">common_public.go</a>
+
+				<a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/server/controller/group_internal.go">group_internal.go</a>
+
+				<a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/server/controller/group_private.go">group_private.go</a>
+
+				<a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/server/controller/group_public.go">group_public.go</a>
+
+				<a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/server/controller/member_internal.go">member_internal.go</a>
+
+				<a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/server/controller/member_private.go">member_private.go</a>
+
+				<a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/server/controller/member_public.go">member_public.go</a>
+
+				<a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/server/controller/user_internal.go">user_internal.go</a>
+
+				<a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/server/controller/user_private.go">user_private.go</a>
+
+				<a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/server/controller/user_public.go">user_public.go</a>
+
+			</span>
+			</p>
+
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+
+
+
+
+
+
+
+
+			<h2 id="CommonControllerForInternal">type <a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/server/controller/common_internal.go?s=85:131#L1">CommonControllerForInternal</a>
+				<a class="permalink" href="index.html#CommonControllerForInternal">&#xb6;</a>
+
+
+			</h2>
+
+			<pre>type CommonControllerForInternal interface {
+}</pre>
+
+
+
+
+
+
+
+
+
+
+
+				<h3 id="NewCommonControllerForInternal">func <a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/server/controller/common_internal.go?s=224:333#L4">NewCommonControllerForInternal</a>
+					<a class="permalink" href="index.html#NewCommonControllerForInternal">&#xb6;</a>
+
+
+				</h3>
+				<pre>func NewCommonControllerForInternal(commonRepository <a href="../repository/index.html">repository</a>.<a href="../repository/index.html#CommonRepository">CommonRepository</a>) <a href="index.html#CommonControllerForInternal">CommonControllerForInternal</a></pre>
+
+
+
+
+
+
+
+
+
+			<h2 id="CommonControllerForPrivate">type <a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/server/controller/common_private.go?s=85:130#L1">CommonControllerForPrivate</a>
+				<a class="permalink" href="index.html#CommonControllerForPrivate">&#xb6;</a>
+
+
+			</h2>
+
+			<pre>type CommonControllerForPrivate interface {
+}</pre>
+
+
+
+
+
+
+
+
+
+
+
+				<h3 id="NewCommonControllerForPrivate">func <a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/server/controller/common_private.go?s=222:329#L4">NewCommonControllerForPrivate</a>
+					<a class="permalink" href="index.html#NewCommonControllerForPrivate">&#xb6;</a>
+
+
+				</h3>
+				<pre>func NewCommonControllerForPrivate(commonRepository <a href="../repository/index.html">repository</a>.<a href="../repository/index.html#CommonRepository">CommonRepository</a>) <a href="index.html#CommonControllerForPrivate">CommonControllerForPrivate</a></pre>
+
+
+
+
+
+
+
+
+
+			<h2 id="CommonControllerForPublic">type <a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/server/controller/common_public.go?s=359:540#L6">CommonControllerForPublic</a>
+				<a class="permalink" href="index.html#CommonControllerForPublic">&#xb6;</a>
+
+
+			</h2>
+
+			<pre>type CommonControllerForPublic interface {
+    ValidateToken(c *<a href="http://localhost:6060/pkg/github.com/gin-gonic/gin/">gin</a>.<a href="http://localhost:6060/pkg/github.com/gin-gonic/gin/#Context">Context</a>)
+    GetUserInfo(c *<a href="http://localhost:6060/pkg/github.com/gin-gonic/gin/">gin</a>.<a href="http://localhost:6060/pkg/github.com/gin-gonic/gin/#Context">Context</a>)
+    Login(c *<a href="http://localhost:6060/pkg/github.com/gin-gonic/gin/">gin</a>.<a href="http://localhost:6060/pkg/github.com/gin-gonic/gin/#Context">Context</a>)
+    RefreshToken(c *<a href="http://localhost:6060/pkg/github.com/gin-gonic/gin/">gin</a>.<a href="http://localhost:6060/pkg/github.com/gin-gonic/gin/#Context">Context</a>)
+    Logout(c *<a href="http://localhost:6060/pkg/github.com/gin-gonic/gin/">gin</a>.<a href="http://localhost:6060/pkg/github.com/gin-gonic/gin/#Context">Context</a>)
+}</pre>
+
+
+
+
+
+
+
+
+
+
+
+				<h3 id="NewCommonControllerForPublic">func <a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/server/controller/common_public.go?s=7063:7210#L253">NewCommonControllerForPublic</a>
+					<a class="permalink" href="index.html#NewCommonControllerForPublic">&#xb6;</a>
+
+
+				</h3>
+				<pre>func NewCommonControllerForPublic(userRepository <a href="../repository/index.html">repository</a>.<a href="../repository/index.html#UserRepository">UserRepository</a>, commonRepository <a href="../repository/index.html">repository</a>.<a href="../repository/index.html#CommonRepository">CommonRepository</a>) <a href="index.html#CommonControllerForPublic">CommonControllerForPublic</a></pre>
+
+
+
+
+
+
+
+
+
+			<h2 id="GroupControllerForInternal">type <a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/server/controller/group_internal.go?s=275:434#L3">GroupControllerForInternal</a>
+				<a class="permalink" href="index.html#GroupControllerForInternal">&#xb6;</a>
+
+
+			</h2>
+
+			<pre>type GroupControllerForInternal interface {
+    GetGroups(c *<a href="http://localhost:6060/pkg/github.com/gin-gonic/gin/">gin</a>.<a href="http://localhost:6060/pkg/github.com/gin-gonic/gin/#Context">Context</a>)
+    CreateGroup(c *<a href="http://localhost:6060/pkg/github.com/gin-gonic/gin/">gin</a>.<a href="http://localhost:6060/pkg/github.com/gin-gonic/gin/#Context">Context</a>)
+    UpdateGroup(c *<a href="http://localhost:6060/pkg/github.com/gin-gonic/gin/">gin</a>.<a href="http://localhost:6060/pkg/github.com/gin-gonic/gin/#Context">Context</a>)
+    DeleteGroup(c *<a href="http://localhost:6060/pkg/github.com/gin-gonic/gin/">gin</a>.<a href="http://localhost:6060/pkg/github.com/gin-gonic/gin/#Context">Context</a>)
+}</pre>
+
+
+
+
+
+
+
+
+
+
+
+				<h3 id="NewGroupControllerForInternal">func <a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/server/controller/group_internal.go?s=4574:4725#L139">NewGroupControllerForInternal</a>
+					<a class="permalink" href="index.html#NewGroupControllerForInternal">&#xb6;</a>
+
+
+				</h3>
+				<pre>func NewGroupControllerForInternal(groupRepository <a href="../repository/index.html">repository</a>.<a href="../repository/index.html#GroupRepository">GroupRepository</a>, commonRepository <a href="../repository/index.html">repository</a>.<a href="../repository/index.html#CommonRepository">CommonRepository</a>) <a href="index.html#GroupControllerForInternal">GroupControllerForInternal</a></pre>
+
+
+
+
+
+
+
+
+
+			<h2 id="GroupControllerForPrivate">type <a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/server/controller/group_private.go?s=275:433#L3">GroupControllerForPrivate</a>
+				<a class="permalink" href="index.html#GroupControllerForPrivate">&#xb6;</a>
+
+
+			</h2>
+
+			<pre>type GroupControllerForPrivate interface {
+    GetGroups(c *<a href="http://localhost:6060/pkg/github.com/gin-gonic/gin/">gin</a>.<a href="http://localhost:6060/pkg/github.com/gin-gonic/gin/#Context">Context</a>)
+    CreateGroup(c *<a href="http://localhost:6060/pkg/github.com/gin-gonic/gin/">gin</a>.<a href="http://localhost:6060/pkg/github.com/gin-gonic/gin/#Context">Context</a>)
+    UpdateGroup(c *<a href="http://localhost:6060/pkg/github.com/gin-gonic/gin/">gin</a>.<a href="http://localhost:6060/pkg/github.com/gin-gonic/gin/#Context">Context</a>)
+    DeleteGroup(c *<a href="http://localhost:6060/pkg/github.com/gin-gonic/gin/">gin</a>.<a href="http://localhost:6060/pkg/github.com/gin-gonic/gin/#Context">Context</a>)
+}</pre>
+
+
+
+
+
+
+
+
+
+
+
+				<h3 id="NewGroupControllerForPrivate">func <a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/server/controller/group_private.go?s=4560:4709#L139">NewGroupControllerForPrivate</a>
+					<a class="permalink" href="index.html#NewGroupControllerForPrivate">&#xb6;</a>
+
+
+				</h3>
+				<pre>func NewGroupControllerForPrivate(groupRepository <a href="../repository/index.html">repository</a>.<a href="../repository/index.html#GroupRepository">GroupRepository</a>, commonRepository <a href="../repository/index.html">repository</a>.<a href="../repository/index.html#CommonRepository">CommonRepository</a>) <a href="index.html#GroupControllerForPrivate">GroupControllerForPrivate</a></pre>
+
+
+
+
+
+
+
+
+
+			<h2 id="GroupControllerForPublic">type <a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/server/controller/group_public.go?s=227:297#L2">GroupControllerForPublic</a>
+				<a class="permalink" href="index.html#GroupControllerForPublic">&#xb6;</a>
+
+
+			</h2>
+
+			<pre>type GroupControllerForPublic interface {
+    GetGroups(c *<a href="http://localhost:6060/pkg/github.com/gin-gonic/gin/">gin</a>.<a href="http://localhost:6060/pkg/github.com/gin-gonic/gin/#Context">Context</a>)
+}</pre>
+
+
+
+
+
+
+
+
+
+
+
+				<h3 id="NewGroupControllerForPublic">func <a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/server/controller/group_public.go?s=1241:1388#L35">NewGroupControllerForPublic</a>
+					<a class="permalink" href="index.html#NewGroupControllerForPublic">&#xb6;</a>
+
+
+				</h3>
+				<pre>func NewGroupControllerForPublic(groupRepository <a href="../repository/index.html">repository</a>.<a href="../repository/index.html#GroupRepository">GroupRepository</a>, commonRepository <a href="../repository/index.html">repository</a>.<a href="../repository/index.html#CommonRepository">CommonRepository</a>) <a href="index.html#GroupControllerForPublic">GroupControllerForPublic</a></pre>
+
+
+
+
+
+
+
+
+
+			<h2 id="MemberControllerForInternal">type <a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/server/controller/member_internal.go?s=275:439#L3">MemberControllerForInternal</a>
+				<a class="permalink" href="index.html#MemberControllerForInternal">&#xb6;</a>
+
+
+			</h2>
+
+			<pre>type MemberControllerForInternal interface {
+    GetMembers(c *<a href="http://localhost:6060/pkg/github.com/gin-gonic/gin/">gin</a>.<a href="http://localhost:6060/pkg/github.com/gin-gonic/gin/#Context">Context</a>)
+    CreateMember(c *<a href="http://localhost:6060/pkg/github.com/gin-gonic/gin/">gin</a>.<a href="http://localhost:6060/pkg/github.com/gin-gonic/gin/#Context">Context</a>)
+    UpdateMember(c *<a href="http://localhost:6060/pkg/github.com/gin-gonic/gin/">gin</a>.<a href="http://localhost:6060/pkg/github.com/gin-gonic/gin/#Context">Context</a>)
+    DeleteMember(c *<a href="http://localhost:6060/pkg/github.com/gin-gonic/gin/">gin</a>.<a href="http://localhost:6060/pkg/github.com/gin-gonic/gin/#Context">Context</a>)
+}</pre>
+
+
+
+
+
+
+
+
+
+
+
+				<h3 id="NewMemberControllerForInternal">func <a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/server/controller/member_internal.go?s=4675:4830#L139">NewMemberControllerForInternal</a>
+					<a class="permalink" href="index.html#NewMemberControllerForInternal">&#xb6;</a>
+
+
+				</h3>
+				<pre>func NewMemberControllerForInternal(memberRepository <a href="../repository/index.html">repository</a>.<a href="../repository/index.html#MemberRepository">MemberRepository</a>, commonRepository <a href="../repository/index.html">repository</a>.<a href="../repository/index.html#CommonRepository">CommonRepository</a>) <a href="index.html#MemberControllerForInternal">MemberControllerForInternal</a></pre>
+
+
+
+
+
+
+
+
+
+			<h2 id="MemberControllerForPrivate">type <a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/server/controller/member_private.go?s=275:438#L3">MemberControllerForPrivate</a>
+				<a class="permalink" href="index.html#MemberControllerForPrivate">&#xb6;</a>
+
+
+			</h2>
+
+			<pre>type MemberControllerForPrivate interface {
+    GetMembers(c *<a href="http://localhost:6060/pkg/github.com/gin-gonic/gin/">gin</a>.<a href="http://localhost:6060/pkg/github.com/gin-gonic/gin/#Context">Context</a>)
+    CreateMember(c *<a href="http://localhost:6060/pkg/github.com/gin-gonic/gin/">gin</a>.<a href="http://localhost:6060/pkg/github.com/gin-gonic/gin/#Context">Context</a>)
+    UpdateMember(c *<a href="http://localhost:6060/pkg/github.com/gin-gonic/gin/">gin</a>.<a href="http://localhost:6060/pkg/github.com/gin-gonic/gin/#Context">Context</a>)
+    DeleteMember(c *<a href="http://localhost:6060/pkg/github.com/gin-gonic/gin/">gin</a>.<a href="http://localhost:6060/pkg/github.com/gin-gonic/gin/#Context">Context</a>)
+}</pre>
+
+
+
+
+
+
+
+
+
+
+
+				<h3 id="NewMemberControllerForPrivate">func <a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/server/controller/member_private.go?s=4661:4814#L139">NewMemberControllerForPrivate</a>
+					<a class="permalink" href="index.html#NewMemberControllerForPrivate">&#xb6;</a>
+
+
+				</h3>
+				<pre>func NewMemberControllerForPrivate(memberRepository <a href="../repository/index.html">repository</a>.<a href="../repository/index.html#MemberRepository">MemberRepository</a>, commonRepository <a href="../repository/index.html">repository</a>.<a href="../repository/index.html#CommonRepository">CommonRepository</a>) <a href="index.html#MemberControllerForPrivate">MemberControllerForPrivate</a></pre>
+
+
+
+
+
+
+
+
+
+			<h2 id="MemberControllerForPublic">type <a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/server/controller/member_public.go?s=227:299#L2">MemberControllerForPublic</a>
+				<a class="permalink" href="index.html#MemberControllerForPublic">&#xb6;</a>
+
+
+			</h2>
+
+			<pre>type MemberControllerForPublic interface {
+    GetMembers(c *<a href="http://localhost:6060/pkg/github.com/gin-gonic/gin/">gin</a>.<a href="http://localhost:6060/pkg/github.com/gin-gonic/gin/#Context">Context</a>)
+}</pre>
+
+
+
+
+
+
+
+
+
+
+
+				<h3 id="NewMemberControllerForPublic">func <a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/server/controller/member_public.go?s=1265:1416#L35">NewMemberControllerForPublic</a>
+					<a class="permalink" href="index.html#NewMemberControllerForPublic">&#xb6;</a>
+
+
+				</h3>
+				<pre>func NewMemberControllerForPublic(memberRepository <a href="../repository/index.html">repository</a>.<a href="../repository/index.html#MemberRepository">MemberRepository</a>, commonRepository <a href="../repository/index.html">repository</a>.<a href="../repository/index.html#CommonRepository">CommonRepository</a>) <a href="index.html#MemberControllerForPublic">MemberControllerForPublic</a></pre>
+
+
+
+
+
+
+
+
+
+			<h2 id="UserControllerForInternal">type <a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/server/controller/user_internal.go?s=275:429#L3">UserControllerForInternal</a>
+				<a class="permalink" href="index.html#UserControllerForInternal">&#xb6;</a>
+
+
+			</h2>
+
+			<pre>type UserControllerForInternal interface {
+    GetUsers(c *<a href="http://localhost:6060/pkg/github.com/gin-gonic/gin/">gin</a>.<a href="http://localhost:6060/pkg/github.com/gin-gonic/gin/#Context">Context</a>)
+    UpdateUser(c *<a href="http://localhost:6060/pkg/github.com/gin-gonic/gin/">gin</a>.<a href="http://localhost:6060/pkg/github.com/gin-gonic/gin/#Context">Context</a>)
+    DeleteUser(c *<a href="http://localhost:6060/pkg/github.com/gin-gonic/gin/">gin</a>.<a href="http://localhost:6060/pkg/github.com/gin-gonic/gin/#Context">Context</a>)
+    CreateUser(c *<a href="http://localhost:6060/pkg/github.com/gin-gonic/gin/">gin</a>.<a href="http://localhost:6060/pkg/github.com/gin-gonic/gin/#Context">Context</a>)
+}</pre>
+
+
+
+
+
+
+
+
+
+
+
+				<h3 id="NewUserControllerForInternal">func <a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/server/controller/user_internal.go?s=4703:4850#L143">NewUserControllerForInternal</a>
+					<a class="permalink" href="index.html#NewUserControllerForInternal">&#xb6;</a>
+
+
+				</h3>
+				<pre>func NewUserControllerForInternal(userRepository <a href="../repository/index.html">repository</a>.<a href="../repository/index.html#UserRepository">UserRepository</a>, commonRepository <a href="../repository/index.html">repository</a>.<a href="../repository/index.html#CommonRepository">CommonRepository</a>) <a href="index.html#UserControllerForInternal">UserControllerForInternal</a></pre>
+
+
+
+
+
+
+
+
+
+			<h2 id="UserControllerForPrivate">type <a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/server/controller/user_private.go?s=275:428#L3">UserControllerForPrivate</a>
+				<a class="permalink" href="index.html#UserControllerForPrivate">&#xb6;</a>
+
+
+			</h2>
+
+			<pre>type UserControllerForPrivate interface {
+    GetUsers(c *<a href="http://localhost:6060/pkg/github.com/gin-gonic/gin/">gin</a>.<a href="http://localhost:6060/pkg/github.com/gin-gonic/gin/#Context">Context</a>)
+    CreateUser(c *<a href="http://localhost:6060/pkg/github.com/gin-gonic/gin/">gin</a>.<a href="http://localhost:6060/pkg/github.com/gin-gonic/gin/#Context">Context</a>)
+    UpdateUser(c *<a href="http://localhost:6060/pkg/github.com/gin-gonic/gin/">gin</a>.<a href="http://localhost:6060/pkg/github.com/gin-gonic/gin/#Context">Context</a>)
+    DeleteUser(c *<a href="http://localhost:6060/pkg/github.com/gin-gonic/gin/">gin</a>.<a href="http://localhost:6060/pkg/github.com/gin-gonic/gin/#Context">Context</a>)
+}</pre>
+
+
+
+
+
+
+
+
+
+
+
+				<h3 id="NewUserControllerForPrivate">func <a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/server/controller/user_private.go?s=4736:4881#L144">NewUserControllerForPrivate</a>
+					<a class="permalink" href="index.html#NewUserControllerForPrivate">&#xb6;</a>
+
+
+				</h3>
+				<pre>func NewUserControllerForPrivate(userRepository <a href="../repository/index.html">repository</a>.<a href="../repository/index.html#UserRepository">UserRepository</a>, commonRepository <a href="../repository/index.html">repository</a>.<a href="../repository/index.html#CommonRepository">CommonRepository</a>) <a href="index.html#UserControllerForPrivate">UserControllerForPrivate</a></pre>
+
+
+
+
+
+
+
+
+
+			<h2 id="UserControllerForPublic">type <a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/server/controller/user_public.go?s=284:380#L5">UserControllerForPublic</a>
+				<a class="permalink" href="index.html#UserControllerForPublic">&#xb6;</a>
+
+
+			</h2>
+
+			<pre>type UserControllerForPublic interface {
+    CreateUser(c *<a href="http://localhost:6060/pkg/github.com/gin-gonic/gin/">gin</a>.<a href="http://localhost:6060/pkg/github.com/gin-gonic/gin/#Context">Context</a>)
+    GetUsers(c *<a href="http://localhost:6060/pkg/github.com/gin-gonic/gin/">gin</a>.<a href="http://localhost:6060/pkg/github.com/gin-gonic/gin/#Context">Context</a>)
+}</pre>
+
+
+
+
+
+
+
+
+
+
+
+				<h3 id="NewUserControllerForPublic">func <a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/server/controller/user_public.go?s=4160:4303#L133">NewUserControllerForPublic</a>
+					<a class="permalink" href="index.html#NewUserControllerForPublic">&#xb6;</a>
+
+
+				</h3>
+				<pre>func NewUserControllerForPublic(userRepository <a href="../repository/index.html">repository</a>.<a href="../repository/index.html#UserRepository">UserRepository</a>, commonRepository <a href="../repository/index.html">repository</a>.<a href="../repository/index.html#CommonRepository">CommonRepository</a>) <a href="index.html#UserControllerForPublic">UserControllerForPublic</a></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.24.3.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="https://golang.org/doc/tos.html">Terms of Service</a> |
+<a href="https://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+</body>
+</html>

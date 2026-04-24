@@ -1,0 +1,16 @@
+# Custom Postfix main.cf overrides for docker-mailserver
+# These settings override the default docker-mailserver configuration
+
+# Relax client restrictions to allow Docker network connections
+# Keep spaces out to avoid postconf -e parsing issues; Postfix tolerates either style
+smtpd_client_restrictions=permit_mynetworks,permit_sasl_authenticated,reject
+
+# Allow SMTP AUTH without TLS (test-only, not for production)
+smtpd_tls_auth_only=no
+
+# Ensure SASL auth is enabled globally
+smtpd_sasl_auth_enable=yes
+
+# Explicitly define mynetworks to include the docker bridge subnet so Roundcube
+# can be treated as a trusted network prior to AUTH (test environment only).
+mynetworks=127.0.0.0/8,[::1]/128,10.88.0.0/24

@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>model - Go Documentation Server</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../../lib/godoc/style.css">
+
+<script>window.initFuncs = [];</script>
+<script src="../../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.24.3";</script>
+<script src="../../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/pkg/">Go Documentation Server</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/pkg/">GoDoc</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package model
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+
+
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/ryo-arima/locker/pkg/entity/model"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+
+
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+
+
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+
+
+
+
+
+				<dd><a href="index.html#Commons">type Commons</a></dd>
+
+
+
+
+				<dd><a href="index.html#Groups">type Groups</a></dd>
+
+
+
+
+				<dd><a href="index.html#JWTClaims">type JWTClaims</a></dd>
+
+
+
+
+				<dd><a href="index.html#Members">type Members</a></dd>
+
+
+
+
+				<dd><a href="index.html#TokenPair">type TokenPair</a></dd>
+
+
+
+
+				<dd><a href="index.html#Users">type Users</a></dd>
+
+
+
+
+			</dl>
+			</div><!-- #manual-nav -->
+
+
+
+
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+
+				<a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/entity/model/common.go">common.go</a>
+
+				<a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/entity/model/group.go">group.go</a>
+
+				<a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/entity/model/member.go">member.go</a>
+
+				<a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/entity/model/user.go">user.go</a>
+
+			</span>
+			</p>
+
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+
+
+
+
+
+
+
+
+			<h2 id="Commons">type <a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/entity/model/common.go?s=30:285#L1">Commons</a>
+				<a class="permalink" href="index.html#Commons">&#xb6;</a>
+
+
+			</h2>
+
+			<pre>type Commons struct {
+<span id="Commons.ID"></span>    ID        <a href="http://localhost:6060/pkg/builtin/#uint">uint</a>       `json:&#34;id&#34;`
+<span id="Commons.UUID"></span>    UUID      <a href="http://localhost:6060/pkg/builtin/#string">string</a>     `json:&#34;uuid&#34;`
+<span id="Commons.Name"></span>    Name      <a href="http://localhost:6060/pkg/builtin/#string">string</a>     `json:&#34;name&#34;`
+<span id="Commons.CreatedAt"></span>    CreatedAt *<a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Time">Time</a> `json:&#34;created_at&#34;`
+<span id="Commons.UpdatedAt"></span>    UpdatedAt *<a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Time">Time</a> `json:&#34;updated_at&#34;`
+<span id="Commons.DeletedAt"></span>    DeletedAt *<a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Time">Time</a> `json:&#34;deleted_at&#34;`
+}
+</pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+			<h2 id="Groups">type <a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/entity/model/group.go?s=30:204#L1">Groups</a>
+				<a class="permalink" href="index.html#Groups">&#xb6;</a>
+
+
+			</h2>
+
+			<pre>type Groups struct {
+<span id="Groups.ID"></span>    ID        <a href="http://localhost:6060/pkg/builtin/#uint">uint</a> `gorm:&#34;primaryKey,autoIncrement&#34;`
+<span id="Groups.UUID"></span>    UUID      <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="Groups.Name"></span>    Name      <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="Groups.CreatedAt"></span>    CreatedAt *<a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Time">Time</a>
+<span id="Groups.UpdatedAt"></span>    UpdatedAt *<a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Time">Time</a>
+<span id="Groups.DeletedAt"></span>    DeletedAt *<a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Time">Time</a>
+}
+</pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+			<h2 id="JWTClaims">type <a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/entity/model/common.go?s=332:593#L5">JWTClaims</a>
+				<a class="permalink" href="index.html#JWTClaims">&#xb6;</a>
+
+
+			</h2>
+			<p>JWTClaims represents the JWT token claims
+
+			<pre>type JWTClaims struct {
+<span id="JWTClaims.UserID"></span>    UserID    <a href="http://localhost:6060/pkg/builtin/#uint">uint</a>   `json:&#34;user_id&#34;`
+<span id="JWTClaims.UUID"></span>    UUID      <a href="http://localhost:6060/pkg/builtin/#string">string</a> `json:&#34;uuid&#34;`
+<span id="JWTClaims.Email"></span>    Email     <a href="http://localhost:6060/pkg/builtin/#string">string</a> `json:&#34;email&#34;`
+<span id="JWTClaims.Name"></span>    Name      <a href="http://localhost:6060/pkg/builtin/#string">string</a> `json:&#34;name&#34;`
+<span id="JWTClaims.Role"></span>    Role      <a href="http://localhost:6060/pkg/builtin/#string">string</a> `json:&#34;role,omitempty&#34;`
+<span id="JWTClaims.IssuedAt"></span>    IssuedAt  <a href="http://localhost:6060/pkg/builtin/#int64">int64</a>  `json:&#34;iat&#34;`
+<span id="JWTClaims.ExpiresAt"></span>    ExpiresAt <a href="http://localhost:6060/pkg/builtin/#int64">int64</a>  `json:&#34;exp&#34;`
+}
+</pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+			<h2 id="Members">type <a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/entity/model/member.go?s=30:241#L1">Members</a>
+				<a class="permalink" href="index.html#Members">&#xb6;</a>
+
+
+			</h2>
+
+			<pre>type Members struct {
+<span id="Members.ID"></span>    ID        <a href="http://localhost:6060/pkg/builtin/#uint">uint</a> `gorm:&#34;primaryKey,autoIncrement&#34;`
+<span id="Members.UUID"></span>    UUID      <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="Members.GroupUUID"></span>    GroupUUID <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="Members.UserUUID"></span>    UserUUID  <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="Members.Role"></span>    Role      <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="Members.CreatedAt"></span>    CreatedAt *<a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Time">Time</a>
+<span id="Members.UpdatedAt"></span>    UpdatedAt *<a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Time">Time</a>
+<span id="Members.DeletedAt"></span>    DeletedAt *<a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Time">Time</a>
+}
+</pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+			<h2 id="TokenPair">type <a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/entity/model/common.go?s=645:849#L16">TokenPair</a>
+				<a class="permalink" href="index.html#TokenPair">&#xb6;</a>
+
+
+			</h2>
+			<p>TokenPair represents access and refresh tokens
+
+			<pre>type TokenPair struct {
+<span id="TokenPair.AccessToken"></span>    AccessToken  <a href="http://localhost:6060/pkg/builtin/#string">string</a> `json:&#34;access_token&#34;`
+<span id="TokenPair.RefreshToken"></span>    RefreshToken <a href="http://localhost:6060/pkg/builtin/#string">string</a> `json:&#34;refresh_token,omitempty&#34;`
+<span id="TokenPair.TokenType"></span>    TokenType    <a href="http://localhost:6060/pkg/builtin/#string">string</a> `json:&#34;token_type&#34;`
+<span id="TokenPair.ExpiresIn"></span>    ExpiresIn    <a href="http://localhost:6060/pkg/builtin/#int64">int64</a>  `json:&#34;expires_in&#34;`
+}
+</pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+			<h2 id="Users">type <a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/entity/model/user.go?s=30:239#L1">Users</a>
+				<a class="permalink" href="index.html#Users">&#xb6;</a>
+
+
+			</h2>
+
+			<pre>type Users struct {
+<span id="Users.ID"></span>    ID        <a href="http://localhost:6060/pkg/builtin/#uint">uint</a> `gorm:&#34;primaryKey,autoIncrement&#34;`
+<span id="Users.UUID"></span>    UUID      <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="Users.Email"></span>    Email     <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="Users.Password"></span>    Password  <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="Users.Name"></span>    Name      <a href="http://localhost:6060/pkg/builtin/#string">string</a>
+<span id="Users.CreatedAt"></span>    CreatedAt *<a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Time">Time</a>
+<span id="Users.UpdatedAt"></span>    UpdatedAt *<a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Time">Time</a>
+<span id="Users.DeletedAt"></span>    DeletedAt *<a href="http://localhost:6060/pkg/time/">time</a>.<a href="http://localhost:6060/pkg/time/#Time">Time</a>
+}
+</pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.24.3.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="https://golang.org/doc/tos.html">Terms of Service</a> |
+<a href="https://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+</body>
+</html>

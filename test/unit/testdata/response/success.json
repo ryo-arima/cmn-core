@@ -1,0 +1,9 @@
+{
+  "code": "SUCCESS",
+  "message": "Operation completed successfully",
+  "data": {
+    "uuid": "test-user-uuid-001",
+    "name": "Test User",
+    "email": "testuser@example.com"
+  }
+}

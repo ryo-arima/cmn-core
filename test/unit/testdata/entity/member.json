@@ -1,0 +1,8 @@
+{
+  "uuid": "test-member-uuid-001",
+  "user_uuid": "test-user-uuid-001",
+  "group_uuid": "test-group-uuid-001",
+  "role": "member",
+  "created_at": "2024-01-01T00:00:00Z",
+  "updated_at": "2024-01-01T00:00:00Z"
+}

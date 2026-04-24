@@ -1,0 +1,8 @@
+{
+  "uuid": "test-user-uuid-001",
+  "name": "Test User",
+  "email": "testuser@example.com",
+  "password": "hashed_password_here",
+  "created_at": "2024-01-01T00:00:00Z",
+  "updated_at": "2024-01-01T00:00:00Z"
+}

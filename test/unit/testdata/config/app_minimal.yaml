@@ -1,0 +1,28 @@
+Application:
+  Common: {}
+  Server:
+    port: 8080
+  Client:
+    ServerEndpoint: "http://localhost:8080"
+
+MySQL:
+  host: "localhost"
+  user: "user"
+  pass: "pass"
+  port: 3306
+  db: "db"
+
+Redis:
+  host: "localhost"
+  port: 6379
+  user: "default"
+  pass: "pass"
+  db: 0
+
+Logger:
+  component: "test"
+  service: "test"
+  level: "INFO"
+  structured: false
+  enable_caller: false
+  output: "stdout"

@@ -1,0 +1,87 @@
+{
+  "id": "cmn",
+  "realm": "cmn",
+  "displayName": "cmn-core",
+  "enabled": true,
+  "sslRequired": "none",
+  "registrationAllowed": false,
+  "loginWithEmailAllowed": true,
+  "duplicateEmailsAllowed": false,
+  "resetPasswordAllowed": true,
+  "editUsernameAllowed": false,
+  "bruteForceProtected": false,
+  "accessTokenLifespan": 1800,
+  "ssoSessionMaxLifespan": 36000,
+  "roles": {
+    "realm": [
+      { "name": "admin",     "description": "Administrator" },
+      { "name": "app",       "description": "Application user" },
+      { "name": "anonymous", "description": "Unauthenticated / public access" }
+    ]
+  },
+  "clients": [
+    {
+      "clientId": "cmn-core",
+      "name": "cmn-core API",
+      "description": "OIDC client for cmn-core server",
+      "enabled": true,
+      "clientAuthenticatorType": "client-secret",
+      "secret": "cmn-core-client-secret-change-in-production",
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": true,
+      "serviceAccountsEnabled": true,
+      "redirectUris": [
+        "http://localhost:8000/*"
+      ],
+      "webOrigins": [
+        "http://localhost:8000"
+      ],
+      "defaultClientScopes": [
+        "openid",
+        "profile",
+        "email",
+        "roles"
+      ],
+      "protocolMappers": [
+        {
+          "name": "realm-roles-mapper",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-realm-role-mapper",
+          "config": {
+            "claim.name": "role",
+            "jsonType.label": "String",
+            "single": "true",
+            "access.token.claim": "true",
+            "id.token.claim": "true",
+            "userinfo.token.claim": "true"
+          }
+        }
+      ]
+    }
+  ],
+  "users": [
+    {
+      "username": "admin",
+      "email": "admin@cmn.local",
+      "enabled": true,
+      "firstName": "Admin",
+      "lastName": "User",
+      "credentials": [
+        { "type": "password", "value": "AdminPassword123!", "temporary": false }
+      ],
+      "realmRoles": ["admin"]
+    },
+    {
+      "username": "testuser",
+      "email": "test1@cmn.local",
+      "enabled": true,
+      "firstName": "Test",
+      "lastName": "User",
+      "credentials": [
+        { "type": "password", "value": "TestPassword123!", "temporary": false }
+      ],
+      "realmRoles": ["app"]
+    }
+  ]
+}

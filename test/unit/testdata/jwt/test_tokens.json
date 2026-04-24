@@ -1,0 +1,23 @@
+{
+  "test_jwt_secret": "test-secret-key-for-jwt-that-is-long-enough-for-testing-purposes",
+  "sample_tokens": {
+    "valid_access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VyX3V1aWQiOiJ0ZXN0LXV1aWQiLCJlbWFpbCI6InRlc3RAZXhhbXBsZS5jb20iLCJuYW1lIjoiVGVzdCBVc2VyIiwicm9sZSI6InVzZXIiLCJqdGkiOiJ0ZXN0LWp0aSJ9",
+    "expired_token": "expired.token.here"
+  },
+  "test_claims": {
+    "user_id": 1,
+    "user_uuid": "test-uuid-123",
+    "email": "test@example.com",
+    "name": "Test User",
+    "role": "user",
+    "jti": "test-jti-123"
+  },
+  "admin_claims": {
+    "user_id": 2,
+    "user_uuid": "admin-uuid-456",
+    "email": "admin@example.com",
+    "name": "Admin User",
+    "role": "admin",
+    "jti": "admin-jti-456"
+  }
+}

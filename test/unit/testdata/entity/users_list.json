@@ -1,0 +1,20 @@
+[
+  {
+    "uuid": "user-001",
+    "name": "User One",
+    "email": "user1@example.com",
+    "password": "hashed_pass_1"
+  },
+  {
+    "uuid": "user-002",
+    "name": "User Two",
+    "email": "user2@example.com",
+    "password": "hashed_pass_2"
+  },
+  {
+    "uuid": "user-003",
+    "name": "User Three",
+    "email": "user3@example.com",
+    "password": "hashed_pass_3"
+  }
+]

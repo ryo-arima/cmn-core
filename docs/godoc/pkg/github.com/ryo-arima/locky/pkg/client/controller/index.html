@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>controller - Go Documentation Server</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../../lib/godoc/style.css">
+
+<script>window.initFuncs = [];</script>
+<script src="../../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.24.3";</script>
+<script src="../../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/pkg/">Go Documentation Server</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/pkg/">GoDoc</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package controller
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+
+
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/ryo-arima/locker/pkg/client/controller"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+
+
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+
+
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+
+
+
+
+				<dd><a href="index.html#InitBootstrapGroupCmdForAdminUser">func InitBootstrapGroupCmdForAdminUser(conf config.BaseConfig) *cobra.Command</a></dd>
+
+
+				<dd><a href="index.html#InitBootstrapMemberCmdForAdminUser">func InitBootstrapMemberCmdForAdminUser(conf config.BaseConfig) *cobra.Command</a></dd>
+
+
+				<dd><a href="index.html#InitBootstrapUserCmdForAdminUser">func InitBootstrapUserCmdForAdminUser(conf config.BaseConfig) *cobra.Command</a></dd>
+
+
+				<dd><a href="index.html#InitCommonLoginCmd">func InitCommonLoginCmd(conf config.BaseConfig) *cobra.Command</a></dd>
+
+
+				<dd><a href="index.html#InitCommonLogoutCmd">func InitCommonLogoutCmd(conf config.BaseConfig) *cobra.Command</a></dd>
+
+
+				<dd><a href="index.html#InitCommonRefreshTokenCmd">func InitCommonRefreshTokenCmd(conf config.BaseConfig) *cobra.Command</a></dd>
+
+
+				<dd><a href="index.html#InitCommonUserInfoCmd">func InitCommonUserInfoCmd(conf config.BaseConfig) *cobra.Command</a></dd>
+
+
+				<dd><a href="index.html#InitCommonValidateTokenCmd">func InitCommonValidateTokenCmd(conf config.BaseConfig) *cobra.Command</a></dd>
+
+
+				<dd><a href="index.html#InitCreateGroupCmdForAdminUser">func InitCreateGroupCmdForAdminUser(conf config.BaseConfig) *cobra.Command</a></dd>
+
+
+				<dd><a href="index.html#InitCreateGroupCmdForAnonymousUser">func InitCreateGroupCmdForAnonymousUser(conf config.BaseConfig) *cobra.Command</a></dd>
+
+
+				<dd><a href="index.html#InitCreateGroupCmdForAppUser">func InitCreateGroupCmdForAppUser(conf config.BaseConfig) *cobra.Command</a></dd>
+
+
+				<dd><a href="index.html#InitCreateMemberCmdForAdminUser">func InitCreateMemberCmdForAdminUser(conf config.BaseConfig) *cobra.Command</a></dd>
+
+
+				<dd><a href="index.html#InitCreateMemberCmdForAnonymousUser">func InitCreateMemberCmdForAnonymousUser(conf config.BaseConfig) *cobra.Command</a></dd>
+
+
+				<dd><a href="index.html#InitCreateMemberCmdForAppUser">func InitCreateMemberCmdForAppUser(conf config.BaseConfig) *cobra.Command</a></dd>
+
+
+				<dd><a href="index.html#InitCreateUserCmdForAdminUser">func InitCreateUserCmdForAdminUser(conf config.BaseConfig) *cobra.Command</a></dd>
+
+
+				<dd><a href="index.html#InitCreateUserCmdForAnonymousUser">func InitCreateUserCmdForAnonymousUser(conf config.BaseConfig) *cobra.Command</a></dd>
+
+
+				<dd><a href="index.html#InitCreateUserCmdForAppUser">func InitCreateUserCmdForAppUser(conf config.BaseConfig) *cobra.Command</a></dd>
+
+
+				<dd><a href="index.html#InitDeleteGroupCmdForAdminUser">func InitDeleteGroupCmdForAdminUser(conf config.BaseConfig) *cobra.Command</a></dd>
+
+
+				<dd><a href="index.html#InitDeleteGroupCmdForAnonymousUser">func InitDeleteGroupCmdForAnonymousUser(conf config.BaseConfig) *cobra.Command</a></dd>
+
+
+				<dd><a href="index.html#InitDeleteGroupCmdForAppUser">func InitDeleteGroupCmdForAppUser(conf config.BaseConfig) *cobra.Command</a></dd>
+
+
+				<dd><a href="index.html#InitDeleteMemberCmdForAdminUser">func InitDeleteMemberCmdForAdminUser(conf config.BaseConfig) *cobra.Command</a></dd>
+
+
+				<dd><a href="index.html#InitDeleteMemberCmdForAnonymousUser">func InitDeleteMemberCmdForAnonymousUser(conf config.BaseConfig) *cobra.Command</a></dd>
+
+
+				<dd><a href="index.html#InitDeleteMemberCmdForAppUser">func InitDeleteMemberCmdForAppUser(conf config.BaseConfig) *cobra.Command</a></dd>
+
+
+				<dd><a href="index.html#InitDeleteUserCmdForAdminUser">func InitDeleteUserCmdForAdminUser(conf config.BaseConfig) *cobra.Command</a></dd>
+
+
+				<dd><a href="index.html#InitDeleteUserCmdForAnonymousUser">func InitDeleteUserCmdForAnonymousUser(conf config.BaseConfig) *cobra.Command</a></dd>
+
+
+				<dd><a href="index.html#InitDeleteUserCmdForAppUser">func InitDeleteUserCmdForAppUser(conf config.BaseConfig) *cobra.Command</a></dd>
+
+
+				<dd><a href="index.html#InitGetGroupCmdForAdminUser">func InitGetGroupCmdForAdminUser(conf config.BaseConfig) *cobra.Command</a></dd>
+
+
+				<dd><a href="index.html#InitGetGroupCmdForAnonymousUser">func InitGetGroupCmdForAnonymousUser(conf config.BaseConfig) *cobra.Command</a></dd>
+
+
+				<dd><a href="index.html#InitGetGroupCmdForAppUser">func InitGetGroupCmdForAppUser(conf config.BaseConfig) *cobra.Command</a></dd>
+
+
+				<dd><a href="index.html#InitGetMemberCmdForAdminUser">func InitGetMemberCmdForAdminUser(conf config.BaseConfig) *cobra.Command</a></dd>
+
+
+				<dd><a href="index.html#InitGetMemberCmdForAnonymousUser">func InitGetMemberCmdForAnonymousUser(conf config.BaseConfig) *cobra.Command</a></dd>
+
+
+				<dd><a href="index.html#InitGetMemberCmdForAppUser">func InitGetMemberCmdForAppUser(conf config.BaseConfig) *cobra.Command</a></dd>
+
+
+				<dd><a href="index.html#InitGetUserCmdForAdminUser">func InitGetUserCmdForAdminUser(conf config.BaseConfig) *cobra.Command</a></dd>
+
+
+				<dd><a href="index.html#InitGetUserCmdForAnonymousUser">func InitGetUserCmdForAnonymousUser(conf config.BaseConfig) *cobra.Command</a></dd>
+
+
+				<dd><a href="index.html#InitGetUserCmdForAppUser">func InitGetUserCmdForAppUser(conf config.BaseConfig) *cobra.Command</a></dd>
+
+
+				<dd><a href="index.html#InitUpdateGroupCmdForAdminUser">func InitUpdateGroupCmdForAdminUser(conf config.BaseConfig) *cobra.Command</a></dd>
+
+
+				<dd><a href="index.html#InitUpdateGroupCmdForAnonymousUser">func InitUpdateGroupCmdForAnonymousUser(conf config.BaseConfig) *cobra.Command</a></dd>
+
+
+				<dd><a href="index.html#InitUpdateGroupCmdForAppUser">func InitUpdateGroupCmdForAppUser(conf config.BaseConfig) *cobra.Command</a></dd>
+
+
+				<dd><a href="index.html#InitUpdateMemberCmdForAdminUser">func InitUpdateMemberCmdForAdminUser(conf config.BaseConfig) *cobra.Command</a></dd>
+
+
+				<dd><a href="index.html#InitUpdateMemberCmdForAnonymousUser">func InitUpdateMemberCmdForAnonymousUser(conf config.BaseConfig) *cobra.Command</a></dd>
+
+
+				<dd><a href="index.html#InitUpdateMemberCmdForAppUser">func InitUpdateMemberCmdForAppUser(conf config.BaseConfig) *cobra.Command</a></dd>
+
+
+				<dd><a href="index.html#InitUpdateUserCmdForAdminUser">func InitUpdateUserCmdForAdminUser(conf config.BaseConfig) *cobra.Command</a></dd>
+
+
+				<dd><a href="index.html#InitUpdateUserCmdForAnonymousUser">func InitUpdateUserCmdForAnonymousUser(conf config.BaseConfig) *cobra.Command</a></dd>
+
+
+				<dd><a href="index.html#InitUpdateUserCmdForAppUser">func InitUpdateUserCmdForAppUser(conf config.BaseConfig) *cobra.Command</a></dd>
+
+
+
+			</dl>
+			</div><!-- #manual-nav -->
+
+
+
+
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+
+				<a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/client/controller/common.go">common.go</a>
+
+				<a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/client/controller/group.go">group.go</a>
+
+				<a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/client/controller/member.go">member.go</a>
+
+				<a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/client/controller/user.go">user.go</a>
+
+			</span>
+			</p>
+
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+
+
+
+
+
+
+
+			<h2 id="InitBootstrapGroupCmdForAdminUser">func <a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/client/controller/group.go?s=218:295#L3">InitBootstrapGroupCmdForAdminUser</a>
+				<a class="permalink" href="index.html#InitBootstrapGroupCmdForAdminUser">&#xb6;</a>
+
+
+			</h2>
+			<pre>func InitBootstrapGroupCmdForAdminUser(conf <a href="../../config/index.html">config</a>.<a href="../../config/index.html#BaseConfig">BaseConfig</a>) *<a href="http://localhost:6060/pkg/github.com/spf13/cobra/">cobra</a>.<a href="http://localhost:6060/pkg/github.com/spf13/cobra/#Command">Command</a></pre>
+
+
+
+
+
+
+
+			<h2 id="InitBootstrapMemberCmdForAdminUser">func <a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/client/controller/member.go?s=218:296#L3">InitBootstrapMemberCmdForAdminUser</a>
+				<a class="permalink" href="index.html#InitBootstrapMemberCmdForAdminUser">&#xb6;</a>
+
+
+			</h2>
+			<pre>func InitBootstrapMemberCmdForAdminUser(conf <a href="../../config/index.html">config</a>.<a href="../../config/index.html#BaseConfig">BaseConfig</a>) *<a href="http://localhost:6060/pkg/github.com/spf13/cobra/">cobra</a>.<a href="http://localhost:6060/pkg/github.com/spf13/cobra/#Command">Command</a></pre>
+
+
+
+
+
+
+
+			<h2 id="InitBootstrapUserCmdForAdminUser">func <a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/client/controller/user.go?s=218:294#L3">InitBootstrapUserCmdForAdminUser</a>
+				<a class="permalink" href="index.html#InitBootstrapUserCmdForAdminUser">&#xb6;</a>
+
+
+			</h2>
+			<pre>func InitBootstrapUserCmdForAdminUser(conf <a href="../../config/index.html">config</a>.<a href="../../config/index.html#BaseConfig">BaseConfig</a>) *<a href="http://localhost:6060/pkg/github.com/spf13/cobra/">cobra</a>.<a href="http://localhost:6060/pkg/github.com/spf13/cobra/#Command">Command</a></pre>
+
+
+
+
+
+
+
+			<h2 id="InitCommonLoginCmd">func <a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/client/controller/common.go?s=264:326#L5">InitCommonLoginCmd</a>
+				<a class="permalink" href="index.html#InitCommonLoginCmd">&#xb6;</a>
+
+
+			</h2>
+			<pre>func InitCommonLoginCmd(conf <a href="../../config/index.html">config</a>.<a href="../../config/index.html#BaseConfig">BaseConfig</a>) *<a href="http://localhost:6060/pkg/github.com/spf13/cobra/">cobra</a>.<a href="http://localhost:6060/pkg/github.com/spf13/cobra/#Command">Command</a></pre>
+			<p>InitLoginCmd creates a login command
+
+
+
+
+
+
+
+			<h2 id="InitCommonLogoutCmd">func <a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/client/controller/common.go?s=4238:4301#L112">InitCommonLogoutCmd</a>
+				<a class="permalink" href="index.html#InitCommonLogoutCmd">&#xb6;</a>
+
+
+			</h2>
+			<pre>func InitCommonLogoutCmd(conf <a href="../../config/index.html">config</a>.<a href="../../config/index.html#BaseConfig">BaseConfig</a>) *<a href="http://localhost:6060/pkg/github.com/spf13/cobra/">cobra</a>.<a href="http://localhost:6060/pkg/github.com/spf13/cobra/#Command">Command</a></pre>
+			<p>InitLogoutCmd creates a logout command
+
+
+
+
+
+
+
+			<h2 id="InitCommonRefreshTokenCmd">func <a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/client/controller/common.go?s=2299:2368#L63">InitCommonRefreshTokenCmd</a>
+				<a class="permalink" href="index.html#InitCommonRefreshTokenCmd">&#xb6;</a>
+
+
+			</h2>
+			<pre>func InitCommonRefreshTokenCmd(conf <a href="../../config/index.html">config</a>.<a href="../../config/index.html#BaseConfig">BaseConfig</a>) *<a href="http://localhost:6060/pkg/github.com/spf13/cobra/">cobra</a>.<a href="http://localhost:6060/pkg/github.com/spf13/cobra/#Command">Command</a></pre>
+			<p>InitRefreshTokenCmd creates a refresh token command
+
+
+
+
+
+
+
+			<h2 id="InitCommonUserInfoCmd">func <a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/client/controller/common.go?s=7199:7264#L196">InitCommonUserInfoCmd</a>
+				<a class="permalink" href="index.html#InitCommonUserInfoCmd">&#xb6;</a>
+
+
+			</h2>
+			<pre>func InitCommonUserInfoCmd(conf <a href="../../config/index.html">config</a>.<a href="../../config/index.html#BaseConfig">BaseConfig</a>) *<a href="http://localhost:6060/pkg/github.com/spf13/cobra/">cobra</a>.<a href="http://localhost:6060/pkg/github.com/spf13/cobra/#Command">Command</a></pre>
+			<p>InitGetUserInfoCmd creates a get user info command
+
+
+
+
+
+
+
+			<h2 id="InitCommonValidateTokenCmd">func <a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/client/controller/common.go?s=5706:5776#L153">InitCommonValidateTokenCmd</a>
+				<a class="permalink" href="index.html#InitCommonValidateTokenCmd">&#xb6;</a>
+
+
+			</h2>
+			<pre>func InitCommonValidateTokenCmd(conf <a href="../../config/index.html">config</a>.<a href="../../config/index.html#BaseConfig">BaseConfig</a>) *<a href="http://localhost:6060/pkg/github.com/spf13/cobra/">cobra</a>.<a href="http://localhost:6060/pkg/github.com/spf13/cobra/#Command">Command</a></pre>
+			<p>InitValidateTokenCmd creates a validate token command
+
+
+
+
+
+
+
+			<h2 id="InitCreateGroupCmdForAdminUser">func <a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/client/controller/group.go?s=1635:1709#L51">InitCreateGroupCmdForAdminUser</a>
+				<a class="permalink" href="index.html#InitCreateGroupCmdForAdminUser">&#xb6;</a>
+
+
+			</h2>
+			<pre>func InitCreateGroupCmdForAdminUser(conf <a href="../../config/index.html">config</a>.<a href="../../config/index.html#BaseConfig">BaseConfig</a>) *<a href="http://localhost:6060/pkg/github.com/spf13/cobra/">cobra</a>.<a href="http://localhost:6060/pkg/github.com/spf13/cobra/#Command">Command</a></pre>
+
+
+
+
+
+
+
+			<h2 id="InitCreateGroupCmdForAnonymousUser">func <a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/client/controller/group.go?s=707:785#L17">InitCreateGroupCmdForAnonymousUser</a>
+				<a class="permalink" href="index.html#InitCreateGroupCmdForAnonymousUser">&#xb6;</a>
+
+
+			</h2>
+			<pre>func InitCreateGroupCmdForAnonymousUser(conf <a href="../../config/index.html">config</a>.<a href="../../config/index.html#BaseConfig">BaseConfig</a>) *<a href="http://localhost:6060/pkg/github.com/spf13/cobra/">cobra</a>.<a href="http://localhost:6060/pkg/github.com/spf13/cobra/#Command">Command</a></pre>
+
+
+
+
+
+
+
+			<h2 id="InitCreateGroupCmdForAppUser">func <a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/client/controller/group.go?s=1174:1246#L34">InitCreateGroupCmdForAppUser</a>
+				<a class="permalink" href="index.html#InitCreateGroupCmdForAppUser">&#xb6;</a>
+
+
+			</h2>
+			<pre>func InitCreateGroupCmdForAppUser(conf <a href="../../config/index.html">config</a>.<a href="../../config/index.html#BaseConfig">BaseConfig</a>) *<a href="http://localhost:6060/pkg/github.com/spf13/cobra/">cobra</a>.<a href="http://localhost:6060/pkg/github.com/spf13/cobra/#Command">Command</a></pre>
+
+
+
+
+
+
+
+			<h2 id="InitCreateMemberCmdForAdminUser">func <a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/client/controller/member.go?s=1655:1730#L51">InitCreateMemberCmdForAdminUser</a>
+				<a class="permalink" href="index.html#InitCreateMemberCmdForAdminUser">&#xb6;</a>
+
+
+			</h2>
+			<pre>func InitCreateMemberCmdForAdminUser(conf <a href="../../config/index.html">config</a>.<a href="../../config/index.html#BaseConfig">BaseConfig</a>) *<a href="http://localhost:6060/pkg/github.com/spf13/cobra/">cobra</a>.<a href="http://localhost:6060/pkg/github.com/spf13/cobra/#Command">Command</a></pre>
+
+
+
+
+
+
+
+			<h2 id="InitCreateMemberCmdForAnonymousUser">func <a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/client/controller/member.go?s=717:796#L17">InitCreateMemberCmdForAnonymousUser</a>
+				<a class="permalink" href="index.html#InitCreateMemberCmdForAnonymousUser">&#xb6;</a>
+
+
+			</h2>
+			<pre>func InitCreateMemberCmdForAnonymousUser(conf <a href="../../config/index.html">config</a>.<a href="../../config/index.html#BaseConfig">BaseConfig</a>) *<a href="http://localhost:6060/pkg/github.com/spf13/cobra/">cobra</a>.<a href="http://localhost:6060/pkg/github.com/spf13/cobra/#Command">Command</a></pre>
+
+
+
+
+
+
+
+			<h2 id="InitCreateMemberCmdForAppUser">func <a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/client/controller/member.go?s=1189:1262#L34">InitCreateMemberCmdForAppUser</a>
+				<a class="permalink" href="index.html#InitCreateMemberCmdForAppUser">&#xb6;</a>
+
+
+			</h2>
+			<pre>func InitCreateMemberCmdForAppUser(conf <a href="../../config/index.html">config</a>.<a href="../../config/index.html#BaseConfig">BaseConfig</a>) *<a href="http://localhost:6060/pkg/github.com/spf13/cobra/">cobra</a>.<a href="http://localhost:6060/pkg/github.com/spf13/cobra/#Command">Command</a></pre>
+
+
+
+
+
+
+
+			<h2 id="InitCreateUserCmdForAdminUser">func <a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/client/controller/user.go?s=2098:2171#L66">InitCreateUserCmdForAdminUser</a>
+				<a class="permalink" href="index.html#InitCreateUserCmdForAdminUser">&#xb6;</a>
+
+
+			</h2>
+			<pre>func InitCreateUserCmdForAdminUser(conf <a href="../../config/index.html">config</a>.<a href="../../config/index.html#BaseConfig">BaseConfig</a>) *<a href="http://localhost:6060/pkg/github.com/spf13/cobra/">cobra</a>.<a href="http://localhost:6060/pkg/github.com/spf13/cobra/#Command">Command</a></pre>
+
+
+
+
+
+
+
+			<h2 id="InitCreateUserCmdForAnonymousUser">func <a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/client/controller/user.go?s=697:774#L17">InitCreateUserCmdForAnonymousUser</a>
+				<a class="permalink" href="index.html#InitCreateUserCmdForAnonymousUser">&#xb6;</a>
+
+
+			</h2>
+			<pre>func InitCreateUserCmdForAnonymousUser(conf <a href="../../config/index.html">config</a>.<a href="../../config/index.html#BaseConfig">BaseConfig</a>) *<a href="http://localhost:6060/pkg/github.com/spf13/cobra/">cobra</a>.<a href="http://localhost:6060/pkg/github.com/spf13/cobra/#Command">Command</a></pre>
+
+
+
+
+
+
+
+			<h2 id="InitCreateUserCmdForAppUser">func <a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/client/controller/user.go?s=1642:1713#L49">InitCreateUserCmdForAppUser</a>
+				<a class="permalink" href="index.html#InitCreateUserCmdForAppUser">&#xb6;</a>
+
+
+			</h2>
+			<pre>func InitCreateUserCmdForAppUser(conf <a href="../../config/index.html">config</a>.<a href="../../config/index.html#BaseConfig">BaseConfig</a>) *<a href="http://localhost:6060/pkg/github.com/spf13/cobra/">cobra</a>.<a href="http://localhost:6060/pkg/github.com/spf13/cobra/#Command">Command</a></pre>
+
+
+
+
+
+
+
+			<h2 id="InitDeleteGroupCmdForAdminUser">func <a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/client/controller/group.go?s=5754:5828#L204">InitDeleteGroupCmdForAdminUser</a>
+				<a class="permalink" href="index.html#InitDeleteGroupCmdForAdminUser">&#xb6;</a>
+
+
+			</h2>
+			<pre>func InitDeleteGroupCmdForAdminUser(conf <a href="../../config/index.html">config</a>.<a href="../../config/index.html#BaseConfig">BaseConfig</a>) *<a href="http://localhost:6060/pkg/github.com/spf13/cobra/">cobra</a>.<a href="http://localhost:6060/pkg/github.com/spf13/cobra/#Command">Command</a></pre>
+
+
+
+
+
+
+
+			<h2 id="InitDeleteGroupCmdForAnonymousUser">func <a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/client/controller/group.go?s=4826:4904#L170">InitDeleteGroupCmdForAnonymousUser</a>
+				<a class="permalink" href="index.html#InitDeleteGroupCmdForAnonymousUser">&#xb6;</a>
+
+
+			</h2>
+			<pre>func InitDeleteGroupCmdForAnonymousUser(conf <a href="../../config/index.html">config</a>.<a href="../../config/index.html#BaseConfig">BaseConfig</a>) *<a href="http://localhost:6060/pkg/github.com/spf13/cobra/">cobra</a>.<a href="http://localhost:6060/pkg/github.com/spf13/cobra/#Command">Command</a></pre>
+
+
+
+
+
+
+
+			<h2 id="InitDeleteGroupCmdForAppUser">func <a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/client/controller/group.go?s=5293:5365#L187">InitDeleteGroupCmdForAppUser</a>
+				<a class="permalink" href="index.html#InitDeleteGroupCmdForAppUser">&#xb6;</a>
+
+
+			</h2>
+			<pre>func InitDeleteGroupCmdForAppUser(conf <a href="../../config/index.html">config</a>.<a href="../../config/index.html#BaseConfig">BaseConfig</a>) *<a href="http://localhost:6060/pkg/github.com/spf13/cobra/">cobra</a>.<a href="http://localhost:6060/pkg/github.com/spf13/cobra/#Command">Command</a></pre>
+
+
+
+
+
+
+
+			<h2 id="InitDeleteMemberCmdForAdminUser">func <a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/client/controller/member.go?s=5819:5894#L204">InitDeleteMemberCmdForAdminUser</a>
+				<a class="permalink" href="index.html#InitDeleteMemberCmdForAdminUser">&#xb6;</a>
+
+
+			</h2>
+			<pre>func InitDeleteMemberCmdForAdminUser(conf <a href="../../config/index.html">config</a>.<a href="../../config/index.html#BaseConfig">BaseConfig</a>) *<a href="http://localhost:6060/pkg/github.com/spf13/cobra/">cobra</a>.<a href="http://localhost:6060/pkg/github.com/spf13/cobra/#Command">Command</a></pre>
+
+
+
+
+
+
+
+			<h2 id="InitDeleteMemberCmdForAnonymousUser">func <a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/client/controller/member.go?s=4881:4960#L170">InitDeleteMemberCmdForAnonymousUser</a>
+				<a class="permalink" href="index.html#InitDeleteMemberCmdForAnonymousUser">&#xb6;</a>
+
+
+			</h2>
+			<pre>func InitDeleteMemberCmdForAnonymousUser(conf <a href="../../config/index.html">config</a>.<a href="../../config/index.html#BaseConfig">BaseConfig</a>) *<a href="http://localhost:6060/pkg/github.com/spf13/cobra/">cobra</a>.<a href="http://localhost:6060/pkg/github.com/spf13/cobra/#Command">Command</a></pre>
+
+
+
+
+
+
+
+			<h2 id="InitDeleteMemberCmdForAppUser">func <a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/client/controller/member.go?s=5353:5426#L187">InitDeleteMemberCmdForAppUser</a>
+				<a class="permalink" href="index.html#InitDeleteMemberCmdForAppUser">&#xb6;</a>
+
+
+			</h2>
+			<pre>func InitDeleteMemberCmdForAppUser(conf <a href="../../config/index.html">config</a>.<a href="../../config/index.html#BaseConfig">BaseConfig</a>) *<a href="http://localhost:6060/pkg/github.com/spf13/cobra/">cobra</a>.<a href="http://localhost:6060/pkg/github.com/spf13/cobra/#Command">Command</a></pre>
+
+
+
+
+
+
+
+			<h2 id="InitDeleteUserCmdForAdminUser">func <a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/client/controller/user.go?s=6172:6245#L219">InitDeleteUserCmdForAdminUser</a>
+				<a class="permalink" href="index.html#InitDeleteUserCmdForAdminUser">&#xb6;</a>
+
+
+			</h2>
+			<pre>func InitDeleteUserCmdForAdminUser(conf <a href="../../config/index.html">config</a>.<a href="../../config/index.html#BaseConfig">BaseConfig</a>) *<a href="http://localhost:6060/pkg/github.com/spf13/cobra/">cobra</a>.<a href="http://localhost:6060/pkg/github.com/spf13/cobra/#Command">Command</a></pre>
+
+
+
+
+
+
+
+			<h2 id="InitDeleteUserCmdForAnonymousUser">func <a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/client/controller/user.go?s=5254:5331#L185">InitDeleteUserCmdForAnonymousUser</a>
+				<a class="permalink" href="index.html#InitDeleteUserCmdForAnonymousUser">&#xb6;</a>
+
+
+			</h2>
+			<pre>func InitDeleteUserCmdForAnonymousUser(conf <a href="../../config/index.html">config</a>.<a href="../../config/index.html#BaseConfig">BaseConfig</a>) *<a href="http://localhost:6060/pkg/github.com/spf13/cobra/">cobra</a>.<a href="http://localhost:6060/pkg/github.com/spf13/cobra/#Command">Command</a></pre>
+
+
+
+
+
+
+
+			<h2 id="InitDeleteUserCmdForAppUser">func <a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/client/controller/user.go?s=5716:5787#L202">InitDeleteUserCmdForAppUser</a>
+				<a class="permalink" href="index.html#InitDeleteUserCmdForAppUser">&#xb6;</a>
+
+
+			</h2>
+			<pre>func InitDeleteUserCmdForAppUser(conf <a href="../../config/index.html">config</a>.<a href="../../config/index.html#BaseConfig">BaseConfig</a>) *<a href="http://localhost:6060/pkg/github.com/spf13/cobra/">cobra</a>.<a href="http://localhost:6060/pkg/github.com/spf13/cobra/#Command">Command</a></pre>
+
+
+
+
+
+
+
+			<h2 id="InitGetGroupCmdForAdminUser">func <a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/client/controller/group.go?s=2990:3061#L102">InitGetGroupCmdForAdminUser</a>
+				<a class="permalink" href="index.html#InitGetGroupCmdForAdminUser">&#xb6;</a>
+
+
+			</h2>
+			<pre>func InitGetGroupCmdForAdminUser(conf <a href="../../config/index.html">config</a>.<a href="../../config/index.html#BaseConfig">BaseConfig</a>) *<a href="http://localhost:6060/pkg/github.com/spf13/cobra/">cobra</a>.<a href="http://localhost:6060/pkg/github.com/spf13/cobra/#Command">Command</a></pre>
+
+
+
+
+
+
+
+			<h2 id="InitGetGroupCmdForAnonymousUser">func <a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/client/controller/group.go?s=2098:2173#L68">InitGetGroupCmdForAnonymousUser</a>
+				<a class="permalink" href="index.html#InitGetGroupCmdForAnonymousUser">&#xb6;</a>
+
+
+			</h2>
+			<pre>func InitGetGroupCmdForAnonymousUser(conf <a href="../../config/index.html">config</a>.<a href="../../config/index.html#BaseConfig">BaseConfig</a>) *<a href="http://localhost:6060/pkg/github.com/spf13/cobra/">cobra</a>.<a href="http://localhost:6060/pkg/github.com/spf13/cobra/#Command">Command</a></pre>
+
+
+
+
+
+
+
+			<h2 id="InitGetGroupCmdForAppUser">func <a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/client/controller/group.go?s=2547:2616#L85">InitGetGroupCmdForAppUser</a>
+				<a class="permalink" href="index.html#InitGetGroupCmdForAppUser">&#xb6;</a>
+
+
+			</h2>
+			<pre>func InitGetGroupCmdForAppUser(conf <a href="../../config/index.html">config</a>.<a href="../../config/index.html#BaseConfig">BaseConfig</a>) *<a href="http://localhost:6060/pkg/github.com/spf13/cobra/">cobra</a>.<a href="http://localhost:6060/pkg/github.com/spf13/cobra/#Command">Command</a></pre>
+
+
+
+
+
+
+
+			<h2 id="InitGetMemberCmdForAdminUser">func <a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/client/controller/member.go?s=3025:3097#L102">InitGetMemberCmdForAdminUser</a>
+				<a class="permalink" href="index.html#InitGetMemberCmdForAdminUser">&#xb6;</a>
+
+
+			</h2>
+			<pre>func InitGetMemberCmdForAdminUser(conf <a href="../../config/index.html">config</a>.<a href="../../config/index.html#BaseConfig">BaseConfig</a>) *<a href="http://localhost:6060/pkg/github.com/spf13/cobra/">cobra</a>.<a href="http://localhost:6060/pkg/github.com/spf13/cobra/#Command">Command</a></pre>
+
+
+
+
+
+
+
+			<h2 id="InitGetMemberCmdForAnonymousUser">func <a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/client/controller/member.go?s=2123:2199#L68">InitGetMemberCmdForAnonymousUser</a>
+				<a class="permalink" href="index.html#InitGetMemberCmdForAnonymousUser">&#xb6;</a>
+
+
+			</h2>
+			<pre>func InitGetMemberCmdForAnonymousUser(conf <a href="../../config/index.html">config</a>.<a href="../../config/index.html#BaseConfig">BaseConfig</a>) *<a href="http://localhost:6060/pkg/github.com/spf13/cobra/">cobra</a>.<a href="http://localhost:6060/pkg/github.com/spf13/cobra/#Command">Command</a></pre>
+
+
+
+
+
+
+
+			<h2 id="InitGetMemberCmdForAppUser">func <a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/client/controller/member.go?s=2577:2647#L85">InitGetMemberCmdForAppUser</a>
+				<a class="permalink" href="index.html#InitGetMemberCmdForAppUser">&#xb6;</a>
+
+
+			</h2>
+			<pre>func InitGetMemberCmdForAppUser(conf <a href="../../config/index.html">config</a>.<a href="../../config/index.html#BaseConfig">BaseConfig</a>) *<a href="http://localhost:6060/pkg/github.com/spf13/cobra/">cobra</a>.<a href="http://localhost:6060/pkg/github.com/spf13/cobra/#Command">Command</a></pre>
+
+
+
+
+
+
+
+			<h2 id="InitGetUserCmdForAdminUser">func <a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/client/controller/user.go?s=3438:3508#L117">InitGetUserCmdForAdminUser</a>
+				<a class="permalink" href="index.html#InitGetUserCmdForAdminUser">&#xb6;</a>
+
+
+			</h2>
+			<pre>func InitGetUserCmdForAdminUser(conf <a href="../../config/index.html">config</a>.<a href="../../config/index.html#BaseConfig">BaseConfig</a>) *<a href="http://localhost:6060/pkg/github.com/spf13/cobra/">cobra</a>.<a href="http://localhost:6060/pkg/github.com/spf13/cobra/#Command">Command</a></pre>
+
+
+
+
+
+
+
+			<h2 id="InitGetUserCmdForAnonymousUser">func <a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/client/controller/user.go?s=2556:2630#L83">InitGetUserCmdForAnonymousUser</a>
+				<a class="permalink" href="index.html#InitGetUserCmdForAnonymousUser">&#xb6;</a>
+
+
+			</h2>
+			<pre>func InitGetUserCmdForAnonymousUser(conf <a href="../../config/index.html">config</a>.<a href="../../config/index.html#BaseConfig">BaseConfig</a>) *<a href="http://localhost:6060/pkg/github.com/spf13/cobra/">cobra</a>.<a href="http://localhost:6060/pkg/github.com/spf13/cobra/#Command">Command</a></pre>
+
+
+
+
+
+
+
+			<h2 id="InitGetUserCmdForAppUser">func <a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/client/controller/user.go?s=3000:3068#L100">InitGetUserCmdForAppUser</a>
+				<a class="permalink" href="index.html#InitGetUserCmdForAppUser">&#xb6;</a>
+
+
+			</h2>
+			<pre>func InitGetUserCmdForAppUser(conf <a href="../../config/index.html">config</a>.<a href="../../config/index.html#BaseConfig">BaseConfig</a>) *<a href="http://localhost:6060/pkg/github.com/spf13/cobra/">cobra</a>.<a href="http://localhost:6060/pkg/github.com/spf13/cobra/#Command">Command</a></pre>
+
+
+
+
+
+
+
+			<h2 id="InitUpdateGroupCmdForAdminUser">func <a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/client/controller/group.go?s=4363:4437#L153">InitUpdateGroupCmdForAdminUser</a>
+				<a class="permalink" href="index.html#InitUpdateGroupCmdForAdminUser">&#xb6;</a>
+
+
+			</h2>
+			<pre>func InitUpdateGroupCmdForAdminUser(conf <a href="../../config/index.html">config</a>.<a href="../../config/index.html#BaseConfig">BaseConfig</a>) *<a href="http://localhost:6060/pkg/github.com/spf13/cobra/">cobra</a>.<a href="http://localhost:6060/pkg/github.com/spf13/cobra/#Command">Command</a></pre>
+
+
+
+
+
+
+
+			<h2 id="InitUpdateGroupCmdForAnonymousUser">func <a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/client/controller/group.go?s=3435:3513#L119">InitUpdateGroupCmdForAnonymousUser</a>
+				<a class="permalink" href="index.html#InitUpdateGroupCmdForAnonymousUser">&#xb6;</a>
+
+
+			</h2>
+			<pre>func InitUpdateGroupCmdForAnonymousUser(conf <a href="../../config/index.html">config</a>.<a href="../../config/index.html#BaseConfig">BaseConfig</a>) *<a href="http://localhost:6060/pkg/github.com/spf13/cobra/">cobra</a>.<a href="http://localhost:6060/pkg/github.com/spf13/cobra/#Command">Command</a></pre>
+
+
+
+
+
+
+
+			<h2 id="InitUpdateGroupCmdForAppUser">func <a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/client/controller/group.go?s=3902:3974#L136">InitUpdateGroupCmdForAppUser</a>
+				<a class="permalink" href="index.html#InitUpdateGroupCmdForAppUser">&#xb6;</a>
+
+
+			</h2>
+			<pre>func InitUpdateGroupCmdForAppUser(conf <a href="../../config/index.html">config</a>.<a href="../../config/index.html#BaseConfig">BaseConfig</a>) *<a href="http://localhost:6060/pkg/github.com/spf13/cobra/">cobra</a>.<a href="http://localhost:6060/pkg/github.com/spf13/cobra/#Command">Command</a></pre>
+
+
+
+
+
+
+
+			<h2 id="InitUpdateMemberCmdForAdminUser">func <a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/client/controller/member.go?s=4413:4488#L153">InitUpdateMemberCmdForAdminUser</a>
+				<a class="permalink" href="index.html#InitUpdateMemberCmdForAdminUser">&#xb6;</a>
+
+
+			</h2>
+			<pre>func InitUpdateMemberCmdForAdminUser(conf <a href="../../config/index.html">config</a>.<a href="../../config/index.html#BaseConfig">BaseConfig</a>) *<a href="http://localhost:6060/pkg/github.com/spf13/cobra/">cobra</a>.<a href="http://localhost:6060/pkg/github.com/spf13/cobra/#Command">Command</a></pre>
+
+
+
+
+
+
+
+			<h2 id="InitUpdateMemberCmdForAnonymousUser">func <a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/client/controller/member.go?s=3475:3554#L119">InitUpdateMemberCmdForAnonymousUser</a>
+				<a class="permalink" href="index.html#InitUpdateMemberCmdForAnonymousUser">&#xb6;</a>
+
+
+			</h2>
+			<pre>func InitUpdateMemberCmdForAnonymousUser(conf <a href="../../config/index.html">config</a>.<a href="../../config/index.html#BaseConfig">BaseConfig</a>) *<a href="http://localhost:6060/pkg/github.com/spf13/cobra/">cobra</a>.<a href="http://localhost:6060/pkg/github.com/spf13/cobra/#Command">Command</a></pre>
+
+
+
+
+
+
+
+			<h2 id="InitUpdateMemberCmdForAppUser">func <a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/client/controller/member.go?s=3947:4020#L136">InitUpdateMemberCmdForAppUser</a>
+				<a class="permalink" href="index.html#InitUpdateMemberCmdForAppUser">&#xb6;</a>
+
+
+			</h2>
+			<pre>func InitUpdateMemberCmdForAppUser(conf <a href="../../config/index.html">config</a>.<a href="../../config/index.html#BaseConfig">BaseConfig</a>) *<a href="http://localhost:6060/pkg/github.com/spf13/cobra/">cobra</a>.<a href="http://localhost:6060/pkg/github.com/spf13/cobra/#Command">Command</a></pre>
+
+
+
+
+
+
+
+			<h2 id="InitUpdateUserCmdForAdminUser">func <a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/client/controller/user.go?s=4796:4869#L168">InitUpdateUserCmdForAdminUser</a>
+				<a class="permalink" href="index.html#InitUpdateUserCmdForAdminUser">&#xb6;</a>
+
+
+			</h2>
+			<pre>func InitUpdateUserCmdForAdminUser(conf <a href="../../config/index.html">config</a>.<a href="../../config/index.html#BaseConfig">BaseConfig</a>) *<a href="http://localhost:6060/pkg/github.com/spf13/cobra/">cobra</a>.<a href="http://localhost:6060/pkg/github.com/spf13/cobra/#Command">Command</a></pre>
+
+
+
+
+
+
+
+			<h2 id="InitUpdateUserCmdForAnonymousUser">func <a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/client/controller/user.go?s=3878:3955#L134">InitUpdateUserCmdForAnonymousUser</a>
+				<a class="permalink" href="index.html#InitUpdateUserCmdForAnonymousUser">&#xb6;</a>
+
+
+			</h2>
+			<pre>func InitUpdateUserCmdForAnonymousUser(conf <a href="../../config/index.html">config</a>.<a href="../../config/index.html#BaseConfig">BaseConfig</a>) *<a href="http://localhost:6060/pkg/github.com/spf13/cobra/">cobra</a>.<a href="http://localhost:6060/pkg/github.com/spf13/cobra/#Command">Command</a></pre>
+
+
+
+
+
+
+
+			<h2 id="InitUpdateUserCmdForAppUser">func <a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/client/controller/user.go?s=4340:4411#L151">InitUpdateUserCmdForAppUser</a>
+				<a class="permalink" href="index.html#InitUpdateUserCmdForAppUser">&#xb6;</a>
+
+
+			</h2>
+			<pre>func InitUpdateUserCmdForAppUser(conf <a href="../../config/index.html">config</a>.<a href="../../config/index.html#BaseConfig">BaseConfig</a>) *<a href="http://localhost:6060/pkg/github.com/spf13/cobra/">cobra</a>.<a href="http://localhost:6060/pkg/github.com/spf13/cobra/#Command">Command</a></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.24.3.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="https://golang.org/doc/tos.html">Terms of Service</a> |
+<a href="https://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+</body>
+</html>

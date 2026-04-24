@@ -1,0 +1,980 @@
+basePath: /v1
+consumes:
+    - application/json
+definitions:
+    Group:
+        properties:
+            created_at:
+                description: The timestamp of when the group was created.
+                example: '"2023-01-01T00:00:00Z"'
+                format: date-time
+                type: string
+                x-go-name: CreatedAt
+            deleted_at:
+                description: The timestamp of when the group was deleted.
+                example: '"2023-01-01T00:00:00Z"'
+                format: date-time
+                type: string
+                x-go-name: DeletedAt
+            id:
+                description: The ID of the group.
+                example: 1
+                format: uint64
+                type: integer
+                x-go-name: ID
+            name:
+                description: The name of the group.
+                example: '"My Group"'
+                type: string
+                x-go-name: Name
+            updated_at:
+                description: The timestamp of when the group was last updated.
+                example: '"2023-01-01T00:00:00Z"'
+                format: date-time
+                type: string
+                x-go-name: UpdatedAt
+            uuid:
+                description: The UUID of the group.
+                example: '"f3b3b3b3-3b3b-3b3b-3b3b-3b3b3b3b3b3b"'
+                type: string
+                x-go-name: UUID
+        required:
+            - id
+            - uuid
+            - name
+        title: Group represents a group in the system.
+        type: object
+        x-go-package: github.com/ryo-arima/cmn-core/pkg/entity/response
+    GroupRequest:
+        properties:
+            created_at:
+                description: The timestamp of when the group was created.
+                example: '"2023-01-01T00:00:00Z"'
+                format: date-time
+                type: string
+                x-go-name: CreatedAt
+            deleted_at:
+                description: The timestamp of when the group was deleted.
+                example: '"2023-01-01T00:00:00Z"'
+                format: date-time
+                type: string
+                x-go-name: DeletedAt
+            id:
+                description: The ID of the group.
+                example: 1
+                format: uint64
+                type: integer
+                x-go-name: ID
+            name:
+                description: The name of the group.
+                example: '"My Group"'
+                type: string
+                x-go-name: Name
+            updated_at:
+                description: The timestamp of when the group was last updated.
+                example: '"2023-01-01T00:00:00Z"'
+                format: date-time
+                type: string
+                x-go-name: UpdatedAt
+            uuid:
+                description: The UUID of the group.
+                example: '"f3b3b3b3-3b3b-3b3b-3b3b-3b3b3b3b3b3b"'
+                type: string
+                x-go-name: UUID
+        required:
+            - name
+        title: GroupRequest represents the request body for group-related operations.
+        type: object
+        x-go-package: github.com/ryo-arima/cmn-core/pkg/entity/request
+    GroupResponse:
+        properties:
+            code:
+                description: The response code.
+                example: '"SUCCESS"'
+                type: string
+                x-go-name: Code
+            groups:
+                description: The list of groups.
+                items:
+                    $ref: '#/definitions/Group'
+                type: array
+                x-go-name: Groups
+            message:
+                description: The response message.
+                example: '"Groups retrieved successfully"'
+                type: string
+                x-go-name: Message
+        required:
+            - code
+            - message
+            - groups
+        title: GroupResponse represents the response body for group-related operations.
+        type: object
+        x-go-package: github.com/ryo-arima/cmn-core/pkg/entity/response
+    Member:
+        properties:
+            created_at:
+                description: The timestamp of when the member was created.
+                example: '"2023-01-01T00:00:00Z"'
+                format: date-time
+                type: string
+                x-go-name: CreatedAt
+            deleted_at:
+                description: The timestamp of when the member was deleted.
+                example: '"2023-01-01T00:00:00Z"'
+                format: date-time
+                type: string
+                x-go-name: DeletedAt
+            group_uuid:
+                description: The UUID of the group.
+                example: '"f3b3b3b3-3b3b-3b3b-3b3b-3b3b3b3b3b3b"'
+                type: string
+                x-go-name: GroupUUID
+            id:
+                description: The ID of the member.
+                example: 1
+                format: uint64
+                type: integer
+                x-go-name: ID
+            role:
+                description: The role of the member.
+                example: '"admin"'
+                type: string
+                x-go-name: Role
+            updated_at:
+                description: The timestamp of when the member was last updated.
+                example: '"2023-01-01T00:00:00Z"'
+                format: date-time
+                type: string
+                x-go-name: UpdatedAt
+            user_uuid:
+                description: The UUID of the user.
+                example: '"f3b3b3b3-3b3b-3b3b-3b3b-3b3b3b3b3b3b"'
+                type: string
+                x-go-name: UserUUID
+            uuid:
+                description: The UUID of the member.
+                example: '"f3b3b3b3-3b3b-3b3b-3b3b-3b3b3b3b3b3b"'
+                type: string
+                x-go-name: UUID
+        required:
+            - id
+            - uuid
+            - group_uuid
+            - user_uuid
+            - role
+        title: Member represents a member in the system.
+        type: object
+        x-go-package: github.com/ryo-arima/cmn-core/pkg/entity/response
+    MemberRequest:
+        properties:
+            created_at:
+                description: The timestamp of when the member was created.
+                example: '"2023-01-01T00:00:00Z"'
+                format: date-time
+                type: string
+                x-go-name: CreatedAt
+            deleted_at:
+                description: The timestamp of when the member was deleted.
+                example: '"2023-01-01T00:00:00Z"'
+                format: date-time
+                type: string
+                x-go-name: DeletedAt
+            group_uuid:
+                description: The UUID of the group.
+                example: '"f3b3b3b3-3b3b-3b3b-3b3b-3b3b3b3b3b3b"'
+                type: string
+                x-go-name: GroupUUID
+            id:
+                description: The ID of the member.
+                example: 1
+                format: uint64
+                type: integer
+                x-go-name: ID
+            role:
+                description: The role of the member.
+                example: '"admin"'
+                type: string
+                x-go-name: Role
+            updated_at:
+                description: The timestamp of when the member was last updated.
+                example: '"2023-01-01T00:00:00Z"'
+                format: date-time
+                type: string
+                x-go-name: UpdatedAt
+            user_uuid:
+                description: The UUID of the user.
+                example: '"f3b3b3b3-3b3b-3b3b-3b3b-3b3b3b3b3b3b"'
+                type: string
+                x-go-name: UserUUID
+            uuid:
+                description: The UUID of the member.
+                example: '"f3b3b3b3-3b3b-3b3b-3b3b-3b3b3b3b3b3b"'
+                type: string
+                x-go-name: UUID
+        required:
+            - group_uuid
+            - user_uuid
+            - role
+        title: MemberRequest represents the request body for member-related operations.
+        type: object
+        x-go-package: github.com/ryo-arima/cmn-core/pkg/entity/request
+    MemberResponse:
+        properties:
+            code:
+                description: The response code.
+                example: '"SUCCESS"'
+                type: string
+                x-go-name: Code
+            members:
+                description: The list of members.
+                items:
+                    $ref: '#/definitions/Member'
+                type: array
+                x-go-name: Members
+            message:
+                description: The response message.
+                example: '"Members retrieved successfully"'
+                type: string
+                x-go-name: Message
+        required:
+            - code
+            - message
+            - members
+        title: MemberResponse represents the response body for member-related operations.
+        type: object
+        x-go-package: github.com/ryo-arima/cmn-core/pkg/entity/response
+    User:
+        properties:
+            created_at:
+                description: The timestamp of when the user was created.
+                example: '"2023-01-01T00:00:00Z"'
+                format: date-time
+                type: string
+                x-go-name: CreatedAt
+            deleted_at:
+                description: The timestamp of when the user was deleted.
+                example: '"2023-01-01T00:00:00Z"'
+                format: date-time
+                type: string
+                x-go-name: DeletedAt
+            email:
+                description: The email of the user.
+                example: '"jhon.doe@example.com"'
+                type: string
+                x-go-name: Email
+            id:
+                description: The ID of the user.
+                example: 1
+                format: uint64
+                type: integer
+                x-go-name: ID
+            name:
+                description: The name of the user.
+                example: '"John Doe"'
+                type: string
+                x-go-name: Name
+            updated_at:
+                description: The timestamp of when the user was last updated.
+                example: '"2023-01-01T00:00:00Z"'
+                format: date-time
+                type: string
+                x-go-name: UpdatedAt
+            uuid:
+                description: The UUID of the user.
+                example: '"f3b3b3b3-3b3b-3b3b-3b3b-3b3b3b3b3b3b"'
+                type: string
+                x-go-name: UUID
+        required:
+            - id
+            - uuid
+            - email
+            - name
+        title: User represents a user in the system.
+        type: object
+        x-go-package: github.com/ryo-arima/cmn-core/pkg/entity/response
+    UserRequest:
+        properties:
+            created_at:
+                description: The timestamp of when the user was created.
+                example: '"2023-01-01T00:00:00Z"'
+                format: date-time
+                type: string
+                x-go-name: CreatedAt
+            deleted_at:
+                description: The timestamp of when the user was deleted.
+                example: '"2023-01-01T00:00:00Z"'
+                format: date-time
+                type: string
+                x-go-name: DeletedAt
+            email:
+                description: The email of the user.
+                example: '"jhon.doe@example.com"'
+                type: string
+                x-go-name: Email
+            id:
+                description: The ID of the user.
+                example: 1
+                format: uint64
+                type: integer
+                x-go-name: ID
+            name:
+                description: The name of the user.
+                example: '"John Doe"'
+                type: string
+                x-go-name: Name
+            password:
+                description: The password of the user.
+                example: '"password"'
+                type: string
+                x-go-name: Password
+            updated_at:
+                description: The timestamp of when the user was last updated.
+                example: '"2023-01-01T00:00:00Z"'
+                format: date-time
+                type: string
+                x-go-name: UpdatedAt
+            uuid:
+                description: The UUID of the user.
+                example: '"f3b3b3b3-3b3b-3b3b-3b3b-3b3b3b3b3b3b"'
+                type: string
+                x-go-name: UUID
+        required:
+            - name
+            - email
+            - password
+        title: UserRequest represents the request body for user-related operations.
+        type: object
+        x-go-package: github.com/ryo-arima/cmn-core/pkg/entity/request
+    UserResponse:
+        properties:
+            code:
+                description: The response code.
+                example: '"SUCCESS"'
+                type: string
+                x-go-name: Code
+            message:
+                description: The response message.
+                example: '"Users retrieved successfully"'
+                type: string
+                x-go-name: Message
+            users:
+                description: The list of users.
+                items:
+                    $ref: '#/definitions/User'
+                type: array
+                x-go-name: Users
+        required:
+            - code
+            - message
+            - users
+        title: UserResponse represents the response body for user-related operations.
+        type: object
+        x-go-package: github.com/ryo-arima/cmn-core/pkg/entity/response
+host: localhost:8080
+info:
+    description: '# This is a sample cmn-core API'
+    title: cmn-core API.
+    version: 1.0.0
+paths:
+    /internal/groups:
+        get:
+            description: Get a list of all groups in the system.
+            operationId: getGroupsInternal
+            responses:
+                "200":
+                    description: A list of groups.
+                    schema:
+                        $ref: '#/definitions/GroupResponse'
+                "400":
+                    description: Bad request.
+                    schema:
+                        $ref: '#/definitions/GroupResponse'
+            summary: Get a list of groups.
+            tags:
+                - groups
+        post:
+            description: Create a new group with the provided information.
+            operationId: createGroupInternal
+            parameters:
+                - description: The group to create.
+                  in: body
+                  name: group
+                  required: true
+                  schema:
+                    $ref: '#/definitions/GroupRequest'
+            responses:
+                "200":
+                    description: The created group.
+                    schema:
+                        $ref: '#/definitions/GroupResponse'
+                "400":
+                    description: Bad request.
+                    schema:
+                        $ref: '#/definitions/GroupResponse'
+            summary: Create a new group.
+            tags:
+                - groups
+    /internal/groups/{id}:
+        delete:
+            description: Delete a group by ID.
+            operationId: deleteGroupInternal
+            parameters:
+                - description: The ID of the group to delete.
+                  in: path
+                  name: id
+                  required: true
+                  type: integer
+            responses:
+                "200":
+                    description: The deleted group.
+                    schema:
+                        $ref: '#/definitions/GroupResponse'
+                "400":
+                    description: Bad request.
+                    schema:
+                        $ref: '#/definitions/GroupResponse'
+            summary: Delete a group.
+            tags:
+                - groups
+        put:
+            description: Update a group with the provided information.
+            operationId: updateGroupInternal
+            parameters:
+                - description: The ID of the group to update.
+                  in: path
+                  name: id
+                  required: true
+                  type: integer
+                - description: The group to update.
+                  in: body
+                  name: group
+                  required: true
+                  schema:
+                    $ref: '#/definitions/GroupRequest'
+            responses:
+                "200":
+                    description: The updated group.
+                    schema:
+                        $ref: '#/definitions/GroupResponse'
+                "400":
+                    description: Bad request.
+                    schema:
+                        $ref: '#/definitions/GroupResponse'
+            summary: Update a group.
+            tags:
+                - groups
+    /internal/members:
+        get:
+            description: Get a list of all members in the system.
+            operationId: getMembersInternal
+            responses:
+                "200":
+                    description: A list of members.
+                    schema:
+                        $ref: '#/definitions/MemberResponse'
+                "400":
+                    description: Bad request.
+                    schema:
+                        $ref: '#/definitions/MemberResponse'
+            summary: Get a list of members.
+            tags:
+                - members
+        post:
+            description: Create a new member with the provided information.
+            operationId: createMemberInternal
+            parameters:
+                - description: The member to create.
+                  in: body
+                  name: member
+                  required: true
+                  schema:
+                    $ref: '#/definitions/MemberRequest'
+            responses:
+                "200":
+                    description: The created member.
+                    schema:
+                        $ref: '#/definitions/MemberResponse'
+                "400":
+                    description: Bad request.
+                    schema:
+                        $ref: '#/definitions/MemberResponse'
+            summary: Create a new member.
+            tags:
+                - members
+    /internal/members/{id}:
+        delete:
+            description: Delete a member by ID.
+            operationId: deleteMemberInternal
+            parameters:
+                - description: The ID of the member to delete.
+                  in: path
+                  name: id
+                  required: true
+                  type: integer
+            responses:
+                "200":
+                    description: The deleted member.
+                    schema:
+                        $ref: '#/definitions/MemberResponse'
+                "400":
+                    description: Bad request.
+                    schema:
+                        $ref: '#/definitions/MemberResponse'
+            summary: Delete a member.
+            tags:
+                - members
+        put:
+            description: Update a member with the provided information.
+            operationId: updateMemberInternal
+            parameters:
+                - description: The ID of the member to update.
+                  in: path
+                  name: id
+                  required: true
+                  type: integer
+                - description: The member to update.
+                  in: body
+                  name: member
+                  required: true
+                  schema:
+                    $ref: '#/definitions/MemberRequest'
+            responses:
+                "200":
+                    description: The updated member.
+                    schema:
+                        $ref: '#/definitions/MemberResponse'
+                "400":
+                    description: Bad request.
+                    schema:
+                        $ref: '#/definitions/MemberResponse'
+            summary: Update a member.
+            tags:
+                - members
+    /internal/users:
+        get:
+            description: Get a list of all users in the system.
+            operationId: getUsersInternal
+            responses:
+                "200":
+                    description: A list of users.
+                    schema:
+                        $ref: '#/definitions/UserResponse'
+                "400":
+                    description: Bad request.
+                    schema:
+                        $ref: '#/definitions/UserResponse'
+            summary: Get a list of users.
+            tags:
+                - users
+        post:
+            description: Create a new user with the provided information.
+            operationId: createUserInternal
+            parameters:
+                - description: The user to create.
+                  in: body
+                  name: user
+                  required: true
+                  schema:
+                    $ref: '#/definitions/UserRequest'
+            responses:
+                "200":
+                    description: The created user.
+                    schema:
+                        $ref: '#/definitions/UserResponse'
+                "400":
+                    description: Bad request.
+                    schema:
+                        $ref: '#/definitions/UserResponse'
+            summary: Create a new user.
+            tags:
+                - users
+    /internal/users/{id}:
+        delete:
+            description: Delete a user by ID.
+            operationId: deleteUserInternal
+            parameters:
+                - description: The ID of the user to delete.
+                  in: path
+                  name: id
+                  required: true
+                  type: integer
+            responses:
+                "200":
+                    description: The deleted user.
+                    schema:
+                        $ref: '#/definitions/UserResponse'
+                "400":
+                    description: Bad request.
+                    schema:
+                        $ref: '#/definitions/UserResponse'
+            summary: Delete a user.
+            tags:
+                - users
+        put:
+            description: Update a user with the provided information.
+            operationId: updateUserInternal
+            parameters:
+                - description: The ID of the user to update.
+                  in: path
+                  name: id
+                  required: true
+                  type: integer
+                - description: The user to update.
+                  in: body
+                  name: user
+                  required: true
+                  schema:
+                    $ref: '#/definitions/UserRequest'
+            responses:
+                "200":
+                    description: The updated user.
+                    schema:
+                        $ref: '#/definitions/UserResponse'
+                "400":
+                    description: Bad request.
+                    schema:
+                        $ref: '#/definitions/UserResponse'
+            summary: Update a user.
+            tags:
+                - users
+    /private/groups:
+        get:
+            description: Get a list of all groups in the system.
+            operationId: getGroupsPrivate
+            responses:
+                "200":
+                    description: A list of groups.
+                    schema:
+                        $ref: '#/definitions/GroupResponse'
+                "400":
+                    description: Bad request.
+                    schema:
+                        $ref: '#/definitions/GroupResponse'
+            summary: Get a list of groups.
+            tags:
+                - groups
+        post:
+            description: Create a new group with the provided information.
+            operationId: createGroupPrivate
+            parameters:
+                - description: The group to create.
+                  in: body
+                  name: group
+                  required: true
+                  schema:
+                    $ref: '#/definitions/GroupRequest'
+            responses:
+                "200":
+                    description: The created group.
+                    schema:
+                        $ref: '#/definitions/GroupResponse'
+                "400":
+                    description: Bad request.
+                    schema:
+                        $ref: '#/definitions/GroupResponse'
+            summary: Create a new group.
+            tags:
+                - groups
+    /private/groups/{id}:
+        delete:
+            description: Delete a group by ID.
+            operationId: deleteGroupPrivate
+            parameters:
+                - description: The ID of the group to delete.
+                  in: path
+                  name: id
+                  required: true
+                  type: integer
+            responses:
+                "200":
+                    description: The deleted group.
+                    schema:
+                        $ref: '#/definitions/GroupResponse'
+                "400":
+                    description: Bad request.
+                    schema:
+                        $ref: '#/definitions/GroupResponse'
+            summary: Delete a group.
+            tags:
+                - groups
+        put:
+            description: Update a group with the provided information.
+            operationId: updateGroupPrivate
+            parameters:
+                - description: The ID of the group to update.
+                  in: path
+                  name: id
+                  required: true
+                  type: integer
+                - description: The group to update.
+                  in: body
+                  name: group
+                  required: true
+                  schema:
+                    $ref: '#/definitions/GroupRequest'
+            responses:
+                "200":
+                    description: The updated group.
+                    schema:
+                        $ref: '#/definitions/GroupResponse'
+                "400":
+                    description: Bad request.
+                    schema:
+                        $ref: '#/definitions/GroupResponse'
+            summary: Update a group.
+            tags:
+                - groups
+    /private/members:
+        get:
+            description: Get a list of all members in the system.
+            operationId: getMembersPrivate
+            responses:
+                "200":
+                    description: A list of members.
+                    schema:
+                        $ref: '#/definitions/MemberResponse'
+                "400":
+                    description: Bad request.
+                    schema:
+                        $ref: '#/definitions/MemberResponse'
+            summary: Get a list of members.
+            tags:
+                - members
+        post:
+            description: Create a new member with the provided information.
+            operationId: createMemberPrivate
+            parameters:
+                - description: The member to create.
+                  in: body
+                  name: member
+                  required: true
+                  schema:
+                    $ref: '#/definitions/MemberRequest'
+            responses:
+                "200":
+                    description: The created member.
+                    schema:
+                        $ref: '#/definitions/MemberResponse'
+                "400":
+                    description: Bad request.
+                    schema:
+                        $ref: '#/definitions/MemberResponse'
+            summary: Create a new member.
+            tags:
+                - members
+    /private/members/{id}:
+        delete:
+            description: Delete a member by ID.
+            operationId: deleteMemberPrivate
+            parameters:
+                - description: The ID of the member to delete.
+                  in: path
+                  name: id
+                  required: true
+                  type: integer
+            responses:
+                "200":
+                    description: The deleted member.
+                    schema:
+                        $ref: '#/definitions/MemberResponse'
+                "400":
+                    description: Bad request.
+                    schema:
+                        $ref: '#/definitions/MemberResponse'
+            summary: Delete a member.
+            tags:
+                - members
+        put:
+            description: Update a member with the provided information.
+            operationId: updateMemberPrivate
+            parameters:
+                - description: The ID of the member to update.
+                  in: path
+                  name: id
+                  required: true
+                  type: integer
+                - description: The member to update.
+                  in: body
+                  name: member
+                  required: true
+                  schema:
+                    $ref: '#/definitions/MemberRequest'
+            responses:
+                "200":
+                    description: The updated member.
+                    schema:
+                        $ref: '#/definitions/MemberResponse'
+                "400":
+                    description: Bad request.
+                    schema:
+                        $ref: '#/definitions/MemberResponse'
+            summary: Update a member.
+            tags:
+                - members
+    /private/users:
+        get:
+            description: Get a list of all users in the system.
+            operationId: getUsersPrivate
+            responses:
+                "200":
+                    description: A list of users.
+                    schema:
+                        $ref: '#/definitions/UserResponse'
+                "400":
+                    description: Bad request.
+                    schema:
+                        $ref: '#/definitions/UserResponse'
+            summary: Get a list of users.
+            tags:
+                - users
+        post:
+            description: Create a new user with the provided information.
+            operationId: createUserPrivate
+            parameters:
+                - description: The user to create.
+                  in: body
+                  name: user
+                  required: true
+                  schema:
+                    $ref: '#/definitions/UserRequest'
+            responses:
+                "200":
+                    description: The created user.
+                    schema:
+                        $ref: '#/definitions/UserResponse'
+                "400":
+                    description: Bad request.
+                    schema:
+                        $ref: '#/definitions/UserResponse'
+            summary: Create a new user.
+            tags:
+                - users
+    /private/users/{id}:
+        delete:
+            description: Delete a user by ID.
+            operationId: deleteUserPrivate
+            parameters:
+                - description: The ID of the user to delete.
+                  in: path
+                  name: id
+                  required: true
+                  type: integer
+            responses:
+                "200":
+                    description: The deleted user.
+                    schema:
+                        $ref: '#/definitions/UserResponse'
+                "400":
+                    description: Bad request.
+                    schema:
+                        $ref: '#/definitions/UserResponse'
+            summary: Delete a user.
+            tags:
+                - users
+        put:
+            description: Update a user with the provided information.
+            operationId: updateUserPrivate
+            parameters:
+                - description: The ID of the user to update.
+                  in: path
+                  name: id
+                  required: true
+                  type: integer
+                - description: The user to update.
+                  in: body
+                  name: user
+                  required: true
+                  schema:
+                    $ref: '#/definitions/UserRequest'
+            responses:
+                "200":
+                    description: The updated user.
+                    schema:
+                        $ref: '#/definitions/UserResponse'
+                "400":
+                    description: Bad request.
+                    schema:
+                        $ref: '#/definitions/UserResponse'
+            summary: Update a user.
+            tags:
+                - users
+    /public/groups:
+        get:
+            description: Get a list of all groups in the system.
+            operationId: getGroups
+            responses:
+                "200":
+                    description: A list of groups.
+                    schema:
+                        $ref: '#/definitions/GroupResponse'
+                "400":
+                    description: Bad request.
+                    schema:
+                        $ref: '#/definitions/GroupResponse'
+            summary: Get a list of groups.
+            tags:
+                - groups
+    /public/members:
+        get:
+            description: Get a list of all members in the system.
+            operationId: getMembers
+            responses:
+                "200":
+                    description: A list of members.
+                    schema:
+                        $ref: '#/definitions/MemberResponse'
+                "400":
+                    description: Bad request.
+                    schema:
+                        $ref: '#/definitions/MemberResponse'
+            summary: Get a list of members.
+            tags:
+                - members
+    /public/users:
+        get:
+            description: Get a list of all users in the system.
+            operationId: getUsers
+            responses:
+                "200":
+                    description: A list of users.
+                    schema:
+                        $ref: '#/definitions/UserResponse'
+                "400":
+                    description: Bad request.
+                    schema:
+                        $ref: '#/definitions/UserResponse'
+            summary: Get a list of users.
+            tags:
+                - users
+        post:
+            description: Create a new user with the provided information.
+            operationId: createUser
+            parameters:
+                - description: The user to create.
+                  in: body
+                  name: user
+                  required: true
+                  schema:
+                    $ref: '#/definitions/UserRequest'
+            responses:
+                "200":
+                    description: The created user.
+                    schema:
+                        $ref: '#/definitions/UserResponse'
+                "400":
+                    description: Bad request.
+                    schema:
+                        $ref: '#/definitions/UserResponse'
+                "500":
+                    description: Internal server error.
+                    schema:
+                        $ref: '#/definitions/UserResponse'
+            summary: Create a new user.
+            tags:
+                - users
+produces:
+    - application/json
+schemes:
+    - http
+swagger: "2.0"

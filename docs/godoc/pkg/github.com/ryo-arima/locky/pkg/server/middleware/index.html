@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>middleware - Go Documentation Server</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../../lib/godoc/style.css">
+
+<script>window.initFuncs = [];</script>
+<script src="../../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.24.3";</script>
+<script src="../../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/pkg/">Go Documentation Server</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/pkg/">GoDoc</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package middleware
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+
+
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/ryo-arima/locker/pkg/server/middleware"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+
+
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+
+
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+
+
+
+
+				<dd><a href="index.html#ForInternal">func ForInternal(conf config.BaseConfig) gin.HandlerFunc</a></dd>
+
+
+				<dd><a href="index.html#ForPrivate">func ForPrivate(conf config.BaseConfig) gin.HandlerFunc</a></dd>
+
+
+				<dd><a href="index.html#ForPublic">func ForPublic(conf config.BaseConfig) gin.HandlerFunc</a></dd>
+
+
+				<dd><a href="index.html#GetUserClaims">func GetUserClaims(c *gin.Context) (*model.JWTClaims, bool)</a></dd>
+
+
+				<dd><a href="index.html#GetUserEmail">func GetUserEmail(c *gin.Context) (string, bool)</a></dd>
+
+
+				<dd><a href="index.html#GetUserID">func GetUserID(c *gin.Context) (uint, bool)</a></dd>
+
+
+				<dd><a href="index.html#GetUserName">func GetUserName(c *gin.Context) (string, bool)</a></dd>
+
+
+				<dd><a href="index.html#GetUserRole">func GetUserRole(c *gin.Context) (string, bool)</a></dd>
+
+
+				<dd><a href="index.html#GetUserUUID">func GetUserUUID(c *gin.Context) (string, bool)</a></dd>
+
+
+
+			</dl>
+			</div><!-- #manual-nav -->
+
+
+
+
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+
+				<a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/server/middleware/base.go">base.go</a>
+
+			</span>
+			</p>
+
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+
+
+
+
+
+
+
+			<h2 id="ForInternal">func <a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/server/middleware/base.go?s=393:449#L11">ForInternal</a>
+				<a class="permalink" href="index.html#ForInternal">&#xb6;</a>
+
+
+			</h2>
+			<pre>func ForInternal(conf <a href="../../config/index.html">config</a>.<a href="../../config/index.html#BaseConfig">BaseConfig</a>) <a href="http://localhost:6060/pkg/github.com/gin-gonic/gin/">gin</a>.<a href="http://localhost:6060/pkg/github.com/gin-gonic/gin/#HandlerFunc">HandlerFunc</a></pre>
+
+
+
+
+
+
+
+			<h2 id="ForPrivate">func <a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/server/middleware/base.go?s=786:841#L27">ForPrivate</a>
+				<a class="permalink" href="index.html#ForPrivate">&#xb6;</a>
+
+
+			</h2>
+			<pre>func ForPrivate(conf <a href="../../config/index.html">config</a>.<a href="../../config/index.html#BaseConfig">BaseConfig</a>) <a href="http://localhost:6060/pkg/github.com/gin-gonic/gin/">gin</a>.<a href="http://localhost:6060/pkg/github.com/gin-gonic/gin/#HandlerFunc">HandlerFunc</a></pre>
+
+
+
+
+
+
+
+			<h2 id="ForPublic">func <a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/server/middleware/base.go?s=237:291#L4">ForPublic</a>
+				<a class="permalink" href="index.html#ForPublic">&#xb6;</a>
+
+
+			</h2>
+			<pre>func ForPublic(conf <a href="../../config/index.html">config</a>.<a href="../../config/index.html#BaseConfig">BaseConfig</a>) <a href="http://localhost:6060/pkg/github.com/gin-gonic/gin/">gin</a>.<a href="http://localhost:6060/pkg/github.com/gin-gonic/gin/#HandlerFunc">HandlerFunc</a></pre>
+
+
+
+
+
+
+
+			<h2 id="GetUserClaims">func <a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/server/middleware/base.go?s=4510:4569#L176">GetUserClaims</a>
+				<a class="permalink" href="index.html#GetUserClaims">&#xb6;</a>
+
+
+			</h2>
+			<pre>func GetUserClaims(c *<a href="http://localhost:6060/pkg/github.com/gin-gonic/gin/">gin</a>.<a href="http://localhost:6060/pkg/github.com/gin-gonic/gin/#Context">Context</a>) (*<a href="../../entity/model/index.html">model</a>.<a href="../../entity/model/index.html#JWTClaims">JWTClaims</a>, <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)</pre>
+			<p>GetUserClaims is a helper function to get full user claims from context
+
+
+
+
+
+
+
+			<h2 id="GetUserEmail">func <a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/server/middleware/base.go?s=3763:3811#L143">GetUserEmail</a>
+				<a class="permalink" href="index.html#GetUserEmail">&#xb6;</a>
+
+
+			</h2>
+			<pre>func GetUserEmail(c *<a href="http://localhost:6060/pkg/github.com/gin-gonic/gin/">gin</a>.<a href="http://localhost:6060/pkg/github.com/gin-gonic/gin/#Context">Context</a>) (<a href="http://localhost:6060/pkg/builtin/#string">string</a>, <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)</pre>
+			<p>GetUserEmail is a helper function to get user email from context
+
+
+
+
+
+
+
+			<h2 id="GetUserID">func <a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/server/middleware/base.go?s=3290:3333#L121">GetUserID</a>
+				<a class="permalink" href="index.html#GetUserID">&#xb6;</a>
+
+
+			</h2>
+			<pre>func GetUserID(c *<a href="http://localhost:6060/pkg/github.com/gin-gonic/gin/">gin</a>.<a href="http://localhost:6060/pkg/github.com/gin-gonic/gin/#Context">Context</a>) (<a href="http://localhost:6060/pkg/builtin/#uint">uint</a>, <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)</pre>
+			<p>GetUserID is a helper function to get user ID from context
+
+
+
+
+
+
+
+			<h2 id="GetUserName">func <a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/server/middleware/base.go?s=4013:4060#L154">GetUserName</a>
+				<a class="permalink" href="index.html#GetUserName">&#xb6;</a>
+
+
+			</h2>
+			<pre>func GetUserName(c *<a href="http://localhost:6060/pkg/github.com/gin-gonic/gin/">gin</a>.<a href="http://localhost:6060/pkg/github.com/gin-gonic/gin/#Context">Context</a>) (<a href="http://localhost:6060/pkg/builtin/#string">string</a>, <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)</pre>
+			<p>GetUserName is a helper function to get user name from context
+
+
+
+
+
+
+
+			<h2 id="GetUserRole">func <a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/server/middleware/base.go?s=4257:4304#L165">GetUserRole</a>
+				<a class="permalink" href="index.html#GetUserRole">&#xb6;</a>
+
+
+			</h2>
+			<pre>func GetUserRole(c *<a href="http://localhost:6060/pkg/github.com/gin-gonic/gin/">gin</a>.<a href="http://localhost:6060/pkg/github.com/gin-gonic/gin/#Context">Context</a>) (<a href="http://localhost:6060/pkg/builtin/#string">string</a>, <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)</pre>
+			<p>GetUserRole is a helper function to get user role from context
+
+
+
+
+
+
+
+			<h2 id="GetUserUUID">func <a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/server/middleware/base.go?s=3517:3564#L132">GetUserUUID</a>
+				<a class="permalink" href="index.html#GetUserUUID">&#xb6;</a>
+
+
+			</h2>
+			<pre>func GetUserUUID(c *<a href="http://localhost:6060/pkg/github.com/gin-gonic/gin/">gin</a>.<a href="http://localhost:6060/pkg/github.com/gin-gonic/gin/#Context">Context</a>) (<a href="http://localhost:6060/pkg/builtin/#string">string</a>, <a href="http://localhost:6060/pkg/builtin/#bool">bool</a>)</pre>
+			<p>GetUserUUID is a helper function to get user UUID from context
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="footer">
+Build version go1.24.3.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="https://golang.org/doc/tos.html">Terms of Service</a> |
+<a href="https://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+</body>
+</html>

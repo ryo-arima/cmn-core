@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#375EAB">
+
+  <title>client - Go Documentation Server</title>
+
+<link type="text/css" rel="stylesheet" href="../../../../../../lib/godoc/style.css">
+
+<script>window.initFuncs = [];</script>
+<script src="../../../../../../lib/godoc/jquery.js" defer></script>
+
+
+
+<script>var goVersion = "go1.24.3";</script>
+<script src="../../../../../../lib/godoc/godocs.js" defer></script>
+</head>
+<body>
+
+<div id='lowframe' style="position: fixed; bottom: 0; left: 0; height: 0; width: 100%; border-top: thin solid grey; background-color: white; overflow: auto;">
+...
+</div><!-- #lowframe -->
+
+<div id="topbar" class="wide"><div class="container">
+<div class="top-heading" id="heading-wide"><a href="http://localhost:6060/pkg/">Go Documentation Server</a></div>
+<div class="top-heading" id="heading-narrow"><a href="http://localhost:6060/pkg/">GoDoc</a></div>
+<a href="index.html#" id="menu-button"><span id="menu-button-arrow">&#9661;</span></a>
+<form method="GET" action="http://localhost:6060/search">
+<div id="menu">
+
+<span class="search-box"><input type="search" id="search" name="q" placeholder="Search" aria-label="Search" required><button type="submit"><span><!-- magnifying glass: --><svg width="24" height="24" viewBox="0 0 24 24"><title>submit search</title><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span></button></span>
+</div>
+</form>
+
+</div></div>
+
+
+
+<div id="page" class="wide">
+<div class="container">
+
+
+  <h1>
+    Package client
+    <span class="text-muted"></span>
+  </h1>
+
+
+
+
+
+
+
+<div id="nav"></div>
+
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script>
+	document.ANALYSIS_DATA = null;
+	document.CALLGRAPH = null;
+	</script>
+
+
+
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "github.com/ryo-arima/locker/pkg/client"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="index.html#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="index.html#pkg-index" class="indexLink">Index</a></dd>
+
+
+				<dd><a href="index.html#pkg-subdirectories">Subdirectories</a></dd>
+
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+
+
+			</div>
+		</div>
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+
+
+
+
+				<dd><a href="index.html#ClientForAdminUser">func ClientForAdminUser(conf config.BaseConfig)</a></dd>
+
+
+				<dd><a href="index.html#ClientForAnonymousUser">func ClientForAnonymousUser(conf config.BaseConfig)</a></dd>
+
+
+				<dd><a href="index.html#ClientForAppUser">func ClientForAppUser(conf config.BaseConfig)</a></dd>
+
+
+				<dd><a href="index.html#InitRootCmdForAdminUser">func InitRootCmdForAdminUser() *cobra.Command</a></dd>
+
+
+				<dd><a href="index.html#InitRootCmdForAnonymousUser">func InitRootCmdForAnonymousUser() *cobra.Command</a></dd>
+
+
+				<dd><a href="index.html#InitRootCmdForAppUser">func InitRootCmdForAppUser() *cobra.Command</a></dd>
+
+
+
+				<dd><a href="index.html#BaseCmdForAdminUser">type BaseCmdForAdminUser</a></dd>
+
+
+					<dd>&nbsp; &nbsp; <a href="index.html#InitBaseCmdForAdminUser">func InitBaseCmdForAdminUser() BaseCmdForAdminUser</a></dd>
+
+
+
+
+				<dd><a href="index.html#BaseCmdForAnonymousUser">type BaseCmdForAnonymousUser</a></dd>
+
+
+					<dd>&nbsp; &nbsp; <a href="index.html#InitBaseCmdForAnonymousUser">func InitBaseCmdForAnonymousUser() BaseCmdForAnonymousUser</a></dd>
+
+
+
+
+				<dd><a href="index.html#BaseCmdForAppUser">type BaseCmdForAppUser</a></dd>
+
+
+					<dd>&nbsp; &nbsp; <a href="index.html#InitBaseCmdForAppUser">func InitBaseCmdForAppUser() BaseCmdForAppUser</a></dd>
+
+
+
+
+			</dl>
+			</div><!-- #manual-nav -->
+
+
+
+
+			<h3>Package files</h3>
+			<p>
+			<span style="font-size:90%">
+
+				<a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/client/admin.go">admin.go</a>
+
+				<a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/client/anonymous.go">anonymous.go</a>
+
+				<a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/client/app.go">app.go</a>
+
+			</span>
+			</p>
+
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+
+
+
+
+
+
+
+			<h2 id="ClientForAdminUser">func <a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/client/admin.go?s=1432:1479#L52">ClientForAdminUser</a>
+				<a class="permalink" href="index.html#ClientForAdminUser">&#xb6;</a>
+
+
+			</h2>
+			<pre>func ClientForAdminUser(conf <a href="../config/index.html">config</a>.<a href="../config/index.html#BaseConfig">BaseConfig</a>)</pre>
+
+
+
+
+
+
+
+			<h2 id="ClientForAnonymousUser">func <a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/client/anonymous.go?s=1103:1154#L38">ClientForAnonymousUser</a>
+				<a class="permalink" href="index.html#ClientForAnonymousUser">&#xb6;</a>
+
+
+			</h2>
+			<pre>func ClientForAnonymousUser(conf <a href="../config/index.html">config</a>.<a href="../config/index.html#BaseConfig">BaseConfig</a>)</pre>
+
+
+
+
+
+
+
+			<h2 id="ClientForAppUser">func <a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/client/app.go?s=1195:1240#L45">ClientForAppUser</a>
+				<a class="permalink" href="index.html#ClientForAppUser">&#xb6;</a>
+
+
+			</h2>
+			<pre>func ClientForAppUser(conf <a href="../config/index.html">config</a>.<a href="../config/index.html#BaseConfig">BaseConfig</a>)</pre>
+
+
+
+
+
+
+
+			<h2 id="InitRootCmdForAdminUser">func <a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/client/admin.go?s=316:361#L7">InitRootCmdForAdminUser</a>
+				<a class="permalink" href="index.html#InitRootCmdForAdminUser">&#xb6;</a>
+
+
+			</h2>
+			<pre>func InitRootCmdForAdminUser() *<a href="http://localhost:6060/pkg/github.com/spf13/cobra/">cobra</a>.<a href="http://localhost:6060/pkg/github.com/spf13/cobra/#Command">Command</a></pre>
+
+
+
+
+
+
+
+			<h2 id="InitRootCmdForAnonymousUser">func <a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/client/anonymous.go?s=259:308#L5">InitRootCmdForAnonymousUser</a>
+				<a class="permalink" href="index.html#InitRootCmdForAnonymousUser">&#xb6;</a>
+
+
+			</h2>
+			<pre>func InitRootCmdForAnonymousUser() *<a href="http://localhost:6060/pkg/github.com/spf13/cobra/">cobra</a>.<a href="http://localhost:6060/pkg/github.com/spf13/cobra/#Command">Command</a></pre>
+
+
+
+
+
+
+
+			<h2 id="InitRootCmdForAppUser">func <a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/client/app.go?s=276:319#L6">InitRootCmdForAppUser</a>
+				<a class="permalink" href="index.html#InitRootCmdForAppUser">&#xb6;</a>
+
+
+			</h2>
+			<pre>func InitRootCmdForAppUser() *<a href="http://localhost:6060/pkg/github.com/spf13/cobra/">cobra</a>.<a href="http://localhost:6060/pkg/github.com/spf13/cobra/#Command">Command</a></pre>
+
+
+
+
+
+
+
+
+			<h2 id="BaseCmdForAdminUser">type <a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/client/admin.go?s=149:314#L1">BaseCmdForAdminUser</a>
+				<a class="permalink" href="index.html#BaseCmdForAdminUser">&#xb6;</a>
+
+
+			</h2>
+
+			<pre>type BaseCmdForAdminUser struct {
+<span id="BaseCmdForAdminUser.Bootstrap"></span>    Bootstrap *<a href="http://localhost:6060/pkg/github.com/spf13/cobra/">cobra</a>.<a href="http://localhost:6060/pkg/github.com/spf13/cobra/#Command">Command</a>
+<span id="BaseCmdForAdminUser.Create"></span>    Create    *<a href="http://localhost:6060/pkg/github.com/spf13/cobra/">cobra</a>.<a href="http://localhost:6060/pkg/github.com/spf13/cobra/#Command">Command</a>
+<span id="BaseCmdForAdminUser.Get"></span>    Get       *<a href="http://localhost:6060/pkg/github.com/spf13/cobra/">cobra</a>.<a href="http://localhost:6060/pkg/github.com/spf13/cobra/#Command">Command</a>
+<span id="BaseCmdForAdminUser.Update"></span>    Update    *<a href="http://localhost:6060/pkg/github.com/spf13/cobra/">cobra</a>.<a href="http://localhost:6060/pkg/github.com/spf13/cobra/#Command">Command</a>
+<span id="BaseCmdForAdminUser.Delete"></span>    Delete    *<a href="http://localhost:6060/pkg/github.com/spf13/cobra/">cobra</a>.<a href="http://localhost:6060/pkg/github.com/spf13/cobra/#Command">Command</a>
+}
+</pre>
+
+
+
+
+
+
+
+
+
+
+
+				<h3 id="InitBaseCmdForAdminUser">func <a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/client/admin.go?s=540:590#L16">InitBaseCmdForAdminUser</a>
+					<a class="permalink" href="index.html#InitBaseCmdForAdminUser">&#xb6;</a>
+
+
+				</h3>
+				<pre>func InitBaseCmdForAdminUser() <a href="index.html#BaseCmdForAdminUser">BaseCmdForAdminUser</a></pre>
+
+
+
+
+
+
+
+
+
+			<h2 id="BaseCmdForAnonymousUser">type <a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/client/anonymous.go?s=149:257#L1">BaseCmdForAnonymousUser</a>
+				<a class="permalink" href="index.html#BaseCmdForAnonymousUser">&#xb6;</a>
+
+
+			</h2>
+
+			<pre>type BaseCmdForAnonymousUser struct {
+<span id="BaseCmdForAnonymousUser.Get"></span>    Get    *<a href="http://localhost:6060/pkg/github.com/spf13/cobra/">cobra</a>.<a href="http://localhost:6060/pkg/github.com/spf13/cobra/#Command">Command</a>
+<span id="BaseCmdForAnonymousUser.Create"></span>    Create *<a href="http://localhost:6060/pkg/github.com/spf13/cobra/">cobra</a>.<a href="http://localhost:6060/pkg/github.com/spf13/cobra/#Command">Command</a>
+<span id="BaseCmdForAnonymousUser.Common"></span>    Common *<a href="http://localhost:6060/pkg/github.com/spf13/cobra/">cobra</a>.<a href="http://localhost:6060/pkg/github.com/spf13/cobra/#Command">Command</a>
+}
+</pre>
+
+
+
+
+
+
+
+
+
+
+
+				<h3 id="InitBaseCmdForAnonymousUser">func <a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/client/anonymous.go?s=499:557#L14">InitBaseCmdForAnonymousUser</a>
+					<a class="permalink" href="index.html#InitBaseCmdForAnonymousUser">&#xb6;</a>
+
+
+				</h3>
+				<pre>func InitBaseCmdForAnonymousUser() <a href="index.html#BaseCmdForAnonymousUser">BaseCmdForAnonymousUser</a></pre>
+
+
+
+
+
+
+
+
+
+			<h2 id="BaseCmdForAppUser">type <a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/client/app.go?s=149:274#L1">BaseCmdForAppUser</a>
+				<a class="permalink" href="index.html#BaseCmdForAppUser">&#xb6;</a>
+
+
+			</h2>
+
+			<pre>type BaseCmdForAppUser struct {
+<span id="BaseCmdForAppUser.Create"></span>    Create *<a href="http://localhost:6060/pkg/github.com/spf13/cobra/">cobra</a>.<a href="http://localhost:6060/pkg/github.com/spf13/cobra/#Command">Command</a>
+<span id="BaseCmdForAppUser.Get"></span>    Get    *<a href="http://localhost:6060/pkg/github.com/spf13/cobra/">cobra</a>.<a href="http://localhost:6060/pkg/github.com/spf13/cobra/#Command">Command</a>
+<span id="BaseCmdForAppUser.Update"></span>    Update *<a href="http://localhost:6060/pkg/github.com/spf13/cobra/">cobra</a>.<a href="http://localhost:6060/pkg/github.com/spf13/cobra/#Command">Command</a>
+<span id="BaseCmdForAppUser.Delete"></span>    Delete *<a href="http://localhost:6060/pkg/github.com/spf13/cobra/">cobra</a>.<a href="http://localhost:6060/pkg/github.com/spf13/cobra/#Command">Command</a>
+}
+</pre>
+
+
+
+
+
+
+
+
+
+
+
+				<h3 id="InitBaseCmdForAppUser">func <a href="http://localhost:6060/src/github.com/ryo-arima/locker/pkg/client/app.go?s=492:538#L15">InitBaseCmdForAppUser</a>
+					<a class="permalink" href="index.html#InitBaseCmdForAppUser">&#xb6;</a>
+
+
+				</h3>
+				<pre>func InitBaseCmdForAppUser() <a href="index.html#BaseCmdForAppUser">BaseCmdForAppUser</a></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		<h2 id="pkg-subdirectories">Subdirectories</h2>
+
+	<div class="pkg-dir">
+		<table>
+			<tr>
+				<th class="pkg-name">Name</th>
+				<th class="pkg-synopsis">Synopsis</th>
+			</tr>
+
+
+			<tr>
+				<td colspan="2"><a href="../index.html">..</a></td>
+			</tr>
+
+
+
+				<tr>
+
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="controller/index.html">controller</a>
+					</td>
+
+					<td class="pkg-synopsis">
+
+					</td>
+				</tr>
+
+				<tr>
+
+					<td class="pkg-name" style="padding-left: 0px;">
+						<a href="repository/index.html">repository</a>
+					</td>
+
+					<td class="pkg-synopsis">
+
+					</td>
+				</tr>
+
+		</table>
+	</div>
+
+
+
+<div id="footer">
+Build version go1.24.3.<br>
+Except as <a href="https://developers.google.com/site-policies#restrictions">noted</a>,
+the content of this page is licensed under the
+Creative Commons Attribution 3.0 License,
+and code is licensed under a <a href="http://localhost:6060/LICENSE">BSD license</a>.<br>
+<a href="https://golang.org/doc/tos.html">Terms of Service</a> |
+<a href="https://www.google.com/intl/en/policies/privacy/">Privacy Policy</a>
+</div>
+
+</div><!-- .container -->
+</div><!-- #page -->
+</body>
+</html>
