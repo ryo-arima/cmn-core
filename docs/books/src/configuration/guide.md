@@ -1,83 +1,69 @@
 # Configuration Guide
 
-cmn-core uses YAML-based configuration files for all runtime settings. This guide explains how to configure cmn-core for different environments.
-
-## Configuration Files
-
-| File | Purpose | Status |
-|------|---------|--------|
-| `etc/app.yaml` | Runtime configuration | **Not in Git** (local only) |
-| `etc/app.yaml.example` | Production template | In Git (template) |
-| `etc/app.dev.yaml` | Development defaults | In Git (for development) |
+cmn-core uses a YAML configuration file (`etc/app.yaml`).
 
 ## Quick Start
 
-### Development Setup
-
 ```bash
-# Copy development configuration
-cp etc/app.dev.yaml etc/app.yaml
-
-# Or start with Docker Compose (auto-configured)
-docker-compose up -d
-```
-
-### Production Setup
-
-```bash
-# Create configuration from template
 cp etc/app.yaml.example etc/app.yaml
-
-# Edit with your actual credentials
-vi etc/app.yaml
 ```
 
 ## Configuration Sections
 
-### Server Configuration
+### Server
 
 ```yaml
-Server:
-  host: "0.0.0.0"
-  port: 8080
-  jwt_secret: "your-secure-secret-256-bits"
-  jwt:
-    key: "your-jwt-key"
+Application:
+  Server:
+    port: 8000
+    jwt_secret: "CHANGE_THIS_JWT_SECRET_IN_PRODUCTION"
+    log_level: "debug"
+    redis:
+      jwt_cache: true
+      cache_ttl: 1800
+    jwt:
+      key: "CHANGE_THIS_JWT_KEY"
+    auth:
+      provider: "oidc"   # "oidc" or "saml"
 ```
 
-**Important**:
-- `jwt_secret`: Must be at least 256 bits (32 characters)
-- `jwt.key`: Used for signing JWT tokens
-- Generate secure random values for production
-
-### Database Configuration
+### PostgreSQL
 
 ```yaml
-MySQL:
-  host: "mysql-host"
-  user: "mysql-user"
-  pass: "mysql-password"
-  port: 3306
-  db: "database-name"
-  max_idle_conns: 10
-  max_open_conns: 100
-  conn_max_lifetime: 3600
+PostgreSQL:
+  host: "localhost"
+  user: "user"
+  pass: "password"
+  port: "5432"
+  db: "cmn_core"
+  sslmode: "disable"
 ```
 
-**Connection Pool Settings**:
-- `max_idle_conns`: Maximum idle connections (default: 10)
-- `max_open_conns`: Maximum open connections (default: 100)
-- `conn_max_lifetime`: Connection lifetime in seconds (default: 3600)
-
-### Redis Configuration
+### Redis
 
 ```yaml
 Redis:
-  host: "redis-host"
+  host: "localhost"
   port: 6379
-  pass: "redis-password"
-  db: 0
+  user: "default"
+  pass: ""
+  db: "0"
 ```
+
+## Security Best Practices
+
+- **Never commit `etc/app.yaml`** (it is in `.gitignore`)
+- Use strong random values for `jwt_secret` and `jwt.key`:
+  ```bash
+  openssl rand -base64 32
+  ```
+- Use separate database credentials per environment
+
+## Next Steps
+
+- [Environment Variables](./environment.md)
+- [Getting Started](../development/getting-started.md)
+
 
 **Note**: The `db` field accepts either integer or string format.
 

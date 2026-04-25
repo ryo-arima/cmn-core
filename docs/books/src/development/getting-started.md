@@ -1,40 +1,63 @@
 # Getting Started
 
-This guide will help you get cmn-core up and running on your local machine.
-
 ## Prerequisites
 
-- **Go 1.22+**: [Download](https://golang.org/dl/)
-- **MySQL 8.0+** or **TiDB**: Database server
-- **Redis 6.0+**: Cache server
-- **Docker & Docker Compose** (optional): For quick setup
+- Go 1.24+
+- Docker & Docker Compose
 
-## Quick Start with Docker Compose
-
-The fastest way to get started:
+## Setup
 
 ```bash
-# Clone the repository
 git clone https://github.com/ryo-arima/cmn-core.git
 cd cmn-core
 
-# Start MySQL and Redis
-docker-compose up -d
+# Platform setting (Apple Silicon)
+echo "DOCKER_PLATFORM=linux/arm64" > .env.local
 
-# Copy development configuration
-cp etc/app.dev.yaml etc/app.yaml
+# Copy config
+cp etc/app.yaml.example etc/app.yaml
 
-# Run database migrations (if any)
-# TODO: Add migration commands
+# Start all dev services
+make dev-up
+```
 
-# Build the server
-go build -o .bin/cmn-server ./cmd/server/main.go
+Services started:
 
-# Start the server
+| Service | URL | Credentials |
+|---|---|---|
+| cmn-core server | http://localhost:8000 | — |
+| Keycloak admin | http://localhost:8080/admin | admin / admin |
+| Keycloak user portal | http://localhost:8080/realms/cmn/account | user01-10 / Password123! |
+| Casdoor admin | http://localhost:9000 | admin / 123 |
+| Casdoor user portal | http://localhost:9000/login/cmn | user01-10 / Password123! |
+| PostgreSQL | localhost:5432 | user / password |
+| Redis | localhost:6379 | — |
+| pgAdmin | http://localhost:5050 | — |
+| Roundcube | http://localhost:3005 | — |
+
+## Build & Run
+
+```bash
+make build
 ./.bin/cmn-server
 ```
 
-The server will start on `http://localhost:8080`.
+## Stop
+
+```bash
+make dev-down
+```
+
+## Makefile Reference
+
+```bash
+make build      # Build all binaries
+make test       # Run unit tests
+make dev-up     # Start dev environment
+make dev-down   # Stop and remove volumes
+make docs       # Build documentation
+```
+
 
 ## Manual Setup
 
