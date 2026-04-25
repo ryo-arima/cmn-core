@@ -1,0 +1,24 @@
+services:
+  casdoor:
+    image: casbin/casdoor:latest
+    container_name: cmn-casdoor
+    platform: ${DOCKER_PLATFORM:-linux/arm64}
+    volumes:
+      - ./etc/casdoor/app.conf:/conf/app.conf:ro
+      - ./etc/casdoor/init_data.json:/init_data.json:ro
+    ports:
+      - "9000:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - cmn-network
+    dns:
+      - 10.88.0.53
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:8000/.well-known/openid-configuration > /dev/null 2>&1 || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+      start_period: 30s
+    restart: unless-stopped

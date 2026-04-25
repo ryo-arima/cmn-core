@@ -1,0 +1,16 @@
+services:
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: cmn-pgadmin
+    platform: ${DOCKER_PLATFORM:-linux/arm64}
+    depends_on:
+      - postgres
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@example.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "3001:80"
+    networks:
+      - cmn-network
+    dns:
+      - 10.88.0.53

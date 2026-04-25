@@ -1,0 +1,42 @@
+services:
+  mailserver:
+    image: ghcr.io/docker-mailserver/docker-mailserver:latest
+    container_name: cmn-mailserver
+    platform: ${DOCKER_PLATFORM:-linux/arm64}
+    hostname: mail.cmn.local
+    domainname: cmn.local
+    environment:
+      - OVERRIDE_HOSTNAME=mail.cmn.local
+      - DOMAINNAME=cmn.local
+      - ONE_DIR=0
+      - SSL_TYPE=
+      - TLS_LEVEL=
+      - ENABLE_SPAMASSASSIN=0
+      - ENABLE_CLAMAV=0
+      - ENABLE_FAIL2BAN=0
+      - ENABLE_POSTGREY=0
+      - DMS_DEBUG=1
+      - PERMIT_DOCKER=network
+      - NETWORK_INTERFACE=eth0
+      - SMTP_ONLY=0
+      - ENABLE_POP3=0
+      - ENABLE_SASLAUTHD=0
+      - DOVECOT_INET_PROTOCOLS=ipv4
+      - POSTFIX_MESSAGE_SIZE_LIMIT=10485760
+    cap_add:
+      - NET_ADMIN
+    restart: unless-stopped
+    stop_grace_period: 1m
+    depends_on:
+      - dns
+    networks:
+      cmn-network:
+        ipv4_address: 10.88.0.10
+    dns:
+      - 10.88.0.53
+    volumes:
+      - ./scripts/data/mailserver:/tmp/docker-mailserver
+    tmpfs:
+      - /var/mail
+      - /var/mail-state
+      - /var/log/mail

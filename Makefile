@@ -1,5 +1,23 @@
 .PHONY: s bootstrap build dev-up dev-down dev-api docs localstack logs test clean
 
+# ---------------------------------------------------------------------------
+# Docker Compose — all service files merged via -f flags
+# ---------------------------------------------------------------------------
+COMPOSE = docker compose --project-directory . \
+	-f docker/network.yaml \
+	-f docker/dns.yaml \
+	-f docker/postgres.yaml \
+	-f docker/pgadmin.yaml \
+	-f docker/redis.yaml \
+	-f docker/keycloak.yaml \
+	-f docker/casdoor.yaml \
+	-f docker/mailserver.yaml \
+	-f docker/roundcube.yaml \
+	-f docker/server.yaml \
+	-f docker/swagger.yaml \
+	-f docker/godoc.yaml \
+	-f docker/localstack.yaml
+
 # Git shortcut
 s:
 	git add .
@@ -14,29 +32,30 @@ build:
 	go build -o .bin/anonymous-client ./cmd/client/anonymous
 	go build -o .bin/server   ./cmd/server
 
-# Development environment (core + IdP + mail; docs/localstack excluded)
+# Development environment (core infra + IdP + mail + app server)
 dev-up:
-	docker compose up -d postgres redis pgadmin \
+	$(COMPOSE) up -d postgres redis pgadmin \
 		keycloak \
 		casdoor \
-		dns mailserver roundcube
+		dns mailserver roundcube \
+		server
 
 dev-down:
-	docker compose down -v --remove-orphans
+	$(COMPOSE) down -v --remove-orphans
 
 # Documentation (swagger-ui + godoc)
 docs:
-	docker compose up -d swagger-ui godoc
+	$(COMPOSE) up -d swagger-ui godoc
 	@echo "Swagger UI: http://localhost:3002"
 	@echo "Go Docs:    http://localhost:3003"
 
 # AWS mock (localstack)
 localstack:
-	docker compose up -d localstack
+	$(COMPOSE) up -d localstack
 
 # Logs (pass SERVICE= to filter, e.g. make logs SERVICE=postgres)
 logs:
-	docker compose logs -f $(SERVICE)
+	$(COMPOSE) logs -f $(SERVICE)
 
 # Tests
 test:
@@ -47,6 +66,4 @@ test-unit:
 
 clean:
 	rm -f coverage.out coverage.html
-
-
 

@@ -1,0 +1,23 @@
+services:
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: cmn-server
+    platform: ${DOCKER_PLATFORM:-linux/arm64}
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./etc/app.yaml.docker:/app/etc/app.yaml:ro
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
+      casdoor:
+        condition: service_healthy
+    networks:
+      - cmn-network
+    dns:
+      - 10.88.0.53
+    restart: unless-stopped

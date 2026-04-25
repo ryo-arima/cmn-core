@@ -1,0 +1,40 @@
+Application:
+  Common: {}
+  Server:
+    port: 8000
+    admin:
+      emails:
+        - "admin@example.com"
+    jwt_secret: "CHANGE_THIS_JWT_SECRET_IN_PRODUCTION"
+    log_level: "debug"
+    redis:
+      jwt_cache: true
+      cache_ttl: 1800
+    jwt:
+      key: "CHANGE_THIS_JWT_KEY"
+    mail:
+      host: "mailserver"
+      port: 587
+  Client:
+    HomePath: "etc/.cmn"
+    ServerEndpoint: "http://localhost:8000"
+    auth:
+      provider: "oidc"
+      no_browser: false
+    HomeDir: "etc/.cmn"
+    TemplatesDir: "pkg/client/repository/templates/"
+
+PostgreSQL:
+  host: "postgres"
+  user: "user"
+  pass: "password"
+  port: "5432"
+  db: "cmn_core"
+  sslmode: "disable"
+
+Redis:
+  host: "redis"
+  port: 6379
+  user: "default"
+  pass: "mysecretpassword"
+  db: 0
