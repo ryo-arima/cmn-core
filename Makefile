@@ -18,7 +18,7 @@ build:
 dev-up:
 	docker compose up -d postgres redis pgadmin \
 		keycloak \
-		authentik-server authentik-worker \
+		casdoor \
 		dns mailserver roundcube
 
 dev-down:

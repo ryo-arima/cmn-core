@@ -27,7 +27,7 @@ services:
 
   # ---------------------------------------------------------------------------
   # PostgreSQL — single database for all services
-  # Databases created on first init: cmn_core, keycloak, roundcube, authentik
+  # Databases created on first init: cmn_core, keycloak, roundcube, casdoor
   # ---------------------------------------------------------------------------
   postgres:
     image: postgres:16-alpine
@@ -46,6 +46,12 @@ services:
       - "5432:5432"
     networks:
       - cmn-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U user -d postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
     restart: unless-stopped
 
   # ---------------------------------------------------------------------------
@@ -71,7 +77,7 @@ services:
 
   redis:
     image: redis:latest
-    container_name: redis
+    container_name: cmn-redis
     platform: ${DOCKER_PLATFORM:-linux/arm64}
     ports:
       - "6379:6379"
@@ -241,60 +247,36 @@ services:
     restart: unless-stopped
 
   # ---------------------------------------------------------------------------
-  # Authentik — OIDC / SAML identity provider (development)
-  # Admin console: http://localhost:9000/if/admin/
-  # First-run setup: http://localhost:9000/if/flow/initial-setup/
+  # Casdoor — OIDC / SAML identity provider (development)
+  # Admin console:  http://localhost:9000
+  # Built-in admin: admin / 123  (organization: built-in)
+  # OIDC issuer:    http://localhost:9000
+  # Client ID:      cmn-core-client-id
+  # Client Secret:  cmn-core-client-secret
+  # App users:      admin / admin, user01…user10 / Password123!  (organization: cmn)
   # ---------------------------------------------------------------------------
-  authentik-server:
-    image: ghcr.io/goauthentik/server:2024.4
-    container_name: cmn-authentik-server
+  casdoor:
+    image: casbin/casdoor:latest
+    container_name: cmn-casdoor
     platform: ${DOCKER_PLATFORM:-linux/arm64}
-    command: server
-    environment:
-      AUTHENTIK_REDIS__HOST: redis
-      AUTHENTIK_REDIS__PASSWORD: mysecretpassword
-      AUTHENTIK_POSTGRESQL__HOST: postgres
-      AUTHENTIK_POSTGRESQL__USER: authentik
-      AUTHENTIK_POSTGRESQL__PASSWORD: authentik
-      AUTHENTIK_POSTGRESQL__NAME: authentik
-      AUTHENTIK_SECRET_KEY: dev-secret-key-change-in-production
-      AUTHENTIK_ERROR_REPORTING__ENABLED: "false"
-      AUTHENTIK_BLUEPRINTS_DIR: /blueprints
     volumes:
-      - ./etc/authentik/blueprints:/blueprints/custom:ro
+      - ./etc/casdoor/app.conf:/conf/app.conf:ro
+      - ./etc/casdoor/init_data.json:/init_data.json:ro
     ports:
-      - "9000:9000"
-      - "9443:9443"
+      - "9000:8000"
     depends_on:
-      - postgres
-      - redis
+      postgres:
+        condition: service_healthy
     networks:
       - cmn-network
     dns:
       - 10.88.0.53
-    restart: unless-stopped
-
-  authentik-worker:
-    image: ghcr.io/goauthentik/server:2024.4
-    container_name: cmn-authentik-worker
-    platform: ${DOCKER_PLATFORM:-linux/arm64}
-    command: worker
-    environment:
-      AUTHENTIK_REDIS__HOST: redis
-      AUTHENTIK_REDIS__PASSWORD: mysecretpassword
-      AUTHENTIK_POSTGRESQL__HOST: postgres
-      AUTHENTIK_POSTGRESQL__USER: authentik
-      AUTHENTIK_POSTGRESQL__PASSWORD: authentik
-      AUTHENTIK_POSTGRESQL__NAME: authentik
-      AUTHENTIK_SECRET_KEY: dev-secret-key-change-in-production
-      AUTHENTIK_ERROR_REPORTING__ENABLED: "false"
-    depends_on:
-      - postgres
-      - redis
-    networks:
-      - cmn-network
-    dns:
-      - 10.88.0.53
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:8000/.well-known/openid-configuration > /dev/null 2>&1 || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+      start_period: 30s
     restart: unless-stopped
 
 networks:

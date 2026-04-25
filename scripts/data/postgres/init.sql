@@ -17,12 +17,12 @@ GRANT ALL PRIVILEGES ON DATABASE roundcube TO roundcube;
 \c roundcube
 GRANT ALL ON SCHEMA public TO roundcube;
 
--- ---- authentik ---------------------------------------------------------------
-CREATE DATABASE authentik;
-CREATE USER authentik WITH PASSWORD 'authentik';
-GRANT ALL PRIVILEGES ON DATABASE authentik TO authentik;
-\c authentik
-GRANT ALL ON SCHEMA public TO authentik;
+-- ---- casdoor ---------------------------------------------------------------
+CREATE DATABASE casdoor;
+CREATE USER casdoor WITH PASSWORD 'casdoor';
+GRANT ALL PRIVILEGES ON DATABASE casdoor TO casdoor;
+\c casdoor
+GRANT ALL ON SCHEMA public TO casdoor;
 
 -- ---- cmn_core (application) --------------------------------------------------
 -- The default POSTGRES_DB=cmn_core is already created by the container.

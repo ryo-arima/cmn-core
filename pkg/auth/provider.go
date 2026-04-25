@@ -1,5 +1,5 @@
 // Package auth provides the interface and implementations for integrating with
-// external identity providers (IdPs) such as Keycloak and Authentik via
+// external identity providers (IdPs) such as Keycloak and Casdoor via
 // OIDC (OpenID Connect) and SAML 2.0.
 package auth
 

@@ -17,7 +17,7 @@ import (
 )
 
 // SAMLConfig holds the configuration required to act as a SAML 2.0 Service
-// Provider (SP) against an IdP such as Keycloak or Authentik.
+// Provider (SP) against an IdP such as Keycloak or Casdoor.
 type SAMLConfig struct {
 	// ProviderName is a human-readable label, e.g. "keycloak-saml".
 	ProviderName string `yaml:"provider_name"`

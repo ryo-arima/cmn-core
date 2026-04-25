@@ -14,7 +14,7 @@ import (
 	"github.com/ryo-arima/cmn-core/pkg/server/usecase"
 )
 
-// CommonShare provides authentication endpoints integrated with external IdPs (Keycloak / Authentik)
+// CommonShare provides authentication endpoints integrated with external IdPs (Keycloak / Zitadel)
 // via OIDC and SAML 2.0.
 type CommonShare interface {
 	// OIDC flow

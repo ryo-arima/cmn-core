@@ -11,13 +11,13 @@ import (
 )
 
 // OIDCConfig holds the configuration required to connect to an OIDC provider
-// such as Keycloak or Authentik.
+// such as Keycloak or Casdoor.
 type OIDCConfig struct {
-	// ProviderName is a human-readable label, e.g. "keycloak" or "authentik".
+	// ProviderName is a human-readable label, e.g. "keycloak" or "casdoor".
 	ProviderName string `yaml:"provider_name"`
 	// IssuerURL is the OIDC issuer URL (used for discovery).
-	// Keycloak:  https://<host>/realms/<realm>
-	// Authentik: https://<host>/application/o/<slug>/
+	// Keycloak: https://<host>/realms/<realm>
+	// Casdoor:  http://<host>
 	IssuerURL string `yaml:"issuer_url"`
 	// ClientID is the OIDC client ID registered in the IdP.
 	ClientID string `yaml:"client_id"`

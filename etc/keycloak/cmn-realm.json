@@ -62,24 +62,13 @@
   ],
   "users": [
     {
-      "username": "admin",
-      "email": "admin@cmn.local",
-      "enabled": true,
-      "firstName": "Admin",
-      "lastName": "User",
-      "credentials": [
-        { "type": "password", "value": "AdminPassword123!", "temporary": false }
-      ],
-      "realmRoles": ["admin"]
-    },
-    {
       "username": "user01",
       "email": "user01@cmn.local",
       "enabled": true,
       "firstName": "User",
       "lastName": "01",
       "credentials": [
-        { "type": "password", "value": "UserPassword123!", "temporary": false }
+        { "type": "password", "value": "Password123!", "temporary": false }
       ],
       "realmRoles": ["app"]
     },
@@ -90,7 +79,7 @@
       "firstName": "User",
       "lastName": "02",
       "credentials": [
-        { "type": "password", "value": "UserPassword123!", "temporary": false }
+        { "type": "password", "value": "Password123!", "temporary": false }
       ],
       "realmRoles": ["app"]
     },
@@ -101,7 +90,7 @@
       "firstName": "User",
       "lastName": "03",
       "credentials": [
-        { "type": "password", "value": "UserPassword123!", "temporary": false }
+        { "type": "password", "value": "Password123!", "temporary": false }
       ],
       "realmRoles": ["app"]
     },
@@ -112,7 +101,7 @@
       "firstName": "User",
       "lastName": "04",
       "credentials": [
-        { "type": "password", "value": "UserPassword123!", "temporary": false }
+        { "type": "password", "value": "Password123!", "temporary": false }
       ],
       "realmRoles": ["app"]
     },
@@ -123,7 +112,7 @@
       "firstName": "User",
       "lastName": "05",
       "credentials": [
-        { "type": "password", "value": "UserPassword123!", "temporary": false }
+        { "type": "password", "value": "Password123!", "temporary": false }
       ],
       "realmRoles": ["app"]
     },
@@ -134,7 +123,7 @@
       "firstName": "User",
       "lastName": "06",
       "credentials": [
-        { "type": "password", "value": "UserPassword123!", "temporary": false }
+        { "type": "password", "value": "Password123!", "temporary": false }
       ],
       "realmRoles": ["app"]
     },
@@ -145,7 +134,7 @@
       "firstName": "User",
       "lastName": "07",
       "credentials": [
-        { "type": "password", "value": "UserPassword123!", "temporary": false }
+        { "type": "password", "value": "Password123!", "temporary": false }
       ],
       "realmRoles": ["app"]
     },
@@ -156,7 +145,7 @@
       "firstName": "User",
       "lastName": "08",
       "credentials": [
-        { "type": "password", "value": "UserPassword123!", "temporary": false }
+        { "type": "password", "value": "Password123!", "temporary": false }
       ],
       "realmRoles": ["app"]
     },
@@ -167,7 +156,7 @@
       "firstName": "User",
       "lastName": "09",
       "credentials": [
-        { "type": "password", "value": "UserPassword123!", "temporary": false }
+        { "type": "password", "value": "Password123!", "temporary": false }
       ],
       "realmRoles": ["app"]
     },
@@ -178,7 +167,7 @@
       "firstName": "User",
       "lastName": "10",
       "credentials": [
-        { "type": "password", "value": "UserPassword123!", "temporary": false }
+        { "type": "password", "value": "Password123!", "temporary": false }
       ],
       "realmRoles": ["app"]
     }
