@@ -96,12 +96,38 @@ type AuthConfig struct {
 	SAML SAMLProviderConfig `yaml:"saml"`
 }
 
+// KeycloakConfig holds admin credentials for the Keycloak Admin REST API.
+type KeycloakConfig struct {
+	BaseURL           string `yaml:"base_url"`
+	Realm             string `yaml:"realm"`
+	AdminClientID     string `yaml:"admin_client_id"`
+	AdminClientSecret string `yaml:"admin_client_secret"`
+}
+
+// CasdoorConfig holds credentials for the Casdoor management API.
+type CasdoorConfig struct {
+	BaseURL      string `yaml:"base_url"`
+	ClientID     string `yaml:"client_id"`
+	ClientSecret string `yaml:"client_secret"`
+	Organization string `yaml:"organization"`
+}
+
+// IdPConfig selects the active identity provider and holds its credentials.
+// Only the provider named in Provider is used; the other block is ignored.
+type IdPConfig struct {
+	// Provider is either "keycloak" or "casdoor".
+	Provider string        `yaml:"provider"`
+	Keycloak KeycloakConfig `yaml:"keycloak"`
+	Casdoor  CasdoorConfig  `yaml:"casdoor"`
+}
+
 type Server struct {
 	Admin     Admin       `yaml:"admin"`
 	JWTSecret string      `yaml:"jwt_secret"`
 	LogLevel  string      `yaml:"log_level"` // debug / info / warn / error
 	Redis     RedisConfig `yaml:"redis"`     // Redis-related configurations
 	Auth      AuthConfig  `yaml:"auth"`      // SSO provider configuration
+	IdP       IdPConfig   `yaml:"idp"`       // Identity provider for user/group management
 }
 
 type Mail struct {

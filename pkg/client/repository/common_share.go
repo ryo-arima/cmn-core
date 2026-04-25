@@ -10,9 +10,7 @@ import (
 )
 
 // Common is the data-access interface for token-related server operations.
-// Authentication is handled transparently via the auth.Manager.
 type Common interface {
-	Logout() response.Commons
 	ValidateToken() response.ValidateToken
 	GetUserInfo() response.Commons
 }
@@ -29,28 +27,6 @@ func NewCommon(conf config.BaseConfig, manager *clientauth.Manager) Common {
 		serverBase: conf.YamlConfig.Application.Client.ServerEndpoint,
 		client:     manager.HTTPClient(),
 	}
-}
-
-func (r *common) Logout() response.Commons {
-	var result response.Commons
-	req, err := http.NewRequest("DELETE", r.serverBase+"/v1/share/token", nil)
-	if err != nil {
-		result.Code = "CLIENT_LOGOUT_001"
-		result.Message = "failed to create request"
-		return result
-	}
-	resp, err := r.client.Do(req)
-	if err != nil {
-		result.Code = "CLIENT_LOGOUT_002"
-		result.Message = "request failed"
-		return result
-	}
-	defer resp.Body.Close()
-	if err := json.NewDecoder(resp.Body).Decode(&result); err != nil {
-		result.Code = "CLIENT_LOGOUT_003"
-		result.Message = "failed to decode response"
-	}
-	return result
 }
 
 func (r *common) ValidateToken() response.ValidateToken {

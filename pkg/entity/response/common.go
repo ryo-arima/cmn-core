@@ -2,8 +2,6 @@ package response
 
 import (
 	"time"
-
-	"github.com/ryo-arima/cmn-core/pkg/entity/model"
 )
 
 type Commons struct {
@@ -20,23 +18,9 @@ type Common struct {
 	DeletedAt *time.Time `json:"deleted_at,omitempty"`
 }
 
-// RefreshToken represents refresh token response
-type RefreshToken struct {
-	Code      string           `json:"code"`
-	Message   string           `json:"message"`
-	TokenPair *model.TokenPair `json:"token_pair,omitempty"`
-}
-
 // ValidateToken represents token validation response
 type ValidateToken struct {
 	Code    string                 `json:"code"`
 	Message string                 `json:"message"`
 	Data    map[string]interface{} `json:"data,omitempty"`
-}
-
-// AuthCallback represents the response after a successful OIDC/SAML callback
-type AuthCallback struct {
-	Code      string           `json:"code"`
-	Message   string           `json:"message"`
-	TokenPair *model.TokenPair `json:"token_pair,omitempty"`
 }

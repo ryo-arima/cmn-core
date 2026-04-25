@@ -1,6 +1,8 @@
 package repository
 
 import (
+	"context"
+
 	"github.com/gin-gonic/gin"
 	"github.com/ryo-arima/cmn-core/pkg/entity/model"
 	"gorm.io/gorm"
@@ -59,4 +61,24 @@ type Member interface {
 	DeleteMember(c *gin.Context, uuid string) interface{}
 	ListMembers(c *gin.Context, filter MemberQueryFilter) ([]model.Members, error)
 	CountMembers(c *gin.Context, filter MemberQueryFilter) (int64, error)
+}
+
+// ResourceQueryFilter holds optional filter conditions for resource queries.
+type ResourceQueryFilter struct {
+	CreatedBy  string
+	GroupUUIDs []string // user's group UUIDs for membership-based access
+}
+
+// Resource repository interface.
+type Resource interface {
+	GetResourceByUUID(ctx context.Context, uuid string) (*model.Resource, error)
+	ListResources(ctx context.Context, filter ResourceQueryFilter) ([]model.Resource, error)
+	ListAllResources(ctx context.Context) ([]model.Resource, error)
+	CreateResource(ctx context.Context, resource *model.Resource) error
+	UpdateResource(ctx context.Context, resource *model.Resource) error
+	SoftDeleteResource(ctx context.Context, resource *model.Resource, deletedBy string) error
+	// Group-role management
+	GetGroupRoles(ctx context.Context, resourceUUID string) ([]model.ResourceGroupRole, error)
+	SetGroupRole(ctx context.Context, rgr *model.ResourceGroupRole) error
+	DeleteGroupRole(ctx context.Context, resourceUUID, groupUUID string) error
 }

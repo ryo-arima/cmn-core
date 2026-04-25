@@ -1,4 +1,4 @@
-.PHONY: s bootstrap build dev-up dev-down dev-api docs localstack logs test clean
+.PHONY: s bootstrap build dev-up dev-down svr-up svr-down dev-api docs localstack logs test clean
 
 # ---------------------------------------------------------------------------
 # Docker Compose — all service files merged via -f flags
@@ -32,16 +32,24 @@ build:
 	go build -o .bin/anonymous-client ./cmd/client/anonymous
 	go build -o .bin/server   ./cmd/server
 
-# Development environment (core infra + IdP + mail + app server)
+# Development environment (core infra + IdP + mail; server excluded)
 dev-up:
 	$(COMPOSE) up -d postgres redis pgadmin \
 		keycloak \
 		casdoor \
-		dns mailserver roundcube \
-		server
+		dns mailserver roundcube
 
 dev-down:
 	$(COMPOSE) down -v --remove-orphans
+
+# App server container (build image and start)
+svr-up:
+	$(COMPOSE) up -d --build server
+
+# Stop and remove the app server container only
+svr-down:
+	$(COMPOSE) stop server
+	$(COMPOSE) rm -f -v server
 
 # Documentation (swagger-ui + godoc)
 docs:

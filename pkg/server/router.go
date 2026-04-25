@@ -5,7 +5,7 @@ import (
 	"log"
 
 	"github.com/gin-gonic/gin"
-	"github.com/ryo-arima/cmn-core/pkg/auth"
+	gooidc "github.com/coreos/go-oidc/v3/oidc"
 	"github.com/ryo-arima/cmn-core/pkg/config"
 	"github.com/ryo-arima/cmn-core/pkg/server/controller"
 	"github.com/ryo-arima/cmn-core/pkg/server/repository"
@@ -24,54 +24,30 @@ func InitRouter(conf config.BaseConfig) *gin.Engine {
 		gin.DefaultErrorWriter = share.NewGinLoggerWriter(logger)
 	}
 
-	redisClient, err := repository.NewRedisClient(conf.YamlConfig.Redis)
-	if err != nil {
-		panic(err)
-	}
-
-	commonRepository := repository.NewCommon(conf, redisClient)
-	commonUsecase := usecase.NewCommon(commonRepository)
-
-	// Initialize OIDC provider (optional — skip if not configured)
-	var oidcProvider auth.Provider
+	// Initialize OIDC verifier for JWT validation
+	var verifier *gooidc.IDTokenVerifier
 	oidcCfg := conf.YamlConfig.Application.Server.Auth.OIDC
-	if oidcCfg.IssuerURL != "" && oidcCfg.ClientID != "" {
-		p, err := auth.NewOIDCProvider(context.Background(), auth.OIDCConfig{
-			ProviderName: oidcCfg.ProviderName,
-			IssuerURL:    oidcCfg.IssuerURL,
-			ClientID:     oidcCfg.ClientID,
-			ClientSecret: oidcCfg.ClientSecret,
-			RedirectURL:  oidcCfg.RedirectURL,
-			Scopes:       oidcCfg.Scopes,
-		})
+	if oidcCfg.IssuerURL != "" {
+		provider, err := gooidc.NewProvider(context.Background(), oidcCfg.IssuerURL)
 		if err != nil {
-			log.Printf("OIDC provider init failed (OIDC disabled): %v", err)
+			log.Printf("OIDC init failed, JWT validation disabled: %v", err)
 		} else {
-			oidcProvider = p
+			verifier = provider.Verifier(&gooidc.Config{SkipClientIDCheck: true})
 		}
 	}
 
-	// Initialize SAML provider (optional — skip if not configured)
-	var samlProvider auth.Provider
-	samlCfg := conf.YamlConfig.Application.Server.Auth.SAML
-	if samlCfg.SPACSURL != "" && samlCfg.SPEntityID != "" && (samlCfg.IDPMetadataURL != "" || samlCfg.IDPCertificatePEM != "") {
-		p, err := auth.NewSAMLProvider(context.Background(), auth.SAMLConfig{
-			ProviderName:      samlCfg.ProviderName,
-			IDPMetadataURL:    samlCfg.IDPMetadataURL,
-			IDPCertificatePEM: samlCfg.IDPCertificatePEM,
-			SPEntityID:        samlCfg.SPEntityID,
-			SPACSURL:          samlCfg.SPACSURL,
-			SPKeyPEM:          samlCfg.SPKeyPEM,
-			SPCertPEM:         samlCfg.SPCertPEM,
-		})
-		if err != nil {
-			log.Printf("SAML provider init failed (SAML disabled): %v", err)
-		} else {
-			samlProvider = p
-		}
-	}
+	commonRepository := repository.NewCommon(conf, verifier)
+	commonUsecase := usecase.NewCommon(commonRepository)
+	commonShareController := controller.NewCommonShare(commonUsecase)
 
-	commonShareController := controller.NewCommonShare(commonUsecase, oidcProvider, samlProvider)
+	// Initialize IdP manager (required)
+	idpManager, err := repository.NewIdPManager(conf)
+	if err != nil {
+		panic("IdP init failed: " + err.Error())
+	}
+	idpUsecase := usecase.NewIdP(idpManager)
+	idpInternalCtrl := controller.NewIdPInternal(idpUsecase)
+	idpPrivateCtrl := controller.NewIdPPrivate(idpUsecase)
 
 	router := gin.Default()
 
@@ -95,45 +71,88 @@ func InitRouter(conf config.BaseConfig) *gin.Engine {
 	shareAPI := v1.Group("/share")
 	shareAPI.Use(loggerMW)
 
-	// OIDC flow
-	shareAPI.GET("/auth/oidc/login", commonShareController.OIDCLogin)
-	shareAPI.GET("/auth/oidc/callback", commonShareController.OIDCCallback)
-
-	// SAML flow
-	shareAPI.GET("/auth/saml/login", commonShareController.SAMLLogin)
-	shareAPI.POST("/auth/saml/callback", commonShareController.SAMLCallback)
-
-	// SSO polling for CLI clients
-	shareAPI.GET("/auth/sso/start", commonShareController.SSOStart)
-	shareAPI.GET("/auth/sso/poll", commonShareController.SSOPoll)
-
-	// Token management
-	shareAPI.POST("/token/refresh", share.ForShare(commonRepository), commonShareController.RefreshToken)
-	shareAPI.DELETE("/token", share.ForShare(commonRepository), commonShareController.Logout)
+	// Token management (JWT validation via IdP JWKS)
 	shareAPI.GET("/token/validate", share.ForShare(commonRepository), commonShareController.ValidateToken)
 	shareAPI.GET("/token/userinfo", share.ForShare(commonRepository), commonShareController.GetUserInfo)
 
 	// ============ PUBLIC API (anonymous — no auth) ============
 	publicAPI := v1.Group("/public")
 	publicAPI.Use(loggerMW)
-	publicAPI.Use(share.ForPublic(conf))
+	publicAPI.Use(share.ForPublic())
 	// Business logic public routes go here
 
 	// ============ INTERNAL API (app — authenticated) ============
 	internalAPI := v1.Group("/internal")
 	internalAPI.Use(loggerMW)
 	internalAPI.Use(share.ForInternal(commonRepository))
-	// Business logic internal routes go here
+
+	// Resource routes (authenticated users)
+	resourceRepo := repository.NewResource(conf)
+	resourceUsecase := usecase.NewResource(resourceRepo)
+	resourceInternalCtrl := controller.NewResourceInternal(resourceUsecase)
+
+	// Own user
+	internalAPI.GET("/user", idpInternalCtrl.GetMyUser)
+	internalAPI.PUT("/user", idpInternalCtrl.UpdateMyUser)
+
+	// Groups the caller belongs to (JWT is issued per-request; claims.Groups is always current)
+	internalAPI.GET("/groups", idpInternalCtrl.ListMyGroups)
+	internalAPI.POST("/groups", idpInternalCtrl.CreateGroup)
+	internalAPI.GET("/group", idpInternalCtrl.GetGroup)
+	internalAPI.PUT("/groups/:id", idpInternalCtrl.UpdateGroup)
+	internalAPI.DELETE("/groups/:id", idpInternalCtrl.DeleteGroup)
+
+	// Member management
+	internalAPI.GET("/members", idpInternalCtrl.ListGroupMembers)
+	internalAPI.POST("/member/:group_id", idpInternalCtrl.AddGroupMember)
+	internalAPI.DELETE("/member/:group_id", idpInternalCtrl.RemoveGroupMember)
+
+	// Resources
+	internalAPI.GET("/resources", resourceInternalCtrl.ListResources)
+	internalAPI.POST("/resources", resourceInternalCtrl.CreateResource)
+	internalAPI.GET("/resource", resourceInternalCtrl.GetResource)
+	internalAPI.PUT("/resources/:uuid", resourceInternalCtrl.UpdateResource)
+	internalAPI.DELETE("/resources/:uuid", resourceInternalCtrl.DeleteResource)
+	internalAPI.GET("/resource/groups", resourceInternalCtrl.GetResourceGroupRoles)
+	internalAPI.PUT("/resources/:uuid/groups", resourceInternalCtrl.SetResourceGroupRole)
+	internalAPI.DELETE("/resources/:uuid/groups/:group_uuid", resourceInternalCtrl.DeleteResourceGroupRole)
 
 	// ============ PRIVATE API (admin — admin role required) ============
 	privateAPI := v1.Group("/private")
 	privateAPI.Use(loggerMW)
 	privateAPI.Use(share.ForPrivate(commonRepository))
-	// Business logic private routes go here
+
+	// Users
+	privateAPI.GET("/users", idpPrivateCtrl.ListUsers)
+	privateAPI.POST("/users", idpPrivateCtrl.CreateUser)
+	privateAPI.GET("/user", idpPrivateCtrl.GetUser)
+	privateAPI.PUT("/users/:id", idpPrivateCtrl.UpdateUser)
+	privateAPI.DELETE("/users/:id", idpPrivateCtrl.DeleteUser)
+
+	// Groups
+	privateAPI.GET("/groups", idpPrivateCtrl.ListGroups)
+	privateAPI.POST("/groups", idpPrivateCtrl.CreateGroup)
+	privateAPI.GET("/group", idpPrivateCtrl.GetGroup)
+	privateAPI.PUT("/groups/:id", idpPrivateCtrl.UpdateGroup)
+	privateAPI.DELETE("/groups/:id", idpPrivateCtrl.DeleteGroup)
+
+	// Members (group membership)
+	privateAPI.GET("/members", idpPrivateCtrl.ListGroupMembers)
+	privateAPI.POST("/member/:group_id", idpPrivateCtrl.AddGroupMember)
+	privateAPI.DELETE("/member/:group_id", idpPrivateCtrl.RemoveGroupMember)
+
+	// Resources
+	resourcePrivateCtrl := controller.NewResourcePrivate(resourceUsecase)
+	privateAPI.GET("/resources", resourcePrivateCtrl.ListAllResources)
+	privateAPI.POST("/resources", resourcePrivateCtrl.CreateResource)
+	privateAPI.GET("/resource", resourcePrivateCtrl.GetResource)
+	privateAPI.PUT("/resources/:uuid", resourcePrivateCtrl.UpdateResource)
+	privateAPI.DELETE("/resources/:uuid", resourcePrivateCtrl.DeleteResource)
+	privateAPI.GET("/resource/groups", resourcePrivateCtrl.GetResourceGroupRoles)
+	privateAPI.PUT("/resources/:uuid/groups", resourcePrivateCtrl.SetResourceGroupRole)
+	privateAPI.DELETE("/resources/:uuid/groups", resourcePrivateCtrl.DeleteResourceGroupRole)
 
 	_ = publicAPI
-	_ = internalAPI
-	_ = privateAPI
 
 	return router
 }

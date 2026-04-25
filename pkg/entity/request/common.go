@@ -11,19 +11,4 @@ type Common struct {
 	DeletedAt *time.Time `json:"deleted_at"`
 }
 
-// RefreshToken represents a request to refresh an access token.
-type RefreshToken struct {
-	RefreshToken string `json:"refresh_token" binding:"required"`
-}
 
-// OIDCCallback represents the authorization code callback from an OIDC provider.
-type OIDCCallback struct {
-	Code  string `form:"code" binding:"required"`
-	State string `form:"state"`
-}
-
-// SAMLCallback represents the ACS POST callback from a SAML identity provider.
-type SAMLCallback struct {
-	SAMLResponse string `form:"SAMLResponse" binding:"required"`
-	RelayState   string `form:"RelayState"`
-}

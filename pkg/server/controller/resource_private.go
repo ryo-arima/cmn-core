@@ -1,0 +1,180 @@
+package controller
+
+import (
+	"net/http"
+
+	"github.com/gin-gonic/gin"
+	"github.com/ryo-arima/cmn-core/pkg/entity/request"
+	"github.com/ryo-arima/cmn-core/pkg/entity/response"
+	"github.com/ryo-arima/cmn-core/pkg/server/share"
+	"github.com/ryo-arima/cmn-core/pkg/server/usecase"
+)
+
+// ResourcePrivate handles resource endpoints that require the admin role.
+type ResourcePrivate interface {
+	ListAllResources(c *gin.Context)
+	GetResource(c *gin.Context)
+	CreateResource(c *gin.Context)
+	UpdateResource(c *gin.Context)
+	DeleteResource(c *gin.Context)
+	GetResourceGroupRoles(c *gin.Context)
+	SetResourceGroupRole(c *gin.Context)
+	DeleteResourceGroupRole(c *gin.Context)
+}
+
+type resourcePrivate struct {
+	resourceUsecase usecase.Resource
+}
+
+// NewResourcePrivate creates a new ResourcePrivate controller.
+func NewResourcePrivate(ru usecase.Resource) ResourcePrivate {
+	return &resourcePrivate{resourceUsecase: ru}
+}
+
+// ListAllResources returns every non-deleted resource.
+// GET /v1/private/resources
+func (rc *resourcePrivate) ListAllResources(c *gin.Context) {
+	resources, err := rc.resourceUsecase.ListAllResources(c.Request.Context())
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"code": "RESOURCE_ADMIN_LIST_001", "message": err.Error()})
+		return
+	}
+	resp := make([]response.Resource, 0, len(resources))
+	for _, r := range resources {
+		resp = append(resp, toResponseResource(r))
+	}
+	c.JSON(http.StatusOK, response.Resources{Code: "SUCCESS", Message: "ok", Resources: resp})
+}
+
+// DeleteResource soft-deletes any resource (admin override).
+// DELETE /v1/private/resources/:uuid
+func (rc *resourcePrivate) DeleteResource(c *gin.Context) {
+	claims, ok := share.GetUserClaims(c)
+	if !ok {
+		c.JSON(http.StatusUnauthorized, gin.H{"code": "RESOURCE_AUTH_001", "message": "Unauthorized"})
+		return
+	}
+	if err := rc.resourceUsecase.AdminDeleteResource(c.Request.Context(), c.Param("uuid"), claims.UUID); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"code": "RESOURCE_ADMIN_DELETE_001", "message": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"code": "SUCCESS", "message": "deleted"})
+}
+
+// GetResource returns a single resource (admin access bypasses ownership checks).
+// GET /v1/private/resource?uuid=...
+func (rc *resourcePrivate) GetResource(c *gin.Context) {
+	claims, ok := share.GetUserClaims(c)
+	if !ok {
+		c.JSON(http.StatusUnauthorized, gin.H{"code": "RESOURCE_AUTH_001", "message": "Unauthorized"})
+		return
+	}
+	res, err := rc.resourceUsecase.GetResource(c.Request.Context(), c.Query("uuid"), claims.UUID, claims.Groups, true)
+	if err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"code": "RESOURCE_GET_404", "message": "Resource not found"})
+		return
+	}
+	c.JSON(http.StatusOK, response.SingleResource{Code: "SUCCESS", Message: "ok", Resource: ptr(toResponseResource(*res))})
+}
+
+// CreateResource creates a new resource owned by the admin.
+// POST /v1/private/resources
+func (rc *resourcePrivate) CreateResource(c *gin.Context) {
+	claims, ok := share.GetUserClaims(c)
+	if !ok {
+		c.JSON(http.StatusUnauthorized, gin.H{"code": "RESOURCE_AUTH_001", "message": "Unauthorized"})
+		return
+	}
+	var req request.CreateResource
+	if err := c.ShouldBindJSON(&req); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"code": "RESOURCE_CREATE_001", "message": "Invalid request body"})
+		return
+	}
+	res, err := rc.resourceUsecase.CreateResource(c.Request.Context(), req.Name, req.Description, claims.UUID)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"code": "RESOURCE_CREATE_002", "message": err.Error()})
+		return
+	}
+	c.JSON(http.StatusCreated, response.SingleResource{Code: "SUCCESS", Message: "created", Resource: ptr(toResponseResource(*res))})
+}
+
+// UpdateResource updates any resource (admin override).
+// PUT /v1/private/resources/:uuid
+func (rc *resourcePrivate) UpdateResource(c *gin.Context) {
+	claims, ok := share.GetUserClaims(c)
+	if !ok {
+		c.JSON(http.StatusUnauthorized, gin.H{"code": "RESOURCE_AUTH_001", "message": "Unauthorized"})
+		return
+	}
+	var req request.UpdateResource
+	if err := c.ShouldBindJSON(&req); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"code": "RESOURCE_UPDATE_001", "message": "Invalid request body"})
+		return
+	}
+	res, err := rc.resourceUsecase.UpdateResource(c.Request.Context(), c.Param("uuid"), req.Name, req.Description, claims.UUID, claims.Groups, true)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"code": "RESOURCE_UPDATE_002", "message": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, response.SingleResource{Code: "SUCCESS", Message: "updated", Resource: ptr(toResponseResource(*res))})
+}
+
+// GetResourceGroupRoles lists group-role entries (admin access).
+// GET /v1/private/resource/groups?uuid=...
+func (rc *resourcePrivate) GetResourceGroupRoles(c *gin.Context) {
+	claims, ok := share.GetUserClaims(c)
+	if !ok {
+		c.JSON(http.StatusUnauthorized, gin.H{"code": "RESOURCE_AUTH_001", "message": "Unauthorized"})
+		return
+	}
+	roles, err := rc.resourceUsecase.GetGroupRoles(c.Request.Context(), c.Param("uuid"), claims.UUID, claims.Groups, true)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"code": "RESOURCE_GROUP_001", "message": err.Error()})
+		return
+	}
+	resp := make([]response.ResourceGroupRole, 0, len(roles))
+	for _, r := range roles {
+		resp = append(resp, response.ResourceGroupRole{ResourceUUID: r.ResourceUUID, GroupUUID: r.GroupUUID, Role: r.Role})
+	}
+	c.JSON(http.StatusOK, response.ResourceGroupRoles{Code: "SUCCESS", Message: "ok", Groups: resp})
+}
+
+// SetResourceGroupRole adds or updates a group-role entry (admin override).
+// PUT /v1/private/resources/:uuid/groups
+func (rc *resourcePrivate) SetResourceGroupRole(c *gin.Context) {
+	claims, ok := share.GetUserClaims(c)
+	if !ok {
+		c.JSON(http.StatusUnauthorized, gin.H{"code": "RESOURCE_AUTH_001", "message": "Unauthorized"})
+		return
+	}
+	var req request.SetResourceGroupRole
+	if err := c.ShouldBindJSON(&req); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"code": "RESOURCE_GROUP_SET_001", "message": "Invalid request body"})
+		return
+	}
+	if err := rc.resourceUsecase.SetGroupRole(c.Request.Context(), c.Param("uuid"), req.GroupUUID, req.Role, claims.UUID, claims.Groups, true); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"code": "RESOURCE_GROUP_SET_002", "message": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"code": "SUCCESS", "message": "group role set"})
+}
+
+// DeleteResourceGroupRole removes a group-role entry (admin override).
+// DELETE /v1/private/resources/:uuid/groups  (group_uuid specified in request body)
+func (rc *resourcePrivate) DeleteResourceGroupRole(c *gin.Context) {
+	claims, ok := share.GetUserClaims(c)
+	if !ok {
+		c.JSON(http.StatusUnauthorized, gin.H{"code": "RESOURCE_AUTH_001", "message": "Unauthorized"})
+		return
+	}
+	var req request.DeleteResourceGroupRole
+	if err := c.ShouldBindJSON(&req); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"code": "RESOURCE_GROUP_DEL_400", "message": "Invalid request body"})
+		return
+	}
+	if err := rc.resourceUsecase.DeleteGroupRole(c.Request.Context(), c.Param("uuid"), req.GroupUUID, claims.UUID, claims.Groups, true); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"code": "RESOURCE_GROUP_DEL_001", "message": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"code": "SUCCESS", "message": "group role deleted"})
+}

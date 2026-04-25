@@ -36,34 +36,15 @@ func PrintMessage(msg string) {
 	fmt.Print(usecase.Format(GetOutputFormat(), message{Message: msg}))
 }
 
-// InitCommonRefreshTokenCmd creates a refresh command that forces a token refresh via the manager.
-func InitCommonRefreshTokenCmd(manager *clientauth.Manager) *cobra.Command {
-	return &cobra.Command{
-		Use:   "refresh",
-		Short: "refresh the access token",
-		Long:  "force a token refresh using the stored refresh token",
-		Run: func(cmd *cobra.Command, args []string) {
-			if err := manager.ForceRefresh(); err != nil {
-				PrintMessage("refresh failed: " + err.Error())
-				return
-			}
-			PrintMessage("token refreshed successfully")
-		},
-	}
-}
-
-// InitCommonLogoutCmd creates a logout command.
-// It sends the logout request to the server and then clears local token files.
+// InitCommonLogoutCmd creates a logout command that clears local token files.
 func InitCommonLogoutCmd(manager *clientauth.Manager) *cobra.Command {
 	return &cobra.Command{
 		Use:   "logout",
-		Short: "logout and invalidate tokens",
-		Long:  "invalidate the current token on the server and remove local token files",
+		Short: "logout and clear local tokens",
+		Long:  "remove local token files; re-authentication via your IdP is required for future requests",
 		Run: func(cmd *cobra.Command, args []string) {
-			uc := usecase.NewCommon(manager.Conf(), manager)
-			result := uc.Logout()
 			manager.ClearTokens()
-			fmt.Print(usecase.Format(GetOutputFormat(), result))
+			PrintMessage("local tokens cleared; please re-authenticate via your IdP")
 		},
 	}
 }

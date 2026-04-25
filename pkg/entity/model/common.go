@@ -11,22 +11,13 @@ type Commons struct {
 	DeletedAt *time.Time `json:"deleted_at"`
 }
 
-// JWTClaims represents the JWT token claims
+// JWTClaims represents claims extracted from an IdP-issued JWT token.
 type JWTClaims struct {
-	Jti       string `json:"jti"`
-	UserID    uint   `json:"user_id"`
-	UUID      string `json:"uuid"`
-	Email     string `json:"email"`
-	Name      string `json:"name"`
-	Role      string `json:"role,omitempty"`
-	IssuedAt  int64  `json:"iat"`
-	ExpiresAt int64  `json:"exp"`
-}
-
-// TokenPair represents access and refresh tokens
-type TokenPair struct {
-	AccessToken  string `json:"access_token"`
-	RefreshToken string `json:"refresh_token,omitempty"`
-	TokenType    string `json:"token_type"`
-	ExpiresIn    int64  `json:"expires_in"`
+	UUID      string   `json:"sub"`            // IdP subject identifier
+	Email     string   `json:"email"`
+	Name      string   `json:"name"`
+	Groups    []string `json:"groups,omitempty"`
+	Role      string   `json:"role,omitempty"` // resolved locally from admin emails list
+	IssuedAt  int64    `json:"iat"`
+	ExpiresAt int64    `json:"exp"`
 }

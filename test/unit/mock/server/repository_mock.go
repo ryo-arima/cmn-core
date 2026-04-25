@@ -3,7 +3,6 @@ package mock
 import (
 	"context"
 	"fmt"
-	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/ryo-arima/cmn-core/pkg/config"
@@ -257,76 +256,17 @@ func (m *MockMemberRepository) CountMembers(c *gin.Context, filter repository.Me
 
 // MockCommonRepository implements repository.Common for testing
 type MockCommonRepository struct {
-	JWTSecret          string
-	InvalidatedTokens  map[string]bool
-	GenerateTokenFunc  func(email, role, uuid string) (string, string, error)
-	ValidateTokenFunc  func(tokenString string) (*model.JWTClaims, error)
-	InvalidateFunc     func(ctx context.Context, jti string, expiration time.Duration) error
-	IsInvalidatedFunc  func(ctx context.Context, jti string) (bool, error)
-	VerifyPasswordFunc func(hashedPassword, password string) error
+	ValidateTokenFunc func(ctx context.Context, token string) (*model.JWTClaims, error)
 }
 
-func (m *MockCommonRepository) GenerateJWTToken(claims model.JWTClaims) (string, error) {
-	return "mock-access-token-" + claims.Email, nil
-}
-
-func (m *MockCommonRepository) ValidateJWTToken(tokenString string) (*model.JWTClaims, error) {
+func (m *MockCommonRepository) ValidateToken(ctx context.Context, tokenString string) (*model.JWTClaims, error) {
 	if m.ValidateTokenFunc != nil {
-		return m.ValidateTokenFunc(tokenString)
+		return m.ValidateTokenFunc(ctx, tokenString)
 	}
 	return &model.JWTClaims{
 		Email: "test@example.com",
 		Role:  "user",
 		UUID:  "test-uuid",
-		Jti:   "test-jti",
-	}, nil
-}
-
-func (m *MockCommonRepository) ParseTokenUnverified(tokenString string) (*model.JWTClaims, error) {
-	return &model.JWTClaims{
-		Email: "test@example.com",
-		Role:  "user",
-		UUID:  "test-uuid",
-		Jti:   "test-jti",
-	}, nil
-}
-
-func (m *MockCommonRepository) InvalidateToken(ctx context.Context, tokenString string) error {
-	if m.InvalidateFunc != nil {
-		return m.InvalidateFunc(ctx, tokenString, 0)
-	}
-	if m.InvalidatedTokens == nil {
-		m.InvalidatedTokens = make(map[string]bool)
-	}
-	m.InvalidatedTokens[tokenString] = true
-	return nil
-}
-
-func (m *MockCommonRepository) IsTokenInvalidated(ctx context.Context, jti string) (bool, error) {
-	if m.IsInvalidatedFunc != nil {
-		return m.IsInvalidatedFunc(ctx, jti)
-	}
-	if m.InvalidatedTokens == nil {
-		return false, nil
-	}
-	return m.InvalidatedTokens[jti], nil
-}
-
-func (m *MockCommonRepository) VerifyPassword(hashedPassword, password string) error {
-	if m.VerifyPasswordFunc != nil {
-		return m.VerifyPasswordFunc(hashedPassword, password)
-	}
-	// Simple mock: just compare strings
-	if hashedPassword == password {
-		return nil
-	}
-	return fmt.Errorf("password mismatch")
-}
-
-func (m *MockCommonRepository) GenerateTokenPair(userID uint, userUUID, email, name, role string) (*model.TokenPair, error) {
-	return &model.TokenPair{
-		AccessToken:  "mock-access-token",
-		RefreshToken: "mock-refresh-token",
 	}, nil
 }
 
@@ -334,34 +274,6 @@ func (m *MockCommonRepository) GetBaseConfig() config.BaseConfig {
 	return config.BaseConfig{}
 }
 
-func (m *MockCommonRepository) GenerateJWTSecret() (string, error) {
-	return "mock-jwt-secret", nil
-}
-
-func (m *MockCommonRepository) ValidateJWTSecretStrength(secret string) error {
-	return nil
-}
-
-func (m *MockCommonRepository) HashPassword(password string) (string, error) {
-	return "hashed-" + password, nil
-}
-
-func (m *MockCommonRepository) ValidatePasswordStrength(password string) error {
-	return nil
-}
-
-func (m *MockCommonRepository) DeleteTokenCache(token string) {
-	// Mock implementation
-}
-
-func (m *MockCommonRepository) SendEmail(ctx context.Context, to, subject, body string, isHTML bool) error {
-	return nil
-}
-
-func (m *MockCommonRepository) SendWelcomeEmail(ctx context.Context, to, name string) error {
-	return nil
-}
-
-func (m *MockCommonRepository) SendPasswordResetEmail(ctx context.Context, to, name, resetURL string) error {
-	return nil
+func (m *MockCommonRepository) ResolveRole(email string) string {
+	return "user"
 }
