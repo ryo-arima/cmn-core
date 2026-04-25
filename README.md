@@ -1,5 +1,11 @@
 # cmn-core
 
+<p align="center">
+  <img src="docs/images/image01.png" alt="cmn-core" width="600">
+  <br>
+  <sub>The Go gopher was designed by <a href="https://reneefrench.blogspot.com/">Renée French</a>, licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</sub>
+</p>
+
 Go-based API server that delegates authentication and authorization entirely to external IdPs.
 
 [![Go Version](https://img.shields.io/badge/Go-1.24+-00ADD8?style=flat&logo=go)](https://golang.org)
