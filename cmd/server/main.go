@@ -85,11 +85,9 @@ import (
 )
 
 func main() {
-	configFile := flag.String("config", "", "path to config file (env: CONFIG_FILE, default: etc/app.yaml)")
+	configFile := flag.String("config", "etc/server.yaml", "path to config file (env: CONFIG_FILE, default: etc/server.yaml)")
 	flag.Parse()
-	if *configFile != "" {
-		os.Setenv("CONFIG_FILE", *configFile)
-	}
+	os.Setenv("CONFIG_FILE", *configFile)
 
 	// Load configuration
 	conf := config.NewBaseConfig()

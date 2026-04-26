@@ -32,6 +32,11 @@ type IdPManager interface {
 	ListGroupMembers(ctx context.Context, groupID string) ([]model.IdPUser, error)
 	AddUserToGroup(ctx context.Context, userID, groupID string) error
 	RemoveUserFromGroup(ctx context.Context, userID, groupID string) error
+
+	// --- Authentication ---
+	// Login performs a Resource Owner Password Credentials (ROPC) grant and returns
+	// the access token issued by the IdP.
+	Login(ctx context.Context, username, password string) (string, error)
 }
 
 // NewIdPManager creates the IdPManager implementation selected by

@@ -76,7 +76,9 @@
       "clientSecret": "cmn-core-client-secret",
       "grantTypes": [
         "authorization_code",
-        "refresh_token"
+        "refresh_token",
+        "password",
+        "client_credentials"
       ],
       "tokenFields": [
         "groups"
@@ -92,6 +94,22 @@
     }
   ],
   "users": [
+    {
+      "owner": "cmn",
+      "name": "admin",
+      "type": "normal-user",
+      "password": "Admin123!",
+      "displayName": "Admin",
+      "firstName": "Admin",
+      "lastName": "",
+      "email": "admin@example.com",
+      "emailVerified": true,
+      "isAdmin": true,
+      "isGlobalAdmin": false,
+      "signupApplication": "app-cmn-core",
+      "score": 2000,
+      "groups": []
+    },
     {
       "owner": "cmn",
       "name": "user01",

@@ -1,0 +1,4 @@
+Application:
+  Client:
+    ServerEndpoint: "http://localhost:8000"
+    # credentials are stored separately in etc/.cmn/client/credentials/admin.yaml

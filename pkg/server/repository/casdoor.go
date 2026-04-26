@@ -9,7 +9,6 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"sync"
 	"time"
 
 	"github.com/ryo-arima/cmn-core/pkg/config"
@@ -57,9 +56,6 @@ type cdResponse struct {
 type casdoorManager struct {
 	cfg    config.CasdoorConfig
 	client *http.Client
-	mu     sync.Mutex
-	token  string
-	expiry time.Time
 }
 
 func newCasdoorManager(cfg config.CasdoorConfig) IdPManager {
@@ -73,52 +69,26 @@ func (m *casdoorManager) apiURL(path string) string {
 	return fmt.Sprintf("%s%s", m.cfg.BaseURL, path)
 }
 
-// getToken obtains (or returns a cached) admin access token via OAuth2 client_credentials.
-func (m *casdoorManager) getToken(ctx context.Context) (string, error) {
-	m.mu.Lock()
-	defer m.mu.Unlock()
-	if m.token != "" && time.Now().Before(m.expiry) {
-		return m.token, nil
+// authParams appends clientId and clientSecret to query params.
+// Casdoor admin API authenticates via these query parameters.
+func (m *casdoorManager) authParams(q url.Values) url.Values {
+	if q == nil {
+		q = url.Values{}
 	}
-
-	tokenURL := m.apiURL("/api/login/oauth/access_token")
-	form := url.Values{}
-	form.Set("grant_type", "client_credentials")
-	form.Set("client_id", m.cfg.ClientID)
-	form.Set("client_secret", m.cfg.ClientSecret)
-
-	req, err := http.NewRequestWithContext(ctx, http.MethodPost, tokenURL, strings.NewReader(form.Encode()))
-	if err != nil {
-		return "", fmt.Errorf("casdoor: build token request: %w", err)
-	}
-	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
-
-	resp, err := m.client.Do(req)
-	if err != nil {
-		return "", fmt.Errorf("casdoor: token request: %w", err)
-	}
-	defer resp.Body.Close()
-
-	body, _ := io.ReadAll(resp.Body)
-	if resp.StatusCode != http.StatusOK {
-		return "", fmt.Errorf("casdoor: token request status %d", resp.StatusCode)
-	}
-
-	var t cdTokenResponse
-	if err := json.Unmarshal(body, &t); err != nil {
-		return "", fmt.Errorf("casdoor: parse token response: %w", err)
-	}
-	m.token = t.AccessToken
-	m.expiry = time.Now().Add(time.Duration(t.ExpiresIn-10) * time.Second)
-	return m.token, nil
+	q.Set("clientId", m.cfg.ClientID)
+	q.Set("clientSecret", m.cfg.ClientSecret)
+	return q
 }
 
-// do performs an authenticated request to the Casdoor API.
+// do performs an authenticated request to the Casdoor admin API.
+// Authentication is via clientId/clientSecret query parameters.
 func (m *casdoorManager) do(ctx context.Context, method, rawURL string, payload interface{}) (int, []byte, error) {
-	token, err := m.getToken(ctx)
+	// Append auth params to URL.
+	u, err := url.Parse(rawURL)
 	if err != nil {
-		return 0, nil, err
+		return 0, nil, fmt.Errorf("casdoor: parse URL: %w", err)
 	}
+	u.RawQuery = m.authParams(u.Query()).Encode()
 
 	var bodyReader io.Reader
 	if payload != nil {
@@ -129,18 +99,17 @@ func (m *casdoorManager) do(ctx context.Context, method, rawURL string, payload 
 		bodyReader = bytes.NewReader(b)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, method, rawURL, bodyReader)
+	req, err := http.NewRequestWithContext(ctx, method, u.String(), bodyReader)
 	if err != nil {
 		return 0, nil, fmt.Errorf("casdoor: build request: %w", err)
 	}
-	req.Header.Set("Authorization", "Bearer "+token)
 	if payload != nil {
 		req.Header.Set("Content-Type", "application/json")
 	}
 
 	resp, err := m.client.Do(req)
 	if err != nil {
-		return 0, nil, fmt.Errorf("casdoor: %s %s: %w", method, rawURL, err)
+		return 0, nil, fmt.Errorf("casdoor: %s %s: %w", method, u.Path, err)
 	}
 	defer resp.Body.Close()
 	b, _ := io.ReadAll(resp.Body)
@@ -488,6 +457,40 @@ func (m *casdoorManager) RemoveUserFromGroup(ctx context.Context, userID, groupI
 	}
 	_, err = checkCdResponse(ubody)
 	return err
+}
+
+// Login performs an ROPC grant on behalf of a user and returns the issued access token.
+func (m *casdoorManager) Login(ctx context.Context, username, password string) (string, error) {
+	tokenURL := m.apiURL("/api/login/oauth/access_token")
+	form := url.Values{}
+	form.Set("grant_type", "password")
+	form.Set("client_id", m.cfg.ClientID)
+	form.Set("client_secret", m.cfg.ClientSecret)
+	form.Set("username", username)
+	form.Set("password", password)
+
+	req, err := http.NewRequestWithContext(ctx, http.MethodPost, tokenURL, strings.NewReader(form.Encode()))
+	if err != nil {
+		return "", fmt.Errorf("casdoor: build login request: %w", err)
+	}
+	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+
+	resp, err := m.client.Do(req)
+	if err != nil {
+		return "", fmt.Errorf("casdoor: login request: %w", err)
+	}
+	defer resp.Body.Close()
+
+	body, _ := io.ReadAll(resp.Body)
+	if resp.StatusCode != http.StatusOK {
+		return "", fmt.Errorf("casdoor: login status %d", resp.StatusCode)
+	}
+
+	var t cdTokenResponse
+	if err := json.Unmarshal(body, &t); err != nil {
+		return "", fmt.Errorf("casdoor: parse login response: %w", err)
+	}
+	return t.AccessToken, nil
 }
 
 // ---- helpers ---------------------------------------------------------------

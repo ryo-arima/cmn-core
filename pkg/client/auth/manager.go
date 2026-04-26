@@ -2,9 +2,12 @@
 package auth
 
 import (
+	"bytes"
+	"context"
 	"encoding/base64"
 	"encoding/json"
-	"errors"
+	"fmt"
+	"io"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -58,7 +61,8 @@ func (m *Manager) readFile(name string) string {
 //
 // If an explicit token was set via WithToken, it is returned verbatim.
 // For anonymous profiles, "" is returned.
-// Otherwise, the token is loaded from disk.
+// Otherwise the token is loaded from the on-disk cache; if missing or expired
+// it is obtained automatically via password-based login (POST /v1/public/login).
 func (m *Manager) Token() (string, error) {
 	if m.explicitToken != "" {
 		return m.explicitToken, nil
@@ -72,17 +76,68 @@ func (m *Manager) Token() (string, error) {
 		return token, nil
 	}
 
-	return "", errors.New("no valid token found, please authenticate via your IdP and set CMN_ACCESS_TOKEN or save a token to disk")
+	// Token missing or expired — re-authenticate transparently.
+	return m.loginWithPassword(context.Background())
 }
 
-// ForceRefresh is not supported. Tokens must be obtained from the IdP.
+// loginWithPassword authenticates using the configured credentials by calling
+// POST /v1/public/login on the server.  The server is responsible for all IdP
+// communication; the client never contacts Casdoor or Keycloak directly.
+func (m *Manager) loginWithPassword(ctx context.Context) (string, error) {
+	creds := m.conf.YamlConfig.Application.Client.Credentials
+	email, password := creds.Email, creds.Password
+	if email == "" || password == "" {
+		return "", fmt.Errorf(
+			"no credentials configured — set Application.Client.credentials.email/password in the config file",
+		)
+	}
+	return m.loginViaServer(ctx, email, password)
+}
+
+// loginViaServer posts credentials to POST /v1/public/login on the app server
+// and returns the access token contained in the response.
+func (m *Manager) loginViaServer(ctx context.Context, email, password string) (string, error) {
+	body, err := json.Marshal(map[string]string{"email": email, "password": password})
+	if err != nil {
+		return "", fmt.Errorf("build login body: %w", err)
+	}
+
+	req, err := http.NewRequestWithContext(ctx, http.MethodPost,
+		m.serverBase()+"/v1/public/login", bytes.NewReader(body))
+	if err != nil {
+		return "", fmt.Errorf("build login request: %w", err)
+	}
+	req.Header.Set("Content-Type", "application/json")
+
+	resp, err := http.DefaultClient.Do(req)
+	if err != nil {
+		return "", fmt.Errorf("login request: %w", err)
+	}
+	defer resp.Body.Close()
+	respBody, _ := io.ReadAll(resp.Body)
+	if resp.StatusCode != http.StatusOK {
+		return "", fmt.Errorf("login failed (HTTP %d): %s", resp.StatusCode, strings.TrimSpace(string(respBody)))
+	}
+	var result struct {
+		AccessToken string `json:"access_token"`
+	}
+	if err := json.Unmarshal(respBody, &result); err != nil || result.AccessToken == "" {
+		return "", fmt.Errorf("parse login response: %w", err)
+	}
+	m.SaveTokenPair(result.AccessToken, "")
+	return result.AccessToken, nil
+}
+
+// ForceRefresh re-authenticates using the configured credentials.
 func (m *Manager) ForceRefresh() error {
-	return errors.New("token refresh is not supported; please re-authenticate via your IdP")
+	m.ClearTokens()
+	_, err := m.loginWithPassword(context.Background())
+	return err
 }
 
-// ForceLogin is not supported. Authentication must happen via the IdP directly.
+// ForceLogin re-authenticates using the configured credentials (provider argument is ignored).
 func (m *Manager) ForceLogin(_ string) error {
-	return errors.New("browser-based SSO is not supported; please authenticate via your IdP and provide the token")
+	return m.ForceRefresh()
 }
 
 // SaveTokenPair persists the access token to disk.
@@ -142,6 +197,7 @@ type authTransport struct {
 }
 
 // RoundTrip obtains a valid token from the Manager and sets the Authorization header.
+// On HTTP 401, it forces a re-login and retries once (safe for bodyless methods only).
 func (t *authTransport) RoundTrip(req *http.Request) (*http.Response, error) {
 	token, err := t.manager.Token()
 	if err != nil {
@@ -152,5 +208,25 @@ func (t *authTransport) RoundTrip(req *http.Request) (*http.Response, error) {
 	if token != "" {
 		clone.Header.Set("Authorization", "Bearer "+token)
 	}
-	return t.base.RoundTrip(clone)
+	resp, err := t.base.RoundTrip(clone)
+	if err != nil {
+		return nil, err
+	}
+
+	// On 401, force re-login and retry once.
+	// Retry is limited to bodyless methods because the request body has already been consumed.
+	if resp.StatusCode == http.StatusUnauthorized && !t.manager.IsAnonymous() &&
+		(req.Method == http.MethodGet || req.Method == http.MethodHead || req.Method == http.MethodDelete) {
+		resp.Body.Close()
+		t.manager.ClearTokens()
+		newToken, loginErr := t.manager.loginWithPassword(req.Context())
+		if loginErr != nil {
+			return nil, loginErr
+		}
+		clone2 := req.Clone(req.Context())
+		clone2.Header.Set("Authorization", "Bearer "+newToken)
+		return t.base.RoundTrip(clone2)
+	}
+
+	return resp, nil
 }

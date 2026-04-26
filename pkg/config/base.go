@@ -82,6 +82,11 @@ type RedisConfig struct {
 type OIDCConfig struct {
 	ProviderName string   `yaml:"provider_name"`
 	IssuerURL    string   `yaml:"issuer_url"`
+	// ProviderURL is the URL used to fetch the OIDC discovery document.
+	// Set this when the IdP's internal service URL differs from the public issuer URL
+	// (e.g. Casdoor running in Docker: issuer_url=http://localhost:9000, provider_url=http://casdoor:8000).
+	// If empty, issuer_url is used.
+	ProviderURL  string   `yaml:"provider_url"`
 	ClientID     string   `yaml:"client_id"`
 	ClientSecret string   `yaml:"client_secret"`
 	RedirectURL  string   `yaml:"redirect_url"`
@@ -159,13 +164,18 @@ type ClientAuthConfig struct {
 	NoBrowser bool `yaml:"no_browser"`
 }
 
+// ClientCredentials holds the email/password used for automatic password-based login.
+type ClientCredentials struct {
+	Email    string `yaml:"email"`
+	Password string `yaml:"password"`
+}
+
 type Client struct {
 	ServerEndpoint string           `yaml:"ServerEndpoint"`
 	Auth           ClientAuthConfig `yaml:"auth"`
-	// UserEmail and UserPassword are kept for backward compatibility with existing
-	// test fixtures. They are NOT used for authentication (which is delegated to the IdP).
-	UserEmail    string `yaml:"UserEmail"`
-	UserPassword string `yaml:"UserPassword"`
+	// Credentials holds login credentials used for automatic authentication.
+	// Set Application.Client.credentials.email/password in the config file.
+	Credentials ClientCredentials `yaml:"credentials"`
 }
 
 type Application struct {
