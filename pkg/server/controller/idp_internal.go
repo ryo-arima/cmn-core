@@ -41,12 +41,13 @@ type IdPInternal interface {
 }
 
 type idpInternal struct {
-	idpUsecase usecase.IdP
+	idpUsecase    usecase.IdP
+	commonUsecase usecase.Common
 }
 
 // NewIdPInternal creates a new IdPInternal controller.
-func NewIdPInternal(iu usecase.IdP) IdPInternal {
-	return &idpInternal{idpUsecase: iu}
+func NewIdPInternal(iu usecase.IdP, cu usecase.Common) IdPInternal {
+	return &idpInternal{idpUsecase: iu, commonUsecase: cu}
 }
 
 // isMemberOf returns true if groupID is present in the caller's groups claim.
@@ -110,6 +111,7 @@ func (ic *idpInternal) GetMyUser(c *gin.Context) {
 			FirstName: u.FirstName,
 			LastName:  u.LastName,
 			Enabled:   u.Enabled,
+			Role:      ic.commonUsecase.ResolveRole(u.Email),
 			CreatedAt: u.CreatedAt,
 		},
 	})
@@ -143,6 +145,7 @@ func (ic *idpInternal) ListGroupUsers(c *gin.Context) {
 				FirstName: u.FirstName,
 				LastName:  u.LastName,
 				Enabled:   u.Enabled,
+				Role:      ic.commonUsecase.ResolveRole(u.Email),
 				CreatedAt: u.CreatedAt,
 			})
 		}
@@ -317,6 +320,7 @@ func (ic *idpInternal) ListGroupMembers(c *gin.Context) {
 			FirstName: u.FirstName,
 			LastName:  u.LastName,
 			Enabled:   u.Enabled,
+			Role:      u.Role,
 			CreatedAt: u.CreatedAt,
 		})
 	}
@@ -341,7 +345,7 @@ func (ic *idpInternal) AddGroupMember(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"code": "IDP_MEMBER_ADD_400", "message": "Invalid request body"})
 		return
 	}
-	if err := ic.idpUsecase.AddUserToGroup(c.Request.Context(), req.UserID, groupID); err != nil {
+	if err := ic.idpUsecase.AddUserToGroup(c.Request.Context(), req.UserID, groupID, req.Role); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"code": "IDP_MEMBER_ADD_001", "message": err.Error()})
 		return
 	}

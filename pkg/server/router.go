@@ -74,8 +74,8 @@ func InitRouter(conf config.BaseConfig) *gin.Engine {
 	}
 	idpUsecase := usecase.NewIdP(idpManager)
 	idpPublicCtrl := controller.NewIdPPublic(idpUsecase)
-	idpInternalCtrl := controller.NewIdPInternal(idpUsecase)
-	idpPrivateCtrl := controller.NewIdPPrivate(idpUsecase)
+	idpInternalCtrl := controller.NewIdPInternal(idpUsecase, commonUsecase)
+	idpPrivateCtrl := controller.NewIdPPrivate(idpUsecase, commonUsecase)
 
 	// -- resource --
 	resourceRepo := repository.NewResource(conf)

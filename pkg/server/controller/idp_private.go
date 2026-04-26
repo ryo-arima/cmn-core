@@ -34,12 +34,13 @@ type IdPPrivate interface {
 }
 
 type idpPrivate struct {
-	idpUsecase usecase.IdP
+	idpUsecase    usecase.IdP
+	commonUsecase usecase.Common
 }
 
 // NewIdPPrivate creates a new IdPPrivate controller.
-func NewIdPPrivate(iu usecase.IdP) IdPPrivate {
-	return &idpPrivate{idpUsecase: iu}
+func NewIdPPrivate(iu usecase.IdP, cu usecase.Common) IdPPrivate {
+	return &idpPrivate{idpUsecase: iu, commonUsecase: cu}
 }
 
 // ---- Users -----------------------------------------------------------------
@@ -61,6 +62,7 @@ func (ic *idpPrivate) ListUsers(c *gin.Context) {
 			FirstName: u.FirstName,
 			LastName:  u.LastName,
 			Enabled:   u.Enabled,
+			Role:      ic.commonUsecase.ResolveRole(u.Email),
 			CreatedAt: u.CreatedAt,
 		})
 	}
@@ -82,6 +84,7 @@ func (ic *idpPrivate) GetUser(c *gin.Context) {
 		FirstName: u.FirstName,
 		LastName:  u.LastName,
 		Enabled:   u.Enabled,
+		Role:      ic.commonUsecase.ResolveRole(u.Email),
 		CreatedAt: u.CreatedAt,
 	}
 	c.JSON(http.StatusOK, response.SingleIdPUser{Code: "SUCCESS", Message: "ok", User: resp})
@@ -107,6 +110,7 @@ func (ic *idpPrivate) CreateUser(c *gin.Context) {
 		FirstName: u.FirstName,
 		LastName:  u.LastName,
 		Enabled:   u.Enabled,
+		Role:      ic.commonUsecase.ResolveRole(u.Email),
 		CreatedAt: u.CreatedAt,
 	}
 	c.JSON(http.StatusCreated, response.SingleIdPUser{Code: "SUCCESS", Message: "created", User: resp})
@@ -233,6 +237,7 @@ func (ic *idpPrivate) ListGroupMembers(c *gin.Context) {
 			FirstName: u.FirstName,
 			LastName:  u.LastName,
 			Enabled:   u.Enabled,
+			Role:      u.Role,
 			CreatedAt: u.CreatedAt,
 		})
 	}
@@ -247,7 +252,7 @@ func (ic *idpPrivate) AddGroupMember(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"code": "IDP_MEMBER_ADD_001", "message": "Invalid request body"})
 		return
 	}
-	if err := ic.idpUsecase.AddUserToGroup(c.Request.Context(), req.UserID, c.Param("group_id")); err != nil {
+	if err := ic.idpUsecase.AddUserToGroup(c.Request.Context(), req.UserID, c.Param("group_id"), req.Role); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"code": "IDP_MEMBER_ADD_002", "message": err.Error()})
 		return
 	}

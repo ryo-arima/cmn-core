@@ -80,9 +80,9 @@ func idpUsersTableString(res response.IdPUsers) string {
 	fmt.Fprintf(w, "%s\t%s\n", res.Code, res.Message)
 	if len(res.Users) > 0 {
 		fmt.Fprintln(w)
-		fmt.Fprintln(w, strings.Join([]string{"ID", "USERNAME", "EMAIL", "FIRST_NAME", "LAST_NAME", "ENABLED"}, "\t"))
+		fmt.Fprintln(w, strings.Join([]string{"ID", "USERNAME", "EMAIL", "FIRST_NAME", "LAST_NAME", "ENABLED", "ROLE"}, "\t"))
 		for _, u := range res.Users {
-			fmt.Fprintf(w, "%s\t%s\t%s\t%s\t%s\t%v\n", u.ID, u.Username, u.Email, u.FirstName, u.LastName, u.Enabled)
+			fmt.Fprintf(w, "%s\t%s\t%s\t%s\t%s\t%v\t%s\n", u.ID, u.Username, u.Email, u.FirstName, u.LastName, u.Enabled, u.Role)
 		}
 	}
 	w.Flush()
@@ -95,9 +95,9 @@ func singleIdPUserTableString(res response.SingleIdPUser) string {
 	fmt.Fprintf(w, "%s\t%s\n", res.Code, res.Message)
 	if res.User != nil {
 		fmt.Fprintln(w)
-		fmt.Fprintln(w, strings.Join([]string{"ID", "USERNAME", "EMAIL", "FIRST_NAME", "LAST_NAME", "ENABLED"}, "\t"))
+		fmt.Fprintln(w, strings.Join([]string{"ID", "USERNAME", "EMAIL", "FIRST_NAME", "LAST_NAME", "ENABLED", "ROLE"}, "\t"))
 		u := res.User
-		fmt.Fprintf(w, "%s\t%s\t%s\t%s\t%s\t%v\n", u.ID, u.Username, u.Email, u.FirstName, u.LastName, u.Enabled)
+		fmt.Fprintf(w, "%s\t%s\t%s\t%s\t%s\t%v\t%s\n", u.ID, u.Username, u.Email, u.FirstName, u.LastName, u.Enabled, u.Role)
 	}
 	w.Flush()
 	return buf.String()

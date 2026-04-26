@@ -107,7 +107,69 @@
         "/group086",
         "/group091",
         "/group096"
-      ]
+      ],
+      "attributes": {
+        "cmn_group_group001_role": [
+          "owner"
+        ],
+        "cmn_group_group006_role": [
+          "owner"
+        ],
+        "cmn_group_group011_role": [
+          "owner"
+        ],
+        "cmn_group_group016_role": [
+          "owner"
+        ],
+        "cmn_group_group021_role": [
+          "owner"
+        ],
+        "cmn_group_group026_role": [
+          "owner"
+        ],
+        "cmn_group_group031_role": [
+          "owner"
+        ],
+        "cmn_group_group036_role": [
+          "owner"
+        ],
+        "cmn_group_group041_role": [
+          "owner"
+        ],
+        "cmn_group_group046_role": [
+          "owner"
+        ],
+        "cmn_group_group051_role": [
+          "owner"
+        ],
+        "cmn_group_group056_role": [
+          "owner"
+        ],
+        "cmn_group_group061_role": [
+          "owner"
+        ],
+        "cmn_group_group066_role": [
+          "owner"
+        ],
+        "cmn_group_group071_role": [
+          "owner"
+        ],
+        "cmn_group_group076_role": [
+          "owner"
+        ],
+        "cmn_group_group081_role": [
+          "owner"
+        ],
+        "cmn_group_group086_role": [
+          "owner"
+        ],
+        "cmn_group_group091_role": [
+          "owner"
+        ],
+        "cmn_group_group096_role": [
+          "owner"
+        ]
+      }
     },
     {
       "username": "user02",
@@ -146,7 +208,69 @@
         "/group086",
         "/group091",
         "/group096"
-      ]
+      ],
+      "attributes": {
+        "cmn_group_group001_role": [
+          "editor"
+        ],
+        "cmn_group_group006_role": [
+          "editor"
+        ],
+        "cmn_group_group011_role": [
+          "editor"
+        ],
+        "cmn_group_group016_role": [
+          "editor"
+        ],
+        "cmn_group_group021_role": [
+          "editor"
+        ],
+        "cmn_group_group026_role": [
+          "editor"
+        ],
+        "cmn_group_group031_role": [
+          "editor"
+        ],
+        "cmn_group_group036_role": [
+          "editor"
+        ],
+        "cmn_group_group041_role": [
+          "editor"
+        ],
+        "cmn_group_group046_role": [
+          "editor"
+        ],
+        "cmn_group_group051_role": [
+          "editor"
+        ],
+        "cmn_group_group056_role": [
+          "editor"
+        ],
+        "cmn_group_group061_role": [
+          "editor"
+        ],
+        "cmn_group_group066_role": [
+          "editor"
+        ],
+        "cmn_group_group071_role": [
+          "editor"
+        ],
+        "cmn_group_group076_role": [
+          "editor"
+        ],
+        "cmn_group_group081_role": [
+          "editor"
+        ],
+        "cmn_group_group086_role": [
+          "editor"
+        ],
+        "cmn_group_group091_role": [
+          "editor"
+        ],
+        "cmn_group_group096_role": [
+          "editor"
+        ]
+      }
     },
     {
       "username": "user03",
@@ -185,7 +309,69 @@
         "/group086",
         "/group091",
         "/group096"
-      ]
+      ],
+      "attributes": {
+        "cmn_group_group001_role": [
+          "editor"
+        ],
+        "cmn_group_group006_role": [
+          "editor"
+        ],
+        "cmn_group_group011_role": [
+          "editor"
+        ],
+        "cmn_group_group016_role": [
+          "editor"
+        ],
+        "cmn_group_group021_role": [
+          "editor"
+        ],
+        "cmn_group_group026_role": [
+          "editor"
+        ],
+        "cmn_group_group031_role": [
+          "editor"
+        ],
+        "cmn_group_group036_role": [
+          "editor"
+        ],
+        "cmn_group_group041_role": [
+          "editor"
+        ],
+        "cmn_group_group046_role": [
+          "editor"
+        ],
+        "cmn_group_group051_role": [
+          "editor"
+        ],
+        "cmn_group_group056_role": [
+          "editor"
+        ],
+        "cmn_group_group061_role": [
+          "editor"
+        ],
+        "cmn_group_group066_role": [
+          "editor"
+        ],
+        "cmn_group_group071_role": [
+          "editor"
+        ],
+        "cmn_group_group076_role": [
+          "editor"
+        ],
+        "cmn_group_group081_role": [
+          "editor"
+        ],
+        "cmn_group_group086_role": [
+          "editor"
+        ],
+        "cmn_group_group091_role": [
+          "editor"
+        ],
+        "cmn_group_group096_role": [
+          "editor"
+        ]
+      }
     },
     {
       "username": "user04",
@@ -224,7 +410,69 @@
         "/group086",
         "/group091",
         "/group096"
-      ]
+      ],
+      "attributes": {
+        "cmn_group_group001_role": [
+          "viewer"
+        ],
+        "cmn_group_group006_role": [
+          "viewer"
+        ],
+        "cmn_group_group011_role": [
+          "viewer"
+        ],
+        "cmn_group_group016_role": [
+          "viewer"
+        ],
+        "cmn_group_group021_role": [
+          "viewer"
+        ],
+        "cmn_group_group026_role": [
+          "viewer"
+        ],
+        "cmn_group_group031_role": [
+          "viewer"
+        ],
+        "cmn_group_group036_role": [
+          "viewer"
+        ],
+        "cmn_group_group041_role": [
+          "viewer"
+        ],
+        "cmn_group_group046_role": [
+          "viewer"
+        ],
+        "cmn_group_group051_role": [
+          "viewer"
+        ],
+        "cmn_group_group056_role": [
+          "viewer"
+        ],
+        "cmn_group_group061_role": [
+          "viewer"
+        ],
+        "cmn_group_group066_role": [
+          "viewer"
+        ],
+        "cmn_group_group071_role": [
+          "viewer"
+        ],
+        "cmn_group_group076_role": [
+          "viewer"
+        ],
+        "cmn_group_group081_role": [
+          "viewer"
+        ],
+        "cmn_group_group086_role": [
+          "viewer"
+        ],
+        "cmn_group_group091_role": [
+          "viewer"
+        ],
+        "cmn_group_group096_role": [
+          "viewer"
+        ]
+      }
     },
     {
       "username": "user05",
@@ -263,7 +511,69 @@
         "/group086",
         "/group091",
         "/group096"
-      ]
+      ],
+      "attributes": {
+        "cmn_group_group001_role": [
+          "viewer"
+        ],
+        "cmn_group_group006_role": [
+          "viewer"
+        ],
+        "cmn_group_group011_role": [
+          "viewer"
+        ],
+        "cmn_group_group016_role": [
+          "viewer"
+        ],
+        "cmn_group_group021_role": [
+          "viewer"
+        ],
+        "cmn_group_group026_role": [
+          "viewer"
+        ],
+        "cmn_group_group031_role": [
+          "viewer"
+        ],
+        "cmn_group_group036_role": [
+          "viewer"
+        ],
+        "cmn_group_group041_role": [
+          "viewer"
+        ],
+        "cmn_group_group046_role": [
+          "viewer"
+        ],
+        "cmn_group_group051_role": [
+          "viewer"
+        ],
+        "cmn_group_group056_role": [
+          "viewer"
+        ],
+        "cmn_group_group061_role": [
+          "viewer"
+        ],
+        "cmn_group_group066_role": [
+          "viewer"
+        ],
+        "cmn_group_group071_role": [
+          "viewer"
+        ],
+        "cmn_group_group076_role": [
+          "viewer"
+        ],
+        "cmn_group_group081_role": [
+          "viewer"
+        ],
+        "cmn_group_group086_role": [
+          "viewer"
+        ],
+        "cmn_group_group091_role": [
+          "viewer"
+        ],
+        "cmn_group_group096_role": [
+          "viewer"
+        ]
+      }
     },
     {
       "username": "user06",
@@ -302,7 +612,69 @@
         "/group086",
         "/group091",
         "/group096"
-      ]
+      ],
+      "attributes": {
+        "cmn_group_group001_role": [
+          "viewer"
+        ],
+        "cmn_group_group006_role": [
+          "viewer"
+        ],
+        "cmn_group_group011_role": [
+          "viewer"
+        ],
+        "cmn_group_group016_role": [
+          "viewer"
+        ],
+        "cmn_group_group021_role": [
+          "viewer"
+        ],
+        "cmn_group_group026_role": [
+          "viewer"
+        ],
+        "cmn_group_group031_role": [
+          "viewer"
+        ],
+        "cmn_group_group036_role": [
+          "viewer"
+        ],
+        "cmn_group_group041_role": [
+          "viewer"
+        ],
+        "cmn_group_group046_role": [
+          "viewer"
+        ],
+        "cmn_group_group051_role": [
+          "viewer"
+        ],
+        "cmn_group_group056_role": [
+          "viewer"
+        ],
+        "cmn_group_group061_role": [
+          "viewer"
+        ],
+        "cmn_group_group066_role": [
+          "viewer"
+        ],
+        "cmn_group_group071_role": [
+          "viewer"
+        ],
+        "cmn_group_group076_role": [
+          "viewer"
+        ],
+        "cmn_group_group081_role": [
+          "viewer"
+        ],
+        "cmn_group_group086_role": [
+          "viewer"
+        ],
+        "cmn_group_group091_role": [
+          "viewer"
+        ],
+        "cmn_group_group096_role": [
+          "viewer"
+        ]
+      }
     },
     {
       "username": "user07",
@@ -341,7 +713,69 @@
         "/group086",
         "/group091",
         "/group096"
-      ]
+      ],
+      "attributes": {
+        "cmn_group_group001_role": [
+          "viewer"
+        ],
+        "cmn_group_group006_role": [
+          "viewer"
+        ],
+        "cmn_group_group011_role": [
+          "viewer"
+        ],
+        "cmn_group_group016_role": [
+          "viewer"
+        ],
+        "cmn_group_group021_role": [
+          "viewer"
+        ],
+        "cmn_group_group026_role": [
+          "viewer"
+        ],
+        "cmn_group_group031_role": [
+          "viewer"
+        ],
+        "cmn_group_group036_role": [
+          "viewer"
+        ],
+        "cmn_group_group041_role": [
+          "viewer"
+        ],
+        "cmn_group_group046_role": [
+          "viewer"
+        ],
+        "cmn_group_group051_role": [
+          "viewer"
+        ],
+        "cmn_group_group056_role": [
+          "viewer"
+        ],
+        "cmn_group_group061_role": [
+          "viewer"
+        ],
+        "cmn_group_group066_role": [
+          "viewer"
+        ],
+        "cmn_group_group071_role": [
+          "viewer"
+        ],
+        "cmn_group_group076_role": [
+          "viewer"
+        ],
+        "cmn_group_group081_role": [
+          "viewer"
+        ],
+        "cmn_group_group086_role": [
+          "viewer"
+        ],
+        "cmn_group_group091_role": [
+          "viewer"
+        ],
+        "cmn_group_group096_role": [
+          "viewer"
+        ]
+      }
     },
     {
       "username": "user08",
@@ -380,7 +814,69 @@
         "/group086",
         "/group091",
         "/group096"
-      ]
+      ],
+      "attributes": {
+        "cmn_group_group001_role": [
+          "viewer"
+        ],
+        "cmn_group_group006_role": [
+          "viewer"
+        ],
+        "cmn_group_group011_role": [
+          "viewer"
+        ],
+        "cmn_group_group016_role": [
+          "viewer"
+        ],
+        "cmn_group_group021_role": [
+          "viewer"
+        ],
+        "cmn_group_group026_role": [
+          "viewer"
+        ],
+        "cmn_group_group031_role": [
+          "viewer"
+        ],
+        "cmn_group_group036_role": [
+          "viewer"
+        ],
+        "cmn_group_group041_role": [
+          "viewer"
+        ],
+        "cmn_group_group046_role": [
+          "viewer"
+        ],
+        "cmn_group_group051_role": [
+          "viewer"
+        ],
+        "cmn_group_group056_role": [
+          "viewer"
+        ],
+        "cmn_group_group061_role": [
+          "viewer"
+        ],
+        "cmn_group_group066_role": [
+          "viewer"
+        ],
+        "cmn_group_group071_role": [
+          "viewer"
+        ],
+        "cmn_group_group076_role": [
+          "viewer"
+        ],
+        "cmn_group_group081_role": [
+          "viewer"
+        ],
+        "cmn_group_group086_role": [
+          "viewer"
+        ],
+        "cmn_group_group091_role": [
+          "viewer"
+        ],
+        "cmn_group_group096_role": [
+          "viewer"
+        ]
+      }
     },
     {
       "username": "user09",
@@ -419,7 +915,69 @@
         "/group086",
         "/group091",
         "/group096"
-      ]
+      ],
+      "attributes": {
+        "cmn_group_group001_role": [
+          "viewer"
+        ],
+        "cmn_group_group006_role": [
+          "viewer"
+        ],
+        "cmn_group_group011_role": [
+          "viewer"
+        ],
+        "cmn_group_group016_role": [
+          "viewer"
+        ],
+        "cmn_group_group021_role": [
+          "viewer"
+        ],
+        "cmn_group_group026_role": [
+          "viewer"
+        ],
+        "cmn_group_group031_role": [
+          "viewer"
+        ],
+        "cmn_group_group036_role": [
+          "viewer"
+        ],
+        "cmn_group_group041_role": [
+          "viewer"
+        ],
+        "cmn_group_group046_role": [
+          "viewer"
+        ],
+        "cmn_group_group051_role": [
+          "viewer"
+        ],
+        "cmn_group_group056_role": [
+          "viewer"
+        ],
+        "cmn_group_group061_role": [
+          "viewer"
+        ],
+        "cmn_group_group066_role": [
+          "viewer"
+        ],
+        "cmn_group_group071_role": [
+          "viewer"
+        ],
+        "cmn_group_group076_role": [
+          "viewer"
+        ],
+        "cmn_group_group081_role": [
+          "viewer"
+        ],
+        "cmn_group_group086_role": [
+          "viewer"
+        ],
+        "cmn_group_group091_role": [
+          "viewer"
+        ],
+        "cmn_group_group096_role": [
+          "viewer"
+        ]
+      }
     },
     {
       "username": "user10",
@@ -458,7 +1016,69 @@
         "/group086",
         "/group091",
         "/group096"
-      ]
+      ],
+      "attributes": {
+        "cmn_group_group001_role": [
+          "viewer"
+        ],
+        "cmn_group_group006_role": [
+          "viewer"
+        ],
+        "cmn_group_group011_role": [
+          "viewer"
+        ],
+        "cmn_group_group016_role": [
+          "viewer"
+        ],
+        "cmn_group_group021_role": [
+          "viewer"
+        ],
+        "cmn_group_group026_role": [
+          "viewer"
+        ],
+        "cmn_group_group031_role": [
+          "viewer"
+        ],
+        "cmn_group_group036_role": [
+          "viewer"
+        ],
+        "cmn_group_group041_role": [
+          "viewer"
+        ],
+        "cmn_group_group046_role": [
+          "viewer"
+        ],
+        "cmn_group_group051_role": [
+          "viewer"
+        ],
+        "cmn_group_group056_role": [
+          "viewer"
+        ],
+        "cmn_group_group061_role": [
+          "viewer"
+        ],
+        "cmn_group_group066_role": [
+          "viewer"
+        ],
+        "cmn_group_group071_role": [
+          "viewer"
+        ],
+        "cmn_group_group076_role": [
+          "viewer"
+        ],
+        "cmn_group_group081_role": [
+          "viewer"
+        ],
+        "cmn_group_group086_role": [
+          "viewer"
+        ],
+        "cmn_group_group091_role": [
+          "viewer"
+        ],
+        "cmn_group_group096_role": [
+          "viewer"
+        ]
+      }
     },
     {
       "username": "user11",
@@ -497,7 +1117,69 @@
         "/group087",
         "/group092",
         "/group097"
-      ]
+      ],
+      "attributes": {
+        "cmn_group_group002_role": [
+          "owner"
+        ],
+        "cmn_group_group007_role": [
+          "owner"
+        ],
+        "cmn_group_group012_role": [
+          "owner"
+        ],
+        "cmn_group_group017_role": [
+          "owner"
+        ],
+        "cmn_group_group022_role": [
+          "owner"
+        ],
+        "cmn_group_group027_role": [
+          "owner"
+        ],
+        "cmn_group_group032_role": [
+          "owner"
+        ],
+        "cmn_group_group037_role": [
+          "owner"
+        ],
+        "cmn_group_group042_role": [
+          "owner"
+        ],
+        "cmn_group_group047_role": [
+          "owner"
+        ],
+        "cmn_group_group052_role": [
+          "owner"
+        ],
+        "cmn_group_group057_role": [
+          "owner"
+        ],
+        "cmn_group_group062_role": [
+          "owner"
+        ],
+        "cmn_group_group067_role": [
+          "owner"
+        ],
+        "cmn_group_group072_role": [
+          "owner"
+        ],
+        "cmn_group_group077_role": [
+          "owner"
+        ],
+        "cmn_group_group082_role": [
+          "owner"
+        ],
+        "cmn_group_group087_role": [
+          "owner"
+        ],
+        "cmn_group_group092_role": [
+          "owner"
+        ],
+        "cmn_group_group097_role": [
+          "owner"
+        ]
+      }
     },
     {
       "username": "user12",
@@ -536,7 +1218,69 @@
         "/group087",
         "/group092",
         "/group097"
-      ]
+      ],
+      "attributes": {
+        "cmn_group_group002_role": [
+          "editor"
+        ],
+        "cmn_group_group007_role": [
+          "editor"
+        ],
+        "cmn_group_group012_role": [
+          "editor"
+        ],
+        "cmn_group_group017_role": [
+          "editor"
+        ],
+        "cmn_group_group022_role": [
+          "editor"
+        ],
+        "cmn_group_group027_role": [
+          "editor"
+        ],
+        "cmn_group_group032_role": [
+          "editor"
+        ],
+        "cmn_group_group037_role": [
+          "editor"
+        ],
+        "cmn_group_group042_role": [
+          "editor"
+        ],
+        "cmn_group_group047_role": [
+          "editor"
+        ],
+        "cmn_group_group052_role": [
+          "editor"
+        ],
+        "cmn_group_group057_role": [
+          "editor"
+        ],
+        "cmn_group_group062_role": [
+          "editor"
+        ],
+        "cmn_group_group067_role": [
+          "editor"
+        ],
+        "cmn_group_group072_role": [
+          "editor"
+        ],
+        "cmn_group_group077_role": [
+          "editor"
+        ],
+        "cmn_group_group082_role": [
+          "editor"
+        ],
+        "cmn_group_group087_role": [
+          "editor"
+        ],
+        "cmn_group_group092_role": [
+          "editor"
+        ],
+        "cmn_group_group097_role": [
+          "editor"
+        ]
+      }
     },
     {
       "username": "user13",
@@ -575,7 +1319,69 @@
         "/group087",
         "/group092",
         "/group097"
-      ]
+      ],
+      "attributes": {
+        "cmn_group_group002_role": [
+          "editor"
+        ],
+        "cmn_group_group007_role": [
+          "editor"
+        ],
+        "cmn_group_group012_role": [
+          "editor"
+        ],
+        "cmn_group_group017_role": [
+          "editor"
+        ],
+        "cmn_group_group022_role": [
+          "editor"
+        ],
+        "cmn_group_group027_role": [
+          "editor"
+        ],
+        "cmn_group_group032_role": [
+          "editor"
+        ],
+        "cmn_group_group037_role": [
+          "editor"
+        ],
+        "cmn_group_group042_role": [
+          "editor"
+        ],
+        "cmn_group_group047_role": [
+          "editor"
+        ],
+        "cmn_group_group052_role": [
+          "editor"
+        ],
+        "cmn_group_group057_role": [
+          "editor"
+        ],
+        "cmn_group_group062_role": [
+          "editor"
+        ],
+        "cmn_group_group067_role": [
+          "editor"
+        ],
+        "cmn_group_group072_role": [
+          "editor"
+        ],
+        "cmn_group_group077_role": [
+          "editor"
+        ],
+        "cmn_group_group082_role": [
+          "editor"
+        ],
+        "cmn_group_group087_role": [
+          "editor"
+        ],
+        "cmn_group_group092_role": [
+          "editor"
+        ],
+        "cmn_group_group097_role": [
+          "editor"
+        ]
+      }
     },
     {
       "username": "user14",
@@ -614,7 +1420,69 @@
         "/group087",
         "/group092",
         "/group097"
-      ]
+      ],
+      "attributes": {
+        "cmn_group_group002_role": [
+          "viewer"
+        ],
+        "cmn_group_group007_role": [
+          "viewer"
+        ],
+        "cmn_group_group012_role": [
+          "viewer"
+        ],
+        "cmn_group_group017_role": [
+          "viewer"
+        ],
+        "cmn_group_group022_role": [
+          "viewer"
+        ],
+        "cmn_group_group027_role": [
+          "viewer"
+        ],
+        "cmn_group_group032_role": [
+          "viewer"
+        ],
+        "cmn_group_group037_role": [
+          "viewer"
+        ],
+        "cmn_group_group042_role": [
+          "viewer"
+        ],
+        "cmn_group_group047_role": [
+          "viewer"
+        ],
+        "cmn_group_group052_role": [
+          "viewer"
+        ],
+        "cmn_group_group057_role": [
+          "viewer"
+        ],
+        "cmn_group_group062_role": [
+          "viewer"
+        ],
+        "cmn_group_group067_role": [
+          "viewer"
+        ],
+        "cmn_group_group072_role": [
+          "viewer"
+        ],
+        "cmn_group_group077_role": [
+          "viewer"
+        ],
+        "cmn_group_group082_role": [
+          "viewer"
+        ],
+        "cmn_group_group087_role": [
+          "viewer"
+        ],
+        "cmn_group_group092_role": [
+          "viewer"
+        ],
+        "cmn_group_group097_role": [
+          "viewer"
+        ]
+      }
     },
     {
       "username": "user15",
@@ -653,7 +1521,69 @@
         "/group087",
         "/group092",
         "/group097"
-      ]
+      ],
+      "attributes": {
+        "cmn_group_group002_role": [
+          "viewer"
+        ],
+        "cmn_group_group007_role": [
+          "viewer"
+        ],
+        "cmn_group_group012_role": [
+          "viewer"
+        ],
+        "cmn_group_group017_role": [
+          "viewer"
+        ],
+        "cmn_group_group022_role": [
+          "viewer"
+        ],
+        "cmn_group_group027_role": [
+          "viewer"
+        ],
+        "cmn_group_group032_role": [
+          "viewer"
+        ],
+        "cmn_group_group037_role": [
+          "viewer"
+        ],
+        "cmn_group_group042_role": [
+          "viewer"
+        ],
+        "cmn_group_group047_role": [
+          "viewer"
+        ],
+        "cmn_group_group052_role": [
+          "viewer"
+        ],
+        "cmn_group_group057_role": [
+          "viewer"
+        ],
+        "cmn_group_group062_role": [
+          "viewer"
+        ],
+        "cmn_group_group067_role": [
+          "viewer"
+        ],
+        "cmn_group_group072_role": [
+          "viewer"
+        ],
+        "cmn_group_group077_role": [
+          "viewer"
+        ],
+        "cmn_group_group082_role": [
+          "viewer"
+        ],
+        "cmn_group_group087_role": [
+          "viewer"
+        ],
+        "cmn_group_group092_role": [
+          "viewer"
+        ],
+        "cmn_group_group097_role": [
+          "viewer"
+        ]
+      }
     },
     {
       "username": "user16",
@@ -692,7 +1622,69 @@
         "/group087",
         "/group092",
         "/group097"
-      ]
+      ],
+      "attributes": {
+        "cmn_group_group002_role": [
+          "viewer"
+        ],
+        "cmn_group_group007_role": [
+          "viewer"
+        ],
+        "cmn_group_group012_role": [
+          "viewer"
+        ],
+        "cmn_group_group017_role": [
+          "viewer"
+        ],
+        "cmn_group_group022_role": [
+          "viewer"
+        ],
+        "cmn_group_group027_role": [
+          "viewer"
+        ],
+        "cmn_group_group032_role": [
+          "viewer"
+        ],
+        "cmn_group_group037_role": [
+          "viewer"
+        ],
+        "cmn_group_group042_role": [
+          "viewer"
+        ],
+        "cmn_group_group047_role": [
+          "viewer"
+        ],
+        "cmn_group_group052_role": [
+          "viewer"
+        ],
+        "cmn_group_group057_role": [
+          "viewer"
+        ],
+        "cmn_group_group062_role": [
+          "viewer"
+        ],
+        "cmn_group_group067_role": [
+          "viewer"
+        ],
+        "cmn_group_group072_role": [
+          "viewer"
+        ],
+        "cmn_group_group077_role": [
+          "viewer"
+        ],
+        "cmn_group_group082_role": [
+          "viewer"
+        ],
+        "cmn_group_group087_role": [
+          "viewer"
+        ],
+        "cmn_group_group092_role": [
+          "viewer"
+        ],
+        "cmn_group_group097_role": [
+          "viewer"
+        ]
+      }
     },
     {
       "username": "user17",
@@ -731,7 +1723,69 @@
         "/group087",
         "/group092",
         "/group097"
-      ]
+      ],
+      "attributes": {
+        "cmn_group_group002_role": [
+          "viewer"
+        ],
+        "cmn_group_group007_role": [
+          "viewer"
+        ],
+        "cmn_group_group012_role": [
+          "viewer"
+        ],
+        "cmn_group_group017_role": [
+          "viewer"
+        ],
+        "cmn_group_group022_role": [
+          "viewer"
+        ],
+        "cmn_group_group027_role": [
+          "viewer"
+        ],
+        "cmn_group_group032_role": [
+          "viewer"
+        ],
+        "cmn_group_group037_role": [
+          "viewer"
+        ],
+        "cmn_group_group042_role": [
+          "viewer"
+        ],
+        "cmn_group_group047_role": [
+          "viewer"
+        ],
+        "cmn_group_group052_role": [
+          "viewer"
+        ],
+        "cmn_group_group057_role": [
+          "viewer"
+        ],
+        "cmn_group_group062_role": [
+          "viewer"
+        ],
+        "cmn_group_group067_role": [
+          "viewer"
+        ],
+        "cmn_group_group072_role": [
+          "viewer"
+        ],
+        "cmn_group_group077_role": [
+          "viewer"
+        ],
+        "cmn_group_group082_role": [
+          "viewer"
+        ],
+        "cmn_group_group087_role": [
+          "viewer"
+        ],
+        "cmn_group_group092_role": [
+          "viewer"
+        ],
+        "cmn_group_group097_role": [
+          "viewer"
+        ]
+      }
     },
     {
       "username": "user18",
@@ -770,7 +1824,69 @@
         "/group087",
         "/group092",
         "/group097"
-      ]
+      ],
+      "attributes": {
+        "cmn_group_group002_role": [
+          "viewer"
+        ],
+        "cmn_group_group007_role": [
+          "viewer"
+        ],
+        "cmn_group_group012_role": [
+          "viewer"
+        ],
+        "cmn_group_group017_role": [
+          "viewer"
+        ],
+        "cmn_group_group022_role": [
+          "viewer"
+        ],
+        "cmn_group_group027_role": [
+          "viewer"
+        ],
+        "cmn_group_group032_role": [
+          "viewer"
+        ],
+        "cmn_group_group037_role": [
+          "viewer"
+        ],
+        "cmn_group_group042_role": [
+          "viewer"
+        ],
+        "cmn_group_group047_role": [
+          "viewer"
+        ],
+        "cmn_group_group052_role": [
+          "viewer"
+        ],
+        "cmn_group_group057_role": [
+          "viewer"
+        ],
+        "cmn_group_group062_role": [
+          "viewer"
+        ],
+        "cmn_group_group067_role": [
+          "viewer"
+        ],
+        "cmn_group_group072_role": [
+          "viewer"
+        ],
+        "cmn_group_group077_role": [
+          "viewer"
+        ],
+        "cmn_group_group082_role": [
+          "viewer"
+        ],
+        "cmn_group_group087_role": [
+          "viewer"
+        ],
+        "cmn_group_group092_role": [
+          "viewer"
+        ],
+        "cmn_group_group097_role": [
+          "viewer"
+        ]
+      }
     },
     {
       "username": "user19",
@@ -809,7 +1925,69 @@
         "/group087",
         "/group092",
         "/group097"
-      ]
+      ],
+      "attributes": {
+        "cmn_group_group002_role": [
+          "viewer"
+        ],
+        "cmn_group_group007_role": [
+          "viewer"
+        ],
+        "cmn_group_group012_role": [
+          "viewer"
+        ],
+        "cmn_group_group017_role": [
+          "viewer"
+        ],
+        "cmn_group_group022_role": [
+          "viewer"
+        ],
+        "cmn_group_group027_role": [
+          "viewer"
+        ],
+        "cmn_group_group032_role": [
+          "viewer"
+        ],
+        "cmn_group_group037_role": [
+          "viewer"
+        ],
+        "cmn_group_group042_role": [
+          "viewer"
+        ],
+        "cmn_group_group047_role": [
+          "viewer"
+        ],
+        "cmn_group_group052_role": [
+          "viewer"
+        ],
+        "cmn_group_group057_role": [
+          "viewer"
+        ],
+        "cmn_group_group062_role": [
+          "viewer"
+        ],
+        "cmn_group_group067_role": [
+          "viewer"
+        ],
+        "cmn_group_group072_role": [
+          "viewer"
+        ],
+        "cmn_group_group077_role": [
+          "viewer"
+        ],
+        "cmn_group_group082_role": [
+          "viewer"
+        ],
+        "cmn_group_group087_role": [
+          "viewer"
+        ],
+        "cmn_group_group092_role": [
+          "viewer"
+        ],
+        "cmn_group_group097_role": [
+          "viewer"
+        ]
+      }
     },
     {
       "username": "user20",
@@ -848,7 +2026,69 @@
         "/group087",
         "/group092",
         "/group097"
-      ]
+      ],
+      "attributes": {
+        "cmn_group_group002_role": [
+          "viewer"
+        ],
+        "cmn_group_group007_role": [
+          "viewer"
+        ],
+        "cmn_group_group012_role": [
+          "viewer"
+        ],
+        "cmn_group_group017_role": [
+          "viewer"
+        ],
+        "cmn_group_group022_role": [
+          "viewer"
+        ],
+        "cmn_group_group027_role": [
+          "viewer"
+        ],
+        "cmn_group_group032_role": [
+          "viewer"
+        ],
+        "cmn_group_group037_role": [
+          "viewer"
+        ],
+        "cmn_group_group042_role": [
+          "viewer"
+        ],
+        "cmn_group_group047_role": [
+          "viewer"
+        ],
+        "cmn_group_group052_role": [
+          "viewer"
+        ],
+        "cmn_group_group057_role": [
+          "viewer"
+        ],
+        "cmn_group_group062_role": [
+          "viewer"
+        ],
+        "cmn_group_group067_role": [
+          "viewer"
+        ],
+        "cmn_group_group072_role": [
+          "viewer"
+        ],
+        "cmn_group_group077_role": [
+          "viewer"
+        ],
+        "cmn_group_group082_role": [
+          "viewer"
+        ],
+        "cmn_group_group087_role": [
+          "viewer"
+        ],
+        "cmn_group_group092_role": [
+          "viewer"
+        ],
+        "cmn_group_group097_role": [
+          "viewer"
+        ]
+      }
     },
     {
       "username": "user21",
@@ -887,7 +2127,69 @@
         "/group088",
         "/group093",
         "/group098"
-      ]
+      ],
+      "attributes": {
+        "cmn_group_group003_role": [
+          "owner"
+        ],
+        "cmn_group_group008_role": [
+          "owner"
+        ],
+        "cmn_group_group013_role": [
+          "owner"
+        ],
+        "cmn_group_group018_role": [
+          "owner"
+        ],
+        "cmn_group_group023_role": [
+          "owner"
+        ],
+        "cmn_group_group028_role": [
+          "owner"
+        ],
+        "cmn_group_group033_role": [
+          "owner"
+        ],
+        "cmn_group_group038_role": [
+          "owner"
+        ],
+        "cmn_group_group043_role": [
+          "owner"
+        ],
+        "cmn_group_group048_role": [
+          "owner"
+        ],
+        "cmn_group_group053_role": [
+          "owner"
+        ],
+        "cmn_group_group058_role": [
+          "owner"
+        ],
+        "cmn_group_group063_role": [
+          "owner"
+        ],
+        "cmn_group_group068_role": [
+          "owner"
+        ],
+        "cmn_group_group073_role": [
+          "owner"
+        ],
+        "cmn_group_group078_role": [
+          "owner"
+        ],
+        "cmn_group_group083_role": [
+          "owner"
+        ],
+        "cmn_group_group088_role": [
+          "owner"
+        ],
+        "cmn_group_group093_role": [
+          "owner"
+        ],
+        "cmn_group_group098_role": [
+          "owner"
+        ]
+      }
     },
     {
       "username": "user22",
@@ -926,7 +2228,69 @@
         "/group088",
         "/group093",
         "/group098"
-      ]
+      ],
+      "attributes": {
+        "cmn_group_group003_role": [
+          "editor"
+        ],
+        "cmn_group_group008_role": [
+          "editor"
+        ],
+        "cmn_group_group013_role": [
+          "editor"
+        ],
+        "cmn_group_group018_role": [
+          "editor"
+        ],
+        "cmn_group_group023_role": [
+          "editor"
+        ],
+        "cmn_group_group028_role": [
+          "editor"
+        ],
+        "cmn_group_group033_role": [
+          "editor"
+        ],
+        "cmn_group_group038_role": [
+          "editor"
+        ],
+        "cmn_group_group043_role": [
+          "editor"
+        ],
+        "cmn_group_group048_role": [
+          "editor"
+        ],
+        "cmn_group_group053_role": [
+          "editor"
+        ],
+        "cmn_group_group058_role": [
+          "editor"
+        ],
+        "cmn_group_group063_role": [
+          "editor"
+        ],
+        "cmn_group_group068_role": [
+          "editor"
+        ],
+        "cmn_group_group073_role": [
+          "editor"
+        ],
+        "cmn_group_group078_role": [
+          "editor"
+        ],
+        "cmn_group_group083_role": [
+          "editor"
+        ],
+        "cmn_group_group088_role": [
+          "editor"
+        ],
+        "cmn_group_group093_role": [
+          "editor"
+        ],
+        "cmn_group_group098_role": [
+          "editor"
+        ]
+      }
     },
     {
       "username": "user23",
@@ -965,7 +2329,69 @@
         "/group088",
         "/group093",
         "/group098"
-      ]
+      ],
+      "attributes": {
+        "cmn_group_group003_role": [
+          "editor"
+        ],
+        "cmn_group_group008_role": [
+          "editor"
+        ],
+        "cmn_group_group013_role": [
+          "editor"
+        ],
+        "cmn_group_group018_role": [
+          "editor"
+        ],
+        "cmn_group_group023_role": [
+          "editor"
+        ],
+        "cmn_group_group028_role": [
+          "editor"
+        ],
+        "cmn_group_group033_role": [
+          "editor"
+        ],
+        "cmn_group_group038_role": [
+          "editor"
+        ],
+        "cmn_group_group043_role": [
+          "editor"
+        ],
+        "cmn_group_group048_role": [
+          "editor"
+        ],
+        "cmn_group_group053_role": [
+          "editor"
+        ],
+        "cmn_group_group058_role": [
+          "editor"
+        ],
+        "cmn_group_group063_role": [
+          "editor"
+        ],
+        "cmn_group_group068_role": [
+          "editor"
+        ],
+        "cmn_group_group073_role": [
+          "editor"
+        ],
+        "cmn_group_group078_role": [
+          "editor"
+        ],
+        "cmn_group_group083_role": [
+          "editor"
+        ],
+        "cmn_group_group088_role": [
+          "editor"
+        ],
+        "cmn_group_group093_role": [
+          "editor"
+        ],
+        "cmn_group_group098_role": [
+          "editor"
+        ]
+      }
     },
     {
       "username": "user24",
@@ -1004,7 +2430,69 @@
         "/group088",
         "/group093",
         "/group098"
-      ]
+      ],
+      "attributes": {
+        "cmn_group_group003_role": [
+          "viewer"
+        ],
+        "cmn_group_group008_role": [
+          "viewer"
+        ],
+        "cmn_group_group013_role": [
+          "viewer"
+        ],
+        "cmn_group_group018_role": [
+          "viewer"
+        ],
+        "cmn_group_group023_role": [
+          "viewer"
+        ],
+        "cmn_group_group028_role": [
+          "viewer"
+        ],
+        "cmn_group_group033_role": [
+          "viewer"
+        ],
+        "cmn_group_group038_role": [
+          "viewer"
+        ],
+        "cmn_group_group043_role": [
+          "viewer"
+        ],
+        "cmn_group_group048_role": [
+          "viewer"
+        ],
+        "cmn_group_group053_role": [
+          "viewer"
+        ],
+        "cmn_group_group058_role": [
+          "viewer"
+        ],
+        "cmn_group_group063_role": [
+          "viewer"
+        ],
+        "cmn_group_group068_role": [
+          "viewer"
+        ],
+        "cmn_group_group073_role": [
+          "viewer"
+        ],
+        "cmn_group_group078_role": [
+          "viewer"
+        ],
+        "cmn_group_group083_role": [
+          "viewer"
+        ],
+        "cmn_group_group088_role": [
+          "viewer"
+        ],
+        "cmn_group_group093_role": [
+          "viewer"
+        ],
+        "cmn_group_group098_role": [
+          "viewer"
+        ]
+      }
     },
     {
       "username": "user25",
@@ -1043,7 +2531,69 @@
         "/group088",
         "/group093",
         "/group098"
-      ]
+      ],
+      "attributes": {
+        "cmn_group_group003_role": [
+          "viewer"
+        ],
+        "cmn_group_group008_role": [
+          "viewer"
+        ],
+        "cmn_group_group013_role": [
+          "viewer"
+        ],
+        "cmn_group_group018_role": [
+          "viewer"
+        ],
+        "cmn_group_group023_role": [
+          "viewer"
+        ],
+        "cmn_group_group028_role": [
+          "viewer"
+        ],
+        "cmn_group_group033_role": [
+          "viewer"
+        ],
+        "cmn_group_group038_role": [
+          "viewer"
+        ],
+        "cmn_group_group043_role": [
+          "viewer"
+        ],
+        "cmn_group_group048_role": [
+          "viewer"
+        ],
+        "cmn_group_group053_role": [
+          "viewer"
+        ],
+        "cmn_group_group058_role": [
+          "viewer"
+        ],
+        "cmn_group_group063_role": [
+          "viewer"
+        ],
+        "cmn_group_group068_role": [
+          "viewer"
+        ],
+        "cmn_group_group073_role": [
+          "viewer"
+        ],
+        "cmn_group_group078_role": [
+          "viewer"
+        ],
+        "cmn_group_group083_role": [
+          "viewer"
+        ],
+        "cmn_group_group088_role": [
+          "viewer"
+        ],
+        "cmn_group_group093_role": [
+          "viewer"
+        ],
+        "cmn_group_group098_role": [
+          "viewer"
+        ]
+      }
     },
     {
       "username": "user26",
@@ -1082,7 +2632,69 @@
         "/group088",
         "/group093",
         "/group098"
-      ]
+      ],
+      "attributes": {
+        "cmn_group_group003_role": [
+          "viewer"
+        ],
+        "cmn_group_group008_role": [
+          "viewer"
+        ],
+        "cmn_group_group013_role": [
+          "viewer"
+        ],
+        "cmn_group_group018_role": [
+          "viewer"
+        ],
+        "cmn_group_group023_role": [
+          "viewer"
+        ],
+        "cmn_group_group028_role": [
+          "viewer"
+        ],
+        "cmn_group_group033_role": [
+          "viewer"
+        ],
+        "cmn_group_group038_role": [
+          "viewer"
+        ],
+        "cmn_group_group043_role": [
+          "viewer"
+        ],
+        "cmn_group_group048_role": [
+          "viewer"
+        ],
+        "cmn_group_group053_role": [
+          "viewer"
+        ],
+        "cmn_group_group058_role": [
+          "viewer"
+        ],
+        "cmn_group_group063_role": [
+          "viewer"
+        ],
+        "cmn_group_group068_role": [
+          "viewer"
+        ],
+        "cmn_group_group073_role": [
+          "viewer"
+        ],
+        "cmn_group_group078_role": [
+          "viewer"
+        ],
+        "cmn_group_group083_role": [
+          "viewer"
+        ],
+        "cmn_group_group088_role": [
+          "viewer"
+        ],
+        "cmn_group_group093_role": [
+          "viewer"
+        ],
+        "cmn_group_group098_role": [
+          "viewer"
+        ]
+      }
     },
     {
       "username": "user27",
@@ -1121,7 +2733,69 @@
         "/group088",
         "/group093",
         "/group098"
-      ]
+      ],
+      "attributes": {
+        "cmn_group_group003_role": [
+          "viewer"
+        ],
+        "cmn_group_group008_role": [
+          "viewer"
+        ],
+        "cmn_group_group013_role": [
+          "viewer"
+        ],
+        "cmn_group_group018_role": [
+          "viewer"
+        ],
+        "cmn_group_group023_role": [
+          "viewer"
+        ],
+        "cmn_group_group028_role": [
+          "viewer"
+        ],
+        "cmn_group_group033_role": [
+          "viewer"
+        ],
+        "cmn_group_group038_role": [
+          "viewer"
+        ],
+        "cmn_group_group043_role": [
+          "viewer"
+        ],
+        "cmn_group_group048_role": [
+          "viewer"
+        ],
+        "cmn_group_group053_role": [
+          "viewer"
+        ],
+        "cmn_group_group058_role": [
+          "viewer"
+        ],
+        "cmn_group_group063_role": [
+          "viewer"
+        ],
+        "cmn_group_group068_role": [
+          "viewer"
+        ],
+        "cmn_group_group073_role": [
+          "viewer"
+        ],
+        "cmn_group_group078_role": [
+          "viewer"
+        ],
+        "cmn_group_group083_role": [
+          "viewer"
+        ],
+        "cmn_group_group088_role": [
+          "viewer"
+        ],
+        "cmn_group_group093_role": [
+          "viewer"
+        ],
+        "cmn_group_group098_role": [
+          "viewer"
+        ]
+      }
     },
     {
       "username": "user28",
@@ -1160,7 +2834,69 @@
         "/group088",
         "/group093",
         "/group098"
-      ]
+      ],
+      "attributes": {
+        "cmn_group_group003_role": [
+          "viewer"
+        ],
+        "cmn_group_group008_role": [
+          "viewer"
+        ],
+        "cmn_group_group013_role": [
+          "viewer"
+        ],
+        "cmn_group_group018_role": [
+          "viewer"
+        ],
+        "cmn_group_group023_role": [
+          "viewer"
+        ],
+        "cmn_group_group028_role": [
+          "viewer"
+        ],
+        "cmn_group_group033_role": [
+          "viewer"
+        ],
+        "cmn_group_group038_role": [
+          "viewer"
+        ],
+        "cmn_group_group043_role": [
+          "viewer"
+        ],
+        "cmn_group_group048_role": [
+          "viewer"
+        ],
+        "cmn_group_group053_role": [
+          "viewer"
+        ],
+        "cmn_group_group058_role": [
+          "viewer"
+        ],
+        "cmn_group_group063_role": [
+          "viewer"
+        ],
+        "cmn_group_group068_role": [
+          "viewer"
+        ],
+        "cmn_group_group073_role": [
+          "viewer"
+        ],
+        "cmn_group_group078_role": [
+          "viewer"
+        ],
+        "cmn_group_group083_role": [
+          "viewer"
+        ],
+        "cmn_group_group088_role": [
+          "viewer"
+        ],
+        "cmn_group_group093_role": [
+          "viewer"
+        ],
+        "cmn_group_group098_role": [
+          "viewer"
+        ]
+      }
     },
     {
       "username": "user29",
@@ -1199,7 +2935,69 @@
         "/group088",
         "/group093",
         "/group098"
-      ]
+      ],
+      "attributes": {
+        "cmn_group_group003_role": [
+          "viewer"
+        ],
+        "cmn_group_group008_role": [
+          "viewer"
+        ],
+        "cmn_group_group013_role": [
+          "viewer"
+        ],
+        "cmn_group_group018_role": [
+          "viewer"
+        ],
+        "cmn_group_group023_role": [
+          "viewer"
+        ],
+        "cmn_group_group028_role": [
+          "viewer"
+        ],
+        "cmn_group_group033_role": [
+          "viewer"
+        ],
+        "cmn_group_group038_role": [
+          "viewer"
+        ],
+        "cmn_group_group043_role": [
+          "viewer"
+        ],
+        "cmn_group_group048_role": [
+          "viewer"
+        ],
+        "cmn_group_group053_role": [
+          "viewer"
+        ],
+        "cmn_group_group058_role": [
+          "viewer"
+        ],
+        "cmn_group_group063_role": [
+          "viewer"
+        ],
+        "cmn_group_group068_role": [
+          "viewer"
+        ],
+        "cmn_group_group073_role": [
+          "viewer"
+        ],
+        "cmn_group_group078_role": [
+          "viewer"
+        ],
+        "cmn_group_group083_role": [
+          "viewer"
+        ],
+        "cmn_group_group088_role": [
+          "viewer"
+        ],
+        "cmn_group_group093_role": [
+          "viewer"
+        ],
+        "cmn_group_group098_role": [
+          "viewer"
+        ]
+      }
     },
     {
       "username": "user30",
@@ -1238,7 +3036,69 @@
         "/group088",
         "/group093",
         "/group098"
-      ]
+      ],
+      "attributes": {
+        "cmn_group_group003_role": [
+          "viewer"
+        ],
+        "cmn_group_group008_role": [
+          "viewer"
+        ],
+        "cmn_group_group013_role": [
+          "viewer"
+        ],
+        "cmn_group_group018_role": [
+          "viewer"
+        ],
+        "cmn_group_group023_role": [
+          "viewer"
+        ],
+        "cmn_group_group028_role": [
+          "viewer"
+        ],
+        "cmn_group_group033_role": [
+          "viewer"
+        ],
+        "cmn_group_group038_role": [
+          "viewer"
+        ],
+        "cmn_group_group043_role": [
+          "viewer"
+        ],
+        "cmn_group_group048_role": [
+          "viewer"
+        ],
+        "cmn_group_group053_role": [
+          "viewer"
+        ],
+        "cmn_group_group058_role": [
+          "viewer"
+        ],
+        "cmn_group_group063_role": [
+          "viewer"
+        ],
+        "cmn_group_group068_role": [
+          "viewer"
+        ],
+        "cmn_group_group073_role": [
+          "viewer"
+        ],
+        "cmn_group_group078_role": [
+          "viewer"
+        ],
+        "cmn_group_group083_role": [
+          "viewer"
+        ],
+        "cmn_group_group088_role": [
+          "viewer"
+        ],
+        "cmn_group_group093_role": [
+          "viewer"
+        ],
+        "cmn_group_group098_role": [
+          "viewer"
+        ]
+      }
     },
     {
       "username": "user31",
@@ -1277,7 +3137,69 @@
         "/group089",
         "/group094",
         "/group099"
-      ]
+      ],
+      "attributes": {
+        "cmn_group_group004_role": [
+          "owner"
+        ],
+        "cmn_group_group009_role": [
+          "owner"
+        ],
+        "cmn_group_group014_role": [
+          "owner"
+        ],
+        "cmn_group_group019_role": [
+          "owner"
+        ],
+        "cmn_group_group024_role": [
+          "owner"
+        ],
+        "cmn_group_group029_role": [
+          "owner"
+        ],
+        "cmn_group_group034_role": [
+          "owner"
+        ],
+        "cmn_group_group039_role": [
+          "owner"
+        ],
+        "cmn_group_group044_role": [
+          "owner"
+        ],
+        "cmn_group_group049_role": [
+          "owner"
+        ],
+        "cmn_group_group054_role": [
+          "owner"
+        ],
+        "cmn_group_group059_role": [
+          "owner"
+        ],
+        "cmn_group_group064_role": [
+          "owner"
+        ],
+        "cmn_group_group069_role": [
+          "owner"
+        ],
+        "cmn_group_group074_role": [
+          "owner"
+        ],
+        "cmn_group_group079_role": [
+          "owner"
+        ],
+        "cmn_group_group084_role": [
+          "owner"
+        ],
+        "cmn_group_group089_role": [
+          "owner"
+        ],
+        "cmn_group_group094_role": [
+          "owner"
+        ],
+        "cmn_group_group099_role": [
+          "owner"
+        ]
+      }
     },
     {
       "username": "user32",
@@ -1316,7 +3238,69 @@
         "/group089",
         "/group094",
         "/group099"
-      ]
+      ],
+      "attributes": {
+        "cmn_group_group004_role": [
+          "editor"
+        ],
+        "cmn_group_group009_role": [
+          "editor"
+        ],
+        "cmn_group_group014_role": [
+          "editor"
+        ],
+        "cmn_group_group019_role": [
+          "editor"
+        ],
+        "cmn_group_group024_role": [
+          "editor"
+        ],
+        "cmn_group_group029_role": [
+          "editor"
+        ],
+        "cmn_group_group034_role": [
+          "editor"
+        ],
+        "cmn_group_group039_role": [
+          "editor"
+        ],
+        "cmn_group_group044_role": [
+          "editor"
+        ],
+        "cmn_group_group049_role": [
+          "editor"
+        ],
+        "cmn_group_group054_role": [
+          "editor"
+        ],
+        "cmn_group_group059_role": [
+          "editor"
+        ],
+        "cmn_group_group064_role": [
+          "editor"
+        ],
+        "cmn_group_group069_role": [
+          "editor"
+        ],
+        "cmn_group_group074_role": [
+          "editor"
+        ],
+        "cmn_group_group079_role": [
+          "editor"
+        ],
+        "cmn_group_group084_role": [
+          "editor"
+        ],
+        "cmn_group_group089_role": [
+          "editor"
+        ],
+        "cmn_group_group094_role": [
+          "editor"
+        ],
+        "cmn_group_group099_role": [
+          "editor"
+        ]
+      }
     },
     {
       "username": "user33",
@@ -1355,7 +3339,69 @@
         "/group089",
         "/group094",
         "/group099"
-      ]
+      ],
+      "attributes": {
+        "cmn_group_group004_role": [
+          "editor"
+        ],
+        "cmn_group_group009_role": [
+          "editor"
+        ],
+        "cmn_group_group014_role": [
+          "editor"
+        ],
+        "cmn_group_group019_role": [
+          "editor"
+        ],
+        "cmn_group_group024_role": [
+          "editor"
+        ],
+        "cmn_group_group029_role": [
+          "editor"
+        ],
+        "cmn_group_group034_role": [
+          "editor"
+        ],
+        "cmn_group_group039_role": [
+          "editor"
+        ],
+        "cmn_group_group044_role": [
+          "editor"
+        ],
+        "cmn_group_group049_role": [
+          "editor"
+        ],
+        "cmn_group_group054_role": [
+          "editor"
+        ],
+        "cmn_group_group059_role": [
+          "editor"
+        ],
+        "cmn_group_group064_role": [
+          "editor"
+        ],
+        "cmn_group_group069_role": [
+          "editor"
+        ],
+        "cmn_group_group074_role": [
+          "editor"
+        ],
+        "cmn_group_group079_role": [
+          "editor"
+        ],
+        "cmn_group_group084_role": [
+          "editor"
+        ],
+        "cmn_group_group089_role": [
+          "editor"
+        ],
+        "cmn_group_group094_role": [
+          "editor"
+        ],
+        "cmn_group_group099_role": [
+          "editor"
+        ]
+      }
     },
     {
       "username": "user34",
@@ -1394,7 +3440,69 @@
         "/group089",
         "/group094",
         "/group099"
-      ]
+      ],
+      "attributes": {
+        "cmn_group_group004_role": [
+          "viewer"
+        ],
+        "cmn_group_group009_role": [
+          "viewer"
+        ],
+        "cmn_group_group014_role": [
+          "viewer"
+        ],
+        "cmn_group_group019_role": [
+          "viewer"
+        ],
+        "cmn_group_group024_role": [
+          "viewer"
+        ],
+        "cmn_group_group029_role": [
+          "viewer"
+        ],
+        "cmn_group_group034_role": [
+          "viewer"
+        ],
+        "cmn_group_group039_role": [
+          "viewer"
+        ],
+        "cmn_group_group044_role": [
+          "viewer"
+        ],
+        "cmn_group_group049_role": [
+          "viewer"
+        ],
+        "cmn_group_group054_role": [
+          "viewer"
+        ],
+        "cmn_group_group059_role": [
+          "viewer"
+        ],
+        "cmn_group_group064_role": [
+          "viewer"
+        ],
+        "cmn_group_group069_role": [
+          "viewer"
+        ],
+        "cmn_group_group074_role": [
+          "viewer"
+        ],
+        "cmn_group_group079_role": [
+          "viewer"
+        ],
+        "cmn_group_group084_role": [
+          "viewer"
+        ],
+        "cmn_group_group089_role": [
+          "viewer"
+        ],
+        "cmn_group_group094_role": [
+          "viewer"
+        ],
+        "cmn_group_group099_role": [
+          "viewer"
+        ]
+      }
     },
     {
       "username": "user35",
@@ -1433,7 +3541,69 @@
         "/group089",
         "/group094",
         "/group099"
-      ]
+      ],
+      "attributes": {
+        "cmn_group_group004_role": [
+          "viewer"
+        ],
+        "cmn_group_group009_role": [
+          "viewer"
+        ],
+        "cmn_group_group014_role": [
+          "viewer"
+        ],
+        "cmn_group_group019_role": [
+          "viewer"
+        ],
+        "cmn_group_group024_role": [
+          "viewer"
+        ],
+        "cmn_group_group029_role": [
+          "viewer"
+        ],
+        "cmn_group_group034_role": [
+          "viewer"
+        ],
+        "cmn_group_group039_role": [
+          "viewer"
+        ],
+        "cmn_group_group044_role": [
+          "viewer"
+        ],
+        "cmn_group_group049_role": [
+          "viewer"
+        ],
+        "cmn_group_group054_role": [
+          "viewer"
+        ],
+        "cmn_group_group059_role": [
+          "viewer"
+        ],
+        "cmn_group_group064_role": [
+          "viewer"
+        ],
+        "cmn_group_group069_role": [
+          "viewer"
+        ],
+        "cmn_group_group074_role": [
+          "viewer"
+        ],
+        "cmn_group_group079_role": [
+          "viewer"
+        ],
+        "cmn_group_group084_role": [
+          "viewer"
+        ],
+        "cmn_group_group089_role": [
+          "viewer"
+        ],
+        "cmn_group_group094_role": [
+          "viewer"
+        ],
+        "cmn_group_group099_role": [
+          "viewer"
+        ]
+      }
     },
     {
       "username": "user36",
@@ -1472,7 +3642,69 @@
         "/group089",
         "/group094",
         "/group099"
-      ]
+      ],
+      "attributes": {
+        "cmn_group_group004_role": [
+          "viewer"
+        ],
+        "cmn_group_group009_role": [
+          "viewer"
+        ],
+        "cmn_group_group014_role": [
+          "viewer"
+        ],
+        "cmn_group_group019_role": [
+          "viewer"
+        ],
+        "cmn_group_group024_role": [
+          "viewer"
+        ],
+        "cmn_group_group029_role": [
+          "viewer"
+        ],
+        "cmn_group_group034_role": [
+          "viewer"
+        ],
+        "cmn_group_group039_role": [
+          "viewer"
+        ],
+        "cmn_group_group044_role": [
+          "viewer"
+        ],
+        "cmn_group_group049_role": [
+          "viewer"
+        ],
+        "cmn_group_group054_role": [
+          "viewer"
+        ],
+        "cmn_group_group059_role": [
+          "viewer"
+        ],
+        "cmn_group_group064_role": [
+          "viewer"
+        ],
+        "cmn_group_group069_role": [
+          "viewer"
+        ],
+        "cmn_group_group074_role": [
+          "viewer"
+        ],
+        "cmn_group_group079_role": [
+          "viewer"
+        ],
+        "cmn_group_group084_role": [
+          "viewer"
+        ],
+        "cmn_group_group089_role": [
+          "viewer"
+        ],
+        "cmn_group_group094_role": [
+          "viewer"
+        ],
+        "cmn_group_group099_role": [
+          "viewer"
+        ]
+      }
     },
     {
       "username": "user37",
@@ -1511,7 +3743,69 @@
         "/group089",
         "/group094",
         "/group099"
-      ]
+      ],
+      "attributes": {
+        "cmn_group_group004_role": [
+          "viewer"
+        ],
+        "cmn_group_group009_role": [
+          "viewer"
+        ],
+        "cmn_group_group014_role": [
+          "viewer"
+        ],
+        "cmn_group_group019_role": [
+          "viewer"
+        ],
+        "cmn_group_group024_role": [
+          "viewer"
+        ],
+        "cmn_group_group029_role": [
+          "viewer"
+        ],
+        "cmn_group_group034_role": [
+          "viewer"
+        ],
+        "cmn_group_group039_role": [
+          "viewer"
+        ],
+        "cmn_group_group044_role": [
+          "viewer"
+        ],
+        "cmn_group_group049_role": [
+          "viewer"
+        ],
+        "cmn_group_group054_role": [
+          "viewer"
+        ],
+        "cmn_group_group059_role": [
+          "viewer"
+        ],
+        "cmn_group_group064_role": [
+          "viewer"
+        ],
+        "cmn_group_group069_role": [
+          "viewer"
+        ],
+        "cmn_group_group074_role": [
+          "viewer"
+        ],
+        "cmn_group_group079_role": [
+          "viewer"
+        ],
+        "cmn_group_group084_role": [
+          "viewer"
+        ],
+        "cmn_group_group089_role": [
+          "viewer"
+        ],
+        "cmn_group_group094_role": [
+          "viewer"
+        ],
+        "cmn_group_group099_role": [
+          "viewer"
+        ]
+      }
     },
     {
       "username": "user38",
@@ -1550,7 +3844,69 @@
         "/group089",
         "/group094",
         "/group099"
-      ]
+      ],
+      "attributes": {
+        "cmn_group_group004_role": [
+          "viewer"
+        ],
+        "cmn_group_group009_role": [
+          "viewer"
+        ],
+        "cmn_group_group014_role": [
+          "viewer"
+        ],
+        "cmn_group_group019_role": [
+          "viewer"
+        ],
+        "cmn_group_group024_role": [
+          "viewer"
+        ],
+        "cmn_group_group029_role": [
+          "viewer"
+        ],
+        "cmn_group_group034_role": [
+          "viewer"
+        ],
+        "cmn_group_group039_role": [
+          "viewer"
+        ],
+        "cmn_group_group044_role": [
+          "viewer"
+        ],
+        "cmn_group_group049_role": [
+          "viewer"
+        ],
+        "cmn_group_group054_role": [
+          "viewer"
+        ],
+        "cmn_group_group059_role": [
+          "viewer"
+        ],
+        "cmn_group_group064_role": [
+          "viewer"
+        ],
+        "cmn_group_group069_role": [
+          "viewer"
+        ],
+        "cmn_group_group074_role": [
+          "viewer"
+        ],
+        "cmn_group_group079_role": [
+          "viewer"
+        ],
+        "cmn_group_group084_role": [
+          "viewer"
+        ],
+        "cmn_group_group089_role": [
+          "viewer"
+        ],
+        "cmn_group_group094_role": [
+          "viewer"
+        ],
+        "cmn_group_group099_role": [
+          "viewer"
+        ]
+      }
     },
     {
       "username": "user39",
@@ -1589,7 +3945,69 @@
         "/group089",
         "/group094",
         "/group099"
-      ]
+      ],
+      "attributes": {
+        "cmn_group_group004_role": [
+          "viewer"
+        ],
+        "cmn_group_group009_role": [
+          "viewer"
+        ],
+        "cmn_group_group014_role": [
+          "viewer"
+        ],
+        "cmn_group_group019_role": [
+          "viewer"
+        ],
+        "cmn_group_group024_role": [
+          "viewer"
+        ],
+        "cmn_group_group029_role": [
+          "viewer"
+        ],
+        "cmn_group_group034_role": [
+          "viewer"
+        ],
+        "cmn_group_group039_role": [
+          "viewer"
+        ],
+        "cmn_group_group044_role": [
+          "viewer"
+        ],
+        "cmn_group_group049_role": [
+          "viewer"
+        ],
+        "cmn_group_group054_role": [
+          "viewer"
+        ],
+        "cmn_group_group059_role": [
+          "viewer"
+        ],
+        "cmn_group_group064_role": [
+          "viewer"
+        ],
+        "cmn_group_group069_role": [
+          "viewer"
+        ],
+        "cmn_group_group074_role": [
+          "viewer"
+        ],
+        "cmn_group_group079_role": [
+          "viewer"
+        ],
+        "cmn_group_group084_role": [
+          "viewer"
+        ],
+        "cmn_group_group089_role": [
+          "viewer"
+        ],
+        "cmn_group_group094_role": [
+          "viewer"
+        ],
+        "cmn_group_group099_role": [
+          "viewer"
+        ]
+      }
     },
     {
       "username": "user40",
@@ -1628,7 +4046,69 @@
         "/group089",
         "/group094",
         "/group099"
-      ]
+      ],
+      "attributes": {
+        "cmn_group_group004_role": [
+          "viewer"
+        ],
+        "cmn_group_group009_role": [
+          "viewer"
+        ],
+        "cmn_group_group014_role": [
+          "viewer"
+        ],
+        "cmn_group_group019_role": [
+          "viewer"
+        ],
+        "cmn_group_group024_role": [
+          "viewer"
+        ],
+        "cmn_group_group029_role": [
+          "viewer"
+        ],
+        "cmn_group_group034_role": [
+          "viewer"
+        ],
+        "cmn_group_group039_role": [
+          "viewer"
+        ],
+        "cmn_group_group044_role": [
+          "viewer"
+        ],
+        "cmn_group_group049_role": [
+          "viewer"
+        ],
+        "cmn_group_group054_role": [
+          "viewer"
+        ],
+        "cmn_group_group059_role": [
+          "viewer"
+        ],
+        "cmn_group_group064_role": [
+          "viewer"
+        ],
+        "cmn_group_group069_role": [
+          "viewer"
+        ],
+        "cmn_group_group074_role": [
+          "viewer"
+        ],
+        "cmn_group_group079_role": [
+          "viewer"
+        ],
+        "cmn_group_group084_role": [
+          "viewer"
+        ],
+        "cmn_group_group089_role": [
+          "viewer"
+        ],
+        "cmn_group_group094_role": [
+          "viewer"
+        ],
+        "cmn_group_group099_role": [
+          "viewer"
+        ]
+      }
     },
     {
       "username": "user41",
@@ -1667,7 +4147,69 @@
         "/group090",
         "/group095",
         "/group100"
-      ]
+      ],
+      "attributes": {
+        "cmn_group_group005_role": [
+          "owner"
+        ],
+        "cmn_group_group010_role": [
+          "owner"
+        ],
+        "cmn_group_group015_role": [
+          "owner"
+        ],
+        "cmn_group_group020_role": [
+          "owner"
+        ],
+        "cmn_group_group025_role": [
+          "owner"
+        ],
+        "cmn_group_group030_role": [
+          "owner"
+        ],
+        "cmn_group_group035_role": [
+          "owner"
+        ],
+        "cmn_group_group040_role": [
+          "owner"
+        ],
+        "cmn_group_group045_role": [
+          "owner"
+        ],
+        "cmn_group_group050_role": [
+          "owner"
+        ],
+        "cmn_group_group055_role": [
+          "owner"
+        ],
+        "cmn_group_group060_role": [
+          "owner"
+        ],
+        "cmn_group_group065_role": [
+          "owner"
+        ],
+        "cmn_group_group070_role": [
+          "owner"
+        ],
+        "cmn_group_group075_role": [
+          "owner"
+        ],
+        "cmn_group_group080_role": [
+          "owner"
+        ],
+        "cmn_group_group085_role": [
+          "owner"
+        ],
+        "cmn_group_group090_role": [
+          "owner"
+        ],
+        "cmn_group_group095_role": [
+          "owner"
+        ],
+        "cmn_group_group100_role": [
+          "owner"
+        ]
+      }
     },
     {
       "username": "user42",
@@ -1706,7 +4248,69 @@
         "/group090",
         "/group095",
         "/group100"
-      ]
+      ],
+      "attributes": {
+        "cmn_group_group005_role": [
+          "editor"
+        ],
+        "cmn_group_group010_role": [
+          "editor"
+        ],
+        "cmn_group_group015_role": [
+          "editor"
+        ],
+        "cmn_group_group020_role": [
+          "editor"
+        ],
+        "cmn_group_group025_role": [
+          "editor"
+        ],
+        "cmn_group_group030_role": [
+          "editor"
+        ],
+        "cmn_group_group035_role": [
+          "editor"
+        ],
+        "cmn_group_group040_role": [
+          "editor"
+        ],
+        "cmn_group_group045_role": [
+          "editor"
+        ],
+        "cmn_group_group050_role": [
+          "editor"
+        ],
+        "cmn_group_group055_role": [
+          "editor"
+        ],
+        "cmn_group_group060_role": [
+          "editor"
+        ],
+        "cmn_group_group065_role": [
+          "editor"
+        ],
+        "cmn_group_group070_role": [
+          "editor"
+        ],
+        "cmn_group_group075_role": [
+          "editor"
+        ],
+        "cmn_group_group080_role": [
+          "editor"
+        ],
+        "cmn_group_group085_role": [
+          "editor"
+        ],
+        "cmn_group_group090_role": [
+          "editor"
+        ],
+        "cmn_group_group095_role": [
+          "editor"
+        ],
+        "cmn_group_group100_role": [
+          "editor"
+        ]
+      }
     },
     {
       "username": "user43",
@@ -1745,7 +4349,69 @@
         "/group090",
         "/group095",
         "/group100"
-      ]
+      ],
+      "attributes": {
+        "cmn_group_group005_role": [
+          "editor"
+        ],
+        "cmn_group_group010_role": [
+          "editor"
+        ],
+        "cmn_group_group015_role": [
+          "editor"
+        ],
+        "cmn_group_group020_role": [
+          "editor"
+        ],
+        "cmn_group_group025_role": [
+          "editor"
+        ],
+        "cmn_group_group030_role": [
+          "editor"
+        ],
+        "cmn_group_group035_role": [
+          "editor"
+        ],
+        "cmn_group_group040_role": [
+          "editor"
+        ],
+        "cmn_group_group045_role": [
+          "editor"
+        ],
+        "cmn_group_group050_role": [
+          "editor"
+        ],
+        "cmn_group_group055_role": [
+          "editor"
+        ],
+        "cmn_group_group060_role": [
+          "editor"
+        ],
+        "cmn_group_group065_role": [
+          "editor"
+        ],
+        "cmn_group_group070_role": [
+          "editor"
+        ],
+        "cmn_group_group075_role": [
+          "editor"
+        ],
+        "cmn_group_group080_role": [
+          "editor"
+        ],
+        "cmn_group_group085_role": [
+          "editor"
+        ],
+        "cmn_group_group090_role": [
+          "editor"
+        ],
+        "cmn_group_group095_role": [
+          "editor"
+        ],
+        "cmn_group_group100_role": [
+          "editor"
+        ]
+      }
     },
     {
       "username": "user44",
@@ -1784,7 +4450,69 @@
         "/group090",
         "/group095",
         "/group100"
-      ]
+      ],
+      "attributes": {
+        "cmn_group_group005_role": [
+          "viewer"
+        ],
+        "cmn_group_group010_role": [
+          "viewer"
+        ],
+        "cmn_group_group015_role": [
+          "viewer"
+        ],
+        "cmn_group_group020_role": [
+          "viewer"
+        ],
+        "cmn_group_group025_role": [
+          "viewer"
+        ],
+        "cmn_group_group030_role": [
+          "viewer"
+        ],
+        "cmn_group_group035_role": [
+          "viewer"
+        ],
+        "cmn_group_group040_role": [
+          "viewer"
+        ],
+        "cmn_group_group045_role": [
+          "viewer"
+        ],
+        "cmn_group_group050_role": [
+          "viewer"
+        ],
+        "cmn_group_group055_role": [
+          "viewer"
+        ],
+        "cmn_group_group060_role": [
+          "viewer"
+        ],
+        "cmn_group_group065_role": [
+          "viewer"
+        ],
+        "cmn_group_group070_role": [
+          "viewer"
+        ],
+        "cmn_group_group075_role": [
+          "viewer"
+        ],
+        "cmn_group_group080_role": [
+          "viewer"
+        ],
+        "cmn_group_group085_role": [
+          "viewer"
+        ],
+        "cmn_group_group090_role": [
+          "viewer"
+        ],
+        "cmn_group_group095_role": [
+          "viewer"
+        ],
+        "cmn_group_group100_role": [
+          "viewer"
+        ]
+      }
     },
     {
       "username": "user45",
@@ -1823,7 +4551,69 @@
         "/group090",
         "/group095",
         "/group100"
-      ]
+      ],
+      "attributes": {
+        "cmn_group_group005_role": [
+          "viewer"
+        ],
+        "cmn_group_group010_role": [
+          "viewer"
+        ],
+        "cmn_group_group015_role": [
+          "viewer"
+        ],
+        "cmn_group_group020_role": [
+          "viewer"
+        ],
+        "cmn_group_group025_role": [
+          "viewer"
+        ],
+        "cmn_group_group030_role": [
+          "viewer"
+        ],
+        "cmn_group_group035_role": [
+          "viewer"
+        ],
+        "cmn_group_group040_role": [
+          "viewer"
+        ],
+        "cmn_group_group045_role": [
+          "viewer"
+        ],
+        "cmn_group_group050_role": [
+          "viewer"
+        ],
+        "cmn_group_group055_role": [
+          "viewer"
+        ],
+        "cmn_group_group060_role": [
+          "viewer"
+        ],
+        "cmn_group_group065_role": [
+          "viewer"
+        ],
+        "cmn_group_group070_role": [
+          "viewer"
+        ],
+        "cmn_group_group075_role": [
+          "viewer"
+        ],
+        "cmn_group_group080_role": [
+          "viewer"
+        ],
+        "cmn_group_group085_role": [
+          "viewer"
+        ],
+        "cmn_group_group090_role": [
+          "viewer"
+        ],
+        "cmn_group_group095_role": [
+          "viewer"
+        ],
+        "cmn_group_group100_role": [
+          "viewer"
+        ]
+      }
     },
     {
       "username": "user46",
@@ -1862,7 +4652,69 @@
         "/group090",
         "/group095",
         "/group100"
-      ]
+      ],
+      "attributes": {
+        "cmn_group_group005_role": [
+          "viewer"
+        ],
+        "cmn_group_group010_role": [
+          "viewer"
+        ],
+        "cmn_group_group015_role": [
+          "viewer"
+        ],
+        "cmn_group_group020_role": [
+          "viewer"
+        ],
+        "cmn_group_group025_role": [
+          "viewer"
+        ],
+        "cmn_group_group030_role": [
+          "viewer"
+        ],
+        "cmn_group_group035_role": [
+          "viewer"
+        ],
+        "cmn_group_group040_role": [
+          "viewer"
+        ],
+        "cmn_group_group045_role": [
+          "viewer"
+        ],
+        "cmn_group_group050_role": [
+          "viewer"
+        ],
+        "cmn_group_group055_role": [
+          "viewer"
+        ],
+        "cmn_group_group060_role": [
+          "viewer"
+        ],
+        "cmn_group_group065_role": [
+          "viewer"
+        ],
+        "cmn_group_group070_role": [
+          "viewer"
+        ],
+        "cmn_group_group075_role": [
+          "viewer"
+        ],
+        "cmn_group_group080_role": [
+          "viewer"
+        ],
+        "cmn_group_group085_role": [
+          "viewer"
+        ],
+        "cmn_group_group090_role": [
+          "viewer"
+        ],
+        "cmn_group_group095_role": [
+          "viewer"
+        ],
+        "cmn_group_group100_role": [
+          "viewer"
+        ]
+      }
     },
     {
       "username": "user47",
@@ -1901,7 +4753,69 @@
         "/group090",
         "/group095",
         "/group100"
-      ]
+      ],
+      "attributes": {
+        "cmn_group_group005_role": [
+          "viewer"
+        ],
+        "cmn_group_group010_role": [
+          "viewer"
+        ],
+        "cmn_group_group015_role": [
+          "viewer"
+        ],
+        "cmn_group_group020_role": [
+          "viewer"
+        ],
+        "cmn_group_group025_role": [
+          "viewer"
+        ],
+        "cmn_group_group030_role": [
+          "viewer"
+        ],
+        "cmn_group_group035_role": [
+          "viewer"
+        ],
+        "cmn_group_group040_role": [
+          "viewer"
+        ],
+        "cmn_group_group045_role": [
+          "viewer"
+        ],
+        "cmn_group_group050_role": [
+          "viewer"
+        ],
+        "cmn_group_group055_role": [
+          "viewer"
+        ],
+        "cmn_group_group060_role": [
+          "viewer"
+        ],
+        "cmn_group_group065_role": [
+          "viewer"
+        ],
+        "cmn_group_group070_role": [
+          "viewer"
+        ],
+        "cmn_group_group075_role": [
+          "viewer"
+        ],
+        "cmn_group_group080_role": [
+          "viewer"
+        ],
+        "cmn_group_group085_role": [
+          "viewer"
+        ],
+        "cmn_group_group090_role": [
+          "viewer"
+        ],
+        "cmn_group_group095_role": [
+          "viewer"
+        ],
+        "cmn_group_group100_role": [
+          "viewer"
+        ]
+      }
     },
     {
       "username": "user48",
@@ -1940,7 +4854,69 @@
         "/group090",
         "/group095",
         "/group100"
-      ]
+      ],
+      "attributes": {
+        "cmn_group_group005_role": [
+          "viewer"
+        ],
+        "cmn_group_group010_role": [
+          "viewer"
+        ],
+        "cmn_group_group015_role": [
+          "viewer"
+        ],
+        "cmn_group_group020_role": [
+          "viewer"
+        ],
+        "cmn_group_group025_role": [
+          "viewer"
+        ],
+        "cmn_group_group030_role": [
+          "viewer"
+        ],
+        "cmn_group_group035_role": [
+          "viewer"
+        ],
+        "cmn_group_group040_role": [
+          "viewer"
+        ],
+        "cmn_group_group045_role": [
+          "viewer"
+        ],
+        "cmn_group_group050_role": [
+          "viewer"
+        ],
+        "cmn_group_group055_role": [
+          "viewer"
+        ],
+        "cmn_group_group060_role": [
+          "viewer"
+        ],
+        "cmn_group_group065_role": [
+          "viewer"
+        ],
+        "cmn_group_group070_role": [
+          "viewer"
+        ],
+        "cmn_group_group075_role": [
+          "viewer"
+        ],
+        "cmn_group_group080_role": [
+          "viewer"
+        ],
+        "cmn_group_group085_role": [
+          "viewer"
+        ],
+        "cmn_group_group090_role": [
+          "viewer"
+        ],
+        "cmn_group_group095_role": [
+          "viewer"
+        ],
+        "cmn_group_group100_role": [
+          "viewer"
+        ]
+      }
     },
     {
       "username": "user49",
@@ -1979,7 +4955,69 @@
         "/group090",
         "/group095",
         "/group100"
-      ]
+      ],
+      "attributes": {
+        "cmn_group_group005_role": [
+          "viewer"
+        ],
+        "cmn_group_group010_role": [
+          "viewer"
+        ],
+        "cmn_group_group015_role": [
+          "viewer"
+        ],
+        "cmn_group_group020_role": [
+          "viewer"
+        ],
+        "cmn_group_group025_role": [
+          "viewer"
+        ],
+        "cmn_group_group030_role": [
+          "viewer"
+        ],
+        "cmn_group_group035_role": [
+          "viewer"
+        ],
+        "cmn_group_group040_role": [
+          "viewer"
+        ],
+        "cmn_group_group045_role": [
+          "viewer"
+        ],
+        "cmn_group_group050_role": [
+          "viewer"
+        ],
+        "cmn_group_group055_role": [
+          "viewer"
+        ],
+        "cmn_group_group060_role": [
+          "viewer"
+        ],
+        "cmn_group_group065_role": [
+          "viewer"
+        ],
+        "cmn_group_group070_role": [
+          "viewer"
+        ],
+        "cmn_group_group075_role": [
+          "viewer"
+        ],
+        "cmn_group_group080_role": [
+          "viewer"
+        ],
+        "cmn_group_group085_role": [
+          "viewer"
+        ],
+        "cmn_group_group090_role": [
+          "viewer"
+        ],
+        "cmn_group_group095_role": [
+          "viewer"
+        ],
+        "cmn_group_group100_role": [
+          "viewer"
+        ]
+      }
     },
     {
       "username": "user50",
@@ -2018,7 +5056,69 @@
         "/group090",
         "/group095",
         "/group100"
-      ]
+      ],
+      "attributes": {
+        "cmn_group_group005_role": [
+          "viewer"
+        ],
+        "cmn_group_group010_role": [
+          "viewer"
+        ],
+        "cmn_group_group015_role": [
+          "viewer"
+        ],
+        "cmn_group_group020_role": [
+          "viewer"
+        ],
+        "cmn_group_group025_role": [
+          "viewer"
+        ],
+        "cmn_group_group030_role": [
+          "viewer"
+        ],
+        "cmn_group_group035_role": [
+          "viewer"
+        ],
+        "cmn_group_group040_role": [
+          "viewer"
+        ],
+        "cmn_group_group045_role": [
+          "viewer"
+        ],
+        "cmn_group_group050_role": [
+          "viewer"
+        ],
+        "cmn_group_group055_role": [
+          "viewer"
+        ],
+        "cmn_group_group060_role": [
+          "viewer"
+        ],
+        "cmn_group_group065_role": [
+          "viewer"
+        ],
+        "cmn_group_group070_role": [
+          "viewer"
+        ],
+        "cmn_group_group075_role": [
+          "viewer"
+        ],
+        "cmn_group_group080_role": [
+          "viewer"
+        ],
+        "cmn_group_group085_role": [
+          "viewer"
+        ],
+        "cmn_group_group090_role": [
+          "viewer"
+        ],
+        "cmn_group_group095_role": [
+          "viewer"
+        ],
+        "cmn_group_group100_role": [
+          "viewer"
+        ]
+      }
     }
   ],
   "groups": [

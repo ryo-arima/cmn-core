@@ -12,6 +12,7 @@ type IdPUser struct {
 	FirstName string
 	LastName  string
 	Enabled   bool
+	Role      string // resolved locally from admin emails list
 	CreatedAt time.Time
 }
 

@@ -19,19 +19,20 @@ import (
 // ---- internal Casdoor JSON types -------------------------------------------
 
 type cdUser struct {
-	Owner        string   `json:"owner"`
-	Name         string   `json:"name"`
-	ID           string   `json:"id,omitempty"`
-	Email        string   `json:"email,omitempty"`
-	DisplayName  string   `json:"displayName,omitempty"`
-	FirstName    string   `json:"firstName,omitempty"`
-	LastName     string   `json:"lastName,omitempty"`
-	IsAdmin      bool     `json:"isAdmin,omitempty"`
-	IsForbidden  bool     `json:"isForbidden,omitempty"`
-	CreatedTime  string   `json:"createdTime,omitempty"`
-	Password     string   `json:"password,omitempty"`
-	PasswordSalt string   `json:"passwordSalt,omitempty"`
-	Groups       []string `json:"groups,omitempty"`
+	Owner        string            `json:"owner"`
+	Name         string            `json:"name"`
+	ID           string            `json:"id,omitempty"`
+	Email        string            `json:"email,omitempty"`
+	DisplayName  string            `json:"displayName,omitempty"`
+	FirstName    string            `json:"firstName,omitempty"`
+	LastName     string            `json:"lastName,omitempty"`
+	IsAdmin      bool              `json:"isAdmin,omitempty"`
+	IsForbidden  bool              `json:"isForbidden,omitempty"`
+	CreatedTime  string            `json:"createdTime,omitempty"`
+	Password     string            `json:"password,omitempty"`
+	PasswordSalt string            `json:"passwordSalt,omitempty"`
+	Groups       []string          `json:"groups,omitempty"`
+	Properties   map[string]string `json:"properties,omitempty"`
 }
 
 type cdGroup struct {
@@ -397,7 +398,12 @@ func (m *casdoorManager) ListGroupMembers(ctx context.Context, groupID string) (
 				normGID = groupID[i+1:]
 			}
 			if normG == normGID {
-				members = append(members, *cdUserToModel(cu))
+				u := *cdUserToModel(cu)
+				if cu.Properties != nil {
+					attrKey := "cmn_group_" + normGID + "_role"
+					u.Role = cu.Properties[attrKey]
+				}
+				members = append(members, u)
 				break
 			}
 		}
@@ -405,7 +411,7 @@ func (m *casdoorManager) ListGroupMembers(ctx context.Context, groupID string) (
 	return members, nil
 }
 
-func (m *casdoorManager) AddUserToGroup(ctx context.Context, userID, groupID string) error {
+func (m *casdoorManager) AddUserToGroup(ctx context.Context, userID, groupID, role string) error {
 	// Casdoor sets group membership by updating the user's "groups" field.
 	// This requires a GET-then-PUT pattern.
 	q := url.Values{}
@@ -436,6 +442,27 @@ func (m *casdoorManager) AddUserToGroup(ctx context.Context, userID, groupID str
 	}
 	groups = append(groups, qualified)
 	userMap["groups"] = groups
+
+	// Casdoor requires displayName to be non-empty on update.
+	// Fall back to the user's name if displayName is absent or blank.
+	if dn, _ := userMap["displayName"].(string); dn == "" {
+		if name, _ := userMap["name"].(string); name != "" {
+			userMap["displayName"] = name
+		}
+	}
+
+	// Store the group-specific role as a user property.
+	normGID := groupID
+	if i := strings.LastIndex(groupID, "/"); i >= 0 {
+		normGID = groupID[i+1:]
+	}
+	attrKey := "cmn_group_" + normGID + "_role"
+	propsMap, _ := userMap["properties"].(map[string]interface{})
+	if propsMap == nil {
+		propsMap = make(map[string]interface{})
+	}
+	propsMap[attrKey] = role
+	userMap["properties"] = propsMap
 
 	uq := url.Values{}
 	uq.Set("id", m.cfg.Organization+"/"+userID)
@@ -478,6 +505,24 @@ func (m *casdoorManager) RemoveUserFromGroup(ctx context.Context, userID, groupI
 		}
 	}
 	userMap["groups"] = filtered
+
+	// Casdoor requires displayName to be non-empty on update.
+	if dn, _ := userMap["displayName"].(string); dn == "" {
+		if name, _ := userMap["name"].(string); name != "" {
+			userMap["displayName"] = name
+		}
+	}
+
+	// Clean up the group-specific role property.
+	normGID := groupID
+	if i := strings.LastIndex(groupID, "/"); i >= 0 {
+		normGID = groupID[i+1:]
+	}
+	attrKey := "cmn_group_" + normGID + "_role"
+	if propsMap, ok := userMap["properties"].(map[string]interface{}); ok {
+		delete(propsMap, attrKey)
+		userMap["properties"] = propsMap
+	}
 
 	uq := url.Values{}
 	uq.Set("id", m.cfg.Organization+"/"+userID)

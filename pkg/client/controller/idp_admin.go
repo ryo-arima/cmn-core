@@ -244,16 +244,21 @@ func InitAdminMemberCmd(uc usecase.IdPAdmin) *cobra.Command {
 		RunE: func(cmd *cobra.Command, args []string) error {
 			gid, _ := cmd.Flags().GetString("group-id")
 			uid, _ := cmd.Flags().GetString("user-id")
+			role, _ := cmd.Flags().GetString("role")
 			if gid == "" || uid == "" {
 				return fmt.Errorf("--group-id and --user-id are required")
 			}
-			result := uc.AddGroupMember(gid, request.AddGroupMember{UserID: uid})
+			if role == "" {
+				return fmt.Errorf("--role is required (owner, editor, or viewer)")
+			}
+			result := uc.AddGroupMember(gid, request.AddGroupMember{UserID: uid, Role: role})
 			fmt.Print(usecase.Format(GetOutputFormat(), result))
 			return nil
 		},
 	}
 	addCmd.Flags().String("group-id", "", "group ID")
 	addCmd.Flags().String("user-id", "", "user ID to add")
+	addCmd.Flags().String("role", "", "role to assign: owner, editor, or viewer")
 	memberCmd.AddCommand(addCmd)
 
 	removeCmd := &cobra.Command{
