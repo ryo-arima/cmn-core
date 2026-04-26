@@ -26,7 +26,7 @@ type IdP interface {
 
 	ListGroupMembers(groupID string) response.IdPUsers
 	AddGroupMember(groupID string, req request.AddGroupMember) response.Commons
-	RemoveGroupMember(groupID string, req request.AddGroupMember) response.Commons
+	RemoveGroupMember(groupID string, req request.RemoveGroupMember) response.Commons
 }
 
 // IdPAdmin extends IdP with admin-only user management.
@@ -80,7 +80,7 @@ func (u *idpUsecase) ListGroupMembers(gid string) response.IdPUsers {
 func (u *idpUsecase) AddGroupMember(gid string, r request.AddGroupMember) response.Commons {
 	return u.repo.AddGroupMember(gid, r)
 }
-func (u *idpUsecase) RemoveGroupMember(gid string, r request.AddGroupMember) response.Commons {
+func (u *idpUsecase) RemoveGroupMember(gid string, r request.RemoveGroupMember) response.Commons {
 	return u.repo.RemoveGroupMember(gid, r)
 }
 
@@ -107,7 +107,7 @@ func (u *idpAdminUsecase) ListGroupMembers(gid string) response.IdPUsers {
 func (u *idpAdminUsecase) AddGroupMember(gid string, r request.AddGroupMember) response.Commons {
 	return u.repo.AddGroupMember(gid, r)
 }
-func (u *idpAdminUsecase) RemoveGroupMember(gid string, r request.AddGroupMember) response.Commons {
+func (u *idpAdminUsecase) RemoveGroupMember(gid string, r request.RemoveGroupMember) response.Commons {
 	return u.repo.RemoveGroupMember(gid, r)
 }
 func (u *idpAdminUsecase) ListUsers() response.IdPUsers       { return u.repo.ListUsers() }

@@ -80,6 +80,22 @@ func groupName(gid string) string {
 	return gid
 }
 
+// callerGroupRole returns the caller's role in the given group ("owner",
+// "editor", "viewer") by fetching the member list from the IdP.
+// Returns "" if the caller is not found in the group.
+func callerGroupRole(c *gin.Context, iu usecase.IdP, groupID, callerEmail string) (string, error) {
+	members, err := iu.ListGroupMembers(c.Request.Context(), groupID)
+	if err != nil {
+		return "", err
+	}
+	for _, m := range members {
+		if m.Email == callerEmail {
+			return m.Role, nil
+		}
+	}
+	return "", nil
+}
+
 // ---- Own user --------------------------------------------------------------
 
 // GetMyUser returns a user's profile.
@@ -234,6 +250,15 @@ func (ic *idpInternal) UpdateGroup(c *gin.Context) {
 		c.JSON(http.StatusForbidden, gin.H{"code": "IDP_GROUP_UPDATE_403", "message": "Access denied"})
 		return
 	}
+	role, err := callerGroupRole(c, ic.idpUsecase, groupID, claims.Email)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"code": "IDP_GROUP_UPDATE_001", "message": err.Error()})
+		return
+	}
+	if role != "owner" {
+		c.JSON(http.StatusForbidden, gin.H{"code": "IDP_GROUP_UPDATE_403", "message": "Only group owners can update a group"})
+		return
+	}
 	var req request.UpdateGroup
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"code": "IDP_GROUP_UPDATE_400", "message": "Invalid request body"})
@@ -257,6 +282,15 @@ func (ic *idpInternal) DeleteGroup(c *gin.Context) {
 	groupID := c.Param("id")
 	if !isMemberOf(claims.Groups, groupID) {
 		c.JSON(http.StatusForbidden, gin.H{"code": "IDP_GROUP_DELETE_403", "message": "Access denied"})
+		return
+	}
+	delRole, err := callerGroupRole(c, ic.idpUsecase, groupID, claims.Email)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"code": "IDP_GROUP_DELETE_001", "message": err.Error()})
+		return
+	}
+	if delRole != "owner" {
+		c.JSON(http.StatusForbidden, gin.H{"code": "IDP_GROUP_DELETE_403", "message": "Only group owners can delete a group"})
 		return
 	}
 	if err := ic.idpUsecase.DeleteGroup(c.Request.Context(), groupID); err != nil {
@@ -340,6 +374,15 @@ func (ic *idpInternal) AddGroupMember(c *gin.Context) {
 		c.JSON(http.StatusForbidden, gin.H{"code": "IDP_MEMBER_ADD_403", "message": "Access denied"})
 		return
 	}
+	addRole, addErr := callerGroupRole(c, ic.idpUsecase, groupID, claims.Email)
+	if addErr != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"code": "IDP_MEMBER_ADD_001", "message": addErr.Error()})
+		return
+	}
+	if addRole != "owner" {
+		c.JSON(http.StatusForbidden, gin.H{"code": "IDP_MEMBER_ADD_403", "message": "Only group owners can add members"})
+		return
+	}
 	var req request.AddGroupMember
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"code": "IDP_MEMBER_ADD_400", "message": "Invalid request body"})
@@ -365,7 +408,16 @@ func (ic *idpInternal) RemoveGroupMember(c *gin.Context) {
 		c.JSON(http.StatusForbidden, gin.H{"code": "IDP_MEMBER_REMOVE_403", "message": "Access denied"})
 		return
 	}
-	var req request.AddGroupMember
+	remRole, remErr := callerGroupRole(c, ic.idpUsecase, groupID, claims.Email)
+	if remErr != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"code": "IDP_MEMBER_REMOVE_001", "message": remErr.Error()})
+		return
+	}
+	if remRole != "owner" {
+		c.JSON(http.StatusForbidden, gin.H{"code": "IDP_MEMBER_REMOVE_403", "message": "Only group owners can remove members"})
+		return
+	}
+	var req request.RemoveGroupMember
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"code": "IDP_MEMBER_REMOVE_400", "message": "Invalid request body"})
 		return
