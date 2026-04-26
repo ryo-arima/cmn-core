@@ -12,9 +12,10 @@ http://localhost:8000/v1
 
 | Tier | Path prefix | Auth required |
 |---|---|---|
+| Public | `/v1/public/` | None (login endpoint) |
 | Share | `/v1/share/` | JWT (from IdP) |
 | Internal | `/v1/internal/` | JWT + role check |
-| Private | `/v1/private/` | JWT |
+| Private | `/v1/private/` | JWT + admin role |
 
 ## Authentication
 

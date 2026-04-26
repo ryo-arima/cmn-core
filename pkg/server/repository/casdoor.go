@@ -19,18 +19,19 @@ import (
 // ---- internal Casdoor JSON types -------------------------------------------
 
 type cdUser struct {
-	Owner       string `json:"owner"`
-	Name        string `json:"name"`
-	ID          string `json:"id,omitempty"`
-	Email       string `json:"email,omitempty"`
-	DisplayName string `json:"displayName,omitempty"`
-	FirstName   string `json:"firstName,omitempty"`
-	LastName    string `json:"lastName,omitempty"`
-	IsAdmin     bool   `json:"isAdmin,omitempty"`
-	IsForbidden bool   `json:"isForbidden,omitempty"`
-	CreatedTime string `json:"createdTime,omitempty"`
-	Password    string `json:"password,omitempty"`
-	PasswordSalt string `json:"passwordSalt,omitempty"`
+	Owner        string   `json:"owner"`
+	Name         string   `json:"name"`
+	ID           string   `json:"id,omitempty"`
+	Email        string   `json:"email,omitempty"`
+	DisplayName  string   `json:"displayName,omitempty"`
+	FirstName    string   `json:"firstName,omitempty"`
+	LastName     string   `json:"lastName,omitempty"`
+	IsAdmin      bool     `json:"isAdmin,omitempty"`
+	IsForbidden  bool     `json:"isForbidden,omitempty"`
+	CreatedTime  string   `json:"createdTime,omitempty"`
+	Password     string   `json:"password,omitempty"`
+	PasswordSalt string   `json:"passwordSalt,omitempty"`
+	Groups       []string `json:"groups,omitempty"`
 }
 
 type cdGroup struct {
@@ -352,24 +353,31 @@ func (m *casdoorManager) DeleteGroup(ctx context.Context, id string) error {
 // Casdoor manages group membership via the "groups" field on the user object.
 
 func (m *casdoorManager) ListGroupMembers(ctx context.Context, groupID string) ([]model.IdPUser, error) {
-	all, err := m.ListUsers(ctx)
+	q := url.Values{}
+	q.Set("owner", m.cfg.Organization)
+	status, body, err := m.do(ctx, http.MethodGet, m.apiURL("/api/get-users?"+q.Encode()), nil)
 	if err != nil {
 		return nil, err
 	}
-	// Fetch each user's full object to inspect group membership.
-	// This is a limitation of the Casdoor API; there is no direct "list members of group" endpoint.
-	// For production use, consider caching the full user list.
+	if status != http.StatusOK {
+		return nil, fmt.Errorf("casdoor: list users status %d", status)
+	}
+	r, err := checkCdResponse(body)
+	if err != nil {
+		return nil, err
+	}
+	var cus []cdUser
+	if err := json.Unmarshal(r.Data, &cus); err != nil {
+		return nil, fmt.Errorf("casdoor: parse user list: %w", err)
+	}
 	var members []model.IdPUser
-	for _, u := range all {
-		full, err := m.GetUser(ctx, u.Username)
-		if err != nil {
-			continue
+	for _, cu := range cus {
+		for _, g := range cu.Groups {
+			if g == groupID {
+				members = append(members, *cdUserToModel(cu))
+				break
+			}
 		}
-		// We encode group membership via the Username field returned from the API;
-		// Casdoor stores the user's groups in a separate field not surfaced by IdPUser.
-		// For now, append if the user belongs to the group (checked via GetUser above).
-		_ = full
-		members = append(members, u)
 	}
 	return members, nil
 }

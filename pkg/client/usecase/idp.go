@@ -13,6 +13,11 @@ type IdP interface {
 	GetMyUser() response.SingleIdPUser
 	UpdateMyUser(req request.UpdateUser) response.Commons
 
+	// Any user by ID
+	GetUser(id string) response.SingleIdPUser
+	// Users in caller's groups
+	ListGroupUsers() response.IdPUsers
+
 	ListMyGroups() response.IdPGroups
 	GetGroup(id string) response.SingleIdPGroup
 	CreateGroup(req request.CreateGroup) response.SingleIdPGroup
@@ -28,7 +33,6 @@ type IdP interface {
 type IdPAdmin interface {
 	IdP
 	ListUsers() response.IdPUsers
-	GetUser(id string) response.SingleIdPUser
 	CreateUser(req request.CreateUser) response.SingleIdPUser
 	UpdateUser(id string, req request.UpdateUser) response.Commons
 	DeleteUser(id string) response.Commons
@@ -59,6 +63,8 @@ func (u *idpUsecase) GetMyUser() response.SingleIdPUser           { return u.rep
 func (u *idpUsecase) UpdateMyUser(r request.UpdateUser) response.Commons {
 	return u.repo.UpdateMyUser(r)
 }
+func (u *idpUsecase) GetUser(id string) response.SingleIdPUser { return u.repo.GetUser(id) }
+func (u *idpUsecase) ListGroupUsers() response.IdPUsers        { return u.repo.ListGroupUsers() }
 func (u *idpUsecase) ListMyGroups() response.IdPGroups { return u.repo.ListMyGroups() }
 func (u *idpUsecase) GetGroup(id string) response.SingleIdPGroup { return u.repo.GetGroup(id) }
 func (u *idpUsecase) CreateGroup(r request.CreateGroup) response.SingleIdPGroup {
@@ -84,6 +90,8 @@ func (u *idpAdminUsecase) GetMyUser() response.SingleIdPUser { return u.repo.Get
 func (u *idpAdminUsecase) UpdateMyUser(r request.UpdateUser) response.Commons {
 	return u.repo.UpdateMyUser(r)
 }
+func (u *idpAdminUsecase) GetUser(id string) response.SingleIdPUser { return u.repo.GetUser(id) }
+func (u *idpAdminUsecase) ListGroupUsers() response.IdPUsers        { return u.repo.ListGroupUsers() }
 func (u *idpAdminUsecase) ListMyGroups() response.IdPGroups { return u.repo.ListMyGroups() }
 func (u *idpAdminUsecase) GetGroup(id string) response.SingleIdPGroup { return u.repo.GetGroup(id) }
 func (u *idpAdminUsecase) CreateGroup(r request.CreateGroup) response.SingleIdPGroup {
@@ -103,7 +111,6 @@ func (u *idpAdminUsecase) RemoveGroupMember(gid string, r request.AddGroupMember
 	return u.repo.RemoveGroupMember(gid, r)
 }
 func (u *idpAdminUsecase) ListUsers() response.IdPUsers       { return u.repo.ListUsers() }
-func (u *idpAdminUsecase) GetUser(id string) response.SingleIdPUser { return u.repo.GetUser(id) }
 func (u *idpAdminUsecase) CreateUser(r request.CreateUser) response.SingleIdPUser {
 	return u.repo.CreateUser(r)
 }

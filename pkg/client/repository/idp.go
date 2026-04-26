@@ -19,6 +19,11 @@ type IdP interface {
 	GetMyUser() response.SingleIdPUser
 	UpdateMyUser(req request.UpdateUser) response.Commons
 
+	// Any user by ID; app client fetches from /v1/internal/user?id=
+	GetUser(id string) response.SingleIdPUser
+	// Users in caller's groups (app: /v1/internal/users)
+	ListGroupUsers() response.IdPUsers
+
 	// Groups
 	ListMyGroups() response.IdPGroups
 	GetGroup(id string) response.SingleIdPGroup
@@ -36,7 +41,6 @@ type IdP interface {
 type IdPAdmin interface {
 	IdP
 	ListUsers() response.IdPUsers
-	GetUser(id string) response.SingleIdPUser
 	CreateUser(req request.CreateUser) response.SingleIdPUser
 	UpdateUser(id string, req request.UpdateUser) response.Commons
 	DeleteUser(id string) response.Commons
@@ -202,6 +206,15 @@ func (r *idpRepo) RemoveGroupMember(groupID string, req request.AddGroupMember) 
 }
 
 // ── Admin-only: users ────────────────────────────────────────────────────────
+
+func (r *idpRepo) ListGroupUsers() response.IdPUsers {
+	var out response.IdPUsers
+	if err := r.do("GET", r.base+"/users", nil, &out); err != nil {
+		out.Code = "CLIENT_USER_LIST_001"
+		out.Message = err.Error()
+	}
+	return out
+}
 
 func (r *idpRepo) ListUsers() response.IdPUsers {
 	var out response.IdPUsers

@@ -27,6 +27,17 @@ Application:
       #   realm: "master"
       #   admin_client_id: "admin-cli"
       #   admin_client_secret: "CHANGE_THIS_SECRET"
+    # OIDC settings for JWT validation.
+    # issuer_url must match the `iss` claim in tokens issued by the IdP.
+    # provider_url is the OIDC discovery URL; set it to the internal service URL
+    # when running in Docker if the public issuer URL is not reachable from within
+    # the container network (e.g. provider_url: "http://casdoor:8000").
+    # If provider_url is omitted, issuer_url is used.
+    auth:
+      oidc:
+        issuer_url: "http://localhost:9000"
+        provider_url: "http://localhost:9000"
+        client_id: "CHANGE_THIS_CLIENT_ID"
 
 PostgreSQL:
   host: "localhost"

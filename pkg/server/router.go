@@ -128,6 +128,11 @@ func InitRouter(conf config.BaseConfig) *gin.Engine {
 	internalAPI.Use(loggerMW)
 	internalAPI.Use(share.ForInternal(commonRepository))
 
+	// Own user (or any user by ?id=) and group users
+	internalAPI.GET("/user", idpInternalCtrl.GetMyUser)
+	internalAPI.PUT("/user", idpInternalCtrl.UpdateMyUser)
+	internalAPI.GET("/users", idpInternalCtrl.ListGroupUsers)
+
 	// Groups the caller belongs to
 	internalAPI.GET("/groups", idpInternalCtrl.ListMyGroups)
 	internalAPI.POST("/groups", idpInternalCtrl.CreateGroup)

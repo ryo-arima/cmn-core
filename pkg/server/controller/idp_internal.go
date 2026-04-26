@@ -14,14 +14,17 @@ import (
 // All operations are proxied to the external IdP; cmn-core stores no auth data locally.
 //
 // Access control (enforced in this layer using JWT claims):
-//   - User operations: self only (claims.UUID)
+//   - User operations: self only (claims.UUID), or by ?id= for any user
 //   - Group create: any authenticated user
 //   - Group read / update / delete / member operations: only for groups present in claims.Groups
 //     JWT is issued on every request, so claims.Groups is always current.
 type IdPInternal interface {
-	// Own user
+	// Own user (or any user by ?id=)
 	GetMyUser(c *gin.Context)
 	UpdateMyUser(c *gin.Context)
+
+	// Users in caller's groups
+	ListGroupUsers(c *gin.Context)
 
 	// Groups the caller belongs to
 	ListMyGroups(c *gin.Context)
@@ -57,7 +60,9 @@ func isMemberOf(groups []string, groupID string) bool {
 
 // ---- Own user --------------------------------------------------------------
 
-// GetMyUser returns the authenticated user's own profile from the IdP.
+// GetMyUser returns a user's profile.
+// If the query param ?id= is provided, returns that user.
+// Otherwise returns the authenticated user's own profile.
 // GET /v1/internal/user
 func (ic *idpInternal) GetMyUser(c *gin.Context) {
 	claims, ok := share.GetUserClaims(c)
@@ -65,7 +70,11 @@ func (ic *idpInternal) GetMyUser(c *gin.Context) {
 		c.JSON(http.StatusUnauthorized, gin.H{"code": "IDP_AUTH_001", "message": "Unauthorized"})
 		return
 	}
-	u, err := ic.idpUsecase.GetUser(c.Request.Context(), claims.UUID)
+	userID := c.Query("id")
+	if userID == "" {
+		userID = claims.UUID
+	}
+	u, err := ic.idpUsecase.GetUser(c.Request.Context(), userID)
 	if err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"code": "IDP_USER_GET_404", "message": "User not found"})
 		return
@@ -83,6 +92,41 @@ func (ic *idpInternal) GetMyUser(c *gin.Context) {
 			CreatedAt: u.CreatedAt,
 		},
 	})
+}
+
+// ListGroupUsers returns all users who are members of any group the caller belongs to.
+// Results are deduplicated. Group membership is read from the caller's JWT claims.
+// GET /v1/internal/users
+func (ic *idpInternal) ListGroupUsers(c *gin.Context) {
+	claims, ok := share.GetUserClaims(c)
+	if !ok {
+		c.JSON(http.StatusUnauthorized, gin.H{"code": "IDP_AUTH_001", "message": "Unauthorized"})
+		return
+	}
+	seen := make(map[string]struct{})
+	var users []response.IdPUser
+	for _, gid := range claims.Groups {
+		members, err := ic.idpUsecase.ListGroupMembers(c.Request.Context(), gid)
+		if err != nil {
+			continue
+		}
+		for _, u := range members {
+			if _, dup := seen[u.ID]; dup {
+				continue
+			}
+			seen[u.ID] = struct{}{}
+			users = append(users, response.IdPUser{
+				ID:        u.ID,
+				Username:  u.Username,
+				Email:     u.Email,
+				FirstName: u.FirstName,
+				LastName:  u.LastName,
+				Enabled:   u.Enabled,
+				CreatedAt: u.CreatedAt,
+			})
+		}
+	}
+	c.JSON(http.StatusOK, response.IdPUsers{Code: "SUCCESS", Message: "ok", Users: users})
 }
 
 // UpdateMyUser updates the authenticated user's own profile in the IdP.
