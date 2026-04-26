@@ -2,7 +2,7 @@
 
 ## Prerequisites
 
-- Go 1.24+
+- Go 1.25+
 - Docker & Docker Compose
 
 ## Setup
@@ -14,70 +14,64 @@ cd cmn-core
 # Platform setting (Apple Silicon)
 echo "DOCKER_PLATFORM=linux/arm64" > .env.local
 
-# Copy config
-cp etc/app.yaml.example etc/app.yaml
-
-# Start all dev services
+# Start all dev services (PostgreSQL, Redis, Keycloak, Casdoor, ...)
 make dev-up
+
+# Build and start the application server container
+make svr-up
 ```
 
-Services started:
+Services started by `make dev-up`:
 
 | Service | URL | Credentials |
 |---|---|---|
-| cmn-core server | http://localhost:8000 | — |
 | Keycloak admin | http://localhost:8080/admin | admin / admin |
-| Keycloak user portal | http://localhost:8080/realms/cmn/account | user01-10 / Password123! |
+| Keycloak user portal | http://localhost:8080/realms/cmn/account | user01-50 / Password123! |
 | Casdoor admin | http://localhost:9000 | admin / 123 |
-| Casdoor user portal | http://localhost:9000/login/cmn | user01-10 / Password123! |
+| Casdoor user portal | http://localhost:9000/login/cmn | user01-50 / Password123! |
+| Casdoor admin user | http://localhost:9000/login/cmn | admin@example.com / Admin123! |
 | PostgreSQL | localhost:5432 | user / password |
 | Redis | localhost:6379 | — |
 | pgAdmin | http://localhost:5050 | — |
 | Roundcube | http://localhost:3005 | — |
 
-## Build & Run
+The application server (`cmn-server`) starts on `http://localhost:8000` after `make svr-up`.
+
+## Build Binaries Locally
 
 ```bash
 make build
-./.bin/cmn-server
+# Binaries are placed in .bin/
 ```
 
 ## Stop
 
 ```bash
-make dev-down
+make dev-down   # stop all infra containers
+make svr-down   # stop only the server container
 ```
 
 ## Makefile Reference
 
 ```bash
-make build      # Build all binaries
-make test       # Run unit tests
-make dev-up     # Start dev environment
+make build      # Build all binaries (.bin/)
+make test       # Run all tests
+make test-unit  # Run unit tests only
+make dev-up     # Start infra (PostgreSQL, Redis, IdPs, ...)
 make dev-down   # Stop and remove volumes
-make docs       # Build documentation
+make svr-up     # Build Docker image and start server container
+make svr-down   # Stop server container
+make docs       # Start Swagger UI + GoDoc containers
 ```
 
+## CLI Usage
 
-## Manual Setup
-
-### 1. Install Dependencies
+Admin client example:
 
 ```bash
-# Install Go dependencies
-go mod download
-go mod vendor
+.bin/admin-client -c etc/.cmn/client/credentials/admin.yaml user list
 ```
 
-### 2. Setup Database
-
-```bash
-# Create MySQL database
-mysql -u root -p
-> CREATE DATABASE cmn_core;
-> CREATE USER 'cmn_core'@'localhost' IDENTIFIED BY 'password';
-> GRANT ALL PRIVILEGES ON cmn_core.* TO 'cmn_core'@'localhost';
-> FLUSH PRIVILEGES;
 ```
 
 ### 3. Setup Redis

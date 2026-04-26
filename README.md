@@ -8,7 +8,7 @@
 
 Go-based API server that delegates authentication and authorization entirely to external IdPs.
 
-[![Go Version](https://img.shields.io/badge/Go-1.24+-00ADD8?style=flat&logo=go)](https://golang.org)
+[![Go Version](https://img.shields.io/badge/Go-1.25+-00ADD8?style=flat&logo=go)](https://golang.org)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![E2E Tests](https://github.com/ryo-arima/cmn-core/actions/workflows/e2e-test.yml/badge.svg)](https://github.com/ryo-arima/cmn-core/actions/workflows/e2e-test.yml)
 [![Documentation](https://img.shields.io/badge/docs-GitHub%20Pages-success)](https://ryo-arima.github.io/cmn-core/)
@@ -17,11 +17,13 @@ Go-based API server that delegates authentication and authorization entirely to 
 
 cmn-core provides a multi-tier REST API backed by PostgreSQL and Redis. All user management, authentication, and authorization are fully delegated to external IdPs — **Keycloak** (port 8080) and **Casdoor** (port 9000). The application itself performs no internal user CRUD.
 
+CLI clients authenticate by posting credentials to the server (`POST /v1/public/login`); the server then obtains a JWT from the configured IdP and returns it to the client. Clients never contact the IdP directly.
+
 ## Quick Start
 
 ### Prerequisites
 
-- Go 1.24+
+- Go 1.25+
 - Docker & Docker Compose
 
 ### Start Dev Environment
@@ -38,9 +40,10 @@ Services started by `make dev-up`:
 | PostgreSQL | localhost:5432 | user/password |
 | Redis | localhost:6379 | — |
 | Keycloak (admin) | http://localhost:8080/admin | admin / admin |
-| Keycloak (cmn realm users) | http://localhost:8080/realms/cmn/account | user01-10 / Password123! |
+| Keycloak (cmn realm users) | http://localhost:8080/realms/cmn/account | user01-50 / Password123! |
 | Casdoor (admin) | http://localhost:9000 | admin / 123 |
-| Casdoor (cmn org users) | http://localhost:9000/login/cmn | user01-10 / Password123! |
+| Casdoor (cmn org users) | http://localhost:9000/login/cmn | user01-50 / Password123! |
+| Casdoor (cmn admin user) | http://localhost:9000/login/cmn | admin@example.com / Admin123! |
 | pgAdmin | http://localhost:5050 | — |
 | Roundcube | http://localhost:3005 | — |
 
@@ -65,9 +68,10 @@ Client → [Keycloak / Casdoor] → JWT Token → cmn-core Server → PostgreSQL
 
 | Tier | Path prefix | Auth |
 |---|---|---|
+| Public | `/v1/public/` | None (login endpoint) |
 | Share | `/v1/share/` | JWT required |
-| Internal | `/v1/internal/` | JWT + role check |
-| Private | `/v1/private/` | JWT required |
+| Internal | `/v1/internal/` | JWT required |
+| Private | `/v1/private/` | JWT + admin role required |
 
 OIDC callback: `GET /v1/share/auth/oidc/callback`
 
@@ -101,18 +105,44 @@ cp etc/app.yaml.example etc/app.yaml
 Key settings in `etc/app.yaml`:
 
 ```yaml
-Server:
-  host: "0.0.0.0"
-  port: 8000
+Application:
+  Server:
+    port: 8000
+    admin:
+      emails:
+        - "admin@example.com"
+    jwt_secret: "CHANGE_THIS_JWT_SECRET_IN_PRODUCTION"
+    log_level: "info"
+    redis:
+      jwt_cache: true
+      cache_ttl: 1800
+    idp:
+      provider: "casdoor"  # or "keycloak"
+      casdoor:
+        base_url: "http://localhost:9000"
+        client_id: "cmn-core-client-id"
+        client_secret: "cmn-core-client-secret"
+        organization: "cmn"
+    auth:
+      oidc:
+        issuer_url: "http://localhost:9000"   # JWT iss claim value
+        provider_url: "http://localhost:9000" # OIDC discovery URL (set to internal URL in Docker)
+        client_id: "cmn-core-client-id"
 
-OIDC:
-  issuer: "http://localhost:9000"          # Casdoor or Keycloak issuer URL
-  client_id: "cmn-core-client-id"
-  client_secret: "cmn-core-client-secret"
+PostgreSQL:
+  host: "localhost"
+  user: "user"
+  pass: "password"
+  port: "5432"
+  db: "cmn_core"
+  sslmode: "disable"
 
 Redis:
   host: "localhost"
   port: 6379
+  user: "default"
+  pass: ""
+  db: 0
 ```
 
 ## Development

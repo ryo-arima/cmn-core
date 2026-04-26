@@ -2,6 +2,7 @@ package controller
 
 import (
 	"net/http"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 	"github.com/ryo-arima/cmn-core/pkg/entity/request"
@@ -14,14 +15,17 @@ import (
 // All operations are proxied to the external IdP; cmn-core stores no auth data locally.
 //
 // Access control (enforced in this layer using JWT claims):
-//   - User operations: self only (claims.UUID)
+//   - User operations: self only (claims.UUID), or by ?id= for any user
 //   - Group create: any authenticated user
 //   - Group read / update / delete / member operations: only for groups present in claims.Groups
 //     JWT is issued on every request, so claims.Groups is always current.
 type IdPInternal interface {
-	// Own user
+	// Own user (or any user by ?id=)
 	GetMyUser(c *gin.Context)
 	UpdateMyUser(c *gin.Context)
+
+	// Users in caller's groups
+	ListGroupUsers(c *gin.Context)
 
 	// Groups the caller belongs to
 	ListMyGroups(c *gin.Context)
@@ -46,18 +50,40 @@ func NewIdPInternal(iu usecase.IdP) IdPInternal {
 }
 
 // isMemberOf returns true if groupID is present in the caller's groups claim.
+// Handles the Casdoor JWT format where groups are "org/name" (e.g. "cmn/group001")
+// and URL-param group IDs are just the name part (e.g. "group001").
 func isMemberOf(groups []string, groupID string) bool {
+	// Normalize target: strip org prefix if present
+	normTarget := groupID
+	if i := strings.LastIndex(groupID, "/"); i >= 0 {
+		normTarget = groupID[i+1:]
+	}
 	for _, g := range groups {
-		if g == groupID {
+		norm := g
+		if i := strings.LastIndex(g, "/"); i >= 0 {
+			norm = g[i+1:]
+		}
+		if norm == normTarget {
 			return true
 		}
 	}
 	return false
 }
 
+// groupName strips the org prefix from a Casdoor group ID.
+// "cmn/group001" → "group001"; "group001" → "group001".
+func groupName(gid string) string {
+	if i := strings.LastIndex(gid, "/"); i >= 0 {
+		return gid[i+1:]
+	}
+	return gid
+}
+
 // ---- Own user --------------------------------------------------------------
 
-// GetMyUser returns the authenticated user's own profile from the IdP.
+// GetMyUser returns a user's profile.
+// If the query param ?id= is provided, returns that user.
+// Otherwise returns the authenticated user's own profile.
 // GET /v1/internal/user
 func (ic *idpInternal) GetMyUser(c *gin.Context) {
 	claims, ok := share.GetUserClaims(c)
@@ -65,7 +91,11 @@ func (ic *idpInternal) GetMyUser(c *gin.Context) {
 		c.JSON(http.StatusUnauthorized, gin.H{"code": "IDP_AUTH_001", "message": "Unauthorized"})
 		return
 	}
-	u, err := ic.idpUsecase.GetUser(c.Request.Context(), claims.UUID)
+	userID := c.Query("id")
+	if userID == "" {
+		userID = claims.UUID
+	}
+	u, err := ic.idpUsecase.GetUser(c.Request.Context(), userID)
 	if err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"code": "IDP_USER_GET_404", "message": "User not found"})
 		return
@@ -83,6 +113,41 @@ func (ic *idpInternal) GetMyUser(c *gin.Context) {
 			CreatedAt: u.CreatedAt,
 		},
 	})
+}
+
+// ListGroupUsers returns all users who are members of any group the caller belongs to.
+// Results are deduplicated. Group membership is read from the caller's JWT claims.
+// GET /v1/internal/users
+func (ic *idpInternal) ListGroupUsers(c *gin.Context) {
+	claims, ok := share.GetUserClaims(c)
+	if !ok {
+		c.JSON(http.StatusUnauthorized, gin.H{"code": "IDP_AUTH_001", "message": "Unauthorized"})
+		return
+	}
+	seen := make(map[string]struct{})
+	var users []response.IdPUser
+	for _, gid := range claims.Groups {
+		members, err := ic.idpUsecase.ListGroupMembers(c.Request.Context(), groupName(gid))
+		if err != nil {
+			continue
+		}
+		for _, u := range members {
+			if _, dup := seen[u.ID]; dup {
+				continue
+			}
+			seen[u.ID] = struct{}{}
+			users = append(users, response.IdPUser{
+				ID:        u.ID,
+				Username:  u.Username,
+				Email:     u.Email,
+				FirstName: u.FirstName,
+				LastName:  u.LastName,
+				Enabled:   u.Enabled,
+				CreatedAt: u.CreatedAt,
+			})
+		}
+	}
+	c.JSON(http.StatusOK, response.IdPUsers{Code: "SUCCESS", Message: "ok", Users: users})
 }
 
 // UpdateMyUser updates the authenticated user's own profile in the IdP.
@@ -118,7 +183,8 @@ func (ic *idpInternal) ListMyGroups(c *gin.Context) {
 	}
 	resp := make([]response.IdPGroup, 0, len(claims.Groups))
 	for _, gid := range claims.Groups {
-		g, err := ic.idpUsecase.GetGroup(c.Request.Context(), gid)
+		// Strip org prefix: JWT uses "cmn/group001", usecase expects "group001"
+		g, err := ic.idpUsecase.GetGroup(c.Request.Context(), groupName(gid))
 		if err != nil {
 			continue // skip groups that can't be fetched
 		}

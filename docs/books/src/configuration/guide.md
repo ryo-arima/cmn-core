@@ -1,11 +1,11 @@
 # Configuration Guide
 
-cmn-core uses a YAML configuration file (`etc/app.yaml`).
+cmn-core uses a YAML configuration file (`etc/server.yaml`).
 
 ## Quick Start
 
 ```bash
-cp etc/app.yaml.example etc/app.yaml
+cp etc/server.yaml.example etc/server.yaml
 ```
 
 ## Configuration Sections
@@ -16,15 +16,45 @@ cp etc/app.yaml.example etc/app.yaml
 Application:
   Server:
     port: 8000
+    admin:
+      emails:
+        - "admin@example.com"   # Emails with the admin role
     jwt_secret: "CHANGE_THIS_JWT_SECRET_IN_PRODUCTION"
-    log_level: "debug"
+    log_level: "info"            # debug / info / warn / error
     redis:
       jwt_cache: true
-      cache_ttl: 1800
-    jwt:
-      key: "CHANGE_THIS_JWT_KEY"
+      cache_ttl: 1800            # seconds (0 = use token expiry)
+```
+
+### Identity Provider (user/group management)
+
+```yaml
+    idp:
+      provider: "casdoor"        # or "keycloak"
+      casdoor:
+        base_url: "http://localhost:9000"
+        client_id: "cmn-core-client-id"
+        client_secret: "cmn-core-client-secret"
+        organization: "cmn"
+      # keycloak:
+      #   base_url: "http://localhost:8080"
+      #   realm: "cmn"
+      #   admin_client_id: "admin-cli"
+      #   admin_client_secret: "CHANGE_THIS_SECRET"
+```
+
+### OIDC (JWT validation)
+
+```yaml
     auth:
-      provider: "oidc"   # "oidc" or "saml"
+      oidc:
+        issuer_url: "http://localhost:9000"   # Must match the `iss` claim in issued JWTs
+        provider_url: "http://localhost:9000" # OIDC discovery URL.
+                                               # Set to the internal service URL when running
+                                               # in Docker (e.g. http://casdoor:8000) if the
+                                               # public issuer URL is not reachable from within
+                                               # the container network.
+        client_id: "cmn-core-client-id"
 ```
 
 ### PostgreSQL
@@ -47,76 +77,38 @@ Redis:
   port: 6379
   user: "default"
   pass: ""
-  db: "0"
+  db: 0
 ```
 
 ## Security Best Practices
 
-- **Never commit `etc/app.yaml`** (it is in `.gitignore`)
-- Use strong random values for `jwt_secret` and `jwt.key`:
+- **Never commit `etc/server.yaml`** (it is in `.gitignore`)
+- Use strong random values for `jwt_secret`:
   ```bash
   openssl rand -base64 32
   ```
 - Use separate database credentials per environment
 
+## Client Credential Files
+
+CLI clients read credentials from separate YAML files:
+
+```yaml
+# etc/.cmn/client/credentials/<name>.yaml
+Application:
+  Client:
+    ServerEndpoint: "http://localhost:8000"
+    credentials:
+      email: "admin@example.com"
+      password: "Admin123!"
+```
+
+Clients send credentials to `POST /v1/public/login` on the server; the server obtains a JWT from the IdP and returns it. The token is cached locally and reused until it expires.
+
 ## Next Steps
 
 - [Environment Variables](./environment.md)
 - [Getting Started](../development/getting-started.md)
-
-
-**Note**: The `db` field accepts either integer or string format.
-
-### Casbin Configuration
-
-```yaml
-Casbin:
-  app_model: "etc/casbin/cmn/model.conf"
-  app_policy: "etc/casbin/cmn/policy.csv"
-  resource_model: "etc/casbin/resources/model.conf"
-  resource_policy: "etc/casbin/resources/policy.csv"
-```
-
-**Dual Enforcer Setup**:
-- **App Enforcer**: Controls API endpoint access
-- **Resource Enforcer**: Controls resource-level permissions
-
-## Environment-Specific Configuration
-
-### Development
-
-Development configuration (`app.dev.yaml`) includes:
-- Localhost database connections
-- Default credentials for Docker Compose
-- Debug-friendly settings
-
-### Production
-
-Production configuration must include:
-- Secure JWT secrets (256+ bits)
-- Production database credentials
-- Redis credentials
-- Appropriate connection pool sizes
-- Production-grade Casbin policies
-
-## Security Best Practices
-
-1. **Never commit `etc/app.yaml`** - It's in `.gitignore` for a reason
-2. **Use environment variables** for sensitive data (optional approach)
-3. **Rotate JWT secrets** regularly
-4. **Use strong passwords** for MySQL and Redis
-5. **Limit connection pool sizes** based on your infrastructure
-6. **Review Casbin policies** before deployment
-
-## Environment Variables (Alternative)
-
-While cmn-core primarily uses YAML configuration, you can also use environment variables:
-
-```bash
-export CMN_JWT_SECRET="your-secret"
-export CMN_MYSQL_PASSWORD="your-db-password"
-export CMN_REDIS_PASSWORD="your-redis-password"
-```
 
 ## Validation
 

@@ -18,22 +18,50 @@ func InitUserCmd(uc usecase.IdP) *cobra.Command {
 	}
 
 	// get
-	userCmd.AddCommand(&cobra.Command{
+	getCmd := &cobra.Command{
 		Use:   "get",
-		Short: "get your own user profile",
+		Short: "get your own profile, or any user by --id",
 		Run: func(cmd *cobra.Command, args []string) {
-			result := uc.GetMyUser()
-			if result.User != nil {
-				u := result.User
-				fmt.Printf("%-20s %s\n", "ID:", u.ID)
-				fmt.Printf("%-20s %s\n", "Username:", u.Username)
-				fmt.Printf("%-20s %s\n", "Email:", u.Email)
-				fmt.Printf("%-20s %s\n", "First name:", u.FirstName)
-				fmt.Printf("%-20s %s\n", "Last name:", u.LastName)
-				fmt.Printf("%-20s %v\n", "Enabled:", u.Enabled)
+			id, _ := cmd.Flags().GetString("id")
+			if id != "" {
+				result := uc.GetUser(id)
+				if result.User != nil {
+					u := result.User
+					fmt.Printf("%-20s %s\n", "ID:", u.ID)
+					fmt.Printf("%-20s %s\n", "Username:", u.Username)
+					fmt.Printf("%-20s %s\n", "Email:", u.Email)
+					fmt.Printf("%-20s %s\n", "First name:", u.FirstName)
+					fmt.Printf("%-20s %s\n", "Last name:", u.LastName)
+					fmt.Printf("%-20s %v\n", "Enabled:", u.Enabled)
+				} else {
+					fmt.Printf("[%s] %s\n", result.Code, result.Message)
+				}
 			} else {
-				fmt.Printf("[%s] %s\n", result.Code, result.Message)
+				result := uc.GetMyUser()
+				if result.User != nil {
+					u := result.User
+					fmt.Printf("%-20s %s\n", "ID:", u.ID)
+					fmt.Printf("%-20s %s\n", "Username:", u.Username)
+					fmt.Printf("%-20s %s\n", "Email:", u.Email)
+					fmt.Printf("%-20s %s\n", "First name:", u.FirstName)
+					fmt.Printf("%-20s %s\n", "Last name:", u.LastName)
+					fmt.Printf("%-20s %v\n", "Enabled:", u.Enabled)
+				} else {
+					fmt.Printf("[%s] %s\n", result.Code, result.Message)
+				}
 			}
+		},
+	}
+	getCmd.Flags().String("id", "", "user ID (omit for own profile)")
+	userCmd.AddCommand(getCmd)
+
+	// list
+	userCmd.AddCommand(&cobra.Command{
+		Use:   "list",
+		Short: "list users in your groups",
+		Run: func(cmd *cobra.Command, args []string) {
+			result := uc.ListGroupUsers()
+			fmt.Print(usecase.Format(GetOutputFormat(), result))
 		},
 	})
 
