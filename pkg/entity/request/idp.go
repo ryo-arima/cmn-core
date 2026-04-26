@@ -33,4 +33,5 @@ type UpdateGroup struct {
 // AddGroupMember is the request body for adding a user to a group.
 type AddGroupMember struct {
 	UserID string `json:"user_id" binding:"required"`
+	Role   string `json:"role"    binding:"required,oneof=owner editor viewer"`
 }

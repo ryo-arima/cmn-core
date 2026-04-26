@@ -27,7 +27,7 @@ type IdP interface {
 
 	// Group membership
 	ListGroupMembers(ctx context.Context, groupID string) ([]model.IdPUser, error)
-	AddUserToGroup(ctx context.Context, userID, groupID string) error
+	AddUserToGroup(ctx context.Context, userID, groupID, role string) error
 	RemoveUserFromGroup(ctx context.Context, userID, groupID string) error
 
 	// Authentication
@@ -87,8 +87,8 @@ func (u *idpUsecase) ListGroupMembers(ctx context.Context, groupID string) ([]mo
 	return u.manager.ListGroupMembers(ctx, groupID)
 }
 
-func (u *idpUsecase) AddUserToGroup(ctx context.Context, userID, groupID string) error {
-	return u.manager.AddUserToGroup(ctx, userID, groupID)
+func (u *idpUsecase) AddUserToGroup(ctx context.Context, userID, groupID, role string) error {
+	return u.manager.AddUserToGroup(ctx, userID, groupID, role)
 }
 
 func (u *idpUsecase) RemoveUserFromGroup(ctx context.Context, userID, groupID string) error {

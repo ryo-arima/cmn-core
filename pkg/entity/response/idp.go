@@ -10,6 +10,7 @@ type IdPUser struct {
 	FirstName string    `json:"first_name,omitempty"`
 	LastName  string    `json:"last_name,omitempty"`
 	Enabled   bool      `json:"enabled"`
+	Role      string    `json:"role,omitempty"`
 	CreatedAt time.Time `json:"created_at,omitempty"`
 }
 

@@ -204,28 +204,42 @@ func (t *authTransport) RoundTrip(req *http.Request) (*http.Response, error) {
 		return nil, err
 	}
 
-	clone := req.Clone(req.Context())
-	if token != "" {
-		clone.Header.Set("Authorization", "Bearer "+token)
+	// Buffer the request body so that POST/PUT/PATCH can also be retried on 401.
+	var bodyBuf []byte
+	if req.Body != nil && req.Body != http.NoBody {
+		bodyBuf, err = io.ReadAll(req.Body)
+		req.Body.Close()
+		if err != nil {
+			return nil, fmt.Errorf("auth transport: buffer request body: %w", err)
+		}
 	}
-	resp, err := t.base.RoundTrip(clone)
+
+	doRequest := func(tok string) (*http.Response, error) {
+		clone := req.Clone(req.Context())
+		if tok != "" {
+			clone.Header.Set("Authorization", "Bearer "+tok)
+		}
+		if bodyBuf != nil {
+			clone.Body = io.NopCloser(bytes.NewReader(bodyBuf))
+			clone.ContentLength = int64(len(bodyBuf))
+		}
+		return t.base.RoundTrip(clone)
+	}
+
+	resp, err := doRequest(token)
 	if err != nil {
 		return nil, err
 	}
 
-	// On 401, force re-login and retry once.
-	// Retry is limited to bodyless methods because the request body has already been consumed.
-	if resp.StatusCode == http.StatusUnauthorized && !t.manager.IsAnonymous() &&
-		(req.Method == http.MethodGet || req.Method == http.MethodHead || req.Method == http.MethodDelete) {
+	// On 401, force re-login and retry once for any HTTP method.
+	if resp.StatusCode == http.StatusUnauthorized && !t.manager.IsAnonymous() {
 		resp.Body.Close()
 		t.manager.ClearTokens()
 		newToken, loginErr := t.manager.loginWithPassword(req.Context())
 		if loginErr != nil {
 			return nil, loginErr
 		}
-		clone2 := req.Clone(req.Context())
-		clone2.Header.Set("Authorization", "Bearer "+newToken)
-		return t.base.RoundTrip(clone2)
+		return doRequest(newToken)
 	}
 
 	return resp, nil
