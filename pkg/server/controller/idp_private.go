@@ -262,7 +262,7 @@ func (ic *idpPrivate) AddGroupMember(c *gin.Context) {
 // RemoveGroupMember removes a user from a group.
 // DELETE /v1/private/member/:group_id  (user_id specified in request body)
 func (ic *idpPrivate) RemoveGroupMember(c *gin.Context) {
-	var req request.AddGroupMember
+	var req request.RemoveGroupMember
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"code": "IDP_MEMBER_REMOVE_400", "message": "Invalid request body"})
 		return

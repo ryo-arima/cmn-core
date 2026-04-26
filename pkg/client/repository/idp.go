@@ -34,7 +34,7 @@ type IdP interface {
 	// Members
 	ListGroupMembers(groupID string) response.IdPUsers
 	AddGroupMember(groupID string, req request.AddGroupMember) response.Commons
-	RemoveGroupMember(groupID string, req request.AddGroupMember) response.Commons
+	RemoveGroupMember(groupID string, req request.RemoveGroupMember) response.Commons
 }
 
 // IdPAdmin extends IdP with admin-only user management operations.
@@ -196,7 +196,7 @@ func (r *idpRepo) AddGroupMember(groupID string, req request.AddGroupMember) res
 	return out
 }
 
-func (r *idpRepo) RemoveGroupMember(groupID string, req request.AddGroupMember) response.Commons {
+func (r *idpRepo) RemoveGroupMember(groupID string, req request.RemoveGroupMember) response.Commons {
 	var out response.Commons
 	url := fmt.Sprintf("%s/member/%s", r.base, groupID)
 	if err := r.do("DELETE", url, req, &out); err != nil {

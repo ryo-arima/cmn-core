@@ -35,3 +35,8 @@ type AddGroupMember struct {
 	UserID string `json:"user_id" binding:"required"`
 	Role   string `json:"role"    binding:"required,oneof=owner editor viewer"`
 }
+
+// RemoveGroupMember is the request body for removing a user from a group.
+type RemoveGroupMember struct {
+	UserID string `json:"user_id" binding:"required"`
+}

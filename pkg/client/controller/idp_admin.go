@@ -270,7 +270,7 @@ func InitAdminMemberCmd(uc usecase.IdPAdmin) *cobra.Command {
 			if gid == "" || uid == "" {
 				return fmt.Errorf("--group-id and --user-id are required")
 			}
-			result := uc.RemoveGroupMember(gid, request.AddGroupMember{UserID: uid})
+			result := uc.RemoveGroupMember(gid, request.RemoveGroupMember{UserID: uid})
 			fmt.Print(usecase.Format(GetOutputFormat(), result))
 			return nil
 		},
