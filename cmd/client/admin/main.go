@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"path/filepath"
 	"strings"
 
 	"github.com/ryo-arima/cmn-core/pkg/client/auth"
@@ -21,17 +22,16 @@ func main() {
 
 	var configFile string
 	var outputFormat string
-	rootCmd.PersistentFlags().StringVarP(&configFile, "config", "c", "", "path to config file (env: CONFIG_FILE, default: etc/app.yaml)")
+	rootCmd.PersistentFlags().StringVarP(&configFile, "config", "c", "etc/admin.yaml", "path to config file (env: CONFIG_FILE, default: etc/admin.yaml)")
 	rootCmd.PersistentFlags().StringVarP(&outputFormat, "output", "o", "table", "output format: table, json, yaml")
 
 	// フラグを早期解析して config.NewBaseConfig() の前に CONFIG_FILE を設定する
 	_ = rootCmd.ParseFlags(os.Args[1:])
-	if configFile != "" {
-		os.Setenv("CONFIG_FILE", configFile)
-	}
+	os.Setenv("CONFIG_FILE", configFile)
 
 	conf := config.NewBaseConfig()
-	manager := auth.NewManager(*conf, "admin")
+	profile := strings.TrimSuffix(filepath.Base(configFile), ".yaml")
+	manager := auth.NewManager(*conf, profile)
 
 	rootCmd.PersistentPreRun = func(cmd *cobra.Command, args []string) {
 		controller.SetOutputFormat(outputFormat)

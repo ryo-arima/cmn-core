@@ -407,6 +407,40 @@ func (m *keycloakManager) RemoveUserFromGroup(ctx context.Context, userID, group
 	return nil
 }
 
+// Login performs an ROPC grant on behalf of a user and returns the issued access token.
+func (m *keycloakManager) Login(ctx context.Context, username, password string) (string, error) {
+	tokenURL := fmt.Sprintf("%s/realms/%s/protocol/openid-connect/token", m.cfg.BaseURL, m.cfg.Realm)
+	form := url.Values{}
+	form.Set("grant_type", "password")
+	form.Set("client_id", m.cfg.AdminClientID)
+	form.Set("client_secret", m.cfg.AdminClientSecret)
+	form.Set("username", username)
+	form.Set("password", password)
+
+	req, err := http.NewRequestWithContext(ctx, http.MethodPost, tokenURL, strings.NewReader(form.Encode()))
+	if err != nil {
+		return "", fmt.Errorf("keycloak: build login request: %w", err)
+	}
+	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+
+	resp, err := m.client.Do(req)
+	if err != nil {
+		return "", fmt.Errorf("keycloak: login request: %w", err)
+	}
+	defer resp.Body.Close()
+
+	body, _ := io.ReadAll(resp.Body)
+	if resp.StatusCode != http.StatusOK {
+		return "", fmt.Errorf("keycloak: login status %d", resp.StatusCode)
+	}
+
+	var t kcTokenResponse
+	if err := json.Unmarshal(body, &t); err != nil {
+		return "", fmt.Errorf("keycloak: parse login response: %w", err)
+	}
+	return t.AccessToken, nil
+}
+
 // ---- helpers ---------------------------------------------------------------
 
 func kcUserToModel(ku kcUser) *model.IdPUser {

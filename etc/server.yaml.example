@@ -1,0 +1,44 @@
+Application:
+  Common: {}
+  Server:
+    port: 8000
+    admin:
+      emails:
+        - "admin@example.com"
+    jwt_secret: "CHANGE_THIS_JWT_SECRET_IN_PRODUCTION"
+    log_level: "debug"
+    # Redis-related configurations
+    redis:
+      # Enable JWT token caching in Redis for better performance
+      jwt_cache: true
+      # JWT cache TTL in seconds (1800 = 30 minutes, 0 = use token expiry)
+      cache_ttl: 1800
+    # Identity provider for user/group management.
+    # provider: "keycloak" or "casdoor"
+    idp:
+      provider: "casdoor"
+      casdoor:
+        base_url: "http://localhost:8000"
+        client_id: "CHANGE_THIS_CLIENT_ID"
+        client_secret: "CHANGE_THIS_CLIENT_SECRET"
+        organization: "built-in"
+      # keycloak:
+      #   base_url: "http://localhost:8080"
+      #   realm: "master"
+      #   admin_client_id: "admin-cli"
+      #   admin_client_secret: "CHANGE_THIS_SECRET"
+
+PostgreSQL:
+  host: "localhost"
+  user: "user"
+  pass: "password"
+  port: "5432"
+  db: "cmn_core"
+  sslmode: "disable"
+
+Redis:
+  host: "localhost"
+  port: 6379
+  user: "default"
+  pass: "redis_password"
+  db: 0

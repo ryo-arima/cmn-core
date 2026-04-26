@@ -19,14 +19,12 @@ func main() {
 
 	var configFile string
 	var outputFormat string
-	rootCmd.PersistentFlags().StringVarP(&configFile, "config", "c", "", "path to config file (env: CONFIG_FILE, default: etc/app.yaml)")
+	rootCmd.PersistentFlags().StringVarP(&configFile, "config", "c", "etc/app.yaml", "path to config file (env: CONFIG_FILE, default: etc/app.yaml)")
 	rootCmd.PersistentFlags().StringVarP(&outputFormat, "output", "o", "table", "output format: table, json, yaml")
 
 	// フラグを早期解析して config.NewBaseConfig() の前に CONFIG_FILE を設定する
 	_ = rootCmd.ParseFlags(os.Args[1:])
-	if configFile != "" {
-		os.Setenv("CONFIG_FILE", configFile)
-	}
+	os.Setenv("CONFIG_FILE", configFile)
 
 	conf := config.NewBaseConfig()
 

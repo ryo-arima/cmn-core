@@ -34,8 +34,9 @@ func CreateTestConfig() config.BaseConfig {
 				},
 				Client: config.Client{
 					ServerEndpoint: "http://localhost:8080",
-					UserEmail:      "test@test.com",
-					UserPassword:   "testpass",
+					Credentials: config.ClientCredentials{
+						Email: "test@test.com", Password: "testpass",
+					},
 				},
 			},
 			PostgreSQL: config.PostgreSQL{
