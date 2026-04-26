@@ -25,7 +25,7 @@ func TestCommonUsecase_ResolveRole(t *testing.T) {
 			Application: config.Application{
 				Server: config.Server{
 					Admin: config.Admin{
-						Emails: []string{"admin@example.com"},
+						Emails: []string{"admin@cmn.local"},
 					},
 				},
 			},
@@ -34,7 +34,7 @@ func TestCommonUsecase_ResolveRole(t *testing.T) {
 	repo := repository.NewCommon(cfg, nil)
 	uc := usecase.NewCommon(repo)
 
-	assert.Equal(t, "admin", uc.ResolveRole("admin@example.com"))
+	assert.Equal(t, "admin", uc.ResolveRole("admin@cmn.local"))
 	assert.Equal(t, "user", uc.ResolveRole("other@example.com"))
 }
 

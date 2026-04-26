@@ -6,7 +6,7 @@ services:
     depends_on:
       - postgres
     environment:
-      PGADMIN_DEFAULT_EMAIL: admin@example.com
+      PGADMIN_DEFAULT_EMAIL: admin@cmn.local
       PGADMIN_DEFAULT_PASSWORD: admin
     ports:
       - "3001:80"

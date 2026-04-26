@@ -180,7 +180,7 @@ The secret value must be a JSON object matching the YAML structure in `etc/app.y
     }
   },
   "admin": {
-    "emails": ["admin@example.com"]
+    "emails": ["admin@cmn.local"]
   },
   "mysql": {
     "host": "localhost",

@@ -18,7 +18,7 @@ Application:
     port: 8000
     admin:
       emails:
-        - "admin@example.com"   # Emails with the admin role
+        - "admin@cmn.local"   # Emails with the admin role
     jwt_secret: "CHANGE_THIS_JWT_SECRET_IN_PRODUCTION"
     log_level: "info"            # debug / info / warn / error
     redis:
@@ -99,7 +99,7 @@ Application:
   Client:
     ServerEndpoint: "http://localhost:8000"
     credentials:
-      email: "admin@example.com"
+      email: "admin@cmn.local"
       password: "Admin123!"
 ```
 

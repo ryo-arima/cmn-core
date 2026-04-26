@@ -15,7 +15,7 @@
   "admin_claims": {
     "user_id": 2,
     "user_uuid": "admin-uuid-456",
-    "email": "admin@example.com",
+    "email": "admin@cmn.local",
     "name": "Admin User",
     "role": "admin",
     "jti": "admin-jti-456"
