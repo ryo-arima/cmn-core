@@ -2,6 +2,7 @@ package controller
 
 import (
 	"net/http"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 	"github.com/ryo-arima/cmn-core/pkg/entity/request"
@@ -49,13 +50,33 @@ func NewIdPInternal(iu usecase.IdP) IdPInternal {
 }
 
 // isMemberOf returns true if groupID is present in the caller's groups claim.
+// Handles the Casdoor JWT format where groups are "org/name" (e.g. "cmn/group001")
+// and URL-param group IDs are just the name part (e.g. "group001").
 func isMemberOf(groups []string, groupID string) bool {
+	// Normalize target: strip org prefix if present
+	normTarget := groupID
+	if i := strings.LastIndex(groupID, "/"); i >= 0 {
+		normTarget = groupID[i+1:]
+	}
 	for _, g := range groups {
-		if g == groupID {
+		norm := g
+		if i := strings.LastIndex(g, "/"); i >= 0 {
+			norm = g[i+1:]
+		}
+		if norm == normTarget {
 			return true
 		}
 	}
 	return false
+}
+
+// groupName strips the org prefix from a Casdoor group ID.
+// "cmn/group001" → "group001"; "group001" → "group001".
+func groupName(gid string) string {
+	if i := strings.LastIndex(gid, "/"); i >= 0 {
+		return gid[i+1:]
+	}
+	return gid
 }
 
 // ---- Own user --------------------------------------------------------------
@@ -106,7 +127,7 @@ func (ic *idpInternal) ListGroupUsers(c *gin.Context) {
 	seen := make(map[string]struct{})
 	var users []response.IdPUser
 	for _, gid := range claims.Groups {
-		members, err := ic.idpUsecase.ListGroupMembers(c.Request.Context(), gid)
+		members, err := ic.idpUsecase.ListGroupMembers(c.Request.Context(), groupName(gid))
 		if err != nil {
 			continue
 		}
@@ -162,7 +183,8 @@ func (ic *idpInternal) ListMyGroups(c *gin.Context) {
 	}
 	resp := make([]response.IdPGroup, 0, len(claims.Groups))
 	for _, gid := range claims.Groups {
-		g, err := ic.idpUsecase.GetGroup(c.Request.Context(), gid)
+		// Strip org prefix: JWT uses "cmn/group001", usecase expects "group001"
+		g, err := ic.idpUsecase.GetGroup(c.Request.Context(), groupName(gid))
 		if err != nil {
 			continue // skip groups that can't be fetched
 		}

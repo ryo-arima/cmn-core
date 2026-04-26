@@ -259,7 +259,13 @@ func (m *casdoorManager) DeleteUser(ctx context.Context, id string) error {
 
 func (m *casdoorManager) GetGroup(ctx context.Context, id string) (*model.IdPGroup, error) {
 	q := url.Values{}
-	q.Set("id", m.cfg.Organization+"/"+id)
+	// Casdoor API expects "org/name" format.
+	// Accept both plain name ("group001") and already-qualified ("cmn/group001").
+	fullID := id
+	if !strings.Contains(id, "/") {
+		fullID = m.cfg.Organization + "/" + id
+	}
+	q.Set("id", fullID)
 	status, body, err := m.do(ctx, http.MethodGet, m.apiURL("/api/get-group?"+q.Encode()), nil)
 	if err != nil {
 		return nil, err
@@ -352,6 +358,14 @@ func (m *casdoorManager) DeleteGroup(ctx context.Context, id string) error {
 // ---- Group membership ------------------------------------------------------
 // Casdoor manages group membership via the "groups" field on the user object.
 
+// qualifyGroup ensures the group ID has the org prefix ("cmn/group001").
+// Accepts both plain name ("group001") and already-qualified ("cmn/group001").
+func (m *casdoorManager) qualifyGroup(id string) string {
+	if strings.Contains(id, "/") {
+		return id
+	}
+	return m.cfg.Organization + "/" + id
+}
 func (m *casdoorManager) ListGroupMembers(ctx context.Context, groupID string) ([]model.IdPUser, error) {
 	q := url.Values{}
 	q.Set("owner", m.cfg.Organization)
@@ -373,7 +387,16 @@ func (m *casdoorManager) ListGroupMembers(ctx context.Context, groupID string) (
 	var members []model.IdPUser
 	for _, cu := range cus {
 		for _, g := range cu.Groups {
-			if g == groupID {
+			// Normalize to plain name: "cmn/group001" → "group001"
+			normG := g
+			if i := strings.LastIndex(g, "/"); i >= 0 {
+				normG = g[i+1:]
+			}
+			normGID := groupID
+			if i := strings.LastIndex(groupID, "/"); i >= 0 {
+				normGID = groupID[i+1:]
+			}
+			if normG == normGID {
 				members = append(members, *cdUserToModel(cu))
 				break
 			}
@@ -405,12 +428,13 @@ func (m *casdoorManager) AddUserToGroup(ctx context.Context, userID, groupID str
 		return fmt.Errorf("casdoor: parse user map: %w", err)
 	}
 	groups := parseStringSlice(userMap["groups"])
+	qualified := m.qualifyGroup(groupID)
 	for _, g := range groups {
-		if g == groupID {
+		if g == qualified {
 			return nil // already a member
 		}
 	}
-	groups = append(groups, groupID)
+	groups = append(groups, qualified)
 	userMap["groups"] = groups
 
 	uq := url.Values{}
@@ -446,9 +470,10 @@ func (m *casdoorManager) RemoveUserFromGroup(ctx context.Context, userID, groupI
 		return fmt.Errorf("casdoor: parse user map: %w", err)
 	}
 	groups := parseStringSlice(userMap["groups"])
-	filtered := groups[:0]
+	qualified := m.qualifyGroup(groupID)
+	filtered := make([]string, 0, len(groups))
 	for _, g := range groups {
-		if g != groupID {
+		if g != qualified {
 			filtered = append(filtered, g)
 		}
 	}
