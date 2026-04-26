@@ -256,6 +256,7 @@ func (m *MockMemberRepository) CountMembers(c *gin.Context, filter repository.Me
 
 // MockCommonRepository implements repository.Common for testing
 type MockCommonRepository struct {
+	JWTSecret         string
 	ValidateTokenFunc func(ctx context.Context, token string) (*model.JWTClaims, error)
 }
 

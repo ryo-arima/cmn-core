@@ -42,9 +42,9 @@ dev-up:
 dev-down:
 	$(COMPOSE) down -v --remove-orphans
 
-# App server container (build image and start)
+# App server container (build image and start, dependencies unchanged)
 svr-up:
-	$(COMPOSE) up -d --build server
+	$(COMPOSE) up -d --build --no-deps server
 
 # Stop and remove the app server container only
 svr-down:

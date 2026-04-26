@@ -36,6 +36,22 @@ func PrintMessage(msg string) {
 	fmt.Print(usecase.Format(GetOutputFormat(), message{Message: msg}))
 }
 
+// InitCommonRefreshTokenCmd creates a refresh command.
+// Token refresh is not supported in this system; tokens must be re-issued by the IdP.
+// The command informs the user and exits cleanly.
+func InitCommonRefreshTokenCmd(manager *clientauth.Manager) *cobra.Command {
+	return &cobra.Command{
+		Use:   "refresh",
+		Short: "refresh the access token",
+		Long:  "token refresh is not supported; please re-authenticate via your IdP to obtain a new token",
+		Run: func(cmd *cobra.Command, args []string) {
+			if err := manager.ForceRefresh(); err != nil {
+				PrintMessage(err.Error())
+			}
+		},
+	}
+}
+
 // InitCommonLogoutCmd creates a logout command that clears local token files.
 func InitCommonLogoutCmd(manager *clientauth.Manager) *cobra.Command {
 	return &cobra.Command{

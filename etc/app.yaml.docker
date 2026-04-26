@@ -15,6 +15,20 @@ Application:
     mail:
       host: "mailserver"
       port: 587
+    # Identity provider for user/group management.
+    # provider: "keycloak" or "casdoor"
+    idp:
+      provider: "casdoor"
+      casdoor:
+        base_url: "http://casdoor:8000"
+        client_id: "CHANGE_THIS_CLIENT_ID"
+        client_secret: "CHANGE_THIS_CLIENT_SECRET"
+        organization: "built-in"
+      # keycloak:
+      #   base_url: "http://keycloak:8080"
+      #   realm: "master"
+      #   admin_client_id: "admin-cli"
+      #   admin_client_secret: "CHANGE_THIS_SECRET"
   Client:
     HomePath: "etc/.cmn"
     ServerEndpoint: "http://localhost:8000"

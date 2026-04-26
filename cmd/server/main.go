@@ -76,12 +76,21 @@
 package main
 
 import (
+	"flag"
+	"os"
+
 	"github.com/ryo-arima/cmn-core/pkg/config"
 	"github.com/ryo-arima/cmn-core/pkg/server"
 	"github.com/ryo-arima/cmn-core/pkg/server/share"
 )
 
 func main() {
+	configFile := flag.String("config", "", "path to config file (env: CONFIG_FILE, default: etc/app.yaml)")
+	flag.Parse()
+	if *configFile != "" {
+		os.Setenv("CONFIG_FILE", *configFile)
+	}
+
 	// Load configuration
 	conf := config.NewBaseConfig()
 

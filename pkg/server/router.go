@@ -43,7 +43,7 @@ func InitRouter(conf config.BaseConfig) *gin.Engine {
 	// Initialize IdP manager (required)
 	idpManager, err := repository.NewIdPManager(conf)
 	if err != nil {
-		panic("IdP init failed: " + err.Error())
+		log.Fatalf("IdP init failed: %v", err)
 	}
 	idpUsecase := usecase.NewIdP(idpManager)
 	idpInternalCtrl := controller.NewIdPInternal(idpUsecase)

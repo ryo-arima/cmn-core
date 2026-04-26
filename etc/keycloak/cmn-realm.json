@@ -14,9 +14,18 @@
   "ssoSessionMaxLifespan": 36000,
   "roles": {
     "realm": [
-      { "name": "admin",     "description": "Administrator" },
-      { "name": "app",       "description": "Application user" },
-      { "name": "anonymous", "description": "Unauthenticated / public access" }
+      {
+        "name": "admin",
+        "description": "Administrator"
+      },
+      {
+        "name": "app",
+        "description": "Application user"
+      },
+      {
+        "name": "anonymous",
+        "description": "Unauthenticated / public access"
+      }
     ]
   },
   "clients": [
@@ -68,9 +77,37 @@
       "firstName": "User",
       "lastName": "01",
       "credentials": [
-        { "type": "password", "value": "Password123!", "temporary": false }
+        {
+          "type": "password",
+          "value": "Password123!",
+          "temporary": false
+        }
       ],
-      "realmRoles": ["app"]
+      "realmRoles": [
+        "app"
+      ],
+      "groups": [
+        "/group001",
+        "/group006",
+        "/group011",
+        "/group016",
+        "/group021",
+        "/group026",
+        "/group031",
+        "/group036",
+        "/group041",
+        "/group046",
+        "/group051",
+        "/group056",
+        "/group061",
+        "/group066",
+        "/group071",
+        "/group076",
+        "/group081",
+        "/group086",
+        "/group091",
+        "/group096"
+      ]
     },
     {
       "username": "user02",
@@ -79,9 +116,37 @@
       "firstName": "User",
       "lastName": "02",
       "credentials": [
-        { "type": "password", "value": "Password123!", "temporary": false }
+        {
+          "type": "password",
+          "value": "Password123!",
+          "temporary": false
+        }
       ],
-      "realmRoles": ["app"]
+      "realmRoles": [
+        "app"
+      ],
+      "groups": [
+        "/group001",
+        "/group006",
+        "/group011",
+        "/group016",
+        "/group021",
+        "/group026",
+        "/group031",
+        "/group036",
+        "/group041",
+        "/group046",
+        "/group051",
+        "/group056",
+        "/group061",
+        "/group066",
+        "/group071",
+        "/group076",
+        "/group081",
+        "/group086",
+        "/group091",
+        "/group096"
+      ]
     },
     {
       "username": "user03",
@@ -90,9 +155,37 @@
       "firstName": "User",
       "lastName": "03",
       "credentials": [
-        { "type": "password", "value": "Password123!", "temporary": false }
+        {
+          "type": "password",
+          "value": "Password123!",
+          "temporary": false
+        }
       ],
-      "realmRoles": ["app"]
+      "realmRoles": [
+        "app"
+      ],
+      "groups": [
+        "/group001",
+        "/group006",
+        "/group011",
+        "/group016",
+        "/group021",
+        "/group026",
+        "/group031",
+        "/group036",
+        "/group041",
+        "/group046",
+        "/group051",
+        "/group056",
+        "/group061",
+        "/group066",
+        "/group071",
+        "/group076",
+        "/group081",
+        "/group086",
+        "/group091",
+        "/group096"
+      ]
     },
     {
       "username": "user04",
@@ -101,9 +194,37 @@
       "firstName": "User",
       "lastName": "04",
       "credentials": [
-        { "type": "password", "value": "Password123!", "temporary": false }
+        {
+          "type": "password",
+          "value": "Password123!",
+          "temporary": false
+        }
       ],
-      "realmRoles": ["app"]
+      "realmRoles": [
+        "app"
+      ],
+      "groups": [
+        "/group001",
+        "/group006",
+        "/group011",
+        "/group016",
+        "/group021",
+        "/group026",
+        "/group031",
+        "/group036",
+        "/group041",
+        "/group046",
+        "/group051",
+        "/group056",
+        "/group061",
+        "/group066",
+        "/group071",
+        "/group076",
+        "/group081",
+        "/group086",
+        "/group091",
+        "/group096"
+      ]
     },
     {
       "username": "user05",
@@ -112,9 +233,37 @@
       "firstName": "User",
       "lastName": "05",
       "credentials": [
-        { "type": "password", "value": "Password123!", "temporary": false }
+        {
+          "type": "password",
+          "value": "Password123!",
+          "temporary": false
+        }
       ],
-      "realmRoles": ["app"]
+      "realmRoles": [
+        "app"
+      ],
+      "groups": [
+        "/group001",
+        "/group006",
+        "/group011",
+        "/group016",
+        "/group021",
+        "/group026",
+        "/group031",
+        "/group036",
+        "/group041",
+        "/group046",
+        "/group051",
+        "/group056",
+        "/group061",
+        "/group066",
+        "/group071",
+        "/group076",
+        "/group081",
+        "/group086",
+        "/group091",
+        "/group096"
+      ]
     },
     {
       "username": "user06",
@@ -123,9 +272,37 @@
       "firstName": "User",
       "lastName": "06",
       "credentials": [
-        { "type": "password", "value": "Password123!", "temporary": false }
+        {
+          "type": "password",
+          "value": "Password123!",
+          "temporary": false
+        }
       ],
-      "realmRoles": ["app"]
+      "realmRoles": [
+        "app"
+      ],
+      "groups": [
+        "/group001",
+        "/group006",
+        "/group011",
+        "/group016",
+        "/group021",
+        "/group026",
+        "/group031",
+        "/group036",
+        "/group041",
+        "/group046",
+        "/group051",
+        "/group056",
+        "/group061",
+        "/group066",
+        "/group071",
+        "/group076",
+        "/group081",
+        "/group086",
+        "/group091",
+        "/group096"
+      ]
     },
     {
       "username": "user07",
@@ -134,9 +311,37 @@
       "firstName": "User",
       "lastName": "07",
       "credentials": [
-        { "type": "password", "value": "Password123!", "temporary": false }
+        {
+          "type": "password",
+          "value": "Password123!",
+          "temporary": false
+        }
       ],
-      "realmRoles": ["app"]
+      "realmRoles": [
+        "app"
+      ],
+      "groups": [
+        "/group001",
+        "/group006",
+        "/group011",
+        "/group016",
+        "/group021",
+        "/group026",
+        "/group031",
+        "/group036",
+        "/group041",
+        "/group046",
+        "/group051",
+        "/group056",
+        "/group061",
+        "/group066",
+        "/group071",
+        "/group076",
+        "/group081",
+        "/group086",
+        "/group091",
+        "/group096"
+      ]
     },
     {
       "username": "user08",
@@ -145,9 +350,37 @@
       "firstName": "User",
       "lastName": "08",
       "credentials": [
-        { "type": "password", "value": "Password123!", "temporary": false }
+        {
+          "type": "password",
+          "value": "Password123!",
+          "temporary": false
+        }
       ],
-      "realmRoles": ["app"]
+      "realmRoles": [
+        "app"
+      ],
+      "groups": [
+        "/group001",
+        "/group006",
+        "/group011",
+        "/group016",
+        "/group021",
+        "/group026",
+        "/group031",
+        "/group036",
+        "/group041",
+        "/group046",
+        "/group051",
+        "/group056",
+        "/group061",
+        "/group066",
+        "/group071",
+        "/group076",
+        "/group081",
+        "/group086",
+        "/group091",
+        "/group096"
+      ]
     },
     {
       "username": "user09",
@@ -156,9 +389,37 @@
       "firstName": "User",
       "lastName": "09",
       "credentials": [
-        { "type": "password", "value": "Password123!", "temporary": false }
+        {
+          "type": "password",
+          "value": "Password123!",
+          "temporary": false
+        }
       ],
-      "realmRoles": ["app"]
+      "realmRoles": [
+        "app"
+      ],
+      "groups": [
+        "/group001",
+        "/group006",
+        "/group011",
+        "/group016",
+        "/group021",
+        "/group026",
+        "/group031",
+        "/group036",
+        "/group041",
+        "/group046",
+        "/group051",
+        "/group056",
+        "/group061",
+        "/group066",
+        "/group071",
+        "/group076",
+        "/group081",
+        "/group086",
+        "/group091",
+        "/group096"
+      ]
     },
     {
       "username": "user10",
@@ -167,9 +428,2399 @@
       "firstName": "User",
       "lastName": "10",
       "credentials": [
-        { "type": "password", "value": "Password123!", "temporary": false }
+        {
+          "type": "password",
+          "value": "Password123!",
+          "temporary": false
+        }
       ],
-      "realmRoles": ["app"]
+      "realmRoles": [
+        "app"
+      ],
+      "groups": [
+        "/group001",
+        "/group006",
+        "/group011",
+        "/group016",
+        "/group021",
+        "/group026",
+        "/group031",
+        "/group036",
+        "/group041",
+        "/group046",
+        "/group051",
+        "/group056",
+        "/group061",
+        "/group066",
+        "/group071",
+        "/group076",
+        "/group081",
+        "/group086",
+        "/group091",
+        "/group096"
+      ]
+    },
+    {
+      "username": "user11",
+      "email": "user11@cmn.local",
+      "enabled": true,
+      "firstName": "User",
+      "lastName": "11",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Password123!",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "app"
+      ],
+      "groups": [
+        "/group002",
+        "/group007",
+        "/group012",
+        "/group017",
+        "/group022",
+        "/group027",
+        "/group032",
+        "/group037",
+        "/group042",
+        "/group047",
+        "/group052",
+        "/group057",
+        "/group062",
+        "/group067",
+        "/group072",
+        "/group077",
+        "/group082",
+        "/group087",
+        "/group092",
+        "/group097"
+      ]
+    },
+    {
+      "username": "user12",
+      "email": "user12@cmn.local",
+      "enabled": true,
+      "firstName": "User",
+      "lastName": "12",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Password123!",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "app"
+      ],
+      "groups": [
+        "/group002",
+        "/group007",
+        "/group012",
+        "/group017",
+        "/group022",
+        "/group027",
+        "/group032",
+        "/group037",
+        "/group042",
+        "/group047",
+        "/group052",
+        "/group057",
+        "/group062",
+        "/group067",
+        "/group072",
+        "/group077",
+        "/group082",
+        "/group087",
+        "/group092",
+        "/group097"
+      ]
+    },
+    {
+      "username": "user13",
+      "email": "user13@cmn.local",
+      "enabled": true,
+      "firstName": "User",
+      "lastName": "13",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Password123!",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "app"
+      ],
+      "groups": [
+        "/group002",
+        "/group007",
+        "/group012",
+        "/group017",
+        "/group022",
+        "/group027",
+        "/group032",
+        "/group037",
+        "/group042",
+        "/group047",
+        "/group052",
+        "/group057",
+        "/group062",
+        "/group067",
+        "/group072",
+        "/group077",
+        "/group082",
+        "/group087",
+        "/group092",
+        "/group097"
+      ]
+    },
+    {
+      "username": "user14",
+      "email": "user14@cmn.local",
+      "enabled": true,
+      "firstName": "User",
+      "lastName": "14",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Password123!",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "app"
+      ],
+      "groups": [
+        "/group002",
+        "/group007",
+        "/group012",
+        "/group017",
+        "/group022",
+        "/group027",
+        "/group032",
+        "/group037",
+        "/group042",
+        "/group047",
+        "/group052",
+        "/group057",
+        "/group062",
+        "/group067",
+        "/group072",
+        "/group077",
+        "/group082",
+        "/group087",
+        "/group092",
+        "/group097"
+      ]
+    },
+    {
+      "username": "user15",
+      "email": "user15@cmn.local",
+      "enabled": true,
+      "firstName": "User",
+      "lastName": "15",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Password123!",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "app"
+      ],
+      "groups": [
+        "/group002",
+        "/group007",
+        "/group012",
+        "/group017",
+        "/group022",
+        "/group027",
+        "/group032",
+        "/group037",
+        "/group042",
+        "/group047",
+        "/group052",
+        "/group057",
+        "/group062",
+        "/group067",
+        "/group072",
+        "/group077",
+        "/group082",
+        "/group087",
+        "/group092",
+        "/group097"
+      ]
+    },
+    {
+      "username": "user16",
+      "email": "user16@cmn.local",
+      "enabled": true,
+      "firstName": "User",
+      "lastName": "16",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Password123!",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "app"
+      ],
+      "groups": [
+        "/group002",
+        "/group007",
+        "/group012",
+        "/group017",
+        "/group022",
+        "/group027",
+        "/group032",
+        "/group037",
+        "/group042",
+        "/group047",
+        "/group052",
+        "/group057",
+        "/group062",
+        "/group067",
+        "/group072",
+        "/group077",
+        "/group082",
+        "/group087",
+        "/group092",
+        "/group097"
+      ]
+    },
+    {
+      "username": "user17",
+      "email": "user17@cmn.local",
+      "enabled": true,
+      "firstName": "User",
+      "lastName": "17",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Password123!",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "app"
+      ],
+      "groups": [
+        "/group002",
+        "/group007",
+        "/group012",
+        "/group017",
+        "/group022",
+        "/group027",
+        "/group032",
+        "/group037",
+        "/group042",
+        "/group047",
+        "/group052",
+        "/group057",
+        "/group062",
+        "/group067",
+        "/group072",
+        "/group077",
+        "/group082",
+        "/group087",
+        "/group092",
+        "/group097"
+      ]
+    },
+    {
+      "username": "user18",
+      "email": "user18@cmn.local",
+      "enabled": true,
+      "firstName": "User",
+      "lastName": "18",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Password123!",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "app"
+      ],
+      "groups": [
+        "/group002",
+        "/group007",
+        "/group012",
+        "/group017",
+        "/group022",
+        "/group027",
+        "/group032",
+        "/group037",
+        "/group042",
+        "/group047",
+        "/group052",
+        "/group057",
+        "/group062",
+        "/group067",
+        "/group072",
+        "/group077",
+        "/group082",
+        "/group087",
+        "/group092",
+        "/group097"
+      ]
+    },
+    {
+      "username": "user19",
+      "email": "user19@cmn.local",
+      "enabled": true,
+      "firstName": "User",
+      "lastName": "19",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Password123!",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "app"
+      ],
+      "groups": [
+        "/group002",
+        "/group007",
+        "/group012",
+        "/group017",
+        "/group022",
+        "/group027",
+        "/group032",
+        "/group037",
+        "/group042",
+        "/group047",
+        "/group052",
+        "/group057",
+        "/group062",
+        "/group067",
+        "/group072",
+        "/group077",
+        "/group082",
+        "/group087",
+        "/group092",
+        "/group097"
+      ]
+    },
+    {
+      "username": "user20",
+      "email": "user20@cmn.local",
+      "enabled": true,
+      "firstName": "User",
+      "lastName": "20",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Password123!",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "app"
+      ],
+      "groups": [
+        "/group002",
+        "/group007",
+        "/group012",
+        "/group017",
+        "/group022",
+        "/group027",
+        "/group032",
+        "/group037",
+        "/group042",
+        "/group047",
+        "/group052",
+        "/group057",
+        "/group062",
+        "/group067",
+        "/group072",
+        "/group077",
+        "/group082",
+        "/group087",
+        "/group092",
+        "/group097"
+      ]
+    },
+    {
+      "username": "user21",
+      "email": "user21@cmn.local",
+      "enabled": true,
+      "firstName": "User",
+      "lastName": "21",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Password123!",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "app"
+      ],
+      "groups": [
+        "/group003",
+        "/group008",
+        "/group013",
+        "/group018",
+        "/group023",
+        "/group028",
+        "/group033",
+        "/group038",
+        "/group043",
+        "/group048",
+        "/group053",
+        "/group058",
+        "/group063",
+        "/group068",
+        "/group073",
+        "/group078",
+        "/group083",
+        "/group088",
+        "/group093",
+        "/group098"
+      ]
+    },
+    {
+      "username": "user22",
+      "email": "user22@cmn.local",
+      "enabled": true,
+      "firstName": "User",
+      "lastName": "22",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Password123!",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "app"
+      ],
+      "groups": [
+        "/group003",
+        "/group008",
+        "/group013",
+        "/group018",
+        "/group023",
+        "/group028",
+        "/group033",
+        "/group038",
+        "/group043",
+        "/group048",
+        "/group053",
+        "/group058",
+        "/group063",
+        "/group068",
+        "/group073",
+        "/group078",
+        "/group083",
+        "/group088",
+        "/group093",
+        "/group098"
+      ]
+    },
+    {
+      "username": "user23",
+      "email": "user23@cmn.local",
+      "enabled": true,
+      "firstName": "User",
+      "lastName": "23",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Password123!",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "app"
+      ],
+      "groups": [
+        "/group003",
+        "/group008",
+        "/group013",
+        "/group018",
+        "/group023",
+        "/group028",
+        "/group033",
+        "/group038",
+        "/group043",
+        "/group048",
+        "/group053",
+        "/group058",
+        "/group063",
+        "/group068",
+        "/group073",
+        "/group078",
+        "/group083",
+        "/group088",
+        "/group093",
+        "/group098"
+      ]
+    },
+    {
+      "username": "user24",
+      "email": "user24@cmn.local",
+      "enabled": true,
+      "firstName": "User",
+      "lastName": "24",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Password123!",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "app"
+      ],
+      "groups": [
+        "/group003",
+        "/group008",
+        "/group013",
+        "/group018",
+        "/group023",
+        "/group028",
+        "/group033",
+        "/group038",
+        "/group043",
+        "/group048",
+        "/group053",
+        "/group058",
+        "/group063",
+        "/group068",
+        "/group073",
+        "/group078",
+        "/group083",
+        "/group088",
+        "/group093",
+        "/group098"
+      ]
+    },
+    {
+      "username": "user25",
+      "email": "user25@cmn.local",
+      "enabled": true,
+      "firstName": "User",
+      "lastName": "25",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Password123!",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "app"
+      ],
+      "groups": [
+        "/group003",
+        "/group008",
+        "/group013",
+        "/group018",
+        "/group023",
+        "/group028",
+        "/group033",
+        "/group038",
+        "/group043",
+        "/group048",
+        "/group053",
+        "/group058",
+        "/group063",
+        "/group068",
+        "/group073",
+        "/group078",
+        "/group083",
+        "/group088",
+        "/group093",
+        "/group098"
+      ]
+    },
+    {
+      "username": "user26",
+      "email": "user26@cmn.local",
+      "enabled": true,
+      "firstName": "User",
+      "lastName": "26",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Password123!",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "app"
+      ],
+      "groups": [
+        "/group003",
+        "/group008",
+        "/group013",
+        "/group018",
+        "/group023",
+        "/group028",
+        "/group033",
+        "/group038",
+        "/group043",
+        "/group048",
+        "/group053",
+        "/group058",
+        "/group063",
+        "/group068",
+        "/group073",
+        "/group078",
+        "/group083",
+        "/group088",
+        "/group093",
+        "/group098"
+      ]
+    },
+    {
+      "username": "user27",
+      "email": "user27@cmn.local",
+      "enabled": true,
+      "firstName": "User",
+      "lastName": "27",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Password123!",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "app"
+      ],
+      "groups": [
+        "/group003",
+        "/group008",
+        "/group013",
+        "/group018",
+        "/group023",
+        "/group028",
+        "/group033",
+        "/group038",
+        "/group043",
+        "/group048",
+        "/group053",
+        "/group058",
+        "/group063",
+        "/group068",
+        "/group073",
+        "/group078",
+        "/group083",
+        "/group088",
+        "/group093",
+        "/group098"
+      ]
+    },
+    {
+      "username": "user28",
+      "email": "user28@cmn.local",
+      "enabled": true,
+      "firstName": "User",
+      "lastName": "28",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Password123!",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "app"
+      ],
+      "groups": [
+        "/group003",
+        "/group008",
+        "/group013",
+        "/group018",
+        "/group023",
+        "/group028",
+        "/group033",
+        "/group038",
+        "/group043",
+        "/group048",
+        "/group053",
+        "/group058",
+        "/group063",
+        "/group068",
+        "/group073",
+        "/group078",
+        "/group083",
+        "/group088",
+        "/group093",
+        "/group098"
+      ]
+    },
+    {
+      "username": "user29",
+      "email": "user29@cmn.local",
+      "enabled": true,
+      "firstName": "User",
+      "lastName": "29",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Password123!",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "app"
+      ],
+      "groups": [
+        "/group003",
+        "/group008",
+        "/group013",
+        "/group018",
+        "/group023",
+        "/group028",
+        "/group033",
+        "/group038",
+        "/group043",
+        "/group048",
+        "/group053",
+        "/group058",
+        "/group063",
+        "/group068",
+        "/group073",
+        "/group078",
+        "/group083",
+        "/group088",
+        "/group093",
+        "/group098"
+      ]
+    },
+    {
+      "username": "user30",
+      "email": "user30@cmn.local",
+      "enabled": true,
+      "firstName": "User",
+      "lastName": "30",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Password123!",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "app"
+      ],
+      "groups": [
+        "/group003",
+        "/group008",
+        "/group013",
+        "/group018",
+        "/group023",
+        "/group028",
+        "/group033",
+        "/group038",
+        "/group043",
+        "/group048",
+        "/group053",
+        "/group058",
+        "/group063",
+        "/group068",
+        "/group073",
+        "/group078",
+        "/group083",
+        "/group088",
+        "/group093",
+        "/group098"
+      ]
+    },
+    {
+      "username": "user31",
+      "email": "user31@cmn.local",
+      "enabled": true,
+      "firstName": "User",
+      "lastName": "31",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Password123!",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "app"
+      ],
+      "groups": [
+        "/group004",
+        "/group009",
+        "/group014",
+        "/group019",
+        "/group024",
+        "/group029",
+        "/group034",
+        "/group039",
+        "/group044",
+        "/group049",
+        "/group054",
+        "/group059",
+        "/group064",
+        "/group069",
+        "/group074",
+        "/group079",
+        "/group084",
+        "/group089",
+        "/group094",
+        "/group099"
+      ]
+    },
+    {
+      "username": "user32",
+      "email": "user32@cmn.local",
+      "enabled": true,
+      "firstName": "User",
+      "lastName": "32",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Password123!",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "app"
+      ],
+      "groups": [
+        "/group004",
+        "/group009",
+        "/group014",
+        "/group019",
+        "/group024",
+        "/group029",
+        "/group034",
+        "/group039",
+        "/group044",
+        "/group049",
+        "/group054",
+        "/group059",
+        "/group064",
+        "/group069",
+        "/group074",
+        "/group079",
+        "/group084",
+        "/group089",
+        "/group094",
+        "/group099"
+      ]
+    },
+    {
+      "username": "user33",
+      "email": "user33@cmn.local",
+      "enabled": true,
+      "firstName": "User",
+      "lastName": "33",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Password123!",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "app"
+      ],
+      "groups": [
+        "/group004",
+        "/group009",
+        "/group014",
+        "/group019",
+        "/group024",
+        "/group029",
+        "/group034",
+        "/group039",
+        "/group044",
+        "/group049",
+        "/group054",
+        "/group059",
+        "/group064",
+        "/group069",
+        "/group074",
+        "/group079",
+        "/group084",
+        "/group089",
+        "/group094",
+        "/group099"
+      ]
+    },
+    {
+      "username": "user34",
+      "email": "user34@cmn.local",
+      "enabled": true,
+      "firstName": "User",
+      "lastName": "34",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Password123!",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "app"
+      ],
+      "groups": [
+        "/group004",
+        "/group009",
+        "/group014",
+        "/group019",
+        "/group024",
+        "/group029",
+        "/group034",
+        "/group039",
+        "/group044",
+        "/group049",
+        "/group054",
+        "/group059",
+        "/group064",
+        "/group069",
+        "/group074",
+        "/group079",
+        "/group084",
+        "/group089",
+        "/group094",
+        "/group099"
+      ]
+    },
+    {
+      "username": "user35",
+      "email": "user35@cmn.local",
+      "enabled": true,
+      "firstName": "User",
+      "lastName": "35",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Password123!",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "app"
+      ],
+      "groups": [
+        "/group004",
+        "/group009",
+        "/group014",
+        "/group019",
+        "/group024",
+        "/group029",
+        "/group034",
+        "/group039",
+        "/group044",
+        "/group049",
+        "/group054",
+        "/group059",
+        "/group064",
+        "/group069",
+        "/group074",
+        "/group079",
+        "/group084",
+        "/group089",
+        "/group094",
+        "/group099"
+      ]
+    },
+    {
+      "username": "user36",
+      "email": "user36@cmn.local",
+      "enabled": true,
+      "firstName": "User",
+      "lastName": "36",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Password123!",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "app"
+      ],
+      "groups": [
+        "/group004",
+        "/group009",
+        "/group014",
+        "/group019",
+        "/group024",
+        "/group029",
+        "/group034",
+        "/group039",
+        "/group044",
+        "/group049",
+        "/group054",
+        "/group059",
+        "/group064",
+        "/group069",
+        "/group074",
+        "/group079",
+        "/group084",
+        "/group089",
+        "/group094",
+        "/group099"
+      ]
+    },
+    {
+      "username": "user37",
+      "email": "user37@cmn.local",
+      "enabled": true,
+      "firstName": "User",
+      "lastName": "37",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Password123!",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "app"
+      ],
+      "groups": [
+        "/group004",
+        "/group009",
+        "/group014",
+        "/group019",
+        "/group024",
+        "/group029",
+        "/group034",
+        "/group039",
+        "/group044",
+        "/group049",
+        "/group054",
+        "/group059",
+        "/group064",
+        "/group069",
+        "/group074",
+        "/group079",
+        "/group084",
+        "/group089",
+        "/group094",
+        "/group099"
+      ]
+    },
+    {
+      "username": "user38",
+      "email": "user38@cmn.local",
+      "enabled": true,
+      "firstName": "User",
+      "lastName": "38",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Password123!",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "app"
+      ],
+      "groups": [
+        "/group004",
+        "/group009",
+        "/group014",
+        "/group019",
+        "/group024",
+        "/group029",
+        "/group034",
+        "/group039",
+        "/group044",
+        "/group049",
+        "/group054",
+        "/group059",
+        "/group064",
+        "/group069",
+        "/group074",
+        "/group079",
+        "/group084",
+        "/group089",
+        "/group094",
+        "/group099"
+      ]
+    },
+    {
+      "username": "user39",
+      "email": "user39@cmn.local",
+      "enabled": true,
+      "firstName": "User",
+      "lastName": "39",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Password123!",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "app"
+      ],
+      "groups": [
+        "/group004",
+        "/group009",
+        "/group014",
+        "/group019",
+        "/group024",
+        "/group029",
+        "/group034",
+        "/group039",
+        "/group044",
+        "/group049",
+        "/group054",
+        "/group059",
+        "/group064",
+        "/group069",
+        "/group074",
+        "/group079",
+        "/group084",
+        "/group089",
+        "/group094",
+        "/group099"
+      ]
+    },
+    {
+      "username": "user40",
+      "email": "user40@cmn.local",
+      "enabled": true,
+      "firstName": "User",
+      "lastName": "40",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Password123!",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "app"
+      ],
+      "groups": [
+        "/group004",
+        "/group009",
+        "/group014",
+        "/group019",
+        "/group024",
+        "/group029",
+        "/group034",
+        "/group039",
+        "/group044",
+        "/group049",
+        "/group054",
+        "/group059",
+        "/group064",
+        "/group069",
+        "/group074",
+        "/group079",
+        "/group084",
+        "/group089",
+        "/group094",
+        "/group099"
+      ]
+    },
+    {
+      "username": "user41",
+      "email": "user41@cmn.local",
+      "enabled": true,
+      "firstName": "User",
+      "lastName": "41",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Password123!",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "app"
+      ],
+      "groups": [
+        "/group005",
+        "/group010",
+        "/group015",
+        "/group020",
+        "/group025",
+        "/group030",
+        "/group035",
+        "/group040",
+        "/group045",
+        "/group050",
+        "/group055",
+        "/group060",
+        "/group065",
+        "/group070",
+        "/group075",
+        "/group080",
+        "/group085",
+        "/group090",
+        "/group095",
+        "/group100"
+      ]
+    },
+    {
+      "username": "user42",
+      "email": "user42@cmn.local",
+      "enabled": true,
+      "firstName": "User",
+      "lastName": "42",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Password123!",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "app"
+      ],
+      "groups": [
+        "/group005",
+        "/group010",
+        "/group015",
+        "/group020",
+        "/group025",
+        "/group030",
+        "/group035",
+        "/group040",
+        "/group045",
+        "/group050",
+        "/group055",
+        "/group060",
+        "/group065",
+        "/group070",
+        "/group075",
+        "/group080",
+        "/group085",
+        "/group090",
+        "/group095",
+        "/group100"
+      ]
+    },
+    {
+      "username": "user43",
+      "email": "user43@cmn.local",
+      "enabled": true,
+      "firstName": "User",
+      "lastName": "43",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Password123!",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "app"
+      ],
+      "groups": [
+        "/group005",
+        "/group010",
+        "/group015",
+        "/group020",
+        "/group025",
+        "/group030",
+        "/group035",
+        "/group040",
+        "/group045",
+        "/group050",
+        "/group055",
+        "/group060",
+        "/group065",
+        "/group070",
+        "/group075",
+        "/group080",
+        "/group085",
+        "/group090",
+        "/group095",
+        "/group100"
+      ]
+    },
+    {
+      "username": "user44",
+      "email": "user44@cmn.local",
+      "enabled": true,
+      "firstName": "User",
+      "lastName": "44",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Password123!",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "app"
+      ],
+      "groups": [
+        "/group005",
+        "/group010",
+        "/group015",
+        "/group020",
+        "/group025",
+        "/group030",
+        "/group035",
+        "/group040",
+        "/group045",
+        "/group050",
+        "/group055",
+        "/group060",
+        "/group065",
+        "/group070",
+        "/group075",
+        "/group080",
+        "/group085",
+        "/group090",
+        "/group095",
+        "/group100"
+      ]
+    },
+    {
+      "username": "user45",
+      "email": "user45@cmn.local",
+      "enabled": true,
+      "firstName": "User",
+      "lastName": "45",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Password123!",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "app"
+      ],
+      "groups": [
+        "/group005",
+        "/group010",
+        "/group015",
+        "/group020",
+        "/group025",
+        "/group030",
+        "/group035",
+        "/group040",
+        "/group045",
+        "/group050",
+        "/group055",
+        "/group060",
+        "/group065",
+        "/group070",
+        "/group075",
+        "/group080",
+        "/group085",
+        "/group090",
+        "/group095",
+        "/group100"
+      ]
+    },
+    {
+      "username": "user46",
+      "email": "user46@cmn.local",
+      "enabled": true,
+      "firstName": "User",
+      "lastName": "46",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Password123!",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "app"
+      ],
+      "groups": [
+        "/group005",
+        "/group010",
+        "/group015",
+        "/group020",
+        "/group025",
+        "/group030",
+        "/group035",
+        "/group040",
+        "/group045",
+        "/group050",
+        "/group055",
+        "/group060",
+        "/group065",
+        "/group070",
+        "/group075",
+        "/group080",
+        "/group085",
+        "/group090",
+        "/group095",
+        "/group100"
+      ]
+    },
+    {
+      "username": "user47",
+      "email": "user47@cmn.local",
+      "enabled": true,
+      "firstName": "User",
+      "lastName": "47",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Password123!",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "app"
+      ],
+      "groups": [
+        "/group005",
+        "/group010",
+        "/group015",
+        "/group020",
+        "/group025",
+        "/group030",
+        "/group035",
+        "/group040",
+        "/group045",
+        "/group050",
+        "/group055",
+        "/group060",
+        "/group065",
+        "/group070",
+        "/group075",
+        "/group080",
+        "/group085",
+        "/group090",
+        "/group095",
+        "/group100"
+      ]
+    },
+    {
+      "username": "user48",
+      "email": "user48@cmn.local",
+      "enabled": true,
+      "firstName": "User",
+      "lastName": "48",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Password123!",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "app"
+      ],
+      "groups": [
+        "/group005",
+        "/group010",
+        "/group015",
+        "/group020",
+        "/group025",
+        "/group030",
+        "/group035",
+        "/group040",
+        "/group045",
+        "/group050",
+        "/group055",
+        "/group060",
+        "/group065",
+        "/group070",
+        "/group075",
+        "/group080",
+        "/group085",
+        "/group090",
+        "/group095",
+        "/group100"
+      ]
+    },
+    {
+      "username": "user49",
+      "email": "user49@cmn.local",
+      "enabled": true,
+      "firstName": "User",
+      "lastName": "49",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Password123!",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "app"
+      ],
+      "groups": [
+        "/group005",
+        "/group010",
+        "/group015",
+        "/group020",
+        "/group025",
+        "/group030",
+        "/group035",
+        "/group040",
+        "/group045",
+        "/group050",
+        "/group055",
+        "/group060",
+        "/group065",
+        "/group070",
+        "/group075",
+        "/group080",
+        "/group085",
+        "/group090",
+        "/group095",
+        "/group100"
+      ]
+    },
+    {
+      "username": "user50",
+      "email": "user50@cmn.local",
+      "enabled": true,
+      "firstName": "User",
+      "lastName": "50",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Password123!",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "app"
+      ],
+      "groups": [
+        "/group005",
+        "/group010",
+        "/group015",
+        "/group020",
+        "/group025",
+        "/group030",
+        "/group035",
+        "/group040",
+        "/group045",
+        "/group050",
+        "/group055",
+        "/group060",
+        "/group065",
+        "/group070",
+        "/group075",
+        "/group080",
+        "/group085",
+        "/group090",
+        "/group095",
+        "/group100"
+      ]
+    }
+  ],
+  "groups": [
+    {
+      "name": "group001",
+      "path": "/group001",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group002",
+      "path": "/group002",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group003",
+      "path": "/group003",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group004",
+      "path": "/group004",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group005",
+      "path": "/group005",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group006",
+      "path": "/group006",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group007",
+      "path": "/group007",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group008",
+      "path": "/group008",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group009",
+      "path": "/group009",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group010",
+      "path": "/group010",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group011",
+      "path": "/group011",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group012",
+      "path": "/group012",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group013",
+      "path": "/group013",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group014",
+      "path": "/group014",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group015",
+      "path": "/group015",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group016",
+      "path": "/group016",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group017",
+      "path": "/group017",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group018",
+      "path": "/group018",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group019",
+      "path": "/group019",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group020",
+      "path": "/group020",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group021",
+      "path": "/group021",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group022",
+      "path": "/group022",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group023",
+      "path": "/group023",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group024",
+      "path": "/group024",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group025",
+      "path": "/group025",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group026",
+      "path": "/group026",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group027",
+      "path": "/group027",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group028",
+      "path": "/group028",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group029",
+      "path": "/group029",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group030",
+      "path": "/group030",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group031",
+      "path": "/group031",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group032",
+      "path": "/group032",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group033",
+      "path": "/group033",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group034",
+      "path": "/group034",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group035",
+      "path": "/group035",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group036",
+      "path": "/group036",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group037",
+      "path": "/group037",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group038",
+      "path": "/group038",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group039",
+      "path": "/group039",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group040",
+      "path": "/group040",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group041",
+      "path": "/group041",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group042",
+      "path": "/group042",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group043",
+      "path": "/group043",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group044",
+      "path": "/group044",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group045",
+      "path": "/group045",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group046",
+      "path": "/group046",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group047",
+      "path": "/group047",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group048",
+      "path": "/group048",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group049",
+      "path": "/group049",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group050",
+      "path": "/group050",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group051",
+      "path": "/group051",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group052",
+      "path": "/group052",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group053",
+      "path": "/group053",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group054",
+      "path": "/group054",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group055",
+      "path": "/group055",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group056",
+      "path": "/group056",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group057",
+      "path": "/group057",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group058",
+      "path": "/group058",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group059",
+      "path": "/group059",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group060",
+      "path": "/group060",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group061",
+      "path": "/group061",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group062",
+      "path": "/group062",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group063",
+      "path": "/group063",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group064",
+      "path": "/group064",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group065",
+      "path": "/group065",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group066",
+      "path": "/group066",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group067",
+      "path": "/group067",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group068",
+      "path": "/group068",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group069",
+      "path": "/group069",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group070",
+      "path": "/group070",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group071",
+      "path": "/group071",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group072",
+      "path": "/group072",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group073",
+      "path": "/group073",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group074",
+      "path": "/group074",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group075",
+      "path": "/group075",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group076",
+      "path": "/group076",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group077",
+      "path": "/group077",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group078",
+      "path": "/group078",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group079",
+      "path": "/group079",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group080",
+      "path": "/group080",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group081",
+      "path": "/group081",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group082",
+      "path": "/group082",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group083",
+      "path": "/group083",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group084",
+      "path": "/group084",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group085",
+      "path": "/group085",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group086",
+      "path": "/group086",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group087",
+      "path": "/group087",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group088",
+      "path": "/group088",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group089",
+      "path": "/group089",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group090",
+      "path": "/group090",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group091",
+      "path": "/group091",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group092",
+      "path": "/group092",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group093",
+      "path": "/group093",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group094",
+      "path": "/group094",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group095",
+      "path": "/group095",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group096",
+      "path": "/group096",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group097",
+      "path": "/group097",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group098",
+      "path": "/group098",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group099",
+      "path": "/group099",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "group100",
+      "path": "/group100",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {},
+      "subGroups": []
     }
   ]
 }

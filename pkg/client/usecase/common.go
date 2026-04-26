@@ -54,10 +54,126 @@ func tableString(v interface{}) string {
 		return commonTableString(data)
 	case *response.Commons:
 		return commonTableString(*data)
+	case response.IdPUsers:
+		return idpUsersTableString(data)
+	case response.SingleIdPUser:
+		return singleIdPUserTableString(data)
+	case response.IdPGroups:
+		return idpGroupsTableString(data)
+	case response.SingleIdPGroup:
+		return singleIdPGroupTableString(data)
+	case response.Resources:
+		return resourcesTableString(data)
+	case response.SingleResource:
+		return singleResourceTableString(data)
+	case response.ResourceGroupRoles:
+		return resourceGroupRolesTableString(data)
 	default:
 		b, _ := json.Marshal(data)
 		return string(b) + "\n"
 	}
+}
+
+func idpUsersTableString(res response.IdPUsers) string {
+	w, buf := newTabWriterBuf()
+	fmt.Fprintln(w, strings.Join([]string{"CODE", "MESSAGE"}, "\t"))
+	fmt.Fprintf(w, "%s\t%s\n", res.Code, res.Message)
+	if len(res.Users) > 0 {
+		fmt.Fprintln(w)
+		fmt.Fprintln(w, strings.Join([]string{"ID", "USERNAME", "EMAIL", "FIRST_NAME", "LAST_NAME", "ENABLED"}, "\t"))
+		for _, u := range res.Users {
+			fmt.Fprintf(w, "%s\t%s\t%s\t%s\t%s\t%v\n", u.ID, u.Username, u.Email, u.FirstName, u.LastName, u.Enabled)
+		}
+	}
+	w.Flush()
+	return buf.String()
+}
+
+func singleIdPUserTableString(res response.SingleIdPUser) string {
+	w, buf := newTabWriterBuf()
+	fmt.Fprintln(w, strings.Join([]string{"CODE", "MESSAGE"}, "\t"))
+	fmt.Fprintf(w, "%s\t%s\n", res.Code, res.Message)
+	if res.User != nil {
+		fmt.Fprintln(w)
+		fmt.Fprintln(w, strings.Join([]string{"ID", "USERNAME", "EMAIL", "FIRST_NAME", "LAST_NAME", "ENABLED"}, "\t"))
+		u := res.User
+		fmt.Fprintf(w, "%s\t%s\t%s\t%s\t%s\t%v\n", u.ID, u.Username, u.Email, u.FirstName, u.LastName, u.Enabled)
+	}
+	w.Flush()
+	return buf.String()
+}
+
+func idpGroupsTableString(res response.IdPGroups) string {
+	w, buf := newTabWriterBuf()
+	fmt.Fprintln(w, strings.Join([]string{"CODE", "MESSAGE"}, "\t"))
+	fmt.Fprintf(w, "%s\t%s\n", res.Code, res.Message)
+	if len(res.Groups) > 0 {
+		fmt.Fprintln(w)
+		fmt.Fprintln(w, strings.Join([]string{"ID", "NAME", "PATH"}, "\t"))
+		for _, g := range res.Groups {
+			fmt.Fprintf(w, "%s\t%s\t%s\n", g.ID, g.Name, g.Path)
+		}
+	}
+	w.Flush()
+	return buf.String()
+}
+
+func singleIdPGroupTableString(res response.SingleIdPGroup) string {
+	w, buf := newTabWriterBuf()
+	fmt.Fprintln(w, strings.Join([]string{"CODE", "MESSAGE"}, "\t"))
+	fmt.Fprintf(w, "%s\t%s\n", res.Code, res.Message)
+	if res.Group != nil {
+		fmt.Fprintln(w)
+		fmt.Fprintln(w, strings.Join([]string{"ID", "NAME", "PATH"}, "\t"))
+		g := res.Group
+		fmt.Fprintf(w, "%s\t%s\t%s\n", g.ID, g.Name, g.Path)
+	}
+	w.Flush()
+	return buf.String()
+}
+
+func resourcesTableString(res response.Resources) string {
+	w, buf := newTabWriterBuf()
+	fmt.Fprintln(w, strings.Join([]string{"CODE", "MESSAGE"}, "\t"))
+	fmt.Fprintf(w, "%s\t%s\n", res.Code, res.Message)
+	if len(res.Resources) > 0 {
+		fmt.Fprintln(w)
+		fmt.Fprintln(w, strings.Join([]string{"UUID", "NAME", "DESCRIPTION", "CREATED_BY"}, "\t"))
+		for _, r := range res.Resources {
+			fmt.Fprintf(w, "%s\t%s\t%s\t%s\n", r.UUID, r.Name, r.Description, r.CreatedBy)
+		}
+	}
+	w.Flush()
+	return buf.String()
+}
+
+func singleResourceTableString(res response.SingleResource) string {
+	w, buf := newTabWriterBuf()
+	fmt.Fprintln(w, strings.Join([]string{"CODE", "MESSAGE"}, "\t"))
+	fmt.Fprintf(w, "%s\t%s\n", res.Code, res.Message)
+	if res.Resource != nil {
+		fmt.Fprintln(w)
+		fmt.Fprintln(w, strings.Join([]string{"UUID", "NAME", "DESCRIPTION", "CREATED_BY"}, "\t"))
+		r := res.Resource
+		fmt.Fprintf(w, "%s\t%s\t%s\t%s\n", r.UUID, r.Name, r.Description, r.CreatedBy)
+	}
+	w.Flush()
+	return buf.String()
+}
+
+func resourceGroupRolesTableString(res response.ResourceGroupRoles) string {
+	w, buf := newTabWriterBuf()
+	fmt.Fprintln(w, strings.Join([]string{"CODE", "MESSAGE"}, "\t"))
+	fmt.Fprintf(w, "%s\t%s\n", res.Code, res.Message)
+	if len(res.Groups) > 0 {
+		fmt.Fprintln(w)
+		fmt.Fprintln(w, strings.Join([]string{"RESOURCE_UUID", "GROUP_UUID", "ROLE"}, "\t"))
+		for _, g := range res.Groups {
+			fmt.Fprintf(w, "%s\t%s\t%s\n", g.ResourceUUID, g.GroupUUID, g.Role)
+		}
+	}
+	w.Flush()
+	return buf.String()
 }
 
 func newTabWriterBuf() (*tabwriter.Writer, *bytes.Buffer) {

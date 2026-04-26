@@ -30,9 +30,18 @@ type BaseConfig struct {
 	Logger       interface{} // Logger implementation from server/share or client/share
 }
 
+type MySQL struct {
+	Host string `yaml:"host"`
+	User string `yaml:"user"`
+	Pass string `yaml:"pass"`
+	Port string `yaml:"port"`
+	Db   string `yaml:"db"`
+}
+
 type YamlConfig struct {
 	Application Application  `yaml:"Application"`
 	PostgreSQL   PostgreSQL   `yaml:"PostgreSQL"`
+	MySQL        MySQL        `yaml:"MySQL"`
 	Redis        Redis        `yaml:"Redis"`
 	Logger       LoggerConfig `yaml:"Logger"`
 }
