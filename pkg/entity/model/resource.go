@@ -2,8 +2,8 @@ package model
 
 import "time"
 
-// Resource is the core domain entity managed by cmn-core.
-type Resource struct {
+// PgResource is the GORM/PostgreSQL model for the resources table.
+type PgResource struct {
 	ID          uint       `gorm:"primaryKey;autoIncrement"`
 	UUID        string     `gorm:"uniqueIndex;not null"`
 	Name        string     `gorm:"not null"`
@@ -16,9 +16,9 @@ type Resource struct {
 	DeletedAt   *time.Time `gorm:"index"`
 }
 
-// ResourceGroupRole records which role a group has on a resource.
+// PgResourceGroupRole records which role a group has on a resource.
 // role: "viewer" | "editor" | "owner"
-type ResourceGroupRole struct {
+type PgResourceGroupRole struct {
 	ID           uint       `gorm:"primaryKey;autoIncrement"`
 	ResourceUUID string     `gorm:"not null;index"`
 	GroupUUID    string     `gorm:"not null;index"`

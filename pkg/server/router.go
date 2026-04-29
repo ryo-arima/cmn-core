@@ -72,10 +72,16 @@ func InitRouter(conf config.BaseConfig) *gin.Engine {
 	if err != nil {
 		log.Fatalf("IdP init failed: %v", err)
 	}
-	idpUsecase := usecase.NewIdP(idpManager)
-	idpPublicCtrl := controller.NewIdPPublic(idpUsecase)
-	idpInternalCtrl := controller.NewIdPInternal(idpUsecase, commonUsecase)
-	idpPrivateCtrl := controller.NewIdPPrivate(idpUsecase, commonUsecase)
+	userUsecase := usecase.NewUser(idpManager)
+	groupUsecase := usecase.NewGroup(idpManager)
+	memberUsecase := usecase.NewMember(idpManager)
+	userPublicCtrl := controller.NewUserPublic(userUsecase)
+	userInternalCtrl := controller.NewUserInternal(userUsecase, memberUsecase, commonUsecase)
+	userPrivateCtrl := controller.NewUserPrivate(userUsecase, commonUsecase)
+	groupInternalCtrl := controller.NewGroupInternal(groupUsecase, memberUsecase, commonUsecase)
+	groupPrivateCtrl := controller.NewGroupPrivate(groupUsecase, commonUsecase)
+	memberInternalCtrl := controller.NewMemberInternal(memberUsecase, commonUsecase)
+	memberPrivateCtrl := controller.NewMemberPrivate(memberUsecase)
 
 	// -- resource --
 	resourceRepo := repository.NewResource(conf)
@@ -110,8 +116,8 @@ func InitRouter(conf config.BaseConfig) *gin.Engine {
 	publicAPI.Use(loggerMW)
 	publicAPI.Use(share.ForPublic())
 
-	publicAPI.POST("/user", idpPublicCtrl.RegisterUser)
-	publicAPI.POST("/login", idpPublicCtrl.Login)
+	publicAPI.POST("/user", userPublicCtrl.RegisterUser)
+	publicAPI.POST("/login", userPublicCtrl.Login)
 
 	// ============ SHARE API (any authenticated role) ============
 	shareAPI := v1.Group("/share")
@@ -120,8 +126,8 @@ func InitRouter(conf config.BaseConfig) *gin.Engine {
 
 	shareAPI.GET("/token/validate", commonShareCtrl.ValidateToken)
 	shareAPI.GET("/token/userinfo", commonShareCtrl.GetUserInfo)
-	shareAPI.GET("/user", idpInternalCtrl.GetMyUser)
-	shareAPI.PUT("/user", idpInternalCtrl.UpdateMyUser)
+	shareAPI.GET("/user", userInternalCtrl.GetMyUser)
+	shareAPI.PUT("/user", userInternalCtrl.UpdateMyUser)
 
 	// ============ INTERNAL API (app — authenticated) ============
 	internalAPI := v1.Group("/internal")
@@ -129,21 +135,21 @@ func InitRouter(conf config.BaseConfig) *gin.Engine {
 	internalAPI.Use(share.ForInternal(commonRepository))
 
 	// Own user (or any user by ?id=) and group users
-	internalAPI.GET("/user", idpInternalCtrl.GetMyUser)
-	internalAPI.PUT("/user", idpInternalCtrl.UpdateMyUser)
-	internalAPI.GET("/users", idpInternalCtrl.ListGroupUsers)
+	internalAPI.GET("/user", userInternalCtrl.GetMyUser)
+	internalAPI.PUT("/user", userInternalCtrl.UpdateMyUser)
+	internalAPI.GET("/users", userInternalCtrl.ListGroupUsers)
 
 	// Groups the caller belongs to
-	internalAPI.GET("/groups", idpInternalCtrl.ListMyGroups)
-	internalAPI.POST("/groups", idpInternalCtrl.CreateGroup)
-	internalAPI.GET("/group", idpInternalCtrl.GetGroup)
-	internalAPI.PUT("/groups/:id", idpInternalCtrl.UpdateGroup)
-	internalAPI.DELETE("/groups/:id", idpInternalCtrl.DeleteGroup)
+	internalAPI.GET("/groups", groupInternalCtrl.ListMyGroups)
+	internalAPI.POST("/groups", groupInternalCtrl.CreateGroup)
+	internalAPI.GET("/group", groupInternalCtrl.GetGroup)
+	internalAPI.PUT("/groups/:id", groupInternalCtrl.UpdateGroup)
+	internalAPI.DELETE("/groups/:id", groupInternalCtrl.DeleteGroup)
 
 	// Member management
-	internalAPI.GET("/members", idpInternalCtrl.ListGroupMembers)
-	internalAPI.POST("/member/:group_id", idpInternalCtrl.AddGroupMember)
-	internalAPI.DELETE("/member/:group_id", idpInternalCtrl.RemoveGroupMember)
+	internalAPI.GET("/members", memberInternalCtrl.ListGroupMembers)
+	internalAPI.POST("/member/:group_id", memberInternalCtrl.AddGroupMember)
+	internalAPI.DELETE("/member/:group_id", memberInternalCtrl.RemoveGroupMember)
 
 	// Resources
 	internalAPI.GET("/resources", resourceInternalCtrl.ListResources)
@@ -161,23 +167,23 @@ func InitRouter(conf config.BaseConfig) *gin.Engine {
 	privateAPI.Use(share.ForPrivate(commonRepository))
 
 	// Users
-	privateAPI.GET("/users", idpPrivateCtrl.ListUsers)
-	privateAPI.POST("/users", idpPrivateCtrl.CreateUser)
-	privateAPI.GET("/user", idpPrivateCtrl.GetUser)
-	privateAPI.PUT("/users/:id", idpPrivateCtrl.UpdateUser)
-	privateAPI.DELETE("/users/:id", idpPrivateCtrl.DeleteUser)
+	privateAPI.GET("/users", userPrivateCtrl.ListUsers)
+	privateAPI.POST("/users", userPrivateCtrl.CreateUser)
+	privateAPI.GET("/user", userPrivateCtrl.GetUser)
+	privateAPI.PUT("/users/:id", userPrivateCtrl.UpdateUser)
+	privateAPI.DELETE("/users/:id", userPrivateCtrl.DeleteUser)
 
 	// Groups
-	privateAPI.GET("/groups", idpPrivateCtrl.ListGroups)
-	privateAPI.POST("/groups", idpPrivateCtrl.CreateGroup)
-	privateAPI.GET("/group", idpPrivateCtrl.GetGroup)
-	privateAPI.PUT("/groups/:id", idpPrivateCtrl.UpdateGroup)
-	privateAPI.DELETE("/groups/:id", idpPrivateCtrl.DeleteGroup)
+	privateAPI.GET("/groups", groupPrivateCtrl.ListGroups)
+	privateAPI.POST("/groups", groupPrivateCtrl.CreateGroup)
+	privateAPI.GET("/group", groupPrivateCtrl.GetGroup)
+	privateAPI.PUT("/groups/:id", groupPrivateCtrl.UpdateGroup)
+	privateAPI.DELETE("/groups/:id", groupPrivateCtrl.DeleteGroup)
 
 	// Members
-	privateAPI.GET("/members", idpPrivateCtrl.ListGroupMembers)
-	privateAPI.POST("/member/:group_id", idpPrivateCtrl.AddGroupMember)
-	privateAPI.DELETE("/member/:group_id", idpPrivateCtrl.RemoveGroupMember)
+	privateAPI.GET("/members", memberPrivateCtrl.ListGroupMembers)
+	privateAPI.POST("/member/:group_id", memberPrivateCtrl.AddGroupMember)
+	privateAPI.DELETE("/member/:group_id", memberPrivateCtrl.RemoveGroupMember)
 
 	// Resources
 	privateAPI.GET("/resources", resourcePrivateCtrl.ListAllResources)

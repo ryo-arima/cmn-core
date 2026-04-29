@@ -4,7 +4,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/ryo-arima/cmn-core/pkg/client/auth"
+	clientshare "github.com/ryo-arima/cmn-core/pkg/client/share"
 	"github.com/ryo-arima/cmn-core/pkg/client/controller"
 	"github.com/ryo-arima/cmn-core/pkg/config"
 	"github.com/stretchr/testify/assert"
@@ -24,8 +24,8 @@ func setupTestConfig() config.BaseConfig {
 	}
 }
 
-func setupManager(conf config.BaseConfig) *auth.Manager {
-	return auth.NewManager(conf, "app")
+func setupManager(conf config.BaseConfig) *clientshare.Manager {
+	return clientshare.NewManager(conf, "app")
 }
 
 func TestGetOutputFormat(t *testing.T) {

@@ -42,11 +42,11 @@ func createTestConfig() config.BaseConfig {
 					UserPassword:   "testpass",
 				},
 			},
-			MySQL: config.MySQL{
+			PostgreSQL: config.PostgreSQL{
 				Host: "127.0.0.1",
 				User: "root",
-				Pass: "mysql",
-				Port: "3306",
+				Pass: "postgres",
+				Port: "5432",
 				Db:   "cmn_core_test",
 			},
 		},
@@ -152,15 +152,15 @@ func TestCommonRepository_GetBaseConfig_Validation(t *testing.T) {
 		}
 	}
 
-	// Test MySQL configuration
+	// Test PostgreSQL configuration
 	expectedHost := "127.0.0.1"
-	if diff := cmp.Diff(expectedHost, config.YamlConfig.MySQL.Host); diff != "" {
-		t.Errorf("MySQL host mismatch (-want +got):\n%s", diff)
+	if diff := cmp.Diff(expectedHost, config.YamlConfig.PostgreSQL.Host); diff != "" {
+		t.Errorf("PostgreSQL host mismatch (-want +got):\n%s", diff)
 	}
 
 	expectedDB := "cmn_core_test"
-	if diff := cmp.Diff(expectedDB, config.YamlConfig.MySQL.Db); diff != "" {
-		t.Errorf("MySQL database name mismatch (-want +got):\n%s", diff)
+	if diff := cmp.Diff(expectedDB, config.YamlConfig.PostgreSQL.Db); diff != "" {
+		t.Errorf("PostgreSQL database name mismatch (-want +got):\n%s", diff)
 	}
 }
 
@@ -191,14 +191,14 @@ func TestCommonRepository_TableDriven(t *testing.T) {
 			expectedValue: "test@test.com",
 		},
 		{
-			name:          "get base config - mysql host",
-			operation:     "get_config_mysql_host",
+			name:          "get base config - psql host",
+			operation:     "get_config_psql_host",
 			shouldPass:    true,
 			expectedValue: "127.0.0.1",
 		},
 		{
-			name:          "get base config - mysql db",
-			operation:     "get_config_mysql_db",
+			name:          "get base config - psql db",
+			operation:     "get_config_psql_db",
 			shouldPass:    true,
 			expectedValue: "cmn_core_test",
 		},
@@ -228,11 +228,11 @@ func TestCommonRepository_TableDriven(t *testing.T) {
 			case "get_config_user":
 				actualValue = config.YamlConfig.Application.Client.UserEmail
 				success = actualValue == tt.expectedValue.(string)
-			case "get_config_mysql_host":
-				actualValue = config.YamlConfig.MySQL.Host
+			case "get_config_psql_host":
+				actualValue = config.YamlConfig.PostgreSQL.Host
 				success = actualValue == tt.expectedValue.(string)
-			case "get_config_mysql_db":
-				actualValue = config.YamlConfig.MySQL.Db
+			case "get_config_psql_db":
+				actualValue = config.YamlConfig.PostgreSQL.Db
 				success = actualValue == tt.expectedValue.(string)
 			}
 

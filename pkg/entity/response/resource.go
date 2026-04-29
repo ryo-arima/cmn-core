@@ -2,8 +2,8 @@ package response
 
 import "time"
 
-// Resource is the representation of a resource returned to the client.
-type Resource struct {
+// RrResource is the representation of a resource returned to the client.
+type RrResource struct {
 	ID          uint       `json:"id"`
 	UUID        string     `json:"uuid"`
 	Name        string     `json:"name"`
@@ -16,30 +16,30 @@ type Resource struct {
 	DeletedAt   *time.Time `json:"deleted_at,omitempty"`
 }
 
-// Resources wraps a list of resources.
-type Resources struct {
-	Code      string     `json:"code"`
-	Message   string     `json:"message"`
-	Resources []Resource `json:"resources,omitempty"`
+// RrResources wraps a list of resources.
+type RrResources struct {
+	Code      string       `json:"code"`
+	Message   string       `json:"message"`
+	Resources []RrResource `json:"resources,omitempty"`
 }
 
-// SingleResource wraps a single resource.
-type SingleResource struct {
-	Code     string    `json:"code"`
-	Message  string    `json:"message"`
-	Resource *Resource `json:"resource,omitempty"`
+// RrSingleResource wraps a single resource.
+type RrSingleResource struct {
+	Code     string      `json:"code"`
+	Message  string      `json:"message"`
+	Resource *RrResource `json:"resource,omitempty"`
 }
 
-// ResourceGroupRole is the representation of a group-role entry on a resource.
-type ResourceGroupRole struct {
+// RrResourceGroupRole is the representation of a group-role entry on a resource.
+type RrResourceGroupRole struct {
 	ResourceUUID string `json:"resource_uuid"`
 	GroupUUID    string `json:"group_uuid"`
 	Role         string `json:"role"`
 }
 
-// ResourceGroupRoles wraps a list of group-role entries.
-type ResourceGroupRoles struct {
-	Code    string              `json:"code"`
-	Message string              `json:"message"`
-	Groups  []ResourceGroupRole `json:"groups,omitempty"`
+// RrResourceGroupRoles wraps a list of group-role entries.
+type RrResourceGroupRoles struct {
+	Code    string                `json:"code"`
+	Message string                `json:"message"`
+	Groups  []RrResourceGroupRole `json:"groups,omitempty"`
 }

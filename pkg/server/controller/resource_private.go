@@ -39,11 +39,11 @@ func (rc *resourcePrivate) ListAllResources(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{"code": "RESOURCE_ADMIN_LIST_001", "message": err.Error()})
 		return
 	}
-	resp := make([]response.Resource, 0, len(resources))
+	resp := make([]response.RrResource, 0, len(resources))
 	for _, r := range resources {
 		resp = append(resp, toResponseResource(r))
 	}
-	c.JSON(http.StatusOK, response.Resources{Code: "SUCCESS", Message: "ok", Resources: resp})
+	c.JSON(http.StatusOK, response.RrResources{Code: "SUCCESS", Message: "ok", Resources: resp})
 }
 
 // DeleteResource soft-deletes any resource (admin override).
@@ -74,7 +74,7 @@ func (rc *resourcePrivate) GetResource(c *gin.Context) {
 		c.JSON(http.StatusNotFound, gin.H{"code": "RESOURCE_GET_404", "message": "Resource not found"})
 		return
 	}
-	c.JSON(http.StatusOK, response.SingleResource{Code: "SUCCESS", Message: "ok", Resource: ptr(toResponseResource(*res))})
+	c.JSON(http.StatusOK, response.RrSingleResource{Code: "SUCCESS", Message: "ok", Resource: ptr(toResponseResource(*res))})
 }
 
 // CreateResource creates a new resource owned by the admin.
@@ -85,7 +85,7 @@ func (rc *resourcePrivate) CreateResource(c *gin.Context) {
 		c.JSON(http.StatusUnauthorized, gin.H{"code": "RESOURCE_AUTH_001", "message": "Unauthorized"})
 		return
 	}
-	var req request.CreateResource
+	var req request.RrCreateResource
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"code": "RESOURCE_CREATE_001", "message": "Invalid request body"})
 		return
@@ -95,7 +95,7 @@ func (rc *resourcePrivate) CreateResource(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{"code": "RESOURCE_CREATE_002", "message": err.Error()})
 		return
 	}
-	c.JSON(http.StatusCreated, response.SingleResource{Code: "SUCCESS", Message: "created", Resource: ptr(toResponseResource(*res))})
+	c.JSON(http.StatusCreated, response.RrSingleResource{Code: "SUCCESS", Message: "created", Resource: ptr(toResponseResource(*res))})
 }
 
 // UpdateResource updates any resource (admin override).
@@ -106,7 +106,7 @@ func (rc *resourcePrivate) UpdateResource(c *gin.Context) {
 		c.JSON(http.StatusUnauthorized, gin.H{"code": "RESOURCE_AUTH_001", "message": "Unauthorized"})
 		return
 	}
-	var req request.UpdateResource
+	var req request.RrUpdateResource
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"code": "RESOURCE_UPDATE_001", "message": "Invalid request body"})
 		return
@@ -116,7 +116,7 @@ func (rc *resourcePrivate) UpdateResource(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{"code": "RESOURCE_UPDATE_002", "message": err.Error()})
 		return
 	}
-	c.JSON(http.StatusOK, response.SingleResource{Code: "SUCCESS", Message: "updated", Resource: ptr(toResponseResource(*res))})
+	c.JSON(http.StatusOK, response.RrSingleResource{Code: "SUCCESS", Message: "updated", Resource: ptr(toResponseResource(*res))})
 }
 
 // GetResourceGroupRoles lists group-role entries (admin access).
@@ -132,11 +132,11 @@ func (rc *resourcePrivate) GetResourceGroupRoles(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{"code": "RESOURCE_GROUP_001", "message": err.Error()})
 		return
 	}
-	resp := make([]response.ResourceGroupRole, 0, len(roles))
+	resp := make([]response.RrResourceGroupRole, 0, len(roles))
 	for _, r := range roles {
-		resp = append(resp, response.ResourceGroupRole{ResourceUUID: r.ResourceUUID, GroupUUID: r.GroupUUID, Role: r.Role})
+		resp = append(resp, response.RrResourceGroupRole{ResourceUUID: r.ResourceUUID, GroupUUID: r.GroupUUID, Role: r.Role})
 	}
-	c.JSON(http.StatusOK, response.ResourceGroupRoles{Code: "SUCCESS", Message: "ok", Groups: resp})
+	c.JSON(http.StatusOK, response.RrResourceGroupRoles{Code: "SUCCESS", Message: "ok", Groups: resp})
 }
 
 // SetResourceGroupRole adds or updates a group-role entry (admin override).
@@ -147,7 +147,7 @@ func (rc *resourcePrivate) SetResourceGroupRole(c *gin.Context) {
 		c.JSON(http.StatusUnauthorized, gin.H{"code": "RESOURCE_AUTH_001", "message": "Unauthorized"})
 		return
 	}
-	var req request.SetResourceGroupRole
+	var req request.RrSetResourceGroupRole
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"code": "RESOURCE_GROUP_SET_001", "message": "Invalid request body"})
 		return
@@ -167,7 +167,7 @@ func (rc *resourcePrivate) DeleteResourceGroupRole(c *gin.Context) {
 		c.JSON(http.StatusUnauthorized, gin.H{"code": "RESOURCE_AUTH_001", "message": "Unauthorized"})
 		return
 	}
-	var req request.DeleteResourceGroupRole
+	var req request.RrDeleteResourceGroupRole
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"code": "RESOURCE_GROUP_DEL_400", "message": "Invalid request body"})
 		return

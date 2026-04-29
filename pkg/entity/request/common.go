@@ -2,7 +2,7 @@ package request
 
 import "time"
 
-type Common struct {
+type RrCommon struct {
 	ID        uint       `json:"id"`
 	UUID      string     `json:"uuid"`
 	Name      string     `json:"name"`
@@ -11,29 +11,29 @@ type Common struct {
 	DeletedAt *time.Time `json:"deleted_at"`
 }
 
-// User represents a request to create or update a local DB user.
-type User struct {
+// RrUser represents a request to create or update a local DB user.
+type RrUser struct {
 	UUID     string `json:"uuid"`
 	Email    string `json:"email"`
 	Password string `json:"password"`
 	Name     string `json:"name"`
 }
 
-// Group represents a request to create or update a local DB group.
-type Group struct {
+// RrGroup represents a request to create or update a local DB group.
+type RrGroup struct {
 	UUID string `json:"uuid"`
 	Name string `json:"name"`
 }
 
-// Member represents a request to create or update a local DB group membership.
-type Member struct {
+// RrMember represents a request to create or update a local DB group membership.
+type RrMember struct {
 	UUID      string `json:"uuid"`
 	UserUUID  string `json:"user_uuid"`
 	GroupUUID string `json:"group_uuid"`
 }
 
-// Login holds credentials for a login request.
-type Login struct {
+// RrLogin holds credentials for a login request.
+type RrLogin struct {
 	Email    string `json:"email"`
 	Password string `json:"password"`
 }

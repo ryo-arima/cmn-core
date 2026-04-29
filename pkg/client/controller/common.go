@@ -5,7 +5,7 @@ import (
 	"os"
 	"strings"
 
-	clientauth "github.com/ryo-arima/cmn-core/pkg/client/auth"
+	clientauth "github.com/ryo-arima/cmn-core/pkg/client/share"
 	"github.com/ryo-arima/cmn-core/pkg/client/usecase"
 	"github.com/ryo-arima/cmn-core/pkg/config"
 	"github.com/spf13/cobra"
@@ -94,23 +94,19 @@ func InitCommonUserInfoCmd(manager *clientauth.Manager) *cobra.Command {
 }
 
 // InitSSOLoginCmd creates an explicit SSO login command.
-// provider flag overrides the configured provider from app.yaml.
 func InitSSOLoginCmd(manager *clientauth.Manager) *cobra.Command {
-	cmd := &cobra.Command{
+	return &cobra.Command{
 		Use:   "login",
-		Short: "authenticate via SSO (OIDC or SAML)",
-		Long:  "start a fresh SSO login flow. Prints the IdP URL, opens the browser, and waits for the token.",
+		Short: "authenticate via SSO (OIDC)",
+		Long:  "start a fresh SSO login flow via the configured OIDC provider.",
 		Run: func(cmd *cobra.Command, args []string) {
-			provider, _ := cmd.Flags().GetString("provider")
-			if err := manager.ForceLogin(provider); err != nil {
+			if err := manager.ForceLogin(""); err != nil {
 				PrintMessage("login failed: " + err.Error())
 				return
 			}
 			PrintMessage("login successful")
 		},
 	}
-	cmd.Flags().StringP("provider", "p", "", "SSO provider override: oidc or saml (default from app.yaml)")
-	return cmd
 }
 
 // InitAnonymousValidateCmd creates a validate command for the anonymous client.

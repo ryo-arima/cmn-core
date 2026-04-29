@@ -1,7 +1,7 @@
 package usecase
 
 import (
-	clientauth "github.com/ryo-arima/cmn-core/pkg/client/auth"
+	clientauth "github.com/ryo-arima/cmn-core/pkg/client/share"
 	"github.com/ryo-arima/cmn-core/pkg/client/repository"
 	"github.com/ryo-arima/cmn-core/pkg/config"
 	"github.com/ryo-arima/cmn-core/pkg/entity/request"
@@ -10,14 +10,14 @@ import (
 
 // ResourceUC is the business-logic interface for resource operations.
 type ResourceUC interface {
-	ListResources() response.Resources
-	GetResource(uuid string) response.SingleResource
-	CreateResource(req request.CreateResource) response.SingleResource
-	UpdateResource(uuid string, req request.UpdateResource) response.Commons
-	DeleteResource(uuid string) response.Commons
-	GetResourceGroupRoles(uuid string) response.ResourceGroupRoles
-	SetResourceGroupRole(uuid string, req request.SetResourceGroupRole) response.Commons
-	DeleteResourceGroupRole(uuid, groupUUID string) response.Commons
+	ListResources() response.RrResources
+	GetResource(uuid string) response.RrSingleResource
+	CreateResource(req request.RrCreateResource) response.RrSingleResource
+	UpdateResource(uuid string, req request.RrUpdateResource) response.RrCommons
+	DeleteResource(uuid string) response.RrCommons
+	GetResourceGroupRoles(uuid string) response.RrResourceGroupRoles
+	SetResourceGroupRole(uuid string, req request.RrSetResourceGroupRole) response.RrCommons
+	DeleteResourceGroupRole(uuid, groupUUID string) response.RrCommons
 }
 
 type resourceUsecase struct {
@@ -34,25 +34,25 @@ func NewResourceAdminUC(conf config.BaseConfig, manager *clientauth.Manager) Res
 	return &resourceUsecase{repo: repository.NewResourceAdmin(conf, manager)}
 }
 
-func (u *resourceUsecase) ListResources() response.Resources { return u.repo.ListResources() }
-func (u *resourceUsecase) GetResource(uuid string) response.SingleResource {
+func (u *resourceUsecase) ListResources() response.RrResources { return u.repo.ListResources() }
+func (u *resourceUsecase) GetResource(uuid string) response.RrSingleResource {
 	return u.repo.GetResource(uuid)
 }
-func (u *resourceUsecase) CreateResource(r request.CreateResource) response.SingleResource {
+func (u *resourceUsecase) CreateResource(r request.RrCreateResource) response.RrSingleResource {
 	return u.repo.CreateResource(r)
 }
-func (u *resourceUsecase) UpdateResource(uuid string, r request.UpdateResource) response.Commons {
+func (u *resourceUsecase) UpdateResource(uuid string, r request.RrUpdateResource) response.RrCommons {
 	return u.repo.UpdateResource(uuid, r)
 }
-func (u *resourceUsecase) DeleteResource(uuid string) response.Commons {
+func (u *resourceUsecase) DeleteResource(uuid string) response.RrCommons {
 	return u.repo.DeleteResource(uuid)
 }
-func (u *resourceUsecase) GetResourceGroupRoles(uuid string) response.ResourceGroupRoles {
+func (u *resourceUsecase) GetResourceGroupRoles(uuid string) response.RrResourceGroupRoles {
 	return u.repo.GetResourceGroupRoles(uuid)
 }
-func (u *resourceUsecase) SetResourceGroupRole(uuid string, r request.SetResourceGroupRole) response.Commons {
+func (u *resourceUsecase) SetResourceGroupRole(uuid string, r request.RrSetResourceGroupRole) response.RrCommons {
 	return u.repo.SetResourceGroupRole(uuid, r)
 }
-func (u *resourceUsecase) DeleteResourceGroupRole(uuid, groupUUID string) response.Commons {
+func (u *resourceUsecase) DeleteResourceGroupRole(uuid, groupUUID string) response.RrCommons {
 	return u.repo.DeleteResourceGroupRole(uuid, groupUUID)
 }

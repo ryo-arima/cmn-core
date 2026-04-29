@@ -9,7 +9,7 @@ import (
 
 	"gopkg.in/yaml.v3"
 
-	clientauth "github.com/ryo-arima/cmn-core/pkg/client/auth"
+	clientauth "github.com/ryo-arima/cmn-core/pkg/client/share"
 	"github.com/ryo-arima/cmn-core/pkg/client/repository"
 	"github.com/ryo-arima/cmn-core/pkg/config"
 	"github.com/ryo-arima/cmn-core/pkg/entity/response"
@@ -17,8 +17,8 @@ import (
 
 // Common is the business-logic interface for token-related operations.
 type Common interface {
-	ValidateToken() response.ValidateToken
-	GetUserInfo() response.Commons
+	ValidateToken() response.RrValidateToken
+	GetUserInfo() response.RrCommons
 }
 
 type common struct {
@@ -31,8 +31,8 @@ func NewCommon(conf config.BaseConfig, manager *clientauth.Manager) Common {
 	return &common{repo: repository.NewCommon(conf, manager)}
 }
 
-func (u *common) ValidateToken() response.ValidateToken { return u.repo.ValidateToken() }
-func (u *common) GetUserInfo() response.Commons         { return u.repo.GetUserInfo() }
+func (u *common) ValidateToken() response.RrValidateToken { return u.repo.ValidateToken() }
+func (u *common) GetUserInfo() response.RrCommons         { return u.repo.GetUserInfo() }
 
 // Format formats the given value into table, json, or yaml and returns it as string.
 func Format(format string, v interface{}) string {
@@ -50,23 +50,23 @@ func Format(format string, v interface{}) string {
 
 func tableString(v interface{}) string {
 	switch data := v.(type) {
-	case response.Commons:
+	case response.RrCommons:
 		return commonTableString(data)
-	case *response.Commons:
+	case *response.RrCommons:
 		return commonTableString(*data)
-	case response.IdPUsers:
+	case response.RrIdPUsers:
 		return idpUsersTableString(data)
-	case response.SingleIdPUser:
+	case response.RrSingleIdPUser:
 		return singleIdPUserTableString(data)
-	case response.IdPGroups:
+	case response.RrIdPGroups:
 		return idpGroupsTableString(data)
-	case response.SingleIdPGroup:
+	case response.RrSingleIdPGroup:
 		return singleIdPGroupTableString(data)
-	case response.Resources:
+	case response.RrResources:
 		return resourcesTableString(data)
-	case response.SingleResource:
+	case response.RrSingleResource:
 		return singleResourceTableString(data)
-	case response.ResourceGroupRoles:
+	case response.RrResourceGroupRoles:
 		return resourceGroupRolesTableString(data)
 	default:
 		b, _ := json.Marshal(data)
@@ -74,7 +74,7 @@ func tableString(v interface{}) string {
 	}
 }
 
-func idpUsersTableString(res response.IdPUsers) string {
+func idpUsersTableString(res response.RrIdPUsers) string {
 	w, buf := newTabWriterBuf()
 	fmt.Fprintln(w, strings.Join([]string{"CODE", "MESSAGE"}, "\t"))
 	fmt.Fprintf(w, "%s\t%s\n", res.Code, res.Message)
@@ -89,7 +89,7 @@ func idpUsersTableString(res response.IdPUsers) string {
 	return buf.String()
 }
 
-func singleIdPUserTableString(res response.SingleIdPUser) string {
+func singleIdPUserTableString(res response.RrSingleIdPUser) string {
 	w, buf := newTabWriterBuf()
 	fmt.Fprintln(w, strings.Join([]string{"CODE", "MESSAGE"}, "\t"))
 	fmt.Fprintf(w, "%s\t%s\n", res.Code, res.Message)
@@ -103,7 +103,7 @@ func singleIdPUserTableString(res response.SingleIdPUser) string {
 	return buf.String()
 }
 
-func idpGroupsTableString(res response.IdPGroups) string {
+func idpGroupsTableString(res response.RrIdPGroups) string {
 	w, buf := newTabWriterBuf()
 	fmt.Fprintln(w, strings.Join([]string{"CODE", "MESSAGE"}, "\t"))
 	fmt.Fprintf(w, "%s\t%s\n", res.Code, res.Message)
@@ -118,7 +118,7 @@ func idpGroupsTableString(res response.IdPGroups) string {
 	return buf.String()
 }
 
-func singleIdPGroupTableString(res response.SingleIdPGroup) string {
+func singleIdPGroupTableString(res response.RrSingleIdPGroup) string {
 	w, buf := newTabWriterBuf()
 	fmt.Fprintln(w, strings.Join([]string{"CODE", "MESSAGE"}, "\t"))
 	fmt.Fprintf(w, "%s\t%s\n", res.Code, res.Message)
@@ -132,7 +132,7 @@ func singleIdPGroupTableString(res response.SingleIdPGroup) string {
 	return buf.String()
 }
 
-func resourcesTableString(res response.Resources) string {
+func resourcesTableString(res response.RrResources) string {
 	w, buf := newTabWriterBuf()
 	fmt.Fprintln(w, strings.Join([]string{"CODE", "MESSAGE"}, "\t"))
 	fmt.Fprintf(w, "%s\t%s\n", res.Code, res.Message)
@@ -147,7 +147,7 @@ func resourcesTableString(res response.Resources) string {
 	return buf.String()
 }
 
-func singleResourceTableString(res response.SingleResource) string {
+func singleResourceTableString(res response.RrSingleResource) string {
 	w, buf := newTabWriterBuf()
 	fmt.Fprintln(w, strings.Join([]string{"CODE", "MESSAGE"}, "\t"))
 	fmt.Fprintf(w, "%s\t%s\n", res.Code, res.Message)
@@ -161,7 +161,7 @@ func singleResourceTableString(res response.SingleResource) string {
 	return buf.String()
 }
 
-func resourceGroupRolesTableString(res response.ResourceGroupRoles) string {
+func resourceGroupRolesTableString(res response.RrResourceGroupRoles) string {
 	w, buf := newTabWriterBuf()
 	fmt.Fprintln(w, strings.Join([]string{"CODE", "MESSAGE"}, "\t"))
 	fmt.Fprintf(w, "%s\t%s\n", res.Code, res.Message)
@@ -182,7 +182,7 @@ func newTabWriterBuf() (*tabwriter.Writer, *bytes.Buffer) {
 	return w, buf
 }
 
-func commonTableString(res response.Commons) string {
+func commonTableString(res response.RrCommons) string {
 	w, buf := newTabWriterBuf()
 	fmt.Fprintln(w, strings.Join([]string{"CODE", "MESSAGE"}, "\t"))
 	fmt.Fprintf(w, "%s\t%s\n", res.Code, res.Message)
