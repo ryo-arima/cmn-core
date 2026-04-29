@@ -32,7 +32,7 @@ Services started by `make dev-up`:
 | Casdoor admin user | http://localhost:9000/login/cmn | admin@cmn.local / Admin123! |
 | PostgreSQL | localhost:5432 | user / password |
 | Redis | localhost:6379 | — |
-| pgAdmin | http://localhost:5050 | — |
+| pgAdmin | http://localhost:3001 | admin@cmn.local / admin |
 | Roundcube | http://localhost:3005 | — |
 
 The application server (`cmn-server`) starts on `http://localhost:8000` after `make svr-up`.

@@ -44,7 +44,7 @@ Services started by `make dev-up`:
 | Casdoor (admin) | http://localhost:9000 | admin / 123 |
 | Casdoor (cmn org users) | http://localhost:9000/login/cmn | user01-50 / Password123! |
 | Casdoor (cmn admin user) | http://localhost:9000/login/cmn | admin@cmn.local / Admin123! |
-| pgAdmin | http://localhost:5050 | — |
+| pgAdmin | http://localhost:3001 | admin@cmn.local / admin |
 | Roundcube | http://localhost:3005 | — |
 
 ### Build & Run Server
