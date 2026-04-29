@@ -25,7 +25,7 @@ func TestCommonUsecase_ResolveRole(t *testing.T) {
 			Application: config.Application{
 				Server: config.Server{
 					Admin: config.Admin{
-						Emails: []string{"admin@example.com"},
+						Emails: []string{"admin@cmn.local"},
 					},
 				},
 			},
@@ -34,7 +34,7 @@ func TestCommonUsecase_ResolveRole(t *testing.T) {
 	repo := repository.NewCommon(cfg, nil)
 	uc := usecase.NewCommon(repo)
 
-	assert.Equal(t, "admin", uc.ResolveRole("admin@example.com"))
+	assert.Equal(t, "admin", uc.ResolveRole("admin@cmn.local"))
 	assert.Equal(t, "user", uc.ResolveRole("other@example.com"))
 }
 
@@ -48,19 +48,12 @@ func TestCommonUsecase_ValidateToken_NilVerifier(t *testing.T) {
 }
 
 func TestNewGroup(t *testing.T) {
-	cfg := config.BaseConfig{}
-	groupRepo := repository.NewGroup(cfg)
-	memberRepo := repository.NewMember(cfg)
-
-	uc := usecase.NewGroup(groupRepo, memberRepo, nil)
+	uc := usecase.NewGroup(nil, nil)
 	assert.NotNil(t, uc)
 }
 
 func TestNewMember(t *testing.T) {
-	cfg := config.BaseConfig{}
-	memberRepo := repository.NewMember(cfg)
-
-	uc := usecase.NewMember(memberRepo)
+	uc := usecase.NewMember(nil)
 	assert.NotNil(t, uc)
 }
 
@@ -69,10 +62,7 @@ func TestNewRole(t *testing.T) {
 }
 
 func TestNewUser(t *testing.T) {
-	cfg := config.BaseConfig{}
-	userRepo := repository.NewUser(cfg)
-
-	uc := usecase.NewUser(userRepo)
+	uc := usecase.NewUser(nil)
 	assert.NotNil(t, uc)
 }
 

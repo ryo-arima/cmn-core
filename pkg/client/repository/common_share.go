@@ -4,15 +4,15 @@ import (
 	"encoding/json"
 	"net/http"
 
-	clientauth "github.com/ryo-arima/cmn-core/pkg/client/auth"
+	clientauth "github.com/ryo-arima/cmn-core/pkg/client/share"
 	"github.com/ryo-arima/cmn-core/pkg/config"
 	"github.com/ryo-arima/cmn-core/pkg/entity/response"
 )
 
 // Common is the data-access interface for token-related server operations.
 type Common interface {
-	ValidateToken() response.ValidateToken
-	GetUserInfo() response.Commons
+	ValidateToken() response.RrValidateToken
+	GetUserInfo() response.RrCommons
 }
 
 type common struct {
@@ -29,8 +29,8 @@ func NewCommon(conf config.BaseConfig, manager *clientauth.Manager) Common {
 	}
 }
 
-func (r *common) ValidateToken() response.ValidateToken {
-	var result response.ValidateToken
+func (r *common) ValidateToken() response.RrValidateToken {
+	var result response.RrValidateToken
 	req, err := http.NewRequest("GET", r.serverBase+"/v1/share/token/validate", nil)
 	if err != nil {
 		result.Code = "CLIENT_VALIDATE_001"
@@ -51,8 +51,8 @@ func (r *common) ValidateToken() response.ValidateToken {
 	return result
 }
 
-func (r *common) GetUserInfo() response.Commons {
-	var result response.Commons
+func (r *common) GetUserInfo() response.RrCommons {
+	var result response.RrCommons
 	req, err := http.NewRequest("GET", r.serverBase+"/v1/share/token/userinfo", nil)
 	if err != nil {
 		result.Code = "CLIENT_USERINFO_001"

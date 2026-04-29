@@ -107,11 +107,11 @@ func InitializeDatabase() error {
 
 	// Auto-migrate all tables
 	if err := conf.DBConnection.AutoMigrate(
-		&model.Users{},
-		&model.Groups{},
-		&model.Members{},
-		&model.Resource{},
-		&model.ResourceGroupRole{},
+		&model.PgUsers{},
+		&model.PgGroups{},
+		&model.PgMembers{},
+		&model.PgResource{},
+		&model.PgResourceGroupRole{},
 	); err != nil {
 		return fmt.Errorf("failed to migrate database: %w", err)
 	}

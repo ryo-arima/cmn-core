@@ -29,7 +29,7 @@ Services started by `make dev-up`:
 | Keycloak user portal | http://localhost:8080/realms/cmn/account | user01-50 / Password123! |
 | Casdoor admin | http://localhost:9000 | admin / 123 |
 | Casdoor user portal | http://localhost:9000/login/cmn | user01-50 / Password123! |
-| Casdoor admin user | http://localhost:9000/login/cmn | admin@example.com / Admin123! |
+| Casdoor admin user | http://localhost:9000/login/cmn | admin@cmn.local / Admin123! |
 | PostgreSQL | localhost:5432 | user / password |
 | Redis | localhost:6379 | — |
 | pgAdmin | http://localhost:5050 | — |

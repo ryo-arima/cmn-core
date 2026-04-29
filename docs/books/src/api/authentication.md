@@ -17,7 +17,7 @@ CLI clients authenticate by sending credentials to the server. The server obtain
 POST /v1/public/login
 Content-Type: application/json
 
-{ "email": "admin@example.com", "password": "Admin123!" }
+{ "email": "admin@cmn.local", "password": "Admin123!" }
 ```
 
 Response:
@@ -35,7 +35,7 @@ Application:
   Client:
     ServerEndpoint: "http://localhost:8000"
     credentials:
-      email: "admin@example.com"
+      email: "admin@cmn.local"
       password: "Admin123!"
 ```
 
@@ -60,7 +60,7 @@ Authorization: Bearer <jwt_token>
 | Username | Password | Role |
 |---|---|---|
 | user01 – user50 | `Password123!` | user |
-| admin@example.com | `Admin123!` | admin |
+| admin@cmn.local | `Admin123!` | admin |
 
 ## OIDC Client Settings
 

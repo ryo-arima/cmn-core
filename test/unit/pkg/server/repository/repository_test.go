@@ -22,7 +22,7 @@ func TestCommonRepository_ResolveRole(t *testing.T) {
 			Application: config.Application{
 				Server: config.Server{
 					Admin: config.Admin{
-						Emails: []string{"admin@example.com"},
+						Emails: []string{"admin@cmn.local"},
 					},
 				},
 			},
@@ -30,7 +30,7 @@ func TestCommonRepository_ResolveRole(t *testing.T) {
 	}
 	repo := repository.NewCommon(cfg, nil)
 
-	assert.Equal(t, "admin", repo.ResolveRole("admin@example.com"))
+	assert.Equal(t, "admin", repo.ResolveRole("admin@cmn.local"))
 	assert.Equal(t, "user", repo.ResolveRole("other@example.com"))
 }
 

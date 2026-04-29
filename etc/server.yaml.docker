@@ -4,7 +4,7 @@ Application:
     port: 8000
     admin:
       emails:
-        - "admin@example.com"
+        - "admin@cmn.local"
     jwt_secret: "CHANGE_THIS_JWT_SECRET_IN_PRODUCTION"
     log_level: "debug"
     redis:

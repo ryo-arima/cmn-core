@@ -5,9 +5,10 @@ import (
 	"os"
 	"strings"
 
-	clientauth "github.com/ryo-arima/cmn-core/pkg/client/auth"
+	clientauth "github.com/ryo-arima/cmn-core/pkg/client/share"
 	"github.com/ryo-arima/cmn-core/pkg/client/usecase"
 	"github.com/ryo-arima/cmn-core/pkg/config"
+	"github.com/ryo-arima/cmn-core/pkg/entity/model"
 	"github.com/spf13/cobra"
 )
 
@@ -94,25 +95,20 @@ func InitCommonUserInfoCmd(manager *clientauth.Manager) *cobra.Command {
 }
 
 // InitSSOLoginCmd creates an explicit SSO login command.
-// provider flag overrides the configured provider from app.yaml.
 func InitSSOLoginCmd(manager *clientauth.Manager) *cobra.Command {
-	cmd := &cobra.Command{
+	return &cobra.Command{
 		Use:   "login",
-		Short: "authenticate via SSO (OIDC or SAML)",
-		Long:  "start a fresh SSO login flow. Prints the IdP URL, opens the browser, and waits for the token.",
+		Short: "authenticate via SSO (OIDC)",
+		Long:  "start a fresh SSO login flow via the configured OIDC provider.",
 		Run: func(cmd *cobra.Command, args []string) {
-			provider, _ := cmd.Flags().GetString("provider")
-			if err := manager.ForceLogin(provider); err != nil {
+			if err := manager.ForceLogin(""); err != nil {
 				PrintMessage("login failed: " + err.Error())
 				return
 			}
 			PrintMessage("login successful")
 		},
 	}
-	cmd.Flags().StringP("provider", "p", "", "SSO provider override: oidc or saml (default from app.yaml)")
-	return cmd
 }
-
 // InitAnonymousValidateCmd creates a validate command for the anonymous client.
 // The token must be supplied via --access-token flag or CMN_ACCESS_TOKEN env var.
 func InitAnonymousValidateCmd(conf config.BaseConfig) *cobra.Command {
@@ -139,4 +135,28 @@ func InitAnonymousValidateCmd(conf config.BaseConfig) *cobra.Command {
 	return cmd
 }
 
-
+// NewDBBootstrapCmd returns a command that creates all required PostgreSQL
+// tables via GORM AutoMigrate. Intended for first-time setup by an admin.
+func NewDBBootstrapCmd(conf config.BaseConfig) *cobra.Command {
+	return &cobra.Command{
+		Use:   "db",
+		Short: "create all required database tables (PostgreSQL AutoMigrate)",
+		RunE: func(cmd *cobra.Command, args []string) error {
+			if err := conf.ConnectDB(); err != nil {
+				return fmt.Errorf("failed to connect to database: %w", err)
+			}
+			tables := []interface{}{
+				&model.PgUsers{},
+				&model.PgGroups{},
+				&model.PgMembers{},
+				&model.PgResource{},
+				&model.PgResourceGroupRole{},
+			}
+			if err := conf.DBConnection.AutoMigrate(tables...); err != nil {
+				return fmt.Errorf("AutoMigrate failed: %w", err)
+			}
+			fmt.Println("Bootstrap complete: all tables created or already up-to-date.")
+			return nil
+		},
+	}
+}

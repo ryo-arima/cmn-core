@@ -6,6 +6,7 @@ import (
 	"strings"
 
 	"github.com/ryo-arima/cmn-core/pkg/client/controller"
+	"github.com/ryo-arima/cmn-core/pkg/client/usecase"
 	"github.com/ryo-arima/cmn-core/pkg/config"
 	"github.com/spf13/cobra"
 )
@@ -19,7 +20,7 @@ func main() {
 
 	var configFile string
 	var outputFormat string
-	rootCmd.PersistentFlags().StringVarP(&configFile, "config", "c", "etc/app.yaml", "path to config file (env: CONFIG_FILE, default: etc/app.yaml)")
+	rootCmd.PersistentFlags().StringVarP(&configFile, "config", "c", "etc/.cmn/client/anonymous.yaml", "path to config file (env: CONFIG_FILE, default: etc/.cmn/client/anonymous.yaml)")
 	rootCmd.PersistentFlags().StringVarP(&outputFormat, "output", "o", "table", "output format: table, json, yaml")
 
 	// フラグを早期解析して config.NewBaseConfig() の前に CONFIG_FILE を設定する
@@ -31,6 +32,13 @@ func main() {
 	rootCmd.PersistentPreRun = func(cmd *cobra.Command, args []string) {
 		controller.SetOutputFormat(outputFormat)
 	}
+
+	anonymousUC := usecase.NewAnonymous(*conf)
+
+	// create <target>
+	createCmd := &cobra.Command{Use: "create", Short: "create a resource"}
+	createCmd.AddCommand(controller.NewAnonymousCreateUserCmd(anonymousUC))
+	rootCmd.AddCommand(createCmd)
 
 	// token subcommands
 	tokenCmd := &cobra.Command{

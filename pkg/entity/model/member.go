@@ -2,7 +2,8 @@ package model
 
 import "time"
 
-type Members struct {
+// PgMembers is the GORM/PostgreSQL model for the members table.
+type PgMembers struct {
 	ID        uint       `gorm:"primaryKey,autoIncrement"`
 	UUID      string
 	GroupUUID string

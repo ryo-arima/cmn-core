@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/ryo-arima/cmn-core/pkg/client/auth"
+	clientshare "github.com/ryo-arima/cmn-core/pkg/client/share"
 	"github.com/ryo-arima/cmn-core/pkg/client/controller"
 	"github.com/ryo-arima/cmn-core/pkg/client/usecase"
 	"github.com/ryo-arima/cmn-core/pkg/config"
@@ -31,24 +31,76 @@ func main() {
 
 	conf := config.NewBaseConfig()
 	profile := strings.TrimSuffix(filepath.Base(configFile), ".yaml")
-	manager := auth.NewManager(*conf, profile)
+	manager := clientshare.NewManager(*conf, profile)
 
 	rootCmd.PersistentPreRun = func(cmd *cobra.Command, args []string) {
 		controller.SetOutputFormat(outputFormat)
 	}
 
-	// idp / resource usecases
-	idpUC := usecase.NewIdP(*conf, manager)
+	// usecases
+	userUC := usecase.NewUser(*conf, manager)
+	groupUC := usecase.NewGroup(*conf, manager)
+	memberUC := usecase.NewMember(*conf, manager)
 	resourceUC := usecase.NewResourceUC(*conf, manager)
 
 	// login — explicit SSO login (also triggered automatically on first command)
 	rootCmd.AddCommand(controller.InitSSOLoginCmd(manager))
 
-	// user / group / member / resource subcommands
-	rootCmd.AddCommand(controller.InitUserCmd(idpUC))
-	rootCmd.AddCommand(controller.InitGroupCmd(idpUC))
-	rootCmd.AddCommand(controller.InitMemberCmd(idpUC))
-	rootCmd.AddCommand(controller.InitResourceCmd(resourceUC))
+	// get <target>
+	getCmd := &cobra.Command{Use: "get", Short: "get a resource"}
+	getCmd.AddCommand(controller.NewUserGetCmd(userUC))
+	getCmd.AddCommand(controller.NewGroupGetCmd(groupUC))
+	getCmd.AddCommand(controller.NewResourceGetCmd(resourceUC))
+	rootCmd.AddCommand(getCmd)
+
+	// list <target>
+	listCmd := &cobra.Command{Use: "list", Short: "list resources"}
+	listCmd.AddCommand(controller.NewUserListCmd(userUC))
+	listCmd.AddCommand(controller.NewGroupListCmd(groupUC))
+	listCmd.AddCommand(controller.NewMemberListCmd(memberUC))
+	listCmd.AddCommand(controller.NewResourceListCmd(resourceUC))
+	listCmd.AddCommand(controller.NewResourceGroupListCmd(resourceUC))
+	rootCmd.AddCommand(listCmd)
+
+	// create <target>
+	createCmd := &cobra.Command{Use: "create", Short: "create a resource"}
+	createCmd.AddCommand(controller.NewGroupCreateCmd(groupUC))
+	createCmd.AddCommand(controller.NewResourceCreateCmd(resourceUC))
+	rootCmd.AddCommand(createCmd)
+
+	// update <target>
+	updateCmd := &cobra.Command{Use: "update", Short: "update a resource"}
+	updateCmd.AddCommand(controller.NewUserUpdateCmd(userUC))
+	updateCmd.AddCommand(controller.NewGroupUpdateCmd(groupUC))
+	updateCmd.AddCommand(controller.NewResourceUpdateCmd(resourceUC))
+	rootCmd.AddCommand(updateCmd)
+
+	// delete <target>
+	deleteCmd := &cobra.Command{Use: "delete", Short: "delete a resource"}
+	deleteCmd.AddCommand(controller.NewGroupDeleteCmd(groupUC))
+	deleteCmd.AddCommand(controller.NewResourceDeleteCmd(resourceUC))
+	rootCmd.AddCommand(deleteCmd)
+
+	// add <target>
+	addCmd := &cobra.Command{Use: "add", Short: "add a member"}
+	addCmd.AddCommand(controller.NewMemberAddCmd(memberUC))
+	rootCmd.AddCommand(addCmd)
+
+	// remove <target>
+	removeCmd := &cobra.Command{Use: "remove", Short: "remove a resource"}
+	removeCmd.AddCommand(controller.NewMemberRemoveCmd(memberUC))
+	removeCmd.AddCommand(controller.NewResourceGroupRemoveCmd(resourceUC))
+	rootCmd.AddCommand(removeCmd)
+
+	// set <target>
+	setCmd := &cobra.Command{Use: "set", Short: "set a resource group role"}
+	setCmd.AddCommand(controller.NewResourceGroupSetCmd(resourceUC))
+	rootCmd.AddCommand(setCmd)
+
+	// show <target>
+	showCmd := &cobra.Command{Use: "show", Short: "show resource details"}
+	showCmd.AddCommand(controller.NewResourceShowCmd(resourceUC))
+	rootCmd.AddCommand(showCmd)
 
 	// token subcommands
 	tokenCmd := &cobra.Command{

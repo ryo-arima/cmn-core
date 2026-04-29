@@ -3,7 +3,7 @@ package client
 import (
 	"testing"
 
-	clientauth "github.com/ryo-arima/cmn-core/pkg/client/auth"
+	clientauth "github.com/ryo-arima/cmn-core/pkg/client/share"
 	"github.com/ryo-arima/cmn-core/pkg/client/repository"
 	"github.com/ryo-arima/cmn-core/pkg/config"
 	"github.com/stretchr/testify/assert"

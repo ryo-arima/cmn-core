@@ -46,13 +46,6 @@ func CreateTestConfig() config.BaseConfig {
 				Port: "5432",
 				Db:   "cmn_core_test",
 			},
-			MySQL: config.MySQL{
-				Host: "127.0.0.1",
-				User: "root",
-				Pass: "mysql",
-				Port: "3306",
-				Db:   "cmn_core_test",
-			},
 		},
 	}
 }

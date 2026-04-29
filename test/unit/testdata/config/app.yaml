@@ -27,12 +27,13 @@ Application:
     from: "noreply@test.local"
     use_tls: true
 
-MySQL:
+PostgreSQL:
   host: "localhost"
   user: "testuser"
   pass: "testpass"
-  port: "3306"
+  port: "5432"
   db: "testdb"
+  sslmode: "disable"
 
 Redis:
   host: "localhost"

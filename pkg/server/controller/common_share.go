@@ -61,10 +61,10 @@ func (rcvr commonShare) GetUserInfo(c *gin.Context) {
 		})
 		return
 	}
-	c.JSON(http.StatusOK, &response.Commons{
+	c.JSON(http.StatusOK, &response.RrCommons{
 		Code:    "SUCCESS",
 		Message: "User information retrieved successfully",
-		Commons: []response.Common{
+		Commons: []response.RrCommon{
 			{UUID: userClaims.UUID},
 		},
 	})

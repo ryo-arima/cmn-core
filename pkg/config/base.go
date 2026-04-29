@@ -9,7 +9,6 @@ import (
 	"strconv"
 
 	"gopkg.in/yaml.v3"
-	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
 
@@ -30,18 +29,9 @@ type BaseConfig struct {
 	Logger       interface{} // Logger implementation from server/share or client/share
 }
 
-type MySQL struct {
-	Host string `yaml:"host"`
-	User string `yaml:"user"`
-	Pass string `yaml:"pass"`
-	Port string `yaml:"port"`
-	Db   string `yaml:"db"`
-}
-
 type YamlConfig struct {
 	Application Application  `yaml:"Application"`
 	PostgreSQL   PostgreSQL   `yaml:"PostgreSQL"`
-	MySQL        MySQL        `yaml:"MySQL"`
 	Redis        Redis        `yaml:"Redis"`
 	Logger       LoggerConfig `yaml:"Logger"`
 }
@@ -93,21 +83,9 @@ type OIDCConfig struct {
 	Scopes       []string `yaml:"scopes"`
 }
 
-// SAMLProviderConfig holds SAML SP/IdP settings.
-type SAMLProviderConfig struct {
-	ProviderName      string `yaml:"provider_name"`
-	IDPMetadataURL    string `yaml:"idp_metadata_url"`
-	IDPCertificatePEM string `yaml:"idp_certificate_pem"`
-	SPEntityID        string `yaml:"sp_entity_id"`
-	SPACSURL          string `yaml:"sp_acs_url"`
-	SPKeyPEM          string `yaml:"sp_key_pem"`
-	SPCertPEM         string `yaml:"sp_cert_pem"`
-}
-
 // AuthConfig groups all SSO provider configurations.
 type AuthConfig struct {
-	OIDC OIDCConfig         `yaml:"oidc"`
-	SAML SAMLProviderConfig `yaml:"saml"`
+	OIDC OIDCConfig `yaml:"oidc"`
 }
 
 // KeycloakConfig holds admin credentials for the Keycloak Admin REST API.
@@ -187,15 +165,6 @@ type Application struct {
 
 type Admin struct {
 	Emails []string `yaml:"emails"`
-}
-
-type PostgreSQL struct {
-	Host    string `yaml:"host"`
-	User    string `yaml:"user"`
-	Pass    string `yaml:"pass"`
-	Port    string `yaml:"port"`
-	Db      string `yaml:"db"`
-	SSLMode string `yaml:"sslmode"`
 }
 
 // NewBaseConfig: creates a new BaseConfig instance with configuration loaded from app.yaml or Secrets Manager
@@ -320,35 +289,4 @@ func NewBaseConfigFromSource(ctx context.Context) *BaseConfig {
 	}
 }
 
-// ConnectDB: connect to PostgreSQL only when needed (safe to call multiple times)
-func (bc *BaseConfig) ConnectDB() error {
-	if bc.DBConnection != nil {
-		return nil
-	}
-	db := NewDBConnection(bc.YamlConfig)
-	if db == nil {
-		return fmt.Errorf("failed to connect database")
-	}
-	bc.DBConnection = db
-	return nil
-}
 
-func NewDBConnection(conf YamlConfig) *gorm.DB {
-	sslmode := conf.PostgreSQL.SSLMode
-	if sslmode == "" {
-		sslmode = "disable"
-	}
-	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=%s TimeZone=UTC",
-		conf.PostgreSQL.Host, conf.PostgreSQL.User, conf.PostgreSQL.Pass, conf.PostgreSQL.Db, conf.PostgreSQL.Port, sslmode)
-
-	log.Printf("[C-NDBC-1] Attempting database connection to %s:%s/%s", conf.PostgreSQL.Host, conf.PostgreSQL.Port, conf.PostgreSQL.Db)
-
-	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
-	if err != nil {
-		log.Printf("[C-NDBC-3] Failed to connect to database %s:%s/%s: %v", conf.PostgreSQL.Host, conf.PostgreSQL.Port, conf.PostgreSQL.Db, err)
-		return nil
-	}
-
-	log.Printf("[C-NDBC-2] Database connection established to %s:%s/%s", conf.PostgreSQL.Host, conf.PostgreSQL.Port, conf.PostgreSQL.Db)
-	return db
-}

@@ -43,7 +43,7 @@ Services started by `make dev-up`:
 | Keycloak (cmn realm users) | http://localhost:8080/realms/cmn/account | user01-50 / Password123! |
 | Casdoor (admin) | http://localhost:9000 | admin / 123 |
 | Casdoor (cmn org users) | http://localhost:9000/login/cmn | user01-50 / Password123! |
-| Casdoor (cmn admin user) | http://localhost:9000/login/cmn | admin@example.com / Admin123! |
+| Casdoor (cmn admin user) | http://localhost:9000/login/cmn | admin@cmn.local / Admin123! |
 | pgAdmin | http://localhost:5050 | — |
 | Roundcube | http://localhost:3005 | — |
 
@@ -110,7 +110,7 @@ Application:
     port: 8000
     admin:
       emails:
-        - "admin@example.com"
+        - "admin@cmn.local"
     jwt_secret: "CHANGE_THIS_JWT_SECRET_IN_PRODUCTION"
     log_level: "info"
     redis:

@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"net/http"
 
-	clientauth "github.com/ryo-arima/cmn-core/pkg/client/auth"
+	clientauth "github.com/ryo-arima/cmn-core/pkg/client/share"
 	"github.com/ryo-arima/cmn-core/pkg/config"
 	"github.com/ryo-arima/cmn-core/pkg/entity/request"
 	"github.com/ryo-arima/cmn-core/pkg/entity/response"
@@ -14,14 +14,14 @@ import (
 
 // Resource is the data-access interface for resource operations.
 type Resource interface {
-	ListResources() response.Resources
-	GetResource(uuid string) response.SingleResource
-	CreateResource(req request.CreateResource) response.SingleResource
-	UpdateResource(uuid string, req request.UpdateResource) response.Commons
-	DeleteResource(uuid string) response.Commons
-	GetResourceGroupRoles(uuid string) response.ResourceGroupRoles
-	SetResourceGroupRole(uuid string, req request.SetResourceGroupRole) response.Commons
-	DeleteResourceGroupRole(uuid, groupUUID string) response.Commons
+	ListResources() response.RrResources
+	GetResource(uuid string) response.RrSingleResource
+	CreateResource(req request.RrCreateResource) response.RrSingleResource
+	UpdateResource(uuid string, req request.RrUpdateResource) response.RrCommons
+	DeleteResource(uuid string) response.RrCommons
+	GetResourceGroupRoles(uuid string) response.RrResourceGroupRoles
+	SetResourceGroupRole(uuid string, req request.RrSetResourceGroupRole) response.RrCommons
+	DeleteResourceGroupRole(uuid, groupID string) response.RrCommons
 }
 
 type resourceRepo struct {
@@ -69,8 +69,8 @@ func (r *resourceRepo) do(method, url string, body interface{}, out interface{})
 	return json.NewDecoder(resp.Body).Decode(out)
 }
 
-func (r *resourceRepo) ListResources() response.Resources {
-	var out response.Resources
+func (r *resourceRepo) ListResources() response.RrResources {
+	var out response.RrResources
 	if err := r.do("GET", r.base+"/resources", nil, &out); err != nil {
 		out.Code = "CLIENT_RESOURCE_LIST_001"
 		out.Message = err.Error()
@@ -78,8 +78,8 @@ func (r *resourceRepo) ListResources() response.Resources {
 	return out
 }
 
-func (r *resourceRepo) GetResource(uuid string) response.SingleResource {
-	var out response.SingleResource
+func (r *resourceRepo) GetResource(uuid string) response.RrSingleResource {
+	var out response.RrSingleResource
 	url := fmt.Sprintf("%s/resource?uuid=%s", r.base, uuid)
 	if err := r.do("GET", url, nil, &out); err != nil {
 		out.Code = "CLIENT_RESOURCE_GET_001"
@@ -88,8 +88,8 @@ func (r *resourceRepo) GetResource(uuid string) response.SingleResource {
 	return out
 }
 
-func (r *resourceRepo) CreateResource(req request.CreateResource) response.SingleResource {
-	var out response.SingleResource
+func (r *resourceRepo) CreateResource(req request.RrCreateResource) response.RrSingleResource {
+	var out response.RrSingleResource
 	if err := r.do("POST", r.base+"/resources", req, &out); err != nil {
 		out.Code = "CLIENT_RESOURCE_CREATE_001"
 		out.Message = err.Error()
@@ -97,26 +97,26 @@ func (r *resourceRepo) CreateResource(req request.CreateResource) response.Singl
 	return out
 }
 
-func (r *resourceRepo) UpdateResource(uuid string, req request.UpdateResource) response.Commons {
-	var out response.Commons
+func (r *resourceRepo) UpdateResource(uuid string, req request.RrUpdateResource) response.RrCommons {
+	var out response.RrCommons
 	url := fmt.Sprintf("%s/resources/%s", r.base, uuid)
 	if err := r.do("PUT", url, req, &out); err != nil {
-		return response.Commons{Code: "CLIENT_RESOURCE_UPDATE_001", Message: err.Error()}
+		return response.RrCommons{Code: "CLIENT_RESOURCE_UPDATE_001", Message: err.Error()}
 	}
 	return out
 }
 
-func (r *resourceRepo) DeleteResource(uuid string) response.Commons {
-	var out response.Commons
+func (r *resourceRepo) DeleteResource(uuid string) response.RrCommons {
+	var out response.RrCommons
 	url := fmt.Sprintf("%s/resources/%s", r.base, uuid)
 	if err := r.do("DELETE", url, nil, &out); err != nil {
-		return response.Commons{Code: "CLIENT_RESOURCE_DELETE_001", Message: err.Error()}
+		return response.RrCommons{Code: "CLIENT_RESOURCE_DELETE_001", Message: err.Error()}
 	}
 	return out
 }
 
-func (r *resourceRepo) GetResourceGroupRoles(uuid string) response.ResourceGroupRoles {
-	var out response.ResourceGroupRoles
+func (r *resourceRepo) GetResourceGroupRoles(uuid string) response.RrResourceGroupRoles {
+	var out response.RrResourceGroupRoles
 	url := fmt.Sprintf("%s/resource/groups?uuid=%s", r.base, uuid)
 	if err := r.do("GET", url, nil, &out); err != nil {
 		out.Code = "CLIENT_RESOURCE_GROUPS_001"
@@ -125,20 +125,20 @@ func (r *resourceRepo) GetResourceGroupRoles(uuid string) response.ResourceGroup
 	return out
 }
 
-func (r *resourceRepo) SetResourceGroupRole(uuid string, req request.SetResourceGroupRole) response.Commons {
-	var out response.Commons
+func (r *resourceRepo) SetResourceGroupRole(uuid string, req request.RrSetResourceGroupRole) response.RrCommons {
+	var out response.RrCommons
 	url := fmt.Sprintf("%s/resources/%s/groups", r.base, uuid)
 	if err := r.do("PUT", url, req, &out); err != nil {
-		return response.Commons{Code: "CLIENT_RESOURCE_SETGROUP_001", Message: err.Error()}
+		return response.RrCommons{Code: "CLIENT_RESOURCE_SETGROUP_001", Message: err.Error()}
 	}
 	return out
 }
 
-func (r *resourceRepo) DeleteResourceGroupRole(uuid, groupUUID string) response.Commons {
-	var out response.Commons
-	url := fmt.Sprintf("%s/resources/%s/groups/%s", r.base, uuid, groupUUID)
+func (r *resourceRepo) DeleteResourceGroupRole(uuid, groupID string) response.RrCommons {
+	var out response.RrCommons
+	url := fmt.Sprintf("%s/resources/%s/groups/%s", r.base, uuid, groupID)
 	if err := r.do("DELETE", url, nil, &out); err != nil {
-		return response.Commons{Code: "CLIENT_RESOURCE_DELGROUP_001", Message: err.Error()}
+		return response.RrCommons{Code: "CLIENT_RESOURCE_DELGROUP_001", Message: err.Error()}
 	}
 	return out
 }

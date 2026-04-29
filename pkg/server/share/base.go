@@ -12,7 +12,7 @@ import (
 
 // Common interface for middleware layer.
 type Common interface {
-	ValidateToken(ctx context.Context, tokenString string) (*model.JWTClaims, error)
+	ValidateToken(ctx context.Context, tokenString string) (*model.LoJWTClaims, error)
 }
 
 // ForPublic allows requests without authentication.
@@ -99,7 +99,7 @@ func validateJWTToken(c *gin.Context, commonRepo Common) error {
 }
 
 // setUserContext stores user claims in gin context.
-func setUserContext(c *gin.Context, claims *model.JWTClaims) {
+func setUserContext(c *gin.Context, claims *model.LoJWTClaims) {
 	c.Set("user_uuid", claims.UUID)
 	c.Set("user_email", claims.Email)
 	c.Set("user_name", claims.Name)
@@ -108,12 +108,12 @@ func setUserContext(c *gin.Context, claims *model.JWTClaims) {
 }
 
 // getUserFromContext retrieves user claims from gin context.
-func getUserFromContext(c *gin.Context) (*model.JWTClaims, bool) {
+func getUserFromContext(c *gin.Context) (*model.LoJWTClaims, bool) {
 	claims, exists := c.Get("user_claims")
 	if !exists {
 		return nil, false
 	}
-	userClaims, ok := claims.(*model.JWTClaims)
+	userClaims, ok := claims.(*model.LoJWTClaims)
 	return userClaims, ok
 }
 
@@ -158,6 +158,6 @@ func GetUserRole(c *gin.Context) (string, bool) {
 }
 
 // GetUserClaims returns full user claims from gin context.
-func GetUserClaims(c *gin.Context) (*model.JWTClaims, bool) {
+func GetUserClaims(c *gin.Context) (*model.LoJWTClaims, bool) {
 	return getUserFromContext(c)
 }

@@ -118,8 +118,8 @@ func TestNewBaseConfig(t *testing.T) {
 
 	require.NotNil(t, cfg)
 	assert.NotNil(t, cfg.YamlConfig)
-	assert.Equal(t, "testuser", cfg.YamlConfig.MySQL.User)
-	assert.Equal(t, "testdb", cfg.YamlConfig.MySQL.Db)
+	assert.Equal(t, "testuser", cfg.YamlConfig.PostgreSQL.User)
+	assert.Equal(t, "testdb", cfg.YamlConfig.PostgreSQL.Db)
 }
 
 func TestNewClientConfig(t *testing.T) {
@@ -206,9 +206,9 @@ func TestYamlConfigStructure(t *testing.T) {
 
 	require.NotNil(t, cfg)
 
-	// Test MySQL config
-	assert.Equal(t, "localhost", cfg.YamlConfig.MySQL.Host)
-	assert.Equal(t, "3306", cfg.YamlConfig.MySQL.Port)
+	// Test PostgreSQL config
+	assert.Equal(t, "localhost", cfg.YamlConfig.PostgreSQL.Host)
+	assert.Equal(t, "5432", cfg.YamlConfig.PostgreSQL.Port)
 
 	// Test Redis config
 	assert.Equal(t, "localhost", cfg.YamlConfig.Redis.Host)
@@ -262,7 +262,7 @@ func TestNewBaseConfigFromSource_LocalFile(t *testing.T) {
 	cfg := config.NewBaseConfigFromSource(context.Background())
 
 	require.NotNil(t, cfg)
-	assert.Equal(t, "testuser", cfg.YamlConfig.MySQL.User)
+	assert.Equal(t, "testuser", cfg.YamlConfig.PostgreSQL.User)
 }
 
 func TestNewBaseConfigFromSource_Default(t *testing.T) {
@@ -307,20 +307,20 @@ func TestConnectDB_AlreadyConnected(t *testing.T) {
 	// Unit test verifies the initial state and error handling
 }
 
-func TestMySQLConfig(t *testing.T) {
-	mysql := config.MySQL{
+func TestPostgreSQLConfig(t *testing.T) {
+	psql := config.PostgreSQL{
 		Host: "testhost",
 		User: "testuser",
 		Pass: "testpass",
-		Port: "3306",
+		Port: "5432",
 		Db:   "testdb",
 	}
 
-	assert.Equal(t, "testhost", mysql.Host)
-	assert.Equal(t, "testuser", mysql.User)
-	assert.Equal(t, "testpass", mysql.Pass)
-	assert.Equal(t, "3306", mysql.Port)
-	assert.Equal(t, "testdb", mysql.Db)
+	assert.Equal(t, "testhost", psql.Host)
+	assert.Equal(t, "testuser", psql.User)
+	assert.Equal(t, "testpass", psql.Pass)
+	assert.Equal(t, "5432", psql.Port)
+	assert.Equal(t, "testdb", psql.Db)
 }
 
 func TestRedisConfig(t *testing.T) {
@@ -392,7 +392,7 @@ func TestNewBaseConfigWithContext_SecretsManagerFallback(t *testing.T) {
 	require.NotNil(t, cfg)
 	assert.NotNil(t, cfg.YamlConfig)
 	// Should fall back to file-based config
-	assert.Equal(t, "testuser", cfg.YamlConfig.MySQL.User)
+	assert.Equal(t, "testuser", cfg.YamlConfig.PostgreSQL.User)
 }
 
 func TestClientConfig(t *testing.T) {
