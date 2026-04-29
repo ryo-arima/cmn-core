@@ -46,7 +46,7 @@ func (ic *groupInternal) ListMyGroups(c *gin.Context) {
 		if err != nil {
 			continue // skip groups that can't be fetched
 		}
-		resp = append(resp, response.RrIdPGroup{ID: g.ID, Name: g.Name, Path: g.Path})
+		resp = append(resp, response.RrIdPGroup{ID: g.ID, UUID: g.UUID, Name: g.Name, Path: g.Path})
 	}
 	c.JSON(http.StatusOK, response.RrIdPGroups{Code: "SUCCESS", Message: "ok", Groups: resp})
 }
@@ -72,7 +72,7 @@ func (ic *groupInternal) GetGroup(c *gin.Context) {
 	c.JSON(http.StatusOK, response.RrSingleIdPGroup{
 		Code:    "SUCCESS",
 		Message: "ok",
-		Group:   &response.RrIdPGroup{ID: g.ID, Name: g.Name, Path: g.Path},
+		Group:   &response.RrIdPGroup{ID: g.ID, UUID: g.UUID, Name: g.Name, Path: g.Path},
 	})
 }
 
@@ -97,7 +97,7 @@ func (ic *groupInternal) CreateGroup(c *gin.Context) {
 	c.JSON(http.StatusCreated, response.RrSingleIdPGroup{
 		Code:    "SUCCESS",
 		Message: "created",
-		Group:   &response.RrIdPGroup{ID: g.ID, Name: g.Name, Path: g.Path},
+		Group:   &response.RrIdPGroup{ID: g.ID, UUID: g.UUID, Name: g.Name, Path: g.Path},
 	})
 }
 

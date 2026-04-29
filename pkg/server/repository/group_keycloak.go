@@ -29,7 +29,7 @@ func (m *keycloakManager) GetGroup(ctx context.Context, id string) (*model.LoGro
 	if err := json.Unmarshal(body, &kg); err != nil {
 		return nil, fmt.Errorf("keycloak: parse group: %w", err)
 	}
-	return &model.LoGroup{ID: kg.ID, Name: kg.Name, Path: kg.Path}, nil
+	return &model.LoGroup{ID: kg.ID, UUID: kg.ID, Name: kg.Name, Path: kg.Path}, nil
 }
 
 func (m *keycloakManager) ListGroups(ctx context.Context) ([]model.LoGroup, error) {
@@ -46,7 +46,7 @@ func (m *keycloakManager) ListGroups(ctx context.Context) ([]model.LoGroup, erro
 	}
 	groups := make([]model.LoGroup, 0, len(kgs))
 	for _, kg := range kgs {
-		groups = append(groups, model.LoGroup{ID: kg.ID, Name: kg.Name, Path: kg.Path})
+		groups = append(groups, model.LoGroup{ID: kg.ID, UUID: kg.ID, Name: kg.Name, Path: kg.Path})
 	}
 	return groups, nil
 }

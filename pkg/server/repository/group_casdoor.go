@@ -41,7 +41,7 @@ func (m *casdoorManager) GetGroup(ctx context.Context, id string) (*model.LoGrou
 	if err := json.Unmarshal(r.Data, &cg); err != nil {
 		return nil, fmt.Errorf("casdoor: parse group: %w", err)
 	}
-	return &model.LoGroup{ID: cg.Name, Name: cg.Name}, nil
+	return &model.LoGroup{ID: cg.Name, UUID: cg.Name, Name: cg.Name}, nil
 }
 
 func (m *casdoorManager) ListGroups(ctx context.Context) ([]model.LoGroup, error) {
@@ -64,7 +64,7 @@ func (m *casdoorManager) ListGroups(ctx context.Context) ([]model.LoGroup, error
 	}
 	groups := make([]model.LoGroup, 0, len(cgs))
 	for _, cg := range cgs {
-		groups = append(groups, model.LoGroup{ID: cg.Name, Name: cg.Name})
+		groups = append(groups, model.LoGroup{ID: cg.Name, UUID: cg.Name, Name: cg.Name})
 	}
 	return groups, nil
 }

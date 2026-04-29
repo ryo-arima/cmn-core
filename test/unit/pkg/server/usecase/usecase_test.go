@@ -48,19 +48,12 @@ func TestCommonUsecase_ValidateToken_NilVerifier(t *testing.T) {
 }
 
 func TestNewGroup(t *testing.T) {
-	cfg := config.BaseConfig{}
-	groupRepo := repository.NewGroup(cfg)
-	memberRepo := repository.NewMember(cfg)
-
-	uc := usecase.NewGroup(groupRepo, memberRepo, nil)
+	uc := usecase.NewGroup(nil, nil)
 	assert.NotNil(t, uc)
 }
 
 func TestNewMember(t *testing.T) {
-	cfg := config.BaseConfig{}
-	memberRepo := repository.NewMember(cfg)
-
-	uc := usecase.NewMember(memberRepo)
+	uc := usecase.NewMember(nil)
 	assert.NotNil(t, uc)
 }
 
@@ -69,10 +62,7 @@ func TestNewRole(t *testing.T) {
 }
 
 func TestNewUser(t *testing.T) {
-	cfg := config.BaseConfig{}
-	userRepo := repository.NewUser(cfg)
-
-	uc := usecase.NewUser(userRepo)
+	uc := usecase.NewUser(nil)
 	assert.NotNil(t, uc)
 }
 

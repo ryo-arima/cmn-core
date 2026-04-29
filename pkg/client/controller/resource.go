@@ -33,14 +33,47 @@ func NewResourceGetCmd(uc usecase.ResourceUC) *cobra.Command {
 
 // NewResourceListCmd returns the "resource" subcommand for use under "list".
 func NewResourceListCmd(uc usecase.ResourceUC) *cobra.Command {
-	return &cobra.Command{
+	cmd := &cobra.Command{
 		Use:   "resource",
 		Short: "list resources",
 		Run: func(cmd *cobra.Command, args []string) {
 			result := uc.ListResources()
-			fmt.Print(usecase.Format(GetOutputFormat(), result))
+			long, _ := cmd.Flags().GetBool("long")
+			if long && GetOutputFormat() == "table" {
+				fmt.Print(usecase.ResourcesLongTableString(result))
+			} else {
+				fmt.Print(usecase.Format(GetOutputFormat(), result))
+			}
 		},
 	}
+	cmd.Flags().BoolP("long", "l", false, "show all columns including description")
+	return cmd
+}
+
+// NewResourceShowCmd returns the "resource" subcommand for use under "show" (vertical key-value display).
+func NewResourceShowCmd(uc usecase.ResourceUC) *cobra.Command {
+	cmd := &cobra.Command{
+		Use:   "resource",
+		Short: "show resource details",
+		RunE: func(cmd *cobra.Command, args []string) error {
+			uuid, _ := cmd.Flags().GetString("uuid")
+			if uuid == "" && len(args) > 0 {
+				uuid = args[0]
+			}
+			if uuid == "" {
+				return fmt.Errorf("--uuid or positional argument is required")
+			}
+			result := uc.GetResource(uuid)
+			if GetOutputFormat() == "table" {
+				fmt.Print(usecase.ShowResourceString(result))
+			} else {
+				fmt.Print(usecase.Format(GetOutputFormat(), result))
+			}
+			return nil
+		},
+	}
+	cmd.Flags().String("uuid", "", "resource UUID")
+	return cmd
 }
 
 // NewResourceCreateCmd returns the "resource" subcommand for use under "create".
@@ -54,13 +87,15 @@ func NewResourceCreateCmd(uc usecase.ResourceUC) *cobra.Command {
 				return fmt.Errorf("--name is required")
 			}
 			desc, _ := cmd.Flags().GetString("description")
-			result := uc.CreateResource(request.RrCreateResource{Name: name, Description: desc})
+			ownerGroup, _ := cmd.Flags().GetString("owner-group")
+			result := uc.CreateResource(request.RrCreateResource{Name: name, Description: desc, OwnerGroup: ownerGroup})
 			fmt.Print(usecase.Format(GetOutputFormat(), result))
 			return nil
 		},
 	}
 	cmd.Flags().String("name", "", "resource name")
 	cmd.Flags().String("description", "", "resource description")
+	cmd.Flags().String("owner-group", "", "IDP group ID of the owning group")
 	return cmd
 }
 
@@ -134,21 +169,21 @@ func NewResourceGroupSetCmd(uc usecase.ResourceUC) *cobra.Command {
 		Short: "assign a role to a group on a resource",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			uuid, _ := cmd.Flags().GetString("uuid")
-			groupUUID, _ := cmd.Flags().GetString("group-uuid")
+			groupID, _ := cmd.Flags().GetString("group-id")
 			role, _ := cmd.Flags().GetString("role")
-			if uuid == "" || groupUUID == "" || role == "" {
-				return fmt.Errorf("--uuid, --group-uuid, and --role are required")
+			if uuid == "" || groupID == "" || role == "" {
+				return fmt.Errorf("--uuid, --group-id, and --role are required")
 			}
 			result := uc.SetResourceGroupRole(uuid, request.RrSetResourceGroupRole{
-				GroupUUID: groupUUID,
-				Role:      role,
+				GroupID: groupID,
+				Role:    role,
 			})
 			fmt.Print(usecase.Format(GetOutputFormat(), result))
 			return nil
 		},
 	}
 	cmd.Flags().String("uuid", "", "resource UUID")
-	cmd.Flags().String("group-uuid", "", "group UUID")
+	cmd.Flags().String("group-id", "", "IDP group ID")
 	cmd.Flags().String("role", "", "role: viewer, editor, or owner")
 	return cmd
 }
@@ -160,16 +195,16 @@ func NewResourceGroupRemoveCmd(uc usecase.ResourceUC) *cobra.Command {
 		Short: "remove a group from a resource",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			uuid, _ := cmd.Flags().GetString("uuid")
-			groupUUID, _ := cmd.Flags().GetString("group-uuid")
-			if uuid == "" || groupUUID == "" {
-				return fmt.Errorf("--uuid and --group-uuid are required")
+			groupID, _ := cmd.Flags().GetString("group-id")
+			if uuid == "" || groupID == "" {
+				return fmt.Errorf("--uuid and --group-id are required")
 			}
-			result := uc.DeleteResourceGroupRole(uuid, groupUUID)
+			result := uc.DeleteResourceGroupRole(uuid, groupID)
 			fmt.Print(usecase.Format(GetOutputFormat(), result))
 			return nil
 		},
 	}
 	cmd.Flags().String("uuid", "", "resource UUID")
-	cmd.Flags().String("group-uuid", "", "group UUID")
+	cmd.Flags().String("group-id", "", "IDP group ID")
 	return cmd
 }

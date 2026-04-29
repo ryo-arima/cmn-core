@@ -97,6 +97,11 @@ func main() {
 	setCmd.AddCommand(controller.NewResourceGroupSetCmd(resourceUC))
 	rootCmd.AddCommand(setCmd)
 
+	// show <target>
+	showCmd := &cobra.Command{Use: "show", Short: "show resource details"}
+	showCmd.AddCommand(controller.NewResourceShowCmd(resourceUC))
+	rootCmd.AddCommand(showCmd)
+
 	// token subcommands
 	tokenCmd := &cobra.Command{
 		Use:   "token",

@@ -43,6 +43,7 @@ func (ic *userPublic) RegisterUser(c *gin.Context) {
 		Message: "user created",
 		User: &response.RrIdPUser{
 			ID:        u.ID,
+			UUID:      u.UUID,
 			Username:  u.Username,
 			Email:     u.Email,
 			FirstName: u.FirstName,

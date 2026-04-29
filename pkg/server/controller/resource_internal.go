@@ -85,7 +85,7 @@ func (rc *resourceInternal) CreateResource(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"code": "RESOURCE_CREATE_001", "message": "Invalid request body"})
 		return
 	}
-	res, err := rc.resourceUsecase.CreateResource(c.Request.Context(), req.Name, req.Description, claims.UUID)
+	res, err := rc.resourceUsecase.CreateResource(c.Request.Context(), req.Name, req.Description, claims.UUID, req.OwnerGroup)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"code": "RESOURCE_CREATE_002", "message": err.Error()})
 		return
@@ -156,7 +156,7 @@ func (rc *resourceInternal) GetResourceGroupRoles(c *gin.Context) {
 	}
 	resp := make([]response.RrResourceGroupRole, 0, len(roles))
 	for _, r := range roles {
-		resp = append(resp, response.RrResourceGroupRole{ResourceUUID: r.ResourceUUID, GroupUUID: r.GroupUUID, Role: r.Role})
+		resp = append(resp, response.RrResourceGroupRole{ResourceUUID: r.ResourceUUID, GroupID: r.GroupID, Role: r.Role})
 	}
 	c.JSON(http.StatusOK, response.RrResourceGroupRoles{Code: "SUCCESS", Message: "ok", Groups: resp})
 }
@@ -174,7 +174,7 @@ func (rc *resourceInternal) SetResourceGroupRole(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"code": "RESOURCE_GROUP_SET_001", "message": "Invalid request body"})
 		return
 	}
-	if err := rc.resourceUsecase.SetGroupRole(c.Request.Context(), c.Param("uuid"), req.GroupUUID, req.Role, claims.UUID, claims.Groups, false); err != nil {
+	if err := rc.resourceUsecase.SetGroupRole(c.Request.Context(), c.Param("uuid"), req.GroupID, req.Role, claims.UUID, claims.Groups, false); err != nil {
 		if err.Error() == "access denied" {
 			c.JSON(http.StatusForbidden, gin.H{"code": "RESOURCE_GROUP_SET_403", "message": "Access denied"})
 			return
@@ -186,14 +186,14 @@ func (rc *resourceInternal) SetResourceGroupRole(c *gin.Context) {
 }
 
 // DeleteResourceGroupRole removes a group-role entry.
-// DELETE /v1/internal/resources/:uuid/groups/:group_uuid
+// DELETE /v1/internal/resources/:uuid/groups/:group_id
 func (rc *resourceInternal) DeleteResourceGroupRole(c *gin.Context) {
 	claims, ok := share.GetUserClaims(c)
 	if !ok {
 		c.JSON(http.StatusUnauthorized, gin.H{"code": "RESOURCE_AUTH_001", "message": "Unauthorized"})
 		return
 	}
-	if err := rc.resourceUsecase.DeleteGroupRole(c.Request.Context(), c.Param("uuid"), c.Param("group_uuid"), claims.UUID, claims.Groups, false); err != nil {
+	if err := rc.resourceUsecase.DeleteGroupRole(c.Request.Context(), c.Param("uuid"), c.Param("group_id"), claims.UUID, claims.Groups, false); err != nil {
 		if err.Error() == "access denied" {
 			c.JSON(http.StatusForbidden, gin.H{"code": "RESOURCE_GROUP_DEL_403", "message": "Access denied"})
 			return

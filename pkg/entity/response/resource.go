@@ -8,6 +8,7 @@ type RrResource struct {
 	UUID        string     `json:"uuid"`
 	Name        string     `json:"name"`
 	Description string     `json:"description,omitempty"`
+	OwnerGroup  string     `json:"owner_group,omitempty"`
 	CreatedBy   string     `json:"created_by"`
 	UpdatedBy   string     `json:"updated_by,omitempty"`
 	DeletedBy   string     `json:"deleted_by,omitempty"`
@@ -33,7 +34,7 @@ type RrSingleResource struct {
 // RrResourceGroupRole is the representation of a group-role entry on a resource.
 type RrResourceGroupRole struct {
 	ResourceUUID string `json:"resource_uuid"`
-	GroupUUID    string `json:"group_uuid"`
+	GroupID      string `json:"group_id"`
 	Role         string `json:"role"`
 }
 

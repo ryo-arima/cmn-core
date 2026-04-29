@@ -38,7 +38,7 @@ func (ic *groupPrivate) ListGroups(c *gin.Context) {
 	}
 	resp := make([]response.RrIdPGroup, 0, len(groups))
 	for _, g := range groups {
-		resp = append(resp, response.RrIdPGroup{ID: g.ID, Name: g.Name, Path: g.Path})
+		resp = append(resp, response.RrIdPGroup{ID: g.ID, UUID: g.UUID, Name: g.Name, Path: g.Path})
 	}
 	c.JSON(http.StatusOK, response.RrIdPGroups{Code: "SUCCESS", Message: "ok", Groups: resp})
 }
@@ -54,7 +54,7 @@ func (ic *groupPrivate) GetGroup(c *gin.Context) {
 	c.JSON(http.StatusOK, response.RrSingleIdPGroup{
 		Code:    "SUCCESS",
 		Message: "ok",
-		Group:   &response.RrIdPGroup{ID: g.ID, Name: g.Name, Path: g.Path},
+		Group:   &response.RrIdPGroup{ID: g.ID, UUID: g.UUID, Name: g.Name, Path: g.Path},
 	})
 }
 
@@ -74,7 +74,7 @@ func (ic *groupPrivate) CreateGroup(c *gin.Context) {
 	c.JSON(http.StatusCreated, response.RrSingleIdPGroup{
 		Code:    "SUCCESS",
 		Message: "created",
-		Group:   &response.RrIdPGroup{ID: g.ID, Name: g.Name, Path: g.Path},
+		Group:   &response.RrIdPGroup{ID: g.ID, UUID: g.UUID, Name: g.Name, Path: g.Path},
 	})
 }
 

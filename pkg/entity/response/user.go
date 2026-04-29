@@ -5,6 +5,7 @@ import "time"
 // RrIdPUser is the API representation of a user managed by the identity provider.
 type RrIdPUser struct {
 	ID        string    `json:"id"`
+	UUID      string    `json:"uuid,omitempty"`
 	Username  string    `json:"username"`
 	Email     string    `json:"email"`
 	FirstName string    `json:"first_name,omitempty"`

@@ -21,7 +21,7 @@ type Resource interface {
 	DeleteResource(uuid string) response.RrCommons
 	GetResourceGroupRoles(uuid string) response.RrResourceGroupRoles
 	SetResourceGroupRole(uuid string, req request.RrSetResourceGroupRole) response.RrCommons
-	DeleteResourceGroupRole(uuid, groupUUID string) response.RrCommons
+	DeleteResourceGroupRole(uuid, groupID string) response.RrCommons
 }
 
 type resourceRepo struct {
@@ -134,9 +134,9 @@ func (r *resourceRepo) SetResourceGroupRole(uuid string, req request.RrSetResour
 	return out
 }
 
-func (r *resourceRepo) DeleteResourceGroupRole(uuid, groupUUID string) response.RrCommons {
+func (r *resourceRepo) DeleteResourceGroupRole(uuid, groupID string) response.RrCommons {
 	var out response.RrCommons
-	url := fmt.Sprintf("%s/resources/%s/groups/%s", r.base, uuid, groupUUID)
+	url := fmt.Sprintf("%s/resources/%s/groups/%s", r.base, uuid, groupID)
 	if err := r.do("DELETE", url, nil, &out); err != nil {
 		return response.RrCommons{Code: "CLIENT_RESOURCE_DELGROUP_001", Message: err.Error()}
 	}

@@ -53,6 +53,7 @@ func toResponseResource(r model.PgResource) response.RrResource {
 		UUID:        r.UUID,
 		Name:        r.Name,
 		Description: r.Description,
+		OwnerGroup:  r.OwnerGroup,
 		CreatedBy:   r.CreatedBy,
 		UpdatedBy:   r.UpdatedBy,
 		DeletedBy:   r.DeletedBy,

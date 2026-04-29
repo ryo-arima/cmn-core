@@ -3,6 +3,7 @@ package response
 // RrIdPGroup is the API representation of a group managed by the identity provider.
 type RrIdPGroup struct {
 	ID   string `json:"id"`
+	UUID string `json:"uuid,omitempty"`
 	Name string `json:"name"`
 	Path string `json:"path,omitempty"`
 }

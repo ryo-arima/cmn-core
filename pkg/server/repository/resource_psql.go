@@ -23,7 +23,7 @@ type Resource interface {
 	// Group-role management
 	GetGroupRoles(ctx context.Context, resourceUUID string) ([]model.PgResourceGroupRole, error)
 	SetGroupRole(ctx context.Context, rgr *model.PgResourceGroupRole) error
-	DeleteGroupRole(ctx context.Context, resourceUUID, groupUUID string) error
+	DeleteGroupRole(ctx context.Context, resourceUUID, groupID string) error
 }
 
 type resourceRepository struct {
@@ -54,11 +54,11 @@ func (r *resourceRepository) ListResources(ctx context.Context, filter request.L
 
 	query := r.db.WithContext(ctx).Where("deleted_at IS NULL")
 
-	if len(filter.GroupUUIDs) > 0 {
+	if len(filter.GroupIDs) > 0 {
 		// created_by matches OR resource has a group-role entry for one of the user's groups
 		query = query.Where(
-			"created_by = ? OR uuid IN (SELECT resource_uuid FROM resource_group_roles WHERE group_uuid IN ?)",
-			filter.CreatedBy, filter.GroupUUIDs,
+			"created_by = ? OR uuid IN (SELECT resource_uuid FROM pg_resource_group_roles WHERE group_id IN ?)",
+			filter.CreatedBy, filter.GroupIDs,
 		)
 	} else {
 		query = query.Where("created_by = ?", filter.CreatedBy)
@@ -106,7 +106,7 @@ func (r *resourceRepository) GetGroupRoles(ctx context.Context, resourceUUID str
 func (r *resourceRepository) SetGroupRole(ctx context.Context, rgr *model.PgResourceGroupRole) error {
 	var existing model.PgResourceGroupRole
 	err := r.db.WithContext(ctx).
-		Where("resource_uuid = ? AND group_uuid = ?", rgr.ResourceUUID, rgr.GroupUUID).
+		Where("resource_uuid = ? AND group_id = ?", rgr.ResourceUUID, rgr.GroupID).
 		First(&existing).Error
 
 	if errors.Is(err, gorm.ErrRecordNotFound) {
@@ -119,8 +119,8 @@ func (r *resourceRepository) SetGroupRole(ctx context.Context, rgr *model.PgReso
 	return r.db.WithContext(ctx).Save(&existing).Error
 }
 
-func (r *resourceRepository) DeleteGroupRole(ctx context.Context, resourceUUID, groupUUID string) error {
+func (r *resourceRepository) DeleteGroupRole(ctx context.Context, resourceUUID, groupID string) error {
 	return r.db.WithContext(ctx).
-		Where("resource_uuid = ? AND group_uuid = ?", resourceUUID, groupUUID).
+		Where("resource_uuid = ? AND group_id = ?", resourceUUID, groupID).
 		Delete(&model.PgResourceGroupRole{}).Error
 }

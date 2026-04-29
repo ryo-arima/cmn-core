@@ -37,6 +37,7 @@ func (ic *memberPrivate) ListGroupMembers(c *gin.Context) {
 	for _, u := range members {
 		resp = append(resp, response.RrIdPUser{
 			ID:        u.ID,
+			UUID:      u.UUID,
 			Username:  u.Username,
 			Email:     u.Email,
 			FirstName: u.FirstName,

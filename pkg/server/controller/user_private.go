@@ -41,6 +41,7 @@ func (ic *userPrivate) ListUsers(c *gin.Context) {
 	for _, u := range users {
 		resp = append(resp, response.RrIdPUser{
 			ID:        u.ID,
+			UUID:      u.UUID,
 			Username:  u.Username,
 			Email:     u.Email,
 			FirstName: u.FirstName,
@@ -89,6 +90,7 @@ func (ic *userPrivate) CreateUser(c *gin.Context) {
 	}
 	resp := &response.RrIdPUser{
 		ID:        u.ID,
+		UUID:      u.UUID,
 		Username:  u.Username,
 		Email:     u.Email,
 		FirstName: u.FirstName,

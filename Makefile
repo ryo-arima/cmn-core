@@ -65,6 +65,13 @@ localstack:
 logs:
 	$(COMPOSE) logs -f $(SERVICE)
 
+# Seed pg_groups table with Casdoor group UUID <-> display name mapping.
+# Run AFTER dev-up (server must have created the table via GORM auto-migrate).
+dev-seed:
+	docker compose --project-directory . -f docker/postgres.yaml \
+		exec -T postgres psql -U user -d cmn_core \
+		< scripts/data/postgres/seed_groups.sql
+
 # Tests
 test:
 	go test ./...

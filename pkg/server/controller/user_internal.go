@@ -52,6 +52,7 @@ func (ic *userInternal) GetMyUser(c *gin.Context) {
 		Message: "ok",
 		User: &response.RrIdPUser{
 			ID:        u.ID,
+			UUID:      u.UUID,
 			Username:  u.Username,
 			Email:     u.Email,
 			FirstName: u.FirstName,
@@ -86,6 +87,7 @@ func (ic *userInternal) ListGroupUsers(c *gin.Context) {
 			seen[u.ID] = struct{}{}
 			users = append(users, response.RrIdPUser{
 				ID:        u.ID,
+				UUID:      u.UUID,
 				Username:  u.Username,
 				Email:     u.Email,
 				FirstName: u.FirstName,

@@ -17,7 +17,7 @@ type ResourceUC interface {
 	DeleteResource(uuid string) response.RrCommons
 	GetResourceGroupRoles(uuid string) response.RrResourceGroupRoles
 	SetResourceGroupRole(uuid string, req request.RrSetResourceGroupRole) response.RrCommons
-	DeleteResourceGroupRole(uuid, groupUUID string) response.RrCommons
+	DeleteResourceGroupRole(uuid, groupID string) response.RrCommons
 }
 
 type resourceUsecase struct {
@@ -53,6 +53,6 @@ func (u *resourceUsecase) GetResourceGroupRoles(uuid string) response.RrResource
 func (u *resourceUsecase) SetResourceGroupRole(uuid string, r request.RrSetResourceGroupRole) response.RrCommons {
 	return u.repo.SetResourceGroupRole(uuid, r)
 }
-func (u *resourceUsecase) DeleteResourceGroupRole(uuid, groupUUID string) response.RrCommons {
-	return u.repo.DeleteResourceGroupRole(uuid, groupUUID)
+func (u *resourceUsecase) DeleteResourceGroupRole(uuid, groupID string) response.RrCommons {
+	return u.repo.DeleteResourceGroupRole(uuid, groupID)
 }

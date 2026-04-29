@@ -19,6 +19,8 @@ type PgUsers struct {
 type LoUser struct {
 	// ID is the IdP-internal unique identifier.
 	ID        string
+	// UUID is the IdP-internal UUID (e.g. Keycloak's "id" field, Casdoor's "id" field).
+	UUID      string
 	Username  string
 	Email     string
 	FirstName string

@@ -99,6 +99,11 @@ func main() {
 	setCmd.AddCommand(controller.NewResourceGroupSetCmd(resourceAdminUC))
 	rootCmd.AddCommand(setCmd)
 
+	// show <target>
+	showCmd := &cobra.Command{Use: "show", Short: "show resource details"}
+	showCmd.AddCommand(controller.NewResourceShowCmd(resourceAdminUC))
+	rootCmd.AddCommand(showCmd)
+
 	// token subcommands
 	tokenCmd := &cobra.Command{
 		Use:   "token",
@@ -109,6 +114,11 @@ func main() {
 	tokenCmd.AddCommand(controller.InitCommonValidateTokenCmd(manager))
 	tokenCmd.AddCommand(controller.InitCommonUserInfoCmd(manager))
 	rootCmd.AddCommand(tokenCmd)
+
+	// bootstrap subcommands
+	bootstrapCmd := &cobra.Command{Use: "bootstrap", Short: "bootstrap management"}
+	bootstrapCmd.AddCommand(controller.NewDBBootstrapCmd(*conf))
+	rootCmd.AddCommand(bootstrapCmd)
 
 	rootCmd.AddCommand(&cobra.Command{
 		Use:   "version",

@@ -8,9 +8,10 @@ type PgResource struct {
 	UUID        string     `gorm:"uniqueIndex;not null"`
 	Name        string     `gorm:"not null"`
 	Description string
-	CreatedBy   string     // user UUID of the creator
-	UpdatedBy   string     // user UUID of the last updater
-	DeletedBy   string     // user UUID of the deleter
+	OwnerGroup  string     // IDP group ID of the owning group
+	CreatedBy   string     // IDP user ID of the creator
+	UpdatedBy   string     // IDP user ID of the last updater
+	DeletedBy   string     // IDP user ID of the deleter
 	CreatedAt   *time.Time
 	UpdatedAt   *time.Time
 	DeletedAt   *time.Time `gorm:"index"`
@@ -21,8 +22,8 @@ type PgResource struct {
 type PgResourceGroupRole struct {
 	ID           uint       `gorm:"primaryKey;autoIncrement"`
 	ResourceUUID string     `gorm:"not null;index"`
-	GroupUUID    string     `gorm:"not null;index"`
-	Role         string     `gorm:"not null"` // viewer | editor | owner
+	GroupID      string     `gorm:"not null;index"` // IDP group ID
+	Role         string     `gorm:"not null"`      // viewer | editor | owner
 	CreatedAt    *time.Time
 	UpdatedAt    *time.Time
 }

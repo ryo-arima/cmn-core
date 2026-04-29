@@ -90,7 +90,7 @@ func (rc *resourcePrivate) CreateResource(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"code": "RESOURCE_CREATE_001", "message": "Invalid request body"})
 		return
 	}
-	res, err := rc.resourceUsecase.CreateResource(c.Request.Context(), req.Name, req.Description, claims.UUID)
+	res, err := rc.resourceUsecase.CreateResource(c.Request.Context(), req.Name, req.Description, claims.UUID, req.OwnerGroup)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"code": "RESOURCE_CREATE_002", "message": err.Error()})
 		return
@@ -134,7 +134,7 @@ func (rc *resourcePrivate) GetResourceGroupRoles(c *gin.Context) {
 	}
 	resp := make([]response.RrResourceGroupRole, 0, len(roles))
 	for _, r := range roles {
-		resp = append(resp, response.RrResourceGroupRole{ResourceUUID: r.ResourceUUID, GroupUUID: r.GroupUUID, Role: r.Role})
+		resp = append(resp, response.RrResourceGroupRole{ResourceUUID: r.ResourceUUID, GroupID: r.GroupID, Role: r.Role})
 	}
 	c.JSON(http.StatusOK, response.RrResourceGroupRoles{Code: "SUCCESS", Message: "ok", Groups: resp})
 }
@@ -152,7 +152,7 @@ func (rc *resourcePrivate) SetResourceGroupRole(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"code": "RESOURCE_GROUP_SET_001", "message": "Invalid request body"})
 		return
 	}
-	if err := rc.resourceUsecase.SetGroupRole(c.Request.Context(), c.Param("uuid"), req.GroupUUID, req.Role, claims.UUID, claims.Groups, true); err != nil {
+	if err := rc.resourceUsecase.SetGroupRole(c.Request.Context(), c.Param("uuid"), req.GroupID, req.Role, claims.UUID, claims.Groups, true); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"code": "RESOURCE_GROUP_SET_002", "message": err.Error()})
 		return
 	}
@@ -172,7 +172,7 @@ func (rc *resourcePrivate) DeleteResourceGroupRole(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"code": "RESOURCE_GROUP_DEL_400", "message": "Invalid request body"})
 		return
 	}
-	if err := rc.resourceUsecase.DeleteGroupRole(c.Request.Context(), c.Param("uuid"), req.GroupUUID, claims.UUID, claims.Groups, true); err != nil {
+	if err := rc.resourceUsecase.DeleteGroupRole(c.Request.Context(), c.Param("uuid"), req.GroupID, claims.UUID, claims.Groups, true); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"code": "RESOURCE_GROUP_DEL_001", "message": err.Error()})
 		return
 	}

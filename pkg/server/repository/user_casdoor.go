@@ -175,8 +175,13 @@ func (m *casdoorManager) Login(ctx context.Context, username, password string) (
 
 // cdUserToModel converts a Casdoor internal user struct to the domain model.
 func cdUserToModel(cu model.CdUser) *model.LoUser {
+	uuid := cu.ID
+	if uuid == "" {
+		uuid = cu.Name
+	}
 	u := &model.LoUser{
 		ID:        cu.Name,
+		UUID:      uuid,
 		Username:  cu.Name,
 		Email:     cu.Email,
 		FirstName: cu.FirstName,

@@ -73,7 +73,11 @@ func InitRouter(conf config.BaseConfig) *gin.Engine {
 		log.Fatalf("IdP init failed: %v", err)
 	}
 	userUsecase := usecase.NewUser(idpManager)
-	groupUsecase := usecase.NewGroup(idpManager)
+	var groupStore repository.Group
+	if conf.YamlConfig.Application.Server.IdP.Provider == "casdoor" && conf.DBConnection != nil {
+		groupStore = repository.NewGroup(conf.DBConnection)
+	}
+	groupUsecase := usecase.NewGroup(idpManager, groupStore)
 	memberUsecase := usecase.NewMember(idpManager)
 	userPublicCtrl := controller.NewUserPublic(userUsecase)
 	userInternalCtrl := controller.NewUserInternal(userUsecase, memberUsecase, commonUsecase)
@@ -159,7 +163,7 @@ func InitRouter(conf config.BaseConfig) *gin.Engine {
 	internalAPI.DELETE("/resources/:uuid", resourceInternalCtrl.DeleteResource)
 	internalAPI.GET("/resource/groups", resourceInternalCtrl.GetResourceGroupRoles)
 	internalAPI.PUT("/resources/:uuid/groups", resourceInternalCtrl.SetResourceGroupRole)
-	internalAPI.DELETE("/resources/:uuid/groups/:group_uuid", resourceInternalCtrl.DeleteResourceGroupRole)
+	internalAPI.DELETE("/resources/:uuid/groups/:group_id", resourceInternalCtrl.DeleteResourceGroupRole)
 
 	// ============ PRIVATE API (admin — admin role required) ============
 	privateAPI := v1.Group("/private")

@@ -16,8 +16,8 @@ type Resource interface {
 	ListResources(ctx context.Context, userUUID string, groups []string) ([]model.PgResource, error)
 	// Get returns a resource if the caller is allowed to view it.
 	GetResource(ctx context.Context, resourceUUID, userUUID string, groups []string, isAdmin bool) (*model.PgResource, error)
-	// Create creates a new resource owned by userUUID.
-	CreateResource(ctx context.Context, name, description, userUUID string) (*model.PgResource, error)
+	// Create creates a new resource owned by userID (IDP user ID), with an optional ownerGroup (IDP group ID).
+	CreateResource(ctx context.Context, name, description, userID, ownerGroup string) (*model.PgResource, error)
 	// Update modifies a resource if the caller has editor or owner role (or is admin/creator).
 	UpdateResource(ctx context.Context, resourceUUID, name, description, userUUID string, groups []string, isAdmin bool) (*model.PgResource, error)
 	// Delete soft-deletes a resource if the caller has owner role (or is admin/creator).
@@ -29,9 +29,9 @@ type Resource interface {
 	AdminDeleteResource(ctx context.Context, resourceUUID, userUUID string) error
 
 	// Group role management (owner or creator of the resource required).
-	GetGroupRoles(ctx context.Context, resourceUUID, userUUID string, groups []string, isAdmin bool) ([]model.PgResourceGroupRole, error)
-	SetGroupRole(ctx context.Context, resourceUUID, groupUUID, role, userUUID string, groups []string, isAdmin bool) error
-	DeleteGroupRole(ctx context.Context, resourceUUID, groupUUID, userUUID string, groups []string, isAdmin bool) error
+	GetGroupRoles(ctx context.Context, resourceUUID, userID string, groups []string, isAdmin bool) ([]model.PgResourceGroupRole, error)
+	SetGroupRole(ctx context.Context, resourceUUID, groupID, role, userID string, groups []string, isAdmin bool) error
+	DeleteGroupRole(ctx context.Context, resourceUUID, groupID, userID string, groups []string, isAdmin bool) error
 }
 
 type resourceUsecase struct {
@@ -62,7 +62,7 @@ func hasGroupRoleInList(roles []model.PgResourceGroupRole, groups []string, minR
 	for _, r := range roles {
 		if roleLevel(r.Role) >= allowed {
 			for _, g := range groups {
-				if r.GroupUUID == g {
+				if r.GroupID == g {
 					return true
 				}
 			}
@@ -104,8 +104,8 @@ func canManage(roles []model.PgResourceGroupRole, res *model.PgResource, userUUI
 
 func (uc *resourceUsecase) ListResources(ctx context.Context, userUUID string, groups []string) ([]model.PgResource, error) {
 	return uc.repo.ListResources(ctx, request.LoResourceQueryFilter{
-		CreatedBy:  userUUID,
-		GroupUUIDs: groups,
+		CreatedBy: userUUID,
+		GroupIDs:  groups,
 	})
 }
 
@@ -128,13 +128,14 @@ func (uc *resourceUsecase) GetResource(ctx context.Context, resourceUUID, userUU
 	return nil, fmt.Errorf("access denied")
 }
 
-func (uc *resourceUsecase) CreateResource(ctx context.Context, name, description, userUUID string) (*model.PgResource, error) {
+func (uc *resourceUsecase) CreateResource(ctx context.Context, name, description, userID, ownerGroup string) (*model.PgResource, error) {
 	res := &model.PgResource{
 		UUID:        uuid.New().String(),
 		Name:        name,
 		Description: description,
-		CreatedBy:   userUUID,
-		UpdatedBy:   userUUID,
+		OwnerGroup:  ownerGroup,
+		CreatedBy:   userID,
+		UpdatedBy:   userID,
 	}
 	if err := uc.repo.CreateResource(ctx, res); err != nil {
 		return nil, err
@@ -194,7 +195,7 @@ func (uc *resourceUsecase) AdminDeleteResource(ctx context.Context, resourceUUID
 	return uc.repo.SoftDeleteResource(ctx, res, userUUID)
 }
 
-func (uc *resourceUsecase) GetGroupRoles(ctx context.Context, resourceUUID, userUUID string, groups []string, isAdmin bool) ([]model.PgResourceGroupRole, error) {
+func (uc *resourceUsecase) GetGroupRoles(ctx context.Context, resourceUUID, userID string, groups []string, isAdmin bool) ([]model.PgResourceGroupRole, error) {
 	res, err := uc.repo.GetResourceByUUID(ctx, resourceUUID)
 	if err != nil {
 		return nil, err
@@ -203,13 +204,13 @@ func (uc *resourceUsecase) GetGroupRoles(ctx context.Context, resourceUUID, user
 	if err != nil {
 		return nil, err
 	}
-	if !isAdmin && res.CreatedBy != userUUID && !hasGroupRoleInList(roles, groups, "viewer") {
+	if !isAdmin && res.CreatedBy != userID && !hasGroupRoleInList(roles, groups, "viewer") {
 		return nil, fmt.Errorf("access denied")
 	}
 	return roles, nil
 }
 
-func (uc *resourceUsecase) SetGroupRole(ctx context.Context, resourceUUID, groupUUID, role, userUUID string, groups []string, isAdmin bool) error {
+func (uc *resourceUsecase) SetGroupRole(ctx context.Context, resourceUUID, groupID, role, userID string, groups []string, isAdmin bool) error {
 	res, err := uc.repo.GetResourceByUUID(ctx, resourceUUID)
 	if err != nil {
 		return err
@@ -218,17 +219,17 @@ func (uc *resourceUsecase) SetGroupRole(ctx context.Context, resourceUUID, group
 	if err != nil {
 		return err
 	}
-	if !canManage(roles, res, userUUID, groups, isAdmin, "owner") {
+	if !canManage(roles, res, userID, groups, isAdmin, "owner") {
 		return fmt.Errorf("access denied")
 	}
 	return uc.repo.SetGroupRole(ctx, &model.PgResourceGroupRole{
 		ResourceUUID: resourceUUID,
-		GroupUUID:    groupUUID,
+		GroupID:      groupID,
 		Role:         role,
 	})
 }
 
-func (uc *resourceUsecase) DeleteGroupRole(ctx context.Context, resourceUUID, groupUUID, userUUID string, groups []string, isAdmin bool) error {
+func (uc *resourceUsecase) DeleteGroupRole(ctx context.Context, resourceUUID, groupID, userID string, groups []string, isAdmin bool) error {
 	res, err := uc.repo.GetResourceByUUID(ctx, resourceUUID)
 	if err != nil {
 		return err
@@ -237,8 +238,8 @@ func (uc *resourceUsecase) DeleteGroupRole(ctx context.Context, resourceUUID, gr
 	if err != nil {
 		return err
 	}
-	if !canManage(roles, res, userUUID, groups, isAdmin, "owner") {
+	if !canManage(roles, res, userID, groups, isAdmin, "owner") {
 		return fmt.Errorf("access denied")
 	}
-	return uc.repo.DeleteGroupRole(ctx, resourceUUID, groupUUID)
+	return uc.repo.DeleteGroupRole(ctx, resourceUUID, groupID)
 }

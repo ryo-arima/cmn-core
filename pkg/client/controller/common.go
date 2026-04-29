@@ -8,6 +8,7 @@ import (
 	clientauth "github.com/ryo-arima/cmn-core/pkg/client/share"
 	"github.com/ryo-arima/cmn-core/pkg/client/usecase"
 	"github.com/ryo-arima/cmn-core/pkg/config"
+	"github.com/ryo-arima/cmn-core/pkg/entity/model"
 	"github.com/spf13/cobra"
 )
 
@@ -108,7 +109,6 @@ func InitSSOLoginCmd(manager *clientauth.Manager) *cobra.Command {
 		},
 	}
 }
-
 // InitAnonymousValidateCmd creates a validate command for the anonymous client.
 // The token must be supplied via --access-token flag or CMN_ACCESS_TOKEN env var.
 func InitAnonymousValidateCmd(conf config.BaseConfig) *cobra.Command {
@@ -135,4 +135,28 @@ func InitAnonymousValidateCmd(conf config.BaseConfig) *cobra.Command {
 	return cmd
 }
 
-
+// NewDBBootstrapCmd returns a command that creates all required PostgreSQL
+// tables via GORM AutoMigrate. Intended for first-time setup by an admin.
+func NewDBBootstrapCmd(conf config.BaseConfig) *cobra.Command {
+	return &cobra.Command{
+		Use:   "db",
+		Short: "create all required database tables (PostgreSQL AutoMigrate)",
+		RunE: func(cmd *cobra.Command, args []string) error {
+			if err := conf.ConnectDB(); err != nil {
+				return fmt.Errorf("failed to connect to database: %w", err)
+			}
+			tables := []interface{}{
+				&model.PgUsers{},
+				&model.PgGroups{},
+				&model.PgMembers{},
+				&model.PgResource{},
+				&model.PgResourceGroupRole{},
+			}
+			if err := conf.DBConnection.AutoMigrate(tables...); err != nil {
+				return fmt.Errorf("AutoMigrate failed: %w", err)
+			}
+			fmt.Println("Bootstrap complete: all tables created or already up-to-date.")
+			return nil
+		},
+	}
+}

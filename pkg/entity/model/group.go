@@ -5,7 +5,7 @@ import "time"
 // PgGroups is the GORM/PostgreSQL model for the groups table.
 type PgGroups struct {
 	ID        uint       `gorm:"primaryKey,autoIncrement"`
-	UUID      string
+	UUID      string     `gorm:"uniqueIndex"`
 	Name      string
 	CreatedAt *time.Time
 	UpdatedAt *time.Time
@@ -17,6 +17,8 @@ type PgGroups struct {
 type LoGroup struct {
 	// ID is the IdP-internal unique identifier.
 	ID   string
+	// UUID is the IdP-internal UUID (e.g. Keycloak's "id" field, Casdoor's "id" field).
+	UUID string
 	Name string
 	// Path is the hierarchical path (Keycloak only; empty for Casdoor).
 	Path string

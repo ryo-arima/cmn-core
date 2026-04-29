@@ -173,6 +173,7 @@ func (m *keycloakManager) Login(ctx context.Context, username, password string) 
 func kcUserToModel(ku model.KcUser) *model.LoUser {
 	u := &model.LoUser{
 		ID:        ku.ID,
+		UUID:      ku.ID,
 		Username:  ku.Username,
 		Email:     ku.Email,
 		FirstName: ku.FirstName,
