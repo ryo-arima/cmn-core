@@ -22,60 +22,60 @@ type MockUserRepository struct {
 	CountUsersFunc func(c *gin.Context, filter repository.UserQueryFilter) (int64, error)
 }
 
-func (m *MockUserRepository) GetUsers(c *gin.Context) []model.PgUsers {
-	if m.GetUsersFunc != nil {
-		return m.GetUsersFunc(c)
+func (rcvr *MockUserRepository) GetUsers(c *gin.Context) []model.PgUsers {
+	if rcvr.GetUsersFunc != nil {
+		return rcvr.GetUsersFunc(c)
 	}
-	return m.Users
+	return rcvr.Users
 }
 
-func (m *MockUserRepository) CreateUser(c *gin.Context, user model.PgUsers) model.PgUsers {
-	if m.CreateUserFunc != nil {
-		return m.CreateUserFunc(c, user)
+func (rcvr *MockUserRepository) CreateUser(c *gin.Context, user model.PgUsers) model.PgUsers {
+	if rcvr.CreateUserFunc != nil {
+		return rcvr.CreateUserFunc(c, user)
 	}
-	user.ID = uint(len(m.Users) + 1)
-	m.Users = append(m.Users, user)
+	user.ID = uint(len(rcvr.Users) + 1)
+	rcvr.Users = append(rcvr.Users, user)
 	return user
 }
 
-func (m *MockUserRepository) UpdateUser(c *gin.Context, user model.PgUsers) model.PgUsers {
-	if m.UpdateUserFunc != nil {
-		return m.UpdateUserFunc(c, user)
+func (rcvr *MockUserRepository) UpdateUser(c *gin.Context, user model.PgUsers) model.PgUsers {
+	if rcvr.UpdateUserFunc != nil {
+		return rcvr.UpdateUserFunc(c, user)
 	}
-	for i, u := range m.Users {
+	for i, u := range rcvr.Users {
 		if u.ID == user.ID {
-			m.Users[i] = user
+			rcvr.Users[i] = user
 			return user
 		}
 	}
 	return model.PgUsers{}
 }
 
-func (m *MockUserRepository) DeleteUser(c *gin.Context, user model.PgUsers) model.PgUsers {
-	if m.DeleteUserFunc != nil {
-		return m.DeleteUserFunc(c, user)
+func (rcvr *MockUserRepository) DeleteUser(c *gin.Context, user model.PgUsers) model.PgUsers {
+	if rcvr.DeleteUserFunc != nil {
+		return rcvr.DeleteUserFunc(c, user)
 	}
-	for i, u := range m.Users {
+	for i, u := range rcvr.Users {
 		if u.ID == user.ID {
-			m.Users = append(m.Users[:i], m.Users[i+1:]...)
+			rcvr.Users = append(rcvr.Users[:i], rcvr.Users[i+1:]...)
 			return user
 		}
 	}
 	return model.PgUsers{}
 }
 
-func (m *MockUserRepository) ListUsers(c *gin.Context, filter repository.UserQueryFilter) ([]model.PgUsers, error) {
-	if m.ListUsersFunc != nil {
-		return m.ListUsersFunc(c, filter)
+func (rcvr *MockUserRepository) ListUsers(c *gin.Context, filter repository.UserQueryFilter) ([]model.PgUsers, error) {
+	if rcvr.ListUsersFunc != nil {
+		return rcvr.ListUsersFunc(c, filter)
 	}
-	return m.Users, nil
+	return rcvr.Users, nil
 }
 
-func (m *MockUserRepository) CountUsers(c *gin.Context, filter repository.UserQueryFilter) (int64, error) {
-	if m.CountUsersFunc != nil {
-		return m.CountUsersFunc(c, filter)
+func (rcvr *MockUserRepository) CountUsers(c *gin.Context, filter repository.UserQueryFilter) (int64, error) {
+	if rcvr.CountUsersFunc != nil {
+		return rcvr.CountUsersFunc(c, filter)
 	}
-	return int64(len(m.Users)), nil
+	return int64(len(rcvr.Users)), nil
 }
 
 // MockGroupRepository implements repository.Group for testing
@@ -91,18 +91,18 @@ type MockGroupRepository struct {
 	CountGroupsFunc    func(c *gin.Context, filter repository.GroupQueryFilter) (int64, error)
 }
 
-func (m *MockGroupRepository) GetGroups(c *gin.Context) []model.PgGroups {
-	if m.GetGroupsFunc != nil {
-		return m.GetGroupsFunc(c)
+func (rcvr *MockGroupRepository) GetGroups(c *gin.Context) []model.PgGroups {
+	if rcvr.GetGroupsFunc != nil {
+		return rcvr.GetGroupsFunc(c)
 	}
-	return m.Groups
+	return rcvr.Groups
 }
 
-func (m *MockGroupRepository) GetGroupByUUID(c *gin.Context, uuid string) (model.PgGroups, error) {
-	if m.GetGroupByUUIDFunc != nil {
-		return m.GetGroupByUUIDFunc(c, uuid)
+func (rcvr *MockGroupRepository) GetGroupByUUID(c *gin.Context, uuid string) (model.PgGroups, error) {
+	if rcvr.GetGroupByUUIDFunc != nil {
+		return rcvr.GetGroupByUUIDFunc(c, uuid)
 	}
-	for _, g := range m.Groups {
+	for _, g := range rcvr.Groups {
 		if g.UUID == uuid {
 			return g, nil
 		}
@@ -110,11 +110,11 @@ func (m *MockGroupRepository) GetGroupByUUID(c *gin.Context, uuid string) (model
 	return model.PgGroups{}, fmt.Errorf("group not found")
 }
 
-func (m *MockGroupRepository) GetGroupByID(c *gin.Context, id uint) (model.PgGroups, error) {
-	if m.GetGroupByIDFunc != nil {
-		return m.GetGroupByIDFunc(c, id)
+func (rcvr *MockGroupRepository) GetGroupByID(c *gin.Context, id uint) (model.PgGroups, error) {
+	if rcvr.GetGroupByIDFunc != nil {
+		return rcvr.GetGroupByIDFunc(c, id)
 	}
-	for _, g := range m.Groups {
+	for _, g := range rcvr.Groups {
 		if g.ID == id {
 			return g, nil
 		}
@@ -122,23 +122,23 @@ func (m *MockGroupRepository) GetGroupByID(c *gin.Context, id uint) (model.PgGro
 	return model.PgGroups{}, fmt.Errorf("group not found")
 }
 
-func (m *MockGroupRepository) CreateGroup(c *gin.Context, group *model.PgGroups) *gorm.DB {
-	if m.CreateGroupFunc != nil {
-		m.CreateGroupFunc(c, group)
+func (rcvr *MockGroupRepository) CreateGroup(c *gin.Context, group *model.PgGroups) *gorm.DB {
+	if rcvr.CreateGroupFunc != nil {
+		rcvr.CreateGroupFunc(c, group)
 	} else {
-		group.ID = uint(len(m.Groups) + 1)
-		m.Groups = append(m.Groups, *group)
+		group.ID = uint(len(rcvr.Groups) + 1)
+		rcvr.Groups = append(rcvr.Groups, *group)
 	}
 	return &gorm.DB{}
 }
 
-func (m *MockGroupRepository) UpdateGroup(c *gin.Context, group *model.PgGroups) *gorm.DB {
-	if m.UpdateGroupFunc != nil {
-		m.UpdateGroupFunc(c, group)
+func (rcvr *MockGroupRepository) UpdateGroup(c *gin.Context, group *model.PgGroups) *gorm.DB {
+	if rcvr.UpdateGroupFunc != nil {
+		rcvr.UpdateGroupFunc(c, group)
 	} else {
-		for i, g := range m.Groups {
+		for i, g := range rcvr.Groups {
 			if g.ID == group.ID {
-				m.Groups[i] = *group
+				rcvr.Groups[i] = *group
 				break
 			}
 		}
@@ -146,13 +146,13 @@ func (m *MockGroupRepository) UpdateGroup(c *gin.Context, group *model.PgGroups)
 	return &gorm.DB{}
 }
 
-func (m *MockGroupRepository) DeleteGroup(c *gin.Context, uuid string) *gorm.DB {
-	if m.DeleteGroupFunc != nil {
-		m.DeleteGroupFunc(c, uuid)
+func (rcvr *MockGroupRepository) DeleteGroup(c *gin.Context, uuid string) *gorm.DB {
+	if rcvr.DeleteGroupFunc != nil {
+		rcvr.DeleteGroupFunc(c, uuid)
 	} else {
-		for i, g := range m.Groups {
+		for i, g := range rcvr.Groups {
 			if g.UUID == uuid {
-				m.Groups = append(m.Groups[:i], m.Groups[i+1:]...)
+				rcvr.Groups = append(rcvr.Groups[:i], rcvr.Groups[i+1:]...)
 				break
 			}
 		}
@@ -160,18 +160,18 @@ func (m *MockGroupRepository) DeleteGroup(c *gin.Context, uuid string) *gorm.DB 
 	return &gorm.DB{}
 }
 
-func (m *MockGroupRepository) ListGroups(c *gin.Context, filter repository.GroupQueryFilter) ([]model.PgGroups, error) {
-	if m.ListGroupsFunc != nil {
-		return m.ListGroupsFunc(c, filter)
+func (rcvr *MockGroupRepository) ListGroups(c *gin.Context, filter repository.GroupQueryFilter) ([]model.PgGroups, error) {
+	if rcvr.ListGroupsFunc != nil {
+		return rcvr.ListGroupsFunc(c, filter)
 	}
-	return m.Groups, nil
+	return rcvr.Groups, nil
 }
 
-func (m *MockGroupRepository) CountGroups(c *gin.Context, filter repository.GroupQueryFilter) (int64, error) {
-	if m.CountGroupsFunc != nil {
-		return m.CountGroupsFunc(c, filter)
+func (rcvr *MockGroupRepository) CountGroups(c *gin.Context, filter repository.GroupQueryFilter) (int64, error) {
+	if rcvr.CountGroupsFunc != nil {
+		return rcvr.CountGroupsFunc(c, filter)
 	}
-	return int64(len(m.Groups)), nil
+	return int64(len(rcvr.Groups)), nil
 }
 
 // MockMemberRepository implements repository.Member for testing
@@ -186,18 +186,18 @@ type MockMemberRepository struct {
 	CountMembersFunc    func(c *gin.Context, filter repository.MemberQueryFilter) (int64, error)
 }
 
-func (m *MockMemberRepository) GetMembers(c *gin.Context) []model.PgMembers {
-	if m.GetMembersFunc != nil {
-		return m.GetMembersFunc(c)
+func (rcvr *MockMemberRepository) GetMembers(c *gin.Context) []model.PgMembers {
+	if rcvr.GetMembersFunc != nil {
+		return rcvr.GetMembersFunc(c)
 	}
-	return m.Members
+	return rcvr.Members
 }
 
-func (m *MockMemberRepository) GetMemberByUUID(c *gin.Context, uuid string) (model.PgMembers, error) {
-	if m.GetMemberByUUIDFunc != nil {
-		return m.GetMemberByUUIDFunc(c, uuid)
+func (rcvr *MockMemberRepository) GetMemberByUUID(c *gin.Context, uuid string) (model.PgMembers, error) {
+	if rcvr.GetMemberByUUIDFunc != nil {
+		return rcvr.GetMemberByUUIDFunc(c, uuid)
 	}
-	for _, mem := range m.Members {
+	for _, mem := range rcvr.Members {
 		if mem.UUID == uuid {
 			return mem, nil
 		}
@@ -205,53 +205,53 @@ func (m *MockMemberRepository) GetMemberByUUID(c *gin.Context, uuid string) (mod
 	return model.PgMembers{}, fmt.Errorf("member not found")
 }
 
-func (m *MockMemberRepository) CreateMember(c *gin.Context, member *model.PgMembers) interface{} {
-	if m.CreateMemberFunc != nil {
-		return m.CreateMemberFunc(c, member)
+func (rcvr *MockMemberRepository) CreateMember(c *gin.Context, member *model.PgMembers) interface{} {
+	if rcvr.CreateMemberFunc != nil {
+		return rcvr.CreateMemberFunc(c, member)
 	}
-	member.ID = uint(len(m.Members) + 1)
-	m.Members = append(m.Members, *member)
+	member.ID = uint(len(rcvr.Members) + 1)
+	rcvr.Members = append(rcvr.Members, *member)
 	return nil
 }
 
-func (m *MockMemberRepository) UpdateMember(c *gin.Context, member *model.PgMembers) interface{} {
-	if m.UpdateMemberFunc != nil {
-		return m.UpdateMemberFunc(c, member)
+func (rcvr *MockMemberRepository) UpdateMember(c *gin.Context, member *model.PgMembers) interface{} {
+	if rcvr.UpdateMemberFunc != nil {
+		return rcvr.UpdateMemberFunc(c, member)
 	}
-	for i, mem := range m.Members {
+	for i, mem := range rcvr.Members {
 		if mem.ID == member.ID {
-			m.Members[i] = *member
+			rcvr.Members[i] = *member
 			return nil
 		}
 	}
 	return nil
 }
 
-func (m *MockMemberRepository) DeleteMember(c *gin.Context, uuid string) interface{} {
-	if m.DeleteMemberFunc != nil {
-		return m.DeleteMemberFunc(c, uuid)
+func (rcvr *MockMemberRepository) DeleteMember(c *gin.Context, uuid string) interface{} {
+	if rcvr.DeleteMemberFunc != nil {
+		return rcvr.DeleteMemberFunc(c, uuid)
 	}
-	for i, mem := range m.Members {
+	for i, mem := range rcvr.Members {
 		if mem.UUID == uuid {
-			m.Members = append(m.Members[:i], m.Members[i+1:]...)
+			rcvr.Members = append(rcvr.Members[:i], rcvr.Members[i+1:]...)
 			return nil
 		}
 	}
 	return nil
 }
 
-func (m *MockMemberRepository) ListMembers(c *gin.Context, filter repository.MemberQueryFilter) ([]model.PgMembers, error) {
-	if m.ListMembersFunc != nil {
-		return m.ListMembersFunc(c, filter)
+func (rcvr *MockMemberRepository) ListMembers(c *gin.Context, filter repository.MemberQueryFilter) ([]model.PgMembers, error) {
+	if rcvr.ListMembersFunc != nil {
+		return rcvr.ListMembersFunc(c, filter)
 	}
-	return m.Members, nil
+	return rcvr.Members, nil
 }
 
-func (m *MockMemberRepository) CountMembers(c *gin.Context, filter repository.MemberQueryFilter) (int64, error) {
-	if m.CountMembersFunc != nil {
-		return m.CountMembersFunc(c, filter)
+func (rcvr *MockMemberRepository) CountMembers(c *gin.Context, filter repository.MemberQueryFilter) (int64, error) {
+	if rcvr.CountMembersFunc != nil {
+		return rcvr.CountMembersFunc(c, filter)
 	}
-	return int64(len(m.Members)), nil
+	return int64(len(rcvr.Members)), nil
 }
 
 // MockCommonRepository implements repository.Common for testing
@@ -260,9 +260,9 @@ type MockCommonRepository struct {
 	ValidateTokenFunc func(ctx context.Context, token string) (*model.LoJWTClaims, error)
 }
 
-func (m *MockCommonRepository) ValidateToken(ctx context.Context, tokenString string) (*model.LoJWTClaims, error) {
-	if m.ValidateTokenFunc != nil {
-		return m.ValidateTokenFunc(ctx, tokenString)
+func (rcvr *MockCommonRepository) ValidateToken(ctx context.Context, tokenString string) (*model.LoJWTClaims, error) {
+	if rcvr.ValidateTokenFunc != nil {
+		return rcvr.ValidateTokenFunc(ctx, tokenString)
 	}
 	return &model.LoJWTClaims{
 		Email: "test@example.com",
@@ -271,10 +271,10 @@ func (m *MockCommonRepository) ValidateToken(ctx context.Context, tokenString st
 	}, nil
 }
 
-func (m *MockCommonRepository) GetBaseConfig() config.BaseConfig {
+func (rcvr *MockCommonRepository) GetBaseConfig() config.BaseConfig {
 	return config.BaseConfig{}
 }
 
-func (m *MockCommonRepository) ResolveRole(email string) string {
+func (rcvr *MockCommonRepository) ResolveRole(email string) string {
 	return "user"
 }

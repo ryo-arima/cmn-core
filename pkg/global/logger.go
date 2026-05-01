@@ -41,8 +41,8 @@ const (
 )
 
 // String returns string representation of log level
-func (l GlobalLogLevel) String() string {
-	switch l {
+func (rcvr GlobalLogLevel) String() string {
+	switch rcvr {
 	case GLOBAL_DEBUG:
 		return "DEBUG  "
 	case GLOBAL_INFO:
@@ -131,8 +131,8 @@ func formatGlobalWithOptional(mcode MCode, optionalMessage string) string {
 }
 
 // log writes a log entry
-func (l *GlobalLogger) log(level GlobalLogLevel, mcode MCode, optionalMessage string, fields map[string]interface{}) {
-	if level < l.level {
+func (rcvr *GlobalLogger) log(level GlobalLogLevel, mcode MCode, optionalMessage string, fields map[string]interface{}) {
+	if level < rcvr.level {
 		return
 	}
 
@@ -145,19 +145,19 @@ func (l *GlobalLogger) log(level GlobalLogLevel, mcode MCode, optionalMessage st
 		Timestamp: timestamp,
 		Level:     level.String(),
 		Code:      mcode.Code,
-		Component: l.config.Component,
-		Service:   l.config.Service,
+		Component: rcvr.config.Component,
+		Service:   rcvr.config.Service,
 		Message:   finalMessage,
 		Fields:    fields,
 	}
 
-	l.writeLogEntry(entry)
+	rcvr.writeLogEntry(entry)
 }
 
 // writeLogEntry writes the actual log entry to output
-func (l *GlobalLogger) writeLogEntry(entry GlobalLogEntry) {
+func (rcvr *GlobalLogger) writeLogEntry(entry GlobalLogEntry) {
 	// Add caller information if enabled or DEBUG level
-	if l.config.EnableCaller || l.level == GLOBAL_DEBUG {
+	if rcvr.config.EnableCaller || rcvr.level == GLOBAL_DEBUG {
 		if pc, file, line, ok := runtime.Caller(4); ok {
 			entry.File = file
 			entry.Line = line
@@ -179,54 +179,54 @@ func (l *GlobalLogger) writeLogEntry(entry GlobalLogEntry) {
 		}
 	}
 
-	if l.config.Structured {
+	if rcvr.config.Structured {
 		// JSON format
 		if jsonBytes, err := json.Marshal(entry); err == nil {
-			fmt.Fprintln(l.output, string(jsonBytes))
+			fmt.Fprintln(rcvr.output, string(jsonBytes))
 		} else {
 			// Fallback
-			fmt.Fprintf(l.output, "[%s] [%s] [%s] %s\n",
+			fmt.Fprintf(rcvr.output, "[%s] [%s] [%s] %s\n",
 				entry.Timestamp, entry.Level, entry.Code, entry.Message)
 		}
 	} else {
 		// Human-readable format
-		fmt.Fprintf(l.output, "[%s] [%s] [%s] %s",
+		fmt.Fprintf(rcvr.output, "[%s] [%s] [%s] %s",
 			entry.Timestamp, entry.Level, entry.Code, entry.Message)
 		if len(entry.Fields) > 0 && entry.Level == "DEBUG  " {
 			if fieldsJSON, err := json.Marshal(entry.Fields); err == nil {
-				fmt.Fprintf(l.output, " %s", string(fieldsJSON))
+				fmt.Fprintf(rcvr.output, " %s", string(fieldsJSON))
 			}
 		}
-		fmt.Fprintln(l.output)
+		fmt.Fprintln(rcvr.output)
 	}
 }
 
 // DEBUG logs a debug message
-func (l *GlobalLogger) DEBUG(mcode MCode, optionalMessage string, fields ...map[string]interface{}) {
+func (rcvr *GlobalLogger) DEBUG(mcode MCode, optionalMessage string, fields ...map[string]interface{}) {
 	var f map[string]interface{}
 	if len(fields) > 0 {
 		f = fields[0]
 	}
-	l.log(GLOBAL_DEBUG, mcode, optionalMessage, f)
+	rcvr.log(GLOBAL_DEBUG, mcode, optionalMessage, f)
 }
 
 // INFO logs an info message
-func (l *GlobalLogger) INFO(mcode MCode, optionalMessage string) {
-	l.log(GLOBAL_INFO, mcode, optionalMessage, nil)
+func (rcvr *GlobalLogger) INFO(mcode MCode, optionalMessage string) {
+	rcvr.log(GLOBAL_INFO, mcode, optionalMessage, nil)
 }
 
 // WARN logs a warning message
-func (l *GlobalLogger) WARN(mcode MCode, optionalMessage string) {
-	l.log(GLOBAL_WARN, mcode, optionalMessage, nil)
+func (rcvr *GlobalLogger) WARN(mcode MCode, optionalMessage string) {
+	rcvr.log(GLOBAL_WARN, mcode, optionalMessage, nil)
 }
 
 // ERROR logs an error message
-func (l *GlobalLogger) ERROR(mcode MCode, optionalMessage string) {
-	l.log(GLOBAL_ERROR, mcode, optionalMessage, nil)
+func (rcvr *GlobalLogger) ERROR(mcode MCode, optionalMessage string) {
+	rcvr.log(GLOBAL_ERROR, mcode, optionalMessage, nil)
 }
 
 // FATAL logs a fatal message and exits
-func (l *GlobalLogger) FATAL(mcode MCode, optionalMessage string) {
-	l.log(GLOBAL_FATAL, mcode, optionalMessage, nil)
+func (rcvr *GlobalLogger) FATAL(mcode MCode, optionalMessage string) {
+	rcvr.log(GLOBAL_FATAL, mcode, optionalMessage, nil)
 	os.Exit(1)
 }

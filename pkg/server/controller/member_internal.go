@@ -29,7 +29,7 @@ func NewMemberInternal(mu usecase.Member, cu usecase.Common) MemberInternal {
 
 // ListGroupMembers lists members of a group — only accessible if the caller is a member.
 // GET /v1/internal/members?group_id=...
-func (ic *memberInternal) ListGroupMembers(c *gin.Context) {
+func (rcvr *memberInternal) ListGroupMembers(c *gin.Context) {
 	claims, ok := share.GetUserClaims(c)
 	if !ok {
 		c.JSON(http.StatusUnauthorized, gin.H{"code": "IDP_AUTH_001", "message": "Unauthorized"})
@@ -40,7 +40,7 @@ func (ic *memberInternal) ListGroupMembers(c *gin.Context) {
 		c.JSON(http.StatusForbidden, gin.H{"code": "IDP_MEMBER_LIST_403", "message": "Access denied"})
 		return
 	}
-	members, err := ic.memberUsecase.ListGroupMembers(c.Request.Context(), groupID)
+	members, err := rcvr.memberUsecase.ListGroupMembers(c.Request.Context(), groupID)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"code": "IDP_MEMBER_LIST_001", "message": err.Error()})
 		return
@@ -64,7 +64,7 @@ func (ic *memberInternal) ListGroupMembers(c *gin.Context) {
 
 // AddGroupMember adds a user to a group — only group owners may do this.
 // POST /v1/internal/member/:group_id
-func (ic *memberInternal) AddGroupMember(c *gin.Context) {
+func (rcvr *memberInternal) AddGroupMember(c *gin.Context) {
 	claims, ok := share.GetUserClaims(c)
 	if !ok {
 		c.JSON(http.StatusUnauthorized, gin.H{"code": "IDP_AUTH_001", "message": "Unauthorized"})
@@ -75,7 +75,7 @@ func (ic *memberInternal) AddGroupMember(c *gin.Context) {
 		c.JSON(http.StatusForbidden, gin.H{"code": "IDP_MEMBER_ADD_403", "message": "Access denied"})
 		return
 	}
-	role, err := callerGroupRole(c, ic.memberUsecase, groupID, claims.Email)
+	role, err := callerGroupRole(c, rcvr.memberUsecase, groupID, claims.Email)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"code": "IDP_MEMBER_ADD_001", "message": err.Error()})
 		return
@@ -89,7 +89,7 @@ func (ic *memberInternal) AddGroupMember(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"code": "IDP_MEMBER_ADD_400", "message": "Invalid request body"})
 		return
 	}
-	if err := ic.memberUsecase.AddUserToGroup(c.Request.Context(), req.UserID, groupID, req.Role); err != nil {
+	if err := rcvr.memberUsecase.AddUserToGroup(c.Request.Context(), req.UserID, groupID, req.Role); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"code": "IDP_MEMBER_ADD_001", "message": err.Error()})
 		return
 	}
@@ -98,7 +98,7 @@ func (ic *memberInternal) AddGroupMember(c *gin.Context) {
 
 // RemoveGroupMember removes a user from a group — only group owners may do this.
 // DELETE /v1/internal/member/:group_id
-func (ic *memberInternal) RemoveGroupMember(c *gin.Context) {
+func (rcvr *memberInternal) RemoveGroupMember(c *gin.Context) {
 	claims, ok := share.GetUserClaims(c)
 	if !ok {
 		c.JSON(http.StatusUnauthorized, gin.H{"code": "IDP_AUTH_001", "message": "Unauthorized"})
@@ -109,7 +109,7 @@ func (ic *memberInternal) RemoveGroupMember(c *gin.Context) {
 		c.JSON(http.StatusForbidden, gin.H{"code": "IDP_MEMBER_REMOVE_403", "message": "Access denied"})
 		return
 	}
-	role, err := callerGroupRole(c, ic.memberUsecase, groupID, claims.Email)
+	role, err := callerGroupRole(c, rcvr.memberUsecase, groupID, claims.Email)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"code": "IDP_MEMBER_REMOVE_001", "message": err.Error()})
 		return
@@ -123,7 +123,7 @@ func (ic *memberInternal) RemoveGroupMember(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"code": "IDP_MEMBER_REMOVE_400", "message": "Invalid request body"})
 		return
 	}
-	if err := ic.memberUsecase.RemoveUserFromGroup(c.Request.Context(), req.UserID, groupID); err != nil {
+	if err := rcvr.memberUsecase.RemoveUserFromGroup(c.Request.Context(), req.UserID, groupID); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"code": "IDP_MEMBER_REMOVE_001", "message": err.Error()})
 		return
 	}

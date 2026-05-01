@@ -39,17 +39,17 @@ type YamlConfig struct {
 type IntOrString int
 
 // UnmarshalYAML: receive number or string and convert to number. Non-numeric strings return 0 with warning log.
-func (ios *IntOrString) UnmarshalYAML(value *yaml.Node) error {
+func (rcvr *IntOrString) UnmarshalYAML(value *yaml.Node) error {
 	if value.Kind != yaml.ScalarNode {
 		return fmt.Errorf("invalid yaml node for IntOrString")
 	}
 	s := value.Value
 	if n, err := strconv.Atoi(s); err == nil {
-		*ios = IntOrString(n)
+		*rcvr = IntOrString(n)
 		return nil
 	}
 	log.Printf("Redis db value '%s' is not numeric. Defaulting to 0.", s)
-	*ios = 0
+	*rcvr = 0
 	return nil
 }
 

@@ -64,8 +64,9 @@ Redis:
 ```yaml
 Client:
   ServerEndpoint: "https://your-production-domain.com"
-  UserEmail: "your-default-user@domain.com"
-  UserPassword: "your-secure-password"
+  credentials:
+    email: "your-default-user@domain.com"
+    password: "your-secure-password"
 ```
 
 ### Administrator Configuration

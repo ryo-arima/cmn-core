@@ -15,8 +15,10 @@ func newTestCfg() config.BaseConfig {
 			Application: config.Application{
 				Client: config.Client{
 					ServerEndpoint: "http://localhost:8080",
-					UserEmail:      "test@example.com",
-					UserPassword:   "password",
+					Credentials: config.ClientCredentials{
+						Email:    "test@example.com",
+						Password: "password",
+					},
 				},
 			},
 		},

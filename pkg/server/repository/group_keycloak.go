@@ -14,8 +14,8 @@ import (
 
 // ---- Group management -------------------------------------------------------
 
-func (m *keycloakManager) GetGroup(ctx context.Context, id string) (*model.LoGroup, error) {
-	status, body, err := m.do(ctx, http.MethodGet, m.adminURL("/groups/"+id), nil)
+func (rcvr *keycloakManager) GetGroup(ctx context.Context, id string) (*model.LoGroup, error) {
+	status, body, err := rcvr.do(ctx, http.MethodGet, rcvr.adminURL("/groups/"+id), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -32,8 +32,8 @@ func (m *keycloakManager) GetGroup(ctx context.Context, id string) (*model.LoGro
 	return &model.LoGroup{ID: kg.ID, UUID: kg.ID, Name: kg.Name, Path: kg.Path}, nil
 }
 
-func (m *keycloakManager) ListGroups(ctx context.Context) ([]model.LoGroup, error) {
-	status, body, err := m.do(ctx, http.MethodGet, m.adminURL("/groups"), nil)
+func (rcvr *keycloakManager) ListGroups(ctx context.Context) ([]model.LoGroup, error) {
+	status, body, err := rcvr.do(ctx, http.MethodGet, rcvr.adminURL("/groups"), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -51,17 +51,17 @@ func (m *keycloakManager) ListGroups(ctx context.Context) ([]model.LoGroup, erro
 	return groups, nil
 }
 
-func (m *keycloakManager) CreateGroup(ctx context.Context, input request.RrCreateGroup) (*model.LoGroup, error) {
-	token, err := m.getToken(ctx)
+func (rcvr *keycloakManager) CreateGroup(ctx context.Context, input request.RrCreateGroup) (*model.LoGroup, error) {
+	token, err := rcvr.getToken(ctx)
 	if err != nil {
 		return nil, err
 	}
 	b, _ := json.Marshal(model.KcGroup{Name: input.Name})
-	req, _ := http.NewRequestWithContext(ctx, http.MethodPost, m.adminURL("/groups"), bytes.NewReader(b))
+	req, _ := http.NewRequestWithContext(ctx, http.MethodPost, rcvr.adminURL("/groups"), bytes.NewReader(b))
 	req.Header.Set("Authorization", "Bearer "+token)
 	req.Header.Set("Content-Type", "application/json")
 
-	resp, err := m.client.Do(req)
+	resp, err := rcvr.client.Do(req)
 	if err != nil {
 		return nil, fmt.Errorf("keycloak: create group: %w", err)
 	}
@@ -74,11 +74,11 @@ func (m *keycloakManager) CreateGroup(ctx context.Context, input request.RrCreat
 	if newID == "" {
 		return nil, fmt.Errorf("keycloak: could not determine new group ID from Location header")
 	}
-	return m.GetGroup(ctx, newID)
+	return rcvr.GetGroup(ctx, newID)
 }
 
-func (m *keycloakManager) UpdateGroup(ctx context.Context, id string, input request.RrUpdateGroup) error {
-	status, body, err := m.do(ctx, http.MethodPut, m.adminURL("/groups/"+id), model.KcGroup{Name: input.Name})
+func (rcvr *keycloakManager) UpdateGroup(ctx context.Context, id string, input request.RrUpdateGroup) error {
+	status, body, err := rcvr.do(ctx, http.MethodPut, rcvr.adminURL("/groups/"+id), model.KcGroup{Name: input.Name})
 	if err != nil {
 		return err
 	}
@@ -88,8 +88,8 @@ func (m *keycloakManager) UpdateGroup(ctx context.Context, id string, input requ
 	return nil
 }
 
-func (m *keycloakManager) DeleteGroup(ctx context.Context, id string) error {
-	status, body, err := m.do(ctx, http.MethodDelete, m.adminURL("/groups/"+id), nil)
+func (rcvr *keycloakManager) DeleteGroup(ctx context.Context, id string) error {
+	status, body, err := rcvr.do(ctx, http.MethodDelete, rcvr.adminURL("/groups/"+id), nil)
 	if err != nil {
 		return err
 	}

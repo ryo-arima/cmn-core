@@ -31,8 +31,8 @@ func NewUserPrivate(uu usecase.User, cu usecase.Common) UserPrivate {
 
 // ListUsers lists all users from the IdP.
 // GET /v1/private/users
-func (ic *userPrivate) ListUsers(c *gin.Context) {
-	users, err := ic.userUsecase.ListUsers(c.Request.Context())
+func (rcvr *userPrivate) ListUsers(c *gin.Context) {
+	users, err := rcvr.userUsecase.ListUsers(c.Request.Context())
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"code": "IDP_USER_LIST_001", "message": err.Error()})
 		return
@@ -47,7 +47,7 @@ func (ic *userPrivate) ListUsers(c *gin.Context) {
 			FirstName: u.FirstName,
 			LastName:  u.LastName,
 			Enabled:   u.Enabled,
-			Role:      ic.commonUsecase.ResolveRole(u.Email),
+			Role:      rcvr.commonUsecase.ResolveRole(u.Email),
 			CreatedAt: u.CreatedAt,
 		})
 	}
@@ -56,8 +56,8 @@ func (ic *userPrivate) ListUsers(c *gin.Context) {
 
 // GetUser returns a single user from the IdP.
 // GET /v1/private/user?id=...
-func (ic *userPrivate) GetUser(c *gin.Context) {
-	u, err := ic.userUsecase.GetUser(c.Request.Context(), c.Query("id"))
+func (rcvr *userPrivate) GetUser(c *gin.Context) {
+	u, err := rcvr.userUsecase.GetUser(c.Request.Context(), c.Query("id"))
 	if err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"code": "IDP_USER_GET_404", "message": "User not found"})
 		return
@@ -69,7 +69,7 @@ func (ic *userPrivate) GetUser(c *gin.Context) {
 		FirstName: u.FirstName,
 		LastName:  u.LastName,
 		Enabled:   u.Enabled,
-		Role:      ic.commonUsecase.ResolveRole(u.Email),
+		Role:      rcvr.commonUsecase.ResolveRole(u.Email),
 		CreatedAt: u.CreatedAt,
 	}
 	c.JSON(http.StatusOK, response.RrSingleIdPUser{Code: "SUCCESS", Message: "ok", User: resp})
@@ -77,13 +77,13 @@ func (ic *userPrivate) GetUser(c *gin.Context) {
 
 // CreateUser creates a new user in the IdP.
 // POST /v1/private/users
-func (ic *userPrivate) CreateUser(c *gin.Context) {
+func (rcvr *userPrivate) CreateUser(c *gin.Context) {
 	var req request.RrCreateUser
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"code": "IDP_USER_CREATE_001", "message": "Invalid request body"})
 		return
 	}
-	u, err := ic.userUsecase.CreateUser(c.Request.Context(), req)
+	u, err := rcvr.userUsecase.CreateUser(c.Request.Context(), req)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"code": "IDP_USER_CREATE_002", "message": err.Error()})
 		return
@@ -96,7 +96,7 @@ func (ic *userPrivate) CreateUser(c *gin.Context) {
 		FirstName: u.FirstName,
 		LastName:  u.LastName,
 		Enabled:   u.Enabled,
-		Role:      ic.commonUsecase.ResolveRole(u.Email),
+		Role:      rcvr.commonUsecase.ResolveRole(u.Email),
 		CreatedAt: u.CreatedAt,
 	}
 	c.JSON(http.StatusCreated, response.RrSingleIdPUser{Code: "SUCCESS", Message: "created", User: resp})
@@ -104,13 +104,13 @@ func (ic *userPrivate) CreateUser(c *gin.Context) {
 
 // UpdateUser updates an existing user in the IdP.
 // PUT /v1/private/users/:id
-func (ic *userPrivate) UpdateUser(c *gin.Context) {
+func (rcvr *userPrivate) UpdateUser(c *gin.Context) {
 	var req request.RrUpdateUser
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"code": "IDP_USER_UPDATE_001", "message": "Invalid request body"})
 		return
 	}
-	if err := ic.userUsecase.UpdateUser(c.Request.Context(), c.Param("id"), req); err != nil {
+	if err := rcvr.userUsecase.UpdateUser(c.Request.Context(), c.Param("id"), req); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"code": "IDP_USER_UPDATE_002", "message": err.Error()})
 		return
 	}
@@ -119,8 +119,8 @@ func (ic *userPrivate) UpdateUser(c *gin.Context) {
 
 // DeleteUser deletes a user from the IdP.
 // DELETE /v1/private/users/:id
-func (ic *userPrivate) DeleteUser(c *gin.Context) {
-	if err := ic.userUsecase.DeleteUser(c.Request.Context(), c.Param("id")); err != nil {
+func (rcvr *userPrivate) DeleteUser(c *gin.Context) {
+	if err := rcvr.userUsecase.DeleteUser(c.Request.Context(), c.Param("id")); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"code": "IDP_USER_DELETE_001", "message": err.Error()})
 		return
 	}

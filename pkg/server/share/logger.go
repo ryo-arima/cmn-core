@@ -44,8 +44,8 @@ const (
 )
 
 // String returns string representation of log level
-func (l ServerLogLevel) String() string {
-	switch l {
+func (rcvr ServerLogLevel) String() string {
+	switch rcvr {
 	case SERVER_DEBUG:
 		return "DEBUG  "
 	case SERVER_INFO:
@@ -173,8 +173,8 @@ func formatServerWithOptional(mcode global.MCode, optionalMessage string) string
 }
 
 // log writes a log entry using global.MCode
-func (l *ServerLogger) log(level ServerLogLevel, requestID string, mcode global.MCode, optionalMessage string, fields map[string]interface{}) {
-	if level < l.level {
+func (rcvr *ServerLogger) log(level ServerLogLevel, requestID string, mcode global.MCode, optionalMessage string, fields map[string]interface{}) {
+	if level < rcvr.level {
 		return
 	}
 
@@ -189,20 +189,20 @@ func (l *ServerLogger) log(level ServerLogLevel, requestID string, mcode global.
 		Timestamp: timestamp,
 		Level:     level.String(),
 		Code:      mcode.PaddedCode(),
-		Component: l.config.Component,
-		Service:   l.config.Service,
+		Component: rcvr.config.Component,
+		Service:   rcvr.config.Service,
 		Message:   finalMessage,
 		Fields:    fields,
 		RequestID: requestID,
 	}
 
-	l.writeLogEntry(entry)
+	rcvr.writeLogEntry(entry)
 }
 
 // writeLogEntry writes the actual log entry to output
-func (l *ServerLogger) writeLogEntry(entry ServerLogEntry) {
+func (rcvr *ServerLogger) writeLogEntry(entry ServerLogEntry) {
 	// Add caller information if enabled or DEBUG level
-	if l.config.EnableCaller || l.level == SERVER_DEBUG {
+	if rcvr.config.EnableCaller || rcvr.level == SERVER_DEBUG {
 		if pc, file, line, ok := runtime.Caller(4); ok {
 			entry.File = file
 			entry.Line = line
@@ -236,13 +236,13 @@ func (l *ServerLogger) writeLogEntry(entry ServerLogEntry) {
 		}
 	}
 
-	if l.config.Structured {
+	if rcvr.config.Structured {
 		// JSON format
 		if jsonBytes, err := json.Marshal(entry); err == nil {
-			fmt.Fprintln(l.output, string(jsonBytes))
+			fmt.Fprintln(rcvr.output, string(jsonBytes))
 		} else {
 			// Fallback to simple format
-			fmt.Fprintf(l.output, "[%s] [%s] [%s] %s\n",
+			fmt.Fprintf(rcvr.output, "[%s] [%s] [%s] %s\n",
 				entry.Timestamp, entry.Level, entry.Code, entry.Message)
 		}
 	} else {
@@ -252,45 +252,45 @@ func (l *ServerLogger) writeLogEntry(entry ServerLogEntry) {
 		if requestIDStr == "" {
 			requestIDStr = "xxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
 		}
-		fmt.Fprintf(l.output, "[%s] [%s] [%s] [%s] %s",
+		fmt.Fprintf(rcvr.output, "[%s] [%s] [%s] [%s] %s",
 			entry.Timestamp, entry.Level, entry.Code, requestIDStr, entry.Message)
 		// Only output fields for DEBUG level
 		if len(entry.Fields) > 0 && entry.Level == "DEBUG  " {
 			if fieldsJSON, err := json.Marshal(entry.Fields); err == nil {
-				fmt.Fprintf(l.output, " %s", string(fieldsJSON))
+				fmt.Fprintf(rcvr.output, " %s", string(fieldsJSON))
 			}
 		}
-		fmt.Fprintln(l.output)
+		fmt.Fprintln(rcvr.output)
 	}
 }
 
 // DEBUG logs a debug message using global.MCode
-func (l *ServerLogger) DEBUG(requestID string, mcode global.MCode, optionalMessage string, fields ...map[string]interface{}) {
+func (rcvr *ServerLogger) DEBUG(requestID string, mcode global.MCode, optionalMessage string, fields ...map[string]interface{}) {
 	var f map[string]interface{}
 	if len(fields) > 0 {
 		f = fields[0]
 	}
-	l.log(SERVER_DEBUG, requestID, mcode, optionalMessage, f)
+	rcvr.log(SERVER_DEBUG, requestID, mcode, optionalMessage, f)
 }
 
 // INFO logs an info message using global.MCode
-func (l *ServerLogger) INFO(requestID string, mcode global.MCode, optionalMessage string) {
-	l.log(SERVER_INFO, requestID, mcode, optionalMessage, nil)
+func (rcvr *ServerLogger) INFO(requestID string, mcode global.MCode, optionalMessage string) {
+	rcvr.log(SERVER_INFO, requestID, mcode, optionalMessage, nil)
 }
 
 // WARN logs a warning message using global.MCode
-func (l *ServerLogger) WARN(requestID string, mcode global.MCode, optionalMessage string) {
-	l.log(SERVER_WARN, requestID, mcode, optionalMessage, nil)
+func (rcvr *ServerLogger) WARN(requestID string, mcode global.MCode, optionalMessage string) {
+	rcvr.log(SERVER_WARN, requestID, mcode, optionalMessage, nil)
 }
 
 // ERROR logs an error message using global.MCode
-func (l *ServerLogger) ERROR(requestID string, mcode global.MCode, optionalMessage string) {
-	l.log(SERVER_ERROR, requestID, mcode, optionalMessage, nil)
+func (rcvr *ServerLogger) ERROR(requestID string, mcode global.MCode, optionalMessage string) {
+	rcvr.log(SERVER_ERROR, requestID, mcode, optionalMessage, nil)
 }
 
 // FATAL logs a fatal message using global.MCode and exits
-func (l *ServerLogger) FATAL(requestID string, mcode global.MCode, optionalMessage string) {
-	l.log(SERVER_FATAL, requestID, mcode, optionalMessage, nil)
+func (rcvr *ServerLogger) FATAL(requestID string, mcode global.MCode, optionalMessage string) {
+	rcvr.log(SERVER_FATAL, requestID, mcode, optionalMessage, nil)
 	os.Exit(1)
 }
 
@@ -300,7 +300,7 @@ type GinLoggerWriter struct {
 }
 
 // Write implements io.Writer interface for Gin logging
-func (w *GinLoggerWriter) Write(p []byte) (n int, err error) {
+func (rcvr *GinLoggerWriter) Write(p []byte) (n int, err error) {
 	msg := string(p)
 	// Remove trailing newline if present
 	if len(msg) > 0 && msg[len(msg)-1] == '\n' {
@@ -339,13 +339,13 @@ func (w *GinLoggerWriter) Write(p []byte) (n int, err error) {
 
 	// Determine log level based on message content
 	if strings.Contains(msg, "[WARNING]") || strings.Contains(msg, "[GIN-warning]") || strings.Contains(msg, "WARNING") {
-		w.logger.WARN("", mcode, cleanMsg)
+		rcvr.logger.WARN("", mcode, cleanMsg)
 	} else if strings.Contains(msg, "[ERROR]") || strings.Contains(msg, "[GIN-error]") || strings.Contains(msg, "ERROR") {
-		w.logger.ERROR("", mcode, cleanMsg)
+		rcvr.logger.ERROR("", mcode, cleanMsg)
 	} else if strings.Contains(msg, "[GIN-debug]") || strings.Contains(msg, "[debug]") {
-		w.logger.DEBUG("", mcode, cleanMsg, nil)
+		rcvr.logger.DEBUG("", mcode, cleanMsg, nil)
 	} else {
-		w.logger.INFO("", mcode, cleanMsg)
+		rcvr.logger.INFO("", mcode, cleanMsg)
 	}
 
 	return len(p), nil

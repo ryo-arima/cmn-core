@@ -30,8 +30,8 @@ func NewGroupPrivate(gu usecase.Group, cu usecase.Common) GroupPrivate {
 
 // ListGroups lists all groups from the IdP.
 // GET /v1/private/groups
-func (ic *groupPrivate) ListGroups(c *gin.Context) {
-	groups, err := ic.groupUsecase.ListGroups(c.Request.Context())
+func (rcvr *groupPrivate) ListGroups(c *gin.Context) {
+	groups, err := rcvr.groupUsecase.ListGroups(c.Request.Context())
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"code": "IDP_GROUP_LIST_001", "message": err.Error()})
 		return
@@ -45,8 +45,8 @@ func (ic *groupPrivate) ListGroups(c *gin.Context) {
 
 // GetGroup returns a single group from the IdP.
 // GET /v1/private/group?id=...
-func (ic *groupPrivate) GetGroup(c *gin.Context) {
-	g, err := ic.groupUsecase.GetGroup(c.Request.Context(), c.Query("id"))
+func (rcvr *groupPrivate) GetGroup(c *gin.Context) {
+	g, err := rcvr.groupUsecase.GetGroup(c.Request.Context(), c.Query("id"))
 	if err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"code": "IDP_GROUP_GET_404", "message": "Group not found"})
 		return
@@ -60,13 +60,13 @@ func (ic *groupPrivate) GetGroup(c *gin.Context) {
 
 // CreateGroup creates a new group in the IdP.
 // POST /v1/private/groups
-func (ic *groupPrivate) CreateGroup(c *gin.Context) {
+func (rcvr *groupPrivate) CreateGroup(c *gin.Context) {
 	var req request.RrCreateGroup
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"code": "IDP_GROUP_CREATE_001", "message": "Invalid request body"})
 		return
 	}
-	g, err := ic.groupUsecase.CreateGroup(c.Request.Context(), req)
+	g, err := rcvr.groupUsecase.CreateGroup(c.Request.Context(), req)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"code": "IDP_GROUP_CREATE_002", "message": err.Error()})
 		return
@@ -80,13 +80,13 @@ func (ic *groupPrivate) CreateGroup(c *gin.Context) {
 
 // UpdateGroup updates an existing group in the IdP.
 // PUT /v1/private/groups/:id
-func (ic *groupPrivate) UpdateGroup(c *gin.Context) {
+func (rcvr *groupPrivate) UpdateGroup(c *gin.Context) {
 	var req request.RrUpdateGroup
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"code": "IDP_GROUP_UPDATE_001", "message": "Invalid request body"})
 		return
 	}
-	if err := ic.groupUsecase.UpdateGroup(c.Request.Context(), c.Param("id"), req); err != nil {
+	if err := rcvr.groupUsecase.UpdateGroup(c.Request.Context(), c.Param("id"), req); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"code": "IDP_GROUP_UPDATE_002", "message": err.Error()})
 		return
 	}
@@ -95,8 +95,8 @@ func (ic *groupPrivate) UpdateGroup(c *gin.Context) {
 
 // DeleteGroup deletes a group from the IdP.
 // DELETE /v1/private/groups/:id
-func (ic *groupPrivate) DeleteGroup(c *gin.Context) {
-	if err := ic.groupUsecase.DeleteGroup(c.Request.Context(), c.Param("id")); err != nil {
+func (rcvr *groupPrivate) DeleteGroup(c *gin.Context) {
+	if err := rcvr.groupUsecase.DeleteGroup(c.Request.Context(), c.Param("id")); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"code": "IDP_GROUP_DELETE_001", "message": err.Error()})
 		return
 	}

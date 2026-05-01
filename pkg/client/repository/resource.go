@@ -45,7 +45,7 @@ func NewResourceAdmin(conf config.BaseConfig, manager *clientauth.Manager) Resou
 	}
 }
 
-func (r *resourceRepo) do(method, url string, body interface{}, out interface{}) error {
+func (rcvr *resourceRepo) do(method, url string, body interface{}, out interface{}) error {
 	var req *http.Request
 	var err error
 	if body != nil {
@@ -61,7 +61,7 @@ func (r *resourceRepo) do(method, url string, body interface{}, out interface{})
 		return fmt.Errorf("new request: %w", err)
 	}
 	req.Header.Set("Content-Type", "application/json")
-	resp, err := r.client.Do(req)
+	resp, err := rcvr.client.Do(req)
 	if err != nil {
 		return fmt.Errorf("do request: %w", err)
 	}
@@ -69,75 +69,75 @@ func (r *resourceRepo) do(method, url string, body interface{}, out interface{})
 	return json.NewDecoder(resp.Body).Decode(out)
 }
 
-func (r *resourceRepo) ListResources() response.RrResources {
+func (rcvr *resourceRepo) ListResources() response.RrResources {
 	var out response.RrResources
-	if err := r.do("GET", r.base+"/resources", nil, &out); err != nil {
+	if err := rcvr.do("GET", rcvr.base+"/resources", nil, &out); err != nil {
 		out.Code = "CLIENT_RESOURCE_LIST_001"
 		out.Message = err.Error()
 	}
 	return out
 }
 
-func (r *resourceRepo) GetResource(uuid string) response.RrSingleResource {
+func (rcvr *resourceRepo) GetResource(uuid string) response.RrSingleResource {
 	var out response.RrSingleResource
-	url := fmt.Sprintf("%s/resource?uuid=%s", r.base, uuid)
-	if err := r.do("GET", url, nil, &out); err != nil {
+	url := fmt.Sprintf("%s/resource?uuid=%s", rcvr.base, uuid)
+	if err := rcvr.do("GET", url, nil, &out); err != nil {
 		out.Code = "CLIENT_RESOURCE_GET_001"
 		out.Message = err.Error()
 	}
 	return out
 }
 
-func (r *resourceRepo) CreateResource(req request.RrCreateResource) response.RrSingleResource {
+func (rcvr *resourceRepo) CreateResource(req request.RrCreateResource) response.RrSingleResource {
 	var out response.RrSingleResource
-	if err := r.do("POST", r.base+"/resources", req, &out); err != nil {
+	if err := rcvr.do("POST", rcvr.base+"/resources", req, &out); err != nil {
 		out.Code = "CLIENT_RESOURCE_CREATE_001"
 		out.Message = err.Error()
 	}
 	return out
 }
 
-func (r *resourceRepo) UpdateResource(uuid string, req request.RrUpdateResource) response.RrCommons {
+func (rcvr *resourceRepo) UpdateResource(uuid string, req request.RrUpdateResource) response.RrCommons {
 	var out response.RrCommons
-	url := fmt.Sprintf("%s/resources/%s", r.base, uuid)
-	if err := r.do("PUT", url, req, &out); err != nil {
+	url := fmt.Sprintf("%s/resources/%s", rcvr.base, uuid)
+	if err := rcvr.do("PUT", url, req, &out); err != nil {
 		return response.RrCommons{Code: "CLIENT_RESOURCE_UPDATE_001", Message: err.Error()}
 	}
 	return out
 }
 
-func (r *resourceRepo) DeleteResource(uuid string) response.RrCommons {
+func (rcvr *resourceRepo) DeleteResource(uuid string) response.RrCommons {
 	var out response.RrCommons
-	url := fmt.Sprintf("%s/resources/%s", r.base, uuid)
-	if err := r.do("DELETE", url, nil, &out); err != nil {
+	url := fmt.Sprintf("%s/resources/%s", rcvr.base, uuid)
+	if err := rcvr.do("DELETE", url, nil, &out); err != nil {
 		return response.RrCommons{Code: "CLIENT_RESOURCE_DELETE_001", Message: err.Error()}
 	}
 	return out
 }
 
-func (r *resourceRepo) GetResourceGroupRoles(uuid string) response.RrResourceGroupRoles {
+func (rcvr *resourceRepo) GetResourceGroupRoles(uuid string) response.RrResourceGroupRoles {
 	var out response.RrResourceGroupRoles
-	url := fmt.Sprintf("%s/resource/groups?uuid=%s", r.base, uuid)
-	if err := r.do("GET", url, nil, &out); err != nil {
+	url := fmt.Sprintf("%s/resource/groups?uuid=%s", rcvr.base, uuid)
+	if err := rcvr.do("GET", url, nil, &out); err != nil {
 		out.Code = "CLIENT_RESOURCE_GROUPS_001"
 		out.Message = err.Error()
 	}
 	return out
 }
 
-func (r *resourceRepo) SetResourceGroupRole(uuid string, req request.RrSetResourceGroupRole) response.RrCommons {
+func (rcvr *resourceRepo) SetResourceGroupRole(uuid string, req request.RrSetResourceGroupRole) response.RrCommons {
 	var out response.RrCommons
-	url := fmt.Sprintf("%s/resources/%s/groups", r.base, uuid)
-	if err := r.do("PUT", url, req, &out); err != nil {
+	url := fmt.Sprintf("%s/resources/%s/groups", rcvr.base, uuid)
+	if err := rcvr.do("PUT", url, req, &out); err != nil {
 		return response.RrCommons{Code: "CLIENT_RESOURCE_SETGROUP_001", Message: err.Error()}
 	}
 	return out
 }
 
-func (r *resourceRepo) DeleteResourceGroupRole(uuid, groupID string) response.RrCommons {
+func (rcvr *resourceRepo) DeleteResourceGroupRole(uuid, groupID string) response.RrCommons {
 	var out response.RrCommons
-	url := fmt.Sprintf("%s/resources/%s/groups/%s", r.base, uuid, groupID)
-	if err := r.do("DELETE", url, nil, &out); err != nil {
+	url := fmt.Sprintf("%s/resources/%s/groups/%s", rcvr.base, uuid, groupID)
+	if err := rcvr.do("DELETE", url, nil, &out); err != nil {
 		return response.RrCommons{Code: "CLIENT_RESOURCE_DELGROUP_001", Message: err.Error()}
 	}
 	return out

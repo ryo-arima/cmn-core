@@ -27,8 +27,8 @@ func NewMemberPrivate(mu usecase.Member) MemberPrivate {
 
 // ListGroupMembers lists members of a group.
 // GET /v1/private/members?group_id=...
-func (ic *memberPrivate) ListGroupMembers(c *gin.Context) {
-	members, err := ic.memberUsecase.ListGroupMembers(c.Request.Context(), c.Query("group_id"))
+func (rcvr *memberPrivate) ListGroupMembers(c *gin.Context) {
+	members, err := rcvr.memberUsecase.ListGroupMembers(c.Request.Context(), c.Query("group_id"))
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"code": "IDP_MEMBER_LIST_001", "message": err.Error()})
 		return
@@ -52,13 +52,13 @@ func (ic *memberPrivate) ListGroupMembers(c *gin.Context) {
 
 // AddGroupMember adds a user to a group.
 // POST /v1/private/member/:group_id
-func (ic *memberPrivate) AddGroupMember(c *gin.Context) {
+func (rcvr *memberPrivate) AddGroupMember(c *gin.Context) {
 	var req request.RrAddGroupMember
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"code": "IDP_MEMBER_ADD_001", "message": "Invalid request body"})
 		return
 	}
-	if err := ic.memberUsecase.AddUserToGroup(c.Request.Context(), req.UserID, c.Param("group_id"), req.Role); err != nil {
+	if err := rcvr.memberUsecase.AddUserToGroup(c.Request.Context(), req.UserID, c.Param("group_id"), req.Role); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"code": "IDP_MEMBER_ADD_002", "message": err.Error()})
 		return
 	}
@@ -67,13 +67,13 @@ func (ic *memberPrivate) AddGroupMember(c *gin.Context) {
 
 // RemoveGroupMember removes a user from a group.
 // DELETE /v1/private/member/:group_id
-func (ic *memberPrivate) RemoveGroupMember(c *gin.Context) {
+func (rcvr *memberPrivate) RemoveGroupMember(c *gin.Context) {
 	var req request.RrRemoveGroupMember
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"code": "IDP_MEMBER_REMOVE_400", "message": "Invalid request body"})
 		return
 	}
-	if err := ic.memberUsecase.RemoveUserFromGroup(c.Request.Context(), req.UserID, c.Param("group_id")); err != nil {
+	if err := rcvr.memberUsecase.RemoveUserFromGroup(c.Request.Context(), req.UserID, c.Param("group_id")); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"code": "IDP_MEMBER_REMOVE_001", "message": err.Error()})
 		return
 	}

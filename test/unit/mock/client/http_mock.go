@@ -12,9 +12,9 @@ type MockHTTPClient struct {
 	DoFunc func(req *http.Request) (*http.Response, error)
 }
 
-func (m *MockHTTPClient) Do(req *http.Request) (*http.Response, error) {
-	if m.DoFunc != nil {
-		return m.DoFunc(req)
+func (rcvr *MockHTTPClient) Do(req *http.Request) (*http.Response, error) {
+	if rcvr.DoFunc != nil {
+		return rcvr.DoFunc(req)
 	}
 	return &http.Response{
 		StatusCode: http.StatusOK,
@@ -36,28 +36,28 @@ func NewMockResponseBuilder() *MockResponseBuilder {
 	}
 }
 
-func (b *MockResponseBuilder) WithStatusCode(code int) *MockResponseBuilder {
-	b.StatusCode = code
-	return b
+func (rcvr *MockResponseBuilder) WithStatusCode(code int) *MockResponseBuilder {
+	rcvr.StatusCode = code
+	return rcvr
 }
 
-func (b *MockResponseBuilder) WithBody(body interface{}) *MockResponseBuilder {
-	b.Body = body
-	return b
+func (rcvr *MockResponseBuilder) WithBody(body interface{}) *MockResponseBuilder {
+	rcvr.Body = body
+	return rcvr
 }
 
-func (b *MockResponseBuilder) WithHeader(key, value string) *MockResponseBuilder {
-	b.Headers[key] = value
-	return b
+func (rcvr *MockResponseBuilder) WithHeader(key, value string) *MockResponseBuilder {
+	rcvr.Headers[key] = value
+	return rcvr
 }
 
-func (b *MockResponseBuilder) Build() *http.Response {
+func (rcvr *MockResponseBuilder) Build() *http.Response {
 	var bodyReader io.ReadCloser
-	if b.Body != nil {
-		if str, ok := b.Body.(string); ok {
+	if rcvr.Body != nil {
+		if str, ok := rcvr.Body.(string); ok {
 			bodyReader = io.NopCloser(bytes.NewBufferString(str))
 		} else {
-			jsonBytes, _ := json.Marshal(b.Body)
+			jsonBytes, _ := json.Marshal(rcvr.Body)
 			bodyReader = io.NopCloser(bytes.NewBuffer(jsonBytes))
 		}
 	} else {
@@ -65,12 +65,12 @@ func (b *MockResponseBuilder) Build() *http.Response {
 	}
 
 	header := http.Header{}
-	for k, v := range b.Headers {
+	for k, v := range rcvr.Headers {
 		header.Set(k, v)
 	}
 
 	return &http.Response{
-		StatusCode: b.StatusCode,
+		StatusCode: rcvr.StatusCode,
 		Body:       bodyReader,
 		Header:     header,
 	}

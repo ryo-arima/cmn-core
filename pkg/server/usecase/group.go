@@ -31,28 +31,28 @@ func NewGroup(manager repository.IdPManager, groupStore repository.Group) Group 
 	return &groupUsecase{manager: manager, groupStore: groupStore}
 }
 
-func (u *groupUsecase) GetGroup(ctx context.Context, id string) (*model.LoGroup, error) {
-	g, err := u.manager.GetGroup(ctx, id)
+func (rcvr *groupUsecase) GetGroup(ctx context.Context, id string) (*model.LoGroup, error) {
+	g, err := rcvr.manager.GetGroup(ctx, id)
 	if err != nil {
 		return nil, err
 	}
-	if u.groupStore != nil {
-		g.Name = u.groupStore.LookupName(ctx, g.ID)
+	if rcvr.groupStore != nil {
+		g.Name = rcvr.groupStore.LookupName(ctx, g.ID)
 	}
 	return g, nil
 }
 
-func (u *groupUsecase) ListGroups(ctx context.Context) ([]model.LoGroup, error) {
-	groups, err := u.manager.ListGroups(ctx)
+func (rcvr *groupUsecase) ListGroups(ctx context.Context) ([]model.LoGroup, error) {
+	groups, err := rcvr.manager.ListGroups(ctx)
 	if err != nil {
 		return nil, err
 	}
-	if u.groupStore != nil {
+	if rcvr.groupStore != nil {
 		ids := make([]string, len(groups))
 		for i, g := range groups {
 			ids[i] = g.ID
 		}
-		names := u.groupStore.LookupNames(ctx, ids)
+		names := rcvr.groupStore.LookupNames(ctx, ids)
 		for i := range groups {
 			if n, ok := names[groups[i].ID]; ok {
 				groups[i].Name = n
@@ -62,35 +62,35 @@ func (u *groupUsecase) ListGroups(ctx context.Context) ([]model.LoGroup, error) 
 	return groups, nil
 }
 
-func (u *groupUsecase) CreateGroup(ctx context.Context, input request.RrCreateGroup) (*model.LoGroup, error) {
-	if u.groupStore != nil {
+func (rcvr *groupUsecase) CreateGroup(ctx context.Context, input request.RrCreateGroup) (*model.LoGroup, error) {
+	if rcvr.groupStore != nil {
 		// Casdoor: use a generated UUID as the IdP-internal name to ensure uniqueness.
 		id := uuid.New().String()
-		g, err := u.manager.CreateGroup(ctx, request.RrCreateGroup{Name: id})
+		g, err := rcvr.manager.CreateGroup(ctx, request.RrCreateGroup{Name: id})
 		if err != nil {
 			return nil, err
 		}
-		_ = u.groupStore.Upsert(ctx, id, input.Name)
+		_ = rcvr.groupStore.Upsert(ctx, id, input.Name)
 		g.Name = input.Name
 		return g, nil
 	}
-	return u.manager.CreateGroup(ctx, input)
+	return rcvr.manager.CreateGroup(ctx, input)
 }
 
-func (u *groupUsecase) UpdateGroup(ctx context.Context, id string, input request.RrUpdateGroup) error {
-	if u.groupStore != nil {
+func (rcvr *groupUsecase) UpdateGroup(ctx context.Context, id string, input request.RrUpdateGroup) error {
+	if rcvr.groupStore != nil {
 		// Casdoor: the IdP Name (UUID) is immutable; only update the display name in psql.
-		return u.groupStore.Upsert(ctx, id, input.Name)
+		return rcvr.groupStore.Upsert(ctx, id, input.Name)
 	}
-	return u.manager.UpdateGroup(ctx, id, input)
+	return rcvr.manager.UpdateGroup(ctx, id, input)
 }
 
-func (u *groupUsecase) DeleteGroup(ctx context.Context, id string) error {
-	if err := u.manager.DeleteGroup(ctx, id); err != nil {
+func (rcvr *groupUsecase) DeleteGroup(ctx context.Context, id string) error {
+	if err := rcvr.manager.DeleteGroup(ctx, id); err != nil {
 		return err
 	}
-	if u.groupStore != nil {
-		_ = u.groupStore.SoftDelete(ctx, id)
+	if rcvr.groupStore != nil {
+		_ = rcvr.groupStore.SoftDelete(ctx, id)
 	}
 	return nil
 }

@@ -38,8 +38,10 @@ func createTestConfig() config.BaseConfig {
 				},
 				Client: config.Client{
 					ServerEndpoint: "http://localhost:8080",
-					UserEmail:      "test@test.com",
-					UserPassword:   "testpass",
+					Credentials: config.ClientCredentials{
+						Email:    "test@test.com",
+						Password: "testpass",
+					},
 				},
 			},
 			PostgreSQL: config.PostgreSQL{
@@ -226,7 +228,7 @@ func TestCommonRepository_TableDriven(t *testing.T) {
 					success = actualValue == tt.expectedValue.(string)
 				}
 			case "get_config_user":
-				actualValue = config.YamlConfig.Application.Client.UserEmail
+				actualValue = config.YamlConfig.Application.Client.Credentials.Email
 				success = actualValue == tt.expectedValue.(string)
 			case "get_config_psql_host":
 				actualValue = config.YamlConfig.PostgreSQL.Host

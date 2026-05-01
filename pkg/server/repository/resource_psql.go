@@ -35,9 +35,9 @@ func NewResource(conf config.BaseConfig) Resource {
 	return &resourceRepository{db: conf.DBConnection}
 }
 
-func (r *resourceRepository) GetResourceByUUID(ctx context.Context, uuid string) (*model.PgResource, error) {
+func (rcvr *resourceRepository) GetResourceByUUID(ctx context.Context, uuid string) (*model.PgResource, error) {
 	var res model.PgResource
-	if err := r.db.WithContext(ctx).Where("uuid = ? AND deleted_at IS NULL", uuid).First(&res).Error; err != nil {
+	if err := rcvr.db.WithContext(ctx).Where("uuid = ? AND deleted_at IS NULL", uuid).First(&res).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, fmt.Errorf("resource not found: %s", uuid)
 		}
@@ -49,10 +49,10 @@ func (r *resourceRepository) GetResourceByUUID(ctx context.Context, uuid string)
 // ListResources returns resources accessible to the caller:
 //   - all resources whose created_by matches filter.CreatedBy, or
 //   - all resources that have a ResourceGroupRole entry for any of filter.GroupUUIDs.
-func (r *resourceRepository) ListResources(ctx context.Context, filter request.LoResourceQueryFilter) ([]model.PgResource, error) {
+func (rcvr *resourceRepository) ListResources(ctx context.Context, filter request.LoResourceQueryFilter) ([]model.PgResource, error) {
 	var resources []model.PgResource
 
-	query := r.db.WithContext(ctx).Where("deleted_at IS NULL")
+	query := rcvr.db.WithContext(ctx).Where("deleted_at IS NULL")
 
 	if len(filter.GroupIDs) > 0 {
 		// created_by matches OR resource has a group-role entry for one of the user's groups
@@ -71,56 +71,56 @@ func (r *resourceRepository) ListResources(ctx context.Context, filter request.L
 }
 
 // ListAllResources returns every non-deleted resource (admin only).
-func (r *resourceRepository) ListAllResources(ctx context.Context) ([]model.PgResource, error) {
+func (rcvr *resourceRepository) ListAllResources(ctx context.Context) ([]model.PgResource, error) {
 	var resources []model.PgResource
-	if err := r.db.WithContext(ctx).Where("deleted_at IS NULL").Find(&resources).Error; err != nil {
+	if err := rcvr.db.WithContext(ctx).Where("deleted_at IS NULL").Find(&resources).Error; err != nil {
 		return nil, err
 	}
 	return resources, nil
 }
 
-func (r *resourceRepository) CreateResource(ctx context.Context, resource *model.PgResource) error {
-	return r.db.WithContext(ctx).Create(resource).Error
+func (rcvr *resourceRepository) CreateResource(ctx context.Context, resource *model.PgResource) error {
+	return rcvr.db.WithContext(ctx).Create(resource).Error
 }
 
-func (r *resourceRepository) UpdateResource(ctx context.Context, resource *model.PgResource) error {
-	return r.db.WithContext(ctx).Save(resource).Error
+func (rcvr *resourceRepository) UpdateResource(ctx context.Context, resource *model.PgResource) error {
+	return rcvr.db.WithContext(ctx).Save(resource).Error
 }
 
-func (r *resourceRepository) SoftDeleteResource(ctx context.Context, resource *model.PgResource, deletedBy string) error {
+func (rcvr *resourceRepository) SoftDeleteResource(ctx context.Context, resource *model.PgResource, deletedBy string) error {
 	now := time.Now()
 	resource.DeletedBy = deletedBy
 	resource.DeletedAt = &now
-	return r.db.WithContext(ctx).Save(resource).Error
+	return rcvr.db.WithContext(ctx).Save(resource).Error
 }
 
-func (r *resourceRepository) GetGroupRoles(ctx context.Context, resourceUUID string) ([]model.PgResourceGroupRole, error) {
+func (rcvr *resourceRepository) GetGroupRoles(ctx context.Context, resourceUUID string) ([]model.PgResourceGroupRole, error) {
 	var roles []model.PgResourceGroupRole
-	if err := r.db.WithContext(ctx).Where("resource_uuid = ?", resourceUUID).Find(&roles).Error; err != nil {
+	if err := rcvr.db.WithContext(ctx).Where("resource_uuid = ?", resourceUUID).Find(&roles).Error; err != nil {
 		return nil, err
 	}
 	return roles, nil
 }
 
 // SetGroupRole inserts or updates (upsert) a group-role entry for a resource.
-func (r *resourceRepository) SetGroupRole(ctx context.Context, rgr *model.PgResourceGroupRole) error {
+func (rcvr *resourceRepository) SetGroupRole(ctx context.Context, rgr *model.PgResourceGroupRole) error {
 	var existing model.PgResourceGroupRole
-	err := r.db.WithContext(ctx).
+	err := rcvr.db.WithContext(ctx).
 		Where("resource_uuid = ? AND group_id = ?", rgr.ResourceUUID, rgr.GroupID).
 		First(&existing).Error
 
 	if errors.Is(err, gorm.ErrRecordNotFound) {
-		return r.db.WithContext(ctx).Create(rgr).Error
+		return rcvr.db.WithContext(ctx).Create(rgr).Error
 	}
 	if err != nil {
 		return err
 	}
 	existing.Role = rgr.Role
-	return r.db.WithContext(ctx).Save(&existing).Error
+	return rcvr.db.WithContext(ctx).Save(&existing).Error
 }
 
-func (r *resourceRepository) DeleteGroupRole(ctx context.Context, resourceUUID, groupID string) error {
-	return r.db.WithContext(ctx).
+func (rcvr *resourceRepository) DeleteGroupRole(ctx context.Context, resourceUUID, groupID string) error {
+	return rcvr.db.WithContext(ctx).
 		Where("resource_uuid = ? AND group_id = ?", resourceUUID, groupID).
 		Delete(&model.PgResourceGroupRole{}).Error
 }

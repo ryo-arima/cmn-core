@@ -27,26 +27,26 @@ func NewUser(manager repository.IdPManager) User {
 	return &userUsecase{manager: manager}
 }
 
-func (u *userUsecase) GetUser(ctx context.Context, id string) (*model.LoUser, error) {
-	return u.manager.GetUser(ctx, id)
+func (rcvr *userUsecase) GetUser(ctx context.Context, id string) (*model.LoUser, error) {
+	return rcvr.manager.GetUser(ctx, id)
 }
 
-func (u *userUsecase) ListUsers(ctx context.Context) ([]model.LoUser, error) {
-	return u.manager.ListUsers(ctx)
+func (rcvr *userUsecase) ListUsers(ctx context.Context) ([]model.LoUser, error) {
+	return rcvr.manager.ListUsers(ctx)
 }
 
-func (u *userUsecase) CreateUser(ctx context.Context, input request.RrCreateUser) (*model.LoUser, error) {
-	return u.manager.CreateUser(ctx, input)
+func (rcvr *userUsecase) CreateUser(ctx context.Context, input request.RrCreateUser) (*model.LoUser, error) {
+	return rcvr.manager.CreateUser(ctx, input)
 }
 
-func (u *userUsecase) UpdateUser(ctx context.Context, id string, input request.RrUpdateUser) error {
-	return u.manager.UpdateUser(ctx, id, input)
+func (rcvr *userUsecase) UpdateUser(ctx context.Context, id string, input request.RrUpdateUser) error {
+	return rcvr.manager.UpdateUser(ctx, id, input)
 }
 
-func (u *userUsecase) DeleteUser(ctx context.Context, id string) error {
-	return u.manager.DeleteUser(ctx, id)
+func (rcvr *userUsecase) DeleteUser(ctx context.Context, id string) error {
+	return rcvr.manager.DeleteUser(ctx, id)
 }
 
-func (u *userUsecase) Login(ctx context.Context, username, password string) (string, error) {
-	return u.manager.Login(ctx, username, password)
+func (rcvr *userUsecase) Login(ctx context.Context, username, password string) (string, error) {
+	return rcvr.manager.Login(ctx, username, password)
 }

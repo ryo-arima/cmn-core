@@ -8,10 +8,10 @@ import (
 )
 
 func TestUserResponse_Structure(t *testing.T) {
-	resp := response.Users{
+	resp := response.RrUsers{
 		Code:    "SUCCESS",
 		Message: "Operation successful",
-		Users: []response.User{
+		Users: []response.RrUser{
 			{
 				UUID:  "user-uuid-123",
 				Email: "test@example.com",
@@ -27,10 +27,10 @@ func TestUserResponse_Structure(t *testing.T) {
 }
 
 func TestGroupResponse_Structure(t *testing.T) {
-	resp := response.Groups{
+	resp := response.RrGroups{
 		Code:    "SUCCESS",
 		Message: "Group operation successful",
-		Groups: []response.Group{
+		Groups: []response.RrGroup{
 			{
 				UUID: "group-uuid-123",
 				Name: "Test Group",
@@ -45,10 +45,10 @@ func TestGroupResponse_Structure(t *testing.T) {
 }
 
 func TestMemberResponse_Structure(t *testing.T) {
-	resp := response.Members{
+	resp := response.RrMembers{
 		Code:    "SUCCESS",
 		Message: "Member operation successful",
-		Members: []response.Member{
+		Members: []response.RrMember{
 			{
 				UUID:      "member-uuid-123",
 				UserUUID:  "user-uuid-456",
@@ -64,7 +64,7 @@ func TestMemberResponse_Structure(t *testing.T) {
 }
 
 func TestLoginResponse_Structure(t *testing.T) {
-	resp := response.Login{
+	resp := response.RrLogin{
 		Code:    "SUCCESS",
 		Message: "Login successful",
 	}
@@ -75,7 +75,7 @@ func TestLoginResponse_Structure(t *testing.T) {
 
 func TestCountResponse_Structure(t *testing.T) {
 	// Commons structure doesn't have Count field, using basic structure test
-	resp := response.Commons{
+	resp := response.RrCommons{
 		Code:    "SUCCESS",
 		Message: "Count retrieved",
 	}

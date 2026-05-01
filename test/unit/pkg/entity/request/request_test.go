@@ -8,7 +8,7 @@ import (
 )
 
 func TestUserRequest_Structure(t *testing.T) {
-	req := request.User{
+	req := request.RrUser{
 		UUID:     "user-uuid-123",
 		Email:    "test@example.com",
 		Password: "password123",
@@ -22,7 +22,7 @@ func TestUserRequest_Structure(t *testing.T) {
 }
 
 func TestGroupRequest_Structure(t *testing.T) {
-	req := request.Group{
+	req := request.RrGroup{
 		UUID: "group-uuid-123",
 		Name: "Test Group",
 	}
@@ -32,7 +32,7 @@ func TestGroupRequest_Structure(t *testing.T) {
 }
 
 func TestMemberRequest_Structure(t *testing.T) {
-	req := request.Member{
+	req := request.RrMember{
 		UUID:      "member-uuid-123",
 		UserUUID:  "user-uuid-456",
 		GroupUUID: "group-uuid-789",
@@ -44,7 +44,7 @@ func TestMemberRequest_Structure(t *testing.T) {
 }
 
 func TestLoginRequest_Structure(t *testing.T) {
-	req := request.Login{
+	req := request.RrLogin{
 		Email:    "user@example.com",
 		Password: "securepassword",
 	}

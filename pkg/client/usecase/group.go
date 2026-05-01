@@ -34,15 +34,15 @@ func NewGroup(conf config.BaseConfig, manager *clientauth.Manager) Group {
 	return &groupUsecase{repo: repository.NewGroupInternal(conf, manager)}
 }
 
-func (u *groupUsecase) ListMyGroups() response.RrIdPGroups { return u.repo.ListMyGroups() }
-func (u *groupUsecase) GetGroup(id string) response.RrSingleIdPGroup { return u.repo.GetGroup(id) }
-func (u *groupUsecase) CreateGroup(r request.RrCreateGroup) response.RrSingleIdPGroup {
-	return u.repo.CreateGroup(r)
+func (rcvr *groupUsecase) ListMyGroups() response.RrIdPGroups { return rcvr.repo.ListMyGroups() }
+func (rcvr *groupUsecase) GetGroup(id string) response.RrSingleIdPGroup { return rcvr.repo.GetGroup(id) }
+func (rcvr *groupUsecase) CreateGroup(r request.RrCreateGroup) response.RrSingleIdPGroup {
+	return rcvr.repo.CreateGroup(r)
 }
-func (u *groupUsecase) UpdateGroup(id string, r request.RrUpdateGroup) response.RrCommons {
-	return u.repo.UpdateGroup(id, r)
+func (rcvr *groupUsecase) UpdateGroup(id string, r request.RrUpdateGroup) response.RrCommons {
+	return rcvr.repo.UpdateGroup(id, r)
 }
-func (u *groupUsecase) DeleteGroup(id string) response.RrCommons { return u.repo.DeleteGroup(id) }
+func (rcvr *groupUsecase) DeleteGroup(id string) response.RrCommons { return rcvr.repo.DeleteGroup(id) }
 
 // ---- admin usecase ----------------------------------------------------------
 
@@ -55,15 +55,15 @@ func NewGroupAdmin(conf config.BaseConfig, manager *clientauth.Manager) GroupAdm
 	return &groupAdminUsecase{repo: repository.NewGroupPrivate(conf, manager)}
 }
 
-func (u *groupAdminUsecase) ListMyGroups() response.RrIdPGroups { return u.repo.ListMyGroups() }
-func (u *groupAdminUsecase) ListGroups() response.RrIdPGroups   { return u.repo.ListGroups() }
-func (u *groupAdminUsecase) GetGroup(id string) response.RrSingleIdPGroup {
-	return u.repo.GetGroup(id)
+func (rcvr *groupAdminUsecase) ListMyGroups() response.RrIdPGroups { return rcvr.repo.ListMyGroups() }
+func (rcvr *groupAdminUsecase) ListGroups() response.RrIdPGroups   { return rcvr.repo.ListGroups() }
+func (rcvr *groupAdminUsecase) GetGroup(id string) response.RrSingleIdPGroup {
+	return rcvr.repo.GetGroup(id)
 }
-func (u *groupAdminUsecase) CreateGroup(r request.RrCreateGroup) response.RrSingleIdPGroup {
-	return u.repo.CreateGroup(r)
+func (rcvr *groupAdminUsecase) CreateGroup(r request.RrCreateGroup) response.RrSingleIdPGroup {
+	return rcvr.repo.CreateGroup(r)
 }
-func (u *groupAdminUsecase) UpdateGroup(id string, r request.RrUpdateGroup) response.RrCommons {
-	return u.repo.UpdateGroup(id, r)
+func (rcvr *groupAdminUsecase) UpdateGroup(id string, r request.RrUpdateGroup) response.RrCommons {
+	return rcvr.repo.UpdateGroup(id, r)
 }
-func (u *groupAdminUsecase) DeleteGroup(id string) response.RrCommons { return u.repo.DeleteGroup(id) }
+func (rcvr *groupAdminUsecase) DeleteGroup(id string) response.RrCommons { return rcvr.repo.DeleteGroup(id) }

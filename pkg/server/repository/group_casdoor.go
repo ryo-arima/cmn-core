@@ -14,16 +14,16 @@ import (
 
 // ---- Group management -------------------------------------------------------
 
-func (m *casdoorManager) GetGroup(ctx context.Context, id string) (*model.LoGroup, error) {
+func (rcvr *casdoorManager) GetGroup(ctx context.Context, id string) (*model.LoGroup, error) {
 	q := url.Values{}
 	// Casdoor API expects "org/name" format.
 	// Accept both plain name ("group001") and already-qualified ("cmn/group001").
 	fullID := id
 	if !strings.Contains(id, "/") {
-		fullID = m.cfg.Organization + "/" + id
+		fullID = rcvr.cfg.Organization + "/" + id
 	}
 	q.Set("id", fullID)
-	status, body, err := m.do(ctx, http.MethodGet, m.apiURL("/api/get-group?"+q.Encode()), nil)
+	status, body, err := rcvr.do(ctx, http.MethodGet, rcvr.apiURL("/api/get-group?"+q.Encode()), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -44,10 +44,10 @@ func (m *casdoorManager) GetGroup(ctx context.Context, id string) (*model.LoGrou
 	return &model.LoGroup{ID: cg.Name, UUID: cg.Name, Name: cg.Name}, nil
 }
 
-func (m *casdoorManager) ListGroups(ctx context.Context) ([]model.LoGroup, error) {
+func (rcvr *casdoorManager) ListGroups(ctx context.Context) ([]model.LoGroup, error) {
 	q := url.Values{}
-	q.Set("owner", m.cfg.Organization)
-	status, body, err := m.do(ctx, http.MethodGet, m.apiURL("/api/get-groups?"+q.Encode()), nil)
+	q.Set("owner", rcvr.cfg.Organization)
+	status, body, err := rcvr.do(ctx, http.MethodGet, rcvr.apiURL("/api/get-groups?"+q.Encode()), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -69,9 +69,9 @@ func (m *casdoorManager) ListGroups(ctx context.Context) ([]model.LoGroup, error
 	return groups, nil
 }
 
-func (m *casdoorManager) CreateGroup(ctx context.Context, input request.RrCreateGroup) (*model.LoGroup, error) {
-	payload := model.CdGroup{Owner: m.cfg.Organization, Name: input.Name}
-	status, body, err := m.do(ctx, http.MethodPost, m.apiURL("/api/add-group"), payload)
+func (rcvr *casdoorManager) CreateGroup(ctx context.Context, input request.RrCreateGroup) (*model.LoGroup, error) {
+	payload := model.CdGroup{Owner: rcvr.cfg.Organization, Name: input.Name}
+	status, body, err := rcvr.do(ctx, http.MethodPost, rcvr.apiURL("/api/add-group"), payload)
 	if err != nil {
 		return nil, err
 	}
@@ -81,14 +81,14 @@ func (m *casdoorManager) CreateGroup(ctx context.Context, input request.RrCreate
 	if _, err := checkCdResponse(body); err != nil {
 		return nil, err
 	}
-	return m.GetGroup(ctx, input.Name)
+	return rcvr.GetGroup(ctx, input.Name)
 }
 
-func (m *casdoorManager) UpdateGroup(ctx context.Context, id string, input request.RrUpdateGroup) error {
-	payload := model.CdGroup{Owner: m.cfg.Organization, Name: input.Name}
+func (rcvr *casdoorManager) UpdateGroup(ctx context.Context, id string, input request.RrUpdateGroup) error {
+	payload := model.CdGroup{Owner: rcvr.cfg.Organization, Name: input.Name}
 	q := url.Values{}
-	q.Set("id", m.cfg.Organization+"/"+id)
-	status, body, err := m.do(ctx, http.MethodPost, m.apiURL("/api/update-group?"+q.Encode()), payload)
+	q.Set("id", rcvr.cfg.Organization+"/"+id)
+	status, body, err := rcvr.do(ctx, http.MethodPost, rcvr.apiURL("/api/update-group?"+q.Encode()), payload)
 	if err != nil {
 		return err
 	}
@@ -99,9 +99,9 @@ func (m *casdoorManager) UpdateGroup(ctx context.Context, id string, input reque
 	return err
 }
 
-func (m *casdoorManager) DeleteGroup(ctx context.Context, id string) error {
-	payload := model.CdGroup{Owner: m.cfg.Organization, Name: id}
-	status, body, err := m.do(ctx, http.MethodPost, m.apiURL("/api/delete-group"), payload)
+func (rcvr *casdoorManager) DeleteGroup(ctx context.Context, id string) error {
+	payload := model.CdGroup{Owner: rcvr.cfg.Organization, Name: id}
+	status, body, err := rcvr.do(ctx, http.MethodPost, rcvr.apiURL("/api/delete-group"), payload)
 	if err != nil {
 		return err
 	}

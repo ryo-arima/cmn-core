@@ -23,14 +23,14 @@ func NewMember(manager repository.IdPManager) Member {
 	return &memberUsecase{manager: manager}
 }
 
-func (u *memberUsecase) ListGroupMembers(ctx context.Context, groupID string) ([]model.LoUser, error) {
-	return u.manager.ListGroupMembers(ctx, groupID)
+func (rcvr *memberUsecase) ListGroupMembers(ctx context.Context, groupID string) ([]model.LoUser, error) {
+	return rcvr.manager.ListGroupMembers(ctx, groupID)
 }
 
-func (u *memberUsecase) AddUserToGroup(ctx context.Context, userID, groupID, role string) error {
-	return u.manager.AddUserToGroup(ctx, userID, groupID, role)
+func (rcvr *memberUsecase) AddUserToGroup(ctx context.Context, userID, groupID, role string) error {
+	return rcvr.manager.AddUserToGroup(ctx, userID, groupID, role)
 }
 
-func (u *memberUsecase) RemoveUserFromGroup(ctx context.Context, userID, groupID string) error {
-	return u.manager.RemoveUserFromGroup(ctx, userID, groupID)
+func (rcvr *memberUsecase) RemoveUserFromGroup(ctx context.Context, userID, groupID string) error {
+	return rcvr.manager.RemoveUserFromGroup(ctx, userID, groupID)
 }

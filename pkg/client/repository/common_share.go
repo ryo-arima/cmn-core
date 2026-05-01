@@ -29,15 +29,15 @@ func NewCommon(conf config.BaseConfig, manager *clientauth.Manager) Common {
 	}
 }
 
-func (r *common) ValidateToken() response.RrValidateToken {
+func (rcvr *common) ValidateToken() response.RrValidateToken {
 	var result response.RrValidateToken
-	req, err := http.NewRequest("GET", r.serverBase+"/v1/share/token/validate", nil)
+	req, err := http.NewRequest("GET", rcvr.serverBase+"/v1/share/token/validate", nil)
 	if err != nil {
 		result.Code = "CLIENT_VALIDATE_001"
 		result.Message = "failed to create request"
 		return result
 	}
-	resp, err := r.client.Do(req)
+	resp, err := rcvr.client.Do(req)
 	if err != nil {
 		result.Code = "CLIENT_VALIDATE_002"
 		result.Message = "request failed"
@@ -51,15 +51,15 @@ func (r *common) ValidateToken() response.RrValidateToken {
 	return result
 }
 
-func (r *common) GetUserInfo() response.RrCommons {
+func (rcvr *common) GetUserInfo() response.RrCommons {
 	var result response.RrCommons
-	req, err := http.NewRequest("GET", r.serverBase+"/v1/share/token/userinfo", nil)
+	req, err := http.NewRequest("GET", rcvr.serverBase+"/v1/share/token/userinfo", nil)
 	if err != nil {
 		result.Code = "CLIENT_USERINFO_001"
 		result.Message = "failed to create request"
 		return result
 	}
-	resp, err := r.client.Do(req)
+	resp, err := rcvr.client.Do(req)
 	if err != nil {
 		result.Code = "CLIENT_USERINFO_002"
 		result.Message = "request failed"

@@ -15,8 +15,9 @@ Application:
   Client:
     HomePath: "test/.cmn"
     ServerEndpoint: "http://localhost:8080"
-    UserEmail: "test@test.local"
-    UserPassword: "TestPassword123!"
+    credentials:
+      email: "test@test.local"
+      password: "TestPassword123!"
     HomeDir: "test/.cmn"
     TemplatesDir: "pkg/client/repository/templates/"
   Mail:

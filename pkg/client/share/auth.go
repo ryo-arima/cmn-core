@@ -33,23 +33,23 @@ func NewManager(conf config.BaseConfig, profile string) *Manager {
 // WithToken returns a new Manager that always returns the given token without
 // any file I/O, refresh, or SSO logic.  Useful for the anonymous client when
 // validating an externally-provided token.
-func (m *Manager) WithToken(token string) *Manager {
-	return &Manager{conf: m.conf, profile: m.profile, explicitToken: token}
+func (rcvr *Manager) WithToken(token string) *Manager {
+	return &Manager{conf: rcvr.conf, profile: rcvr.profile, explicitToken: token}
 }
 
 // Conf returns the BaseConfig embedded in this manager.
-func (m *Manager) Conf() config.BaseConfig { return m.conf }
+func (rcvr *Manager) Conf() config.BaseConfig { return rcvr.conf }
 
 // IsAnonymous reports whether this manager is for unauthenticated access.
-func (m *Manager) IsAnonymous() bool { return m.profile == "anonymous" }
+func (rcvr *Manager) IsAnonymous() bool { return rcvr.profile == "anonymous" }
 
 // tokenDir returns the directory where token files are stored for this profile.
-func (m *Manager) tokenDir() string {
-	return filepath.Join("etc", ".cmn", "client", m.profile)
+func (rcvr *Manager) tokenDir() string {
+	return filepath.Join("etc", ".cmn", "client", rcvr.profile)
 }
 
-func (m *Manager) readFile(name string) string {
-	b, err := os.ReadFile(filepath.Join(m.tokenDir(), name))
+func (rcvr *Manager) readFile(name string) string {
+	b, err := os.ReadFile(filepath.Join(rcvr.tokenDir(), name))
 	if err != nil {
 		return ""
 	}
@@ -62,47 +62,47 @@ func (m *Manager) readFile(name string) string {
 // For anonymous profiles, "" is returned.
 // Otherwise the token is loaded from the on-disk cache; if missing or expired
 // it is obtained automatically via password-based login (POST /v1/public/login).
-func (m *Manager) Token() (string, error) {
-	if m.explicitToken != "" {
-		return m.explicitToken, nil
+func (rcvr *Manager) Token() (string, error) {
+	if rcvr.explicitToken != "" {
+		return rcvr.explicitToken, nil
 	}
-	if m.IsAnonymous() {
+	if rcvr.IsAnonymous() {
 		return "", nil
 	}
 
-	token := m.readFile("access_token")
+	token := rcvr.readFile("access_token")
 	if token != "" && !isTokenExpired(token) {
 		return token, nil
 	}
 
 	// Token missing or expired — re-authenticate transparently.
-	return m.loginWithPassword(context.Background())
+	return rcvr.loginWithPassword(context.Background())
 }
 
 // loginWithPassword authenticates using the configured credentials by calling
 // POST /v1/public/login on the server.  The server is responsible for all IdP
 // communication; the client never contacts Casdoor or Keycloak directly.
-func (m *Manager) loginWithPassword(ctx context.Context) (string, error) {
-	creds := m.conf.YamlConfig.Application.Client.Credentials
+func (rcvr *Manager) loginWithPassword(ctx context.Context) (string, error) {
+	creds := rcvr.conf.YamlConfig.Application.Client.Credentials
 	email, password := creds.Email, creds.Password
 	if email == "" || password == "" {
 		return "", fmt.Errorf(
 			"no credentials configured — set Application.Client.credentials.email/password in the config file",
 		)
 	}
-	return m.loginViaServer(ctx, email, password)
+	return rcvr.loginViaServer(ctx, email, password)
 }
 
 // loginViaServer posts credentials to POST /v1/public/login on the app server
 // and returns the access token contained in the response.
-func (m *Manager) loginViaServer(ctx context.Context, email, password string) (string, error) {
+func (rcvr *Manager) loginViaServer(ctx context.Context, email, password string) (string, error) {
 	body, err := json.Marshal(map[string]string{"email": email, "password": password})
 	if err != nil {
 		return "", fmt.Errorf("build login body: %w", err)
 	}
 
 	req, err := http.NewRequestWithContext(ctx, http.MethodPost,
-		m.serverBase()+"/v1/public/login", bytes.NewReader(body))
+		rcvr.serverBase()+"/v1/public/login", bytes.NewReader(body))
 	if err != nil {
 		return "", fmt.Errorf("build login request: %w", err)
 	}
@@ -123,25 +123,25 @@ func (m *Manager) loginViaServer(ctx context.Context, email, password string) (s
 	if err := json.Unmarshal(respBody, &result); err != nil || result.AccessToken == "" {
 		return "", fmt.Errorf("parse login response: %w", err)
 	}
-	m.SaveTokenPair(result.AccessToken, "")
+	rcvr.SaveTokenPair(result.AccessToken, "")
 	return result.AccessToken, nil
 }
 
 // ForceRefresh re-authenticates using the configured credentials.
-func (m *Manager) ForceRefresh() error {
-	m.ClearTokens()
-	_, err := m.loginWithPassword(context.Background())
+func (rcvr *Manager) ForceRefresh() error {
+	rcvr.ClearTokens()
+	_, err := rcvr.loginWithPassword(context.Background())
 	return err
 }
 
 // ForceLogin re-authenticates using the configured credentials (provider argument is ignored).
-func (m *Manager) ForceLogin(_ string) error {
-	return m.ForceRefresh()
+func (rcvr *Manager) ForceLogin(_ string) error {
+	return rcvr.ForceRefresh()
 }
 
 // SaveTokenPair persists the access token to disk.
-func (m *Manager) SaveTokenPair(access, _ string) {
-	dir := m.tokenDir()
+func (rcvr *Manager) SaveTokenPair(access, _ string) {
+	dir := rcvr.tokenDir()
 	_ = os.MkdirAll(dir, 0o755)
 	if access != "" {
 		_ = os.WriteFile(filepath.Join(dir, "access_token"), []byte(access), 0o600)
@@ -149,23 +149,23 @@ func (m *Manager) SaveTokenPair(access, _ string) {
 }
 
 // ClearTokens removes the stored access token file.
-func (m *Manager) ClearTokens() {
-	_ = os.Remove(filepath.Join(m.tokenDir(), "access_token"))
+func (rcvr *Manager) ClearTokens() {
+	_ = os.Remove(filepath.Join(rcvr.tokenDir(), "access_token"))
 	_ = os.Unsetenv("CMN_ACCESS_TOKEN")
 }
 
 // HTTPClient returns an *http.Client that transparently injects the Bearer token
 // into every outgoing request.  On HTTP 401 responses, it refreshes the token
 // once and retries the request.
-func (m *Manager) HTTPClient() *http.Client {
+func (rcvr *Manager) HTTPClient() *http.Client {
 	return &http.Client{
-		Transport: &authTransport{manager: m, base: http.DefaultTransport},
+		Transport: &authTransport{manager: rcvr, base: http.DefaultTransport},
 	}
 }
 
 // serverBase returns the configured server endpoint URL.
-func (m *Manager) serverBase() string {
-	return m.conf.YamlConfig.Application.Client.ServerEndpoint
+func (rcvr *Manager) serverBase() string {
+	return rcvr.conf.YamlConfig.Application.Client.ServerEndpoint
 }
 
 // isTokenExpired returns true if the JWT is expired or structurally invalid.
@@ -197,8 +197,8 @@ type authTransport struct {
 
 // RoundTrip obtains a valid token from the Manager and sets the Authorization header.
 // On HTTP 401, it forces a re-login and retries once.
-func (t *authTransport) RoundTrip(req *http.Request) (*http.Response, error) {
-	token, err := t.manager.Token()
+func (rcvr *authTransport) RoundTrip(req *http.Request) (*http.Response, error) {
+	token, err := rcvr.manager.Token()
 	if err != nil {
 		return nil, err
 	}
@@ -222,7 +222,7 @@ func (t *authTransport) RoundTrip(req *http.Request) (*http.Response, error) {
 			clone.Body = io.NopCloser(bytes.NewReader(bodyBuf))
 			clone.ContentLength = int64(len(bodyBuf))
 		}
-		return t.base.RoundTrip(clone)
+		return rcvr.base.RoundTrip(clone)
 	}
 
 	resp, err := doRequest(token)
@@ -231,10 +231,10 @@ func (t *authTransport) RoundTrip(req *http.Request) (*http.Response, error) {
 	}
 
 	// On 401, force re-login and retry once for any HTTP method.
-	if resp.StatusCode == http.StatusUnauthorized && !t.manager.IsAnonymous() {
+	if resp.StatusCode == http.StatusUnauthorized && !rcvr.manager.IsAnonymous() {
 		resp.Body.Close()
-		t.manager.ClearTokens()
-		newToken, loginErr := t.manager.loginWithPassword(req.Context())
+		rcvr.manager.ClearTokens()
+		newToken, loginErr := rcvr.manager.loginWithPassword(req.Context())
 		if loginErr != nil {
 			return nil, loginErr
 		}

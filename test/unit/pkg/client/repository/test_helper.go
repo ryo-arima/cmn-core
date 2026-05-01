@@ -39,6 +39,6 @@ func NewTestHelper() *TestHelper {
 }
 
 // CleanupDB cleans up the test database (no-op for client tests)
-func (th *TestHelper) CleanupDB() {
+func (rcvr *TestHelper) CleanupDB() {
 	// Client tests don't use real database, so nothing to cleanup
 }
