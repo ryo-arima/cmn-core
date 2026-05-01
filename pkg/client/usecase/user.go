@@ -41,12 +41,12 @@ func NewUser(conf config.BaseConfig, manager *clientauth.Manager) User {
 	return &userUsecase{repo: repository.NewUserInternal(conf, manager)}
 }
 
-func (u *userUsecase) GetMyUser() response.RrSingleIdPUser           { return u.repo.GetMyUser() }
-func (u *userUsecase) UpdateMyUser(r request.RrUpdateUser) response.RrCommons {
-	return u.repo.UpdateMyUser(r)
+func (rcvr *userUsecase) GetMyUser() response.RrSingleIdPUser           { return rcvr.repo.GetMyUser() }
+func (rcvr *userUsecase) UpdateMyUser(r request.RrUpdateUser) response.RrCommons {
+	return rcvr.repo.UpdateMyUser(r)
 }
-func (u *userUsecase) GetUser(id string) response.RrSingleIdPUser { return u.repo.GetUser(id) }
-func (u *userUsecase) ListGroupUsers() response.RrIdPUsers        { return u.repo.ListGroupUsers() }
+func (rcvr *userUsecase) GetUser(id string) response.RrSingleIdPUser { return rcvr.repo.GetUser(id) }
+func (rcvr *userUsecase) ListGroupUsers() response.RrIdPUsers        { return rcvr.repo.ListGroupUsers() }
 
 // ---- admin usecase ----------------------------------------------------------
 
@@ -59,20 +59,20 @@ func NewUserAdmin(conf config.BaseConfig, manager *clientauth.Manager) UserAdmin
 	return &userAdminUsecase{repo: repository.NewUserPrivate(conf, manager)}
 }
 
-func (u *userAdminUsecase) GetMyUser() response.RrSingleIdPUser { return u.repo.GetMyUser() }
-func (u *userAdminUsecase) UpdateMyUser(r request.RrUpdateUser) response.RrCommons {
-	return u.repo.UpdateMyUser(r)
+func (rcvr *userAdminUsecase) GetMyUser() response.RrSingleIdPUser { return rcvr.repo.GetMyUser() }
+func (rcvr *userAdminUsecase) UpdateMyUser(r request.RrUpdateUser) response.RrCommons {
+	return rcvr.repo.UpdateMyUser(r)
 }
-func (u *userAdminUsecase) GetUser(id string) response.RrSingleIdPUser { return u.repo.GetUser(id) }
-func (u *userAdminUsecase) ListGroupUsers() response.RrIdPUsers        { return u.repo.ListGroupUsers() }
-func (u *userAdminUsecase) ListUsers() response.RrIdPUsers             { return u.repo.ListUsers() }
-func (u *userAdminUsecase) CreateUser(r request.RrCreateUser) response.RrSingleIdPUser {
-	return u.repo.CreateUser(r)
+func (rcvr *userAdminUsecase) GetUser(id string) response.RrSingleIdPUser { return rcvr.repo.GetUser(id) }
+func (rcvr *userAdminUsecase) ListGroupUsers() response.RrIdPUsers        { return rcvr.repo.ListGroupUsers() }
+func (rcvr *userAdminUsecase) ListUsers() response.RrIdPUsers             { return rcvr.repo.ListUsers() }
+func (rcvr *userAdminUsecase) CreateUser(r request.RrCreateUser) response.RrSingleIdPUser {
+	return rcvr.repo.CreateUser(r)
 }
-func (u *userAdminUsecase) UpdateUser(id string, r request.RrUpdateUser) response.RrCommons {
-	return u.repo.UpdateUser(id, r)
+func (rcvr *userAdminUsecase) UpdateUser(id string, r request.RrUpdateUser) response.RrCommons {
+	return rcvr.repo.UpdateUser(id, r)
 }
-func (u *userAdminUsecase) DeleteUser(id string) response.RrCommons { return u.repo.DeleteUser(id) }
+func (rcvr *userAdminUsecase) DeleteUser(id string) response.RrCommons { return rcvr.repo.DeleteUser(id) }
 
 // ---- anonymous usecase ------------------------------------------------------
 
@@ -85,6 +85,6 @@ func NewAnonymous(conf config.BaseConfig) Anonymous {
 	return &anonymousUsecase{repo: repository.NewUserPublic(conf)}
 }
 
-func (u *anonymousUsecase) RegisterUser(req request.RrCreateUser) response.RrSingleIdPUser {
-	return u.repo.RegisterUser(req)
+func (rcvr *anonymousUsecase) RegisterUser(req request.RrCreateUser) response.RrSingleIdPUser {
+	return rcvr.repo.RegisterUser(req)
 }

@@ -10,7 +10,7 @@ import (
 
 func TestUsers_Structure(t *testing.T) {
 	now := time.Now()
-	user := model.Users{
+	user := model.PgUsers{
 		ID:        1,
 		UUID:      "test-uuid-123",
 		Email:     "test@example.com",
@@ -33,7 +33,7 @@ func TestUsers_Structure(t *testing.T) {
 
 func TestGroups_Structure(t *testing.T) {
 	now := time.Now()
-	group := model.Groups{
+	group := model.PgGroups{
 		ID:        1,
 		UUID:      "group-uuid-123",
 		Name:      "Test Group",
@@ -52,7 +52,7 @@ func TestGroups_Structure(t *testing.T) {
 
 func TestMembers_Structure(t *testing.T) {
 	now := time.Now()
-	member := model.Members{
+	member := model.PgMembers{
 		ID:        1,
 		UUID:      "member-uuid-123",
 		UserUUID:  "user-uuid-456",

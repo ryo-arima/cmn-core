@@ -93,22 +93,22 @@ func NewOIDCProvider(ctx context.Context, cfg OIDCConfig) (OIDCProvider, error) 
 	}, nil
 }
 
-func (p *oidcProvider) Name() string { return p.cfg.ProviderName }
+func (rcvr *oidcProvider) Name() string { return rcvr.cfg.ProviderName }
 
 // LoginURL builds the OAuth2 authorization URL with PKCE-compatible state.
-func (p *oidcProvider) LoginURL(state string) (string, error) {
-	url := p.oauth2.AuthCodeURL(state, oauth2.AccessTypeOnline)
+func (rcvr *oidcProvider) LoginURL(state string) (string, error) {
+	url := rcvr.oauth2.AuthCodeURL(state, oauth2.AccessTypeOnline)
 	return url, nil
 }
 
 // HandleCallback exchanges the authorization code for tokens and returns normalized OIDCClaims.
-func (p *oidcProvider) HandleCallback(ctx context.Context, r *http.Request) (*OIDCClaims, error) {
+func (rcvr *oidcProvider) HandleCallback(ctx context.Context, r *http.Request) (*OIDCClaims, error) {
 	code := r.FormValue("code")
 	if code == "" {
 		return nil, errors.New("auth: OIDC callback missing code parameter")
 	}
 
-	oauth2Token, err := p.oauth2.Exchange(ctx, code)
+	oauth2Token, err := rcvr.oauth2.Exchange(ctx, code)
 	if err != nil {
 		return nil, fmt.Errorf("auth: OIDC code exchange failed: %w", err)
 	}
@@ -118,7 +118,7 @@ func (p *oidcProvider) HandleCallback(ctx context.Context, r *http.Request) (*OI
 		return nil, errors.New("auth: OIDC token response missing id_token")
 	}
 
-	idToken, err := p.verifier.Verify(ctx, rawIDToken)
+	idToken, err := rcvr.verifier.Verify(ctx, rawIDToken)
 	if err != nil {
 		return nil, fmt.Errorf("auth: OIDC id_token verification failed: %w", err)
 	}

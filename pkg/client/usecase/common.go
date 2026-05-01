@@ -31,8 +31,8 @@ func NewCommon(conf config.BaseConfig, manager *clientauth.Manager) Common {
 	return &common{repo: repository.NewCommon(conf, manager)}
 }
 
-func (u *common) ValidateToken() response.RrValidateToken { return u.repo.ValidateToken() }
-func (u *common) GetUserInfo() response.RrCommons         { return u.repo.GetUserInfo() }
+func (rcvr *common) ValidateToken() response.RrValidateToken { return rcvr.repo.ValidateToken() }
+func (rcvr *common) GetUserInfo() response.RrCommons         { return rcvr.repo.GetUserInfo() }
 
 // Format formats the given value into table, json, or yaml and returns it as string.
 func Format(format string, v interface{}) string {

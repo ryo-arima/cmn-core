@@ -42,7 +42,7 @@ func NewGroupInternal(conf config.BaseConfig, manager *clientauth.Manager) Group
 	}
 }
 
-func (r *groupInternalRepo) doJSON(method, url string, body interface{}, out interface{}) error {
+func (rcvr *groupInternalRepo) doJSON(method, url string, body interface{}, out interface{}) error {
 	var req *http.Request
 	var err error
 	if body != nil {
@@ -58,7 +58,7 @@ func (r *groupInternalRepo) doJSON(method, url string, body interface{}, out int
 		return fmt.Errorf("new request: %w", err)
 	}
 	req.Header.Set("Content-Type", "application/json")
-	resp, err := r.client.Do(req)
+	resp, err := rcvr.client.Do(req)
 	if err != nil {
 		return fmt.Errorf("do request: %w", err)
 	}
@@ -66,47 +66,47 @@ func (r *groupInternalRepo) doJSON(method, url string, body interface{}, out int
 	return json.NewDecoder(resp.Body).Decode(out)
 }
 
-func (r *groupInternalRepo) ListMyGroups() response.RrIdPGroups {
+func (rcvr *groupInternalRepo) ListMyGroups() response.RrIdPGroups {
 	var out response.RrIdPGroups
-	if err := r.doJSON("GET", r.base+"/groups", nil, &out); err != nil {
+	if err := rcvr.doJSON("GET", rcvr.base+"/groups", nil, &out); err != nil {
 		out.Code = "CLIENT_GROUP_LIST_001"
 		out.Message = err.Error()
 	}
 	return out
 }
 
-func (r *groupInternalRepo) GetGroup(id string) response.RrSingleIdPGroup {
+func (rcvr *groupInternalRepo) GetGroup(id string) response.RrSingleIdPGroup {
 	var out response.RrSingleIdPGroup
-	url := fmt.Sprintf("%s/group?id=%s", r.base, id)
-	if err := r.doJSON("GET", url, nil, &out); err != nil {
+	url := fmt.Sprintf("%s/group?id=%s", rcvr.base, id)
+	if err := rcvr.doJSON("GET", url, nil, &out); err != nil {
 		out.Code = "CLIENT_GROUP_GET_001"
 		out.Message = err.Error()
 	}
 	return out
 }
 
-func (r *groupInternalRepo) CreateGroup(req request.RrCreateGroup) response.RrSingleIdPGroup {
+func (rcvr *groupInternalRepo) CreateGroup(req request.RrCreateGroup) response.RrSingleIdPGroup {
 	var out response.RrSingleIdPGroup
-	if err := r.doJSON("POST", r.base+"/groups", req, &out); err != nil {
+	if err := rcvr.doJSON("POST", rcvr.base+"/groups", req, &out); err != nil {
 		out.Code = "CLIENT_GROUP_CREATE_001"
 		out.Message = err.Error()
 	}
 	return out
 }
 
-func (r *groupInternalRepo) UpdateGroup(id string, req request.RrUpdateGroup) response.RrCommons {
+func (rcvr *groupInternalRepo) UpdateGroup(id string, req request.RrUpdateGroup) response.RrCommons {
 	var out response.RrCommons
-	url := fmt.Sprintf("%s/groups/%s", r.base, id)
-	if err := r.doJSON("PUT", url, req, &out); err != nil {
+	url := fmt.Sprintf("%s/groups/%s", rcvr.base, id)
+	if err := rcvr.doJSON("PUT", url, req, &out); err != nil {
 		return response.RrCommons{Code: "CLIENT_GROUP_UPDATE_001", Message: err.Error()}
 	}
 	return out
 }
 
-func (r *groupInternalRepo) DeleteGroup(id string) response.RrCommons {
+func (rcvr *groupInternalRepo) DeleteGroup(id string) response.RrCommons {
 	var out response.RrCommons
-	url := fmt.Sprintf("%s/groups/%s", r.base, id)
-	if err := r.doJSON("DELETE", url, nil, &out); err != nil {
+	url := fmt.Sprintf("%s/groups/%s", rcvr.base, id)
+	if err := rcvr.doJSON("DELETE", url, nil, &out); err != nil {
 		return response.RrCommons{Code: "CLIENT_GROUP_DELETE_001", Message: err.Error()}
 	}
 	return out
@@ -127,7 +127,7 @@ func NewGroupPrivate(conf config.BaseConfig, manager *clientauth.Manager) GroupP
 	}
 }
 
-func (r *groupPrivateRepo) doJSON(method, url string, body interface{}, out interface{}) error {
+func (rcvr *groupPrivateRepo) doJSON(method, url string, body interface{}, out interface{}) error {
 	var req *http.Request
 	var err error
 	if body != nil {
@@ -143,7 +143,7 @@ func (r *groupPrivateRepo) doJSON(method, url string, body interface{}, out inte
 		return fmt.Errorf("new request: %w", err)
 	}
 	req.Header.Set("Content-Type", "application/json")
-	resp, err := r.client.Do(req)
+	resp, err := rcvr.client.Do(req)
 	if err != nil {
 		return fmt.Errorf("do request: %w", err)
 	}
@@ -151,56 +151,56 @@ func (r *groupPrivateRepo) doJSON(method, url string, body interface{}, out inte
 	return json.NewDecoder(resp.Body).Decode(out)
 }
 
-func (r *groupPrivateRepo) ListMyGroups() response.RrIdPGroups {
+func (rcvr *groupPrivateRepo) ListMyGroups() response.RrIdPGroups {
 	var out response.RrIdPGroups
-	if err := r.doJSON("GET", r.base+"/groups", nil, &out); err != nil {
+	if err := rcvr.doJSON("GET", rcvr.base+"/groups", nil, &out); err != nil {
 		out.Code = "CLIENT_GROUP_LIST_001"
 		out.Message = err.Error()
 	}
 	return out
 }
 
-func (r *groupPrivateRepo) ListGroups() response.RrIdPGroups {
+func (rcvr *groupPrivateRepo) ListGroups() response.RrIdPGroups {
 	var out response.RrIdPGroups
-	if err := r.doJSON("GET", r.base+"/groups", nil, &out); err != nil {
+	if err := rcvr.doJSON("GET", rcvr.base+"/groups", nil, &out); err != nil {
 		out.Code = "CLIENT_GROUP_LIST_001"
 		out.Message = err.Error()
 	}
 	return out
 }
 
-func (r *groupPrivateRepo) GetGroup(id string) response.RrSingleIdPGroup {
+func (rcvr *groupPrivateRepo) GetGroup(id string) response.RrSingleIdPGroup {
 	var out response.RrSingleIdPGroup
-	url := fmt.Sprintf("%s/group?id=%s", r.base, id)
-	if err := r.doJSON("GET", url, nil, &out); err != nil {
+	url := fmt.Sprintf("%s/group?id=%s", rcvr.base, id)
+	if err := rcvr.doJSON("GET", url, nil, &out); err != nil {
 		out.Code = "CLIENT_GROUP_GET_001"
 		out.Message = err.Error()
 	}
 	return out
 }
 
-func (r *groupPrivateRepo) CreateGroup(req request.RrCreateGroup) response.RrSingleIdPGroup {
+func (rcvr *groupPrivateRepo) CreateGroup(req request.RrCreateGroup) response.RrSingleIdPGroup {
 	var out response.RrSingleIdPGroup
-	if err := r.doJSON("POST", r.base+"/groups", req, &out); err != nil {
+	if err := rcvr.doJSON("POST", rcvr.base+"/groups", req, &out); err != nil {
 		out.Code = "CLIENT_GROUP_CREATE_001"
 		out.Message = err.Error()
 	}
 	return out
 }
 
-func (r *groupPrivateRepo) UpdateGroup(id string, req request.RrUpdateGroup) response.RrCommons {
+func (rcvr *groupPrivateRepo) UpdateGroup(id string, req request.RrUpdateGroup) response.RrCommons {
 	var out response.RrCommons
-	url := fmt.Sprintf("%s/groups/%s", r.base, id)
-	if err := r.doJSON("PUT", url, req, &out); err != nil {
+	url := fmt.Sprintf("%s/groups/%s", rcvr.base, id)
+	if err := rcvr.doJSON("PUT", url, req, &out); err != nil {
 		return response.RrCommons{Code: "CLIENT_GROUP_UPDATE_001", Message: err.Error()}
 	}
 	return out
 }
 
-func (r *groupPrivateRepo) DeleteGroup(id string) response.RrCommons {
+func (rcvr *groupPrivateRepo) DeleteGroup(id string) response.RrCommons {
 	var out response.RrCommons
-	url := fmt.Sprintf("%s/groups/%s", r.base, id)
-	if err := r.doJSON("DELETE", url, nil, &out); err != nil {
+	url := fmt.Sprintf("%s/groups/%s", rcvr.base, id)
+	if err := rcvr.doJSON("DELETE", url, nil, &out); err != nil {
 		return response.RrCommons{Code: "CLIENT_GROUP_DELETE_001", Message: err.Error()}
 	}
 	return out

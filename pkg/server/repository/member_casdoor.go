@@ -16,17 +16,17 @@ import (
 
 // qualifyGroup ensures the group ID has the org prefix ("cmn/group001").
 // Accepts both plain name ("group001") and already-qualified ("cmn/group001").
-func (m *casdoorManager) qualifyGroup(id string) string {
+func (rcvr *casdoorManager) qualifyGroup(id string) string {
 	if strings.Contains(id, "/") {
 		return id
 	}
-	return m.cfg.Organization + "/" + id
+	return rcvr.cfg.Organization + "/" + id
 }
 
-func (m *casdoorManager) ListGroupMembers(ctx context.Context, groupID string) ([]model.LoUser, error) {
+func (rcvr *casdoorManager) ListGroupMembers(ctx context.Context, groupID string) ([]model.LoUser, error) {
 	q := url.Values{}
-	q.Set("owner", m.cfg.Organization)
-	status, body, err := m.do(ctx, http.MethodGet, m.apiURL("/api/get-users?"+q.Encode()), nil)
+	q.Set("owner", rcvr.cfg.Organization)
+	status, body, err := rcvr.do(ctx, http.MethodGet, rcvr.apiURL("/api/get-users?"+q.Encode()), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -67,12 +67,12 @@ func (m *casdoorManager) ListGroupMembers(ctx context.Context, groupID string) (
 	return members, nil
 }
 
-func (m *casdoorManager) AddUserToGroup(ctx context.Context, userID, groupID, role string) error {
+func (rcvr *casdoorManager) AddUserToGroup(ctx context.Context, userID, groupID, role string) error {
 	// Casdoor sets group membership by updating the user's "groups" field.
 	// This requires a GET-then-PUT pattern.
 	q := url.Values{}
-	q.Set("id", m.cfg.Organization+"/"+userID)
-	status, body, err := m.do(ctx, http.MethodGet, m.apiURL("/api/get-user?"+q.Encode()), nil)
+	q.Set("id", rcvr.cfg.Organization+"/"+userID)
+	status, body, err := rcvr.do(ctx, http.MethodGet, rcvr.apiURL("/api/get-user?"+q.Encode()), nil)
 	if err != nil {
 		return err
 	}
@@ -90,7 +90,7 @@ func (m *casdoorManager) AddUserToGroup(ctx context.Context, userID, groupID, ro
 		return fmt.Errorf("casdoor: parse user map: %w", err)
 	}
 	groups := parseStringSlice(userMap["groups"])
-	qualified := m.qualifyGroup(groupID)
+	qualified := rcvr.qualifyGroup(groupID)
 	for _, g := range groups {
 		if g == qualified {
 			return nil // already a member
@@ -121,8 +121,8 @@ func (m *casdoorManager) AddUserToGroup(ctx context.Context, userID, groupID, ro
 	userMap["properties"] = propsMap
 
 	uq := url.Values{}
-	uq.Set("id", m.cfg.Organization+"/"+userID)
-	ustatus, ubody, uerr := m.do(ctx, http.MethodPost, m.apiURL("/api/update-user?"+uq.Encode()), userMap)
+	uq.Set("id", rcvr.cfg.Organization+"/"+userID)
+	ustatus, ubody, uerr := rcvr.do(ctx, http.MethodPost, rcvr.apiURL("/api/update-user?"+uq.Encode()), userMap)
 	if uerr != nil {
 		return uerr
 	}
@@ -133,10 +133,10 @@ func (m *casdoorManager) AddUserToGroup(ctx context.Context, userID, groupID, ro
 	return err
 }
 
-func (m *casdoorManager) RemoveUserFromGroup(ctx context.Context, userID, groupID string) error {
+func (rcvr *casdoorManager) RemoveUserFromGroup(ctx context.Context, userID, groupID string) error {
 	q := url.Values{}
-	q.Set("id", m.cfg.Organization+"/"+userID)
-	status, body, err := m.do(ctx, http.MethodGet, m.apiURL("/api/get-user?"+q.Encode()), nil)
+	q.Set("id", rcvr.cfg.Organization+"/"+userID)
+	status, body, err := rcvr.do(ctx, http.MethodGet, rcvr.apiURL("/api/get-user?"+q.Encode()), nil)
 	if err != nil {
 		return err
 	}
@@ -153,7 +153,7 @@ func (m *casdoorManager) RemoveUserFromGroup(ctx context.Context, userID, groupI
 		return fmt.Errorf("casdoor: parse user map: %w", err)
 	}
 	groups := parseStringSlice(userMap["groups"])
-	qualified := m.qualifyGroup(groupID)
+	qualified := rcvr.qualifyGroup(groupID)
 	filtered := make([]string, 0, len(groups))
 	for _, g := range groups {
 		if g != qualified {
@@ -181,8 +181,8 @@ func (m *casdoorManager) RemoveUserFromGroup(ctx context.Context, userID, groupI
 	}
 
 	uq := url.Values{}
-	uq.Set("id", m.cfg.Organization+"/"+userID)
-	ustatus, ubody, uerr := m.do(ctx, http.MethodPost, m.apiURL("/api/update-user?"+uq.Encode()), userMap)
+	uq.Set("id", rcvr.cfg.Organization+"/"+userID)
+	ustatus, ubody, uerr := rcvr.do(ctx, http.MethodPost, rcvr.apiURL("/api/update-user?"+uq.Encode()), userMap)
 	if uerr != nil {
 		return uerr
 	}

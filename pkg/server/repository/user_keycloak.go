@@ -17,8 +17,8 @@ import (
 
 // ---- User management -------------------------------------------------------
 
-func (m *keycloakManager) GetUser(ctx context.Context, id string) (*model.LoUser, error) {
-	status, body, err := m.do(ctx, http.MethodGet, m.adminURL("/users/"+id), nil)
+func (rcvr *keycloakManager) GetUser(ctx context.Context, id string) (*model.LoUser, error) {
+	status, body, err := rcvr.do(ctx, http.MethodGet, rcvr.adminURL("/users/"+id), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -35,8 +35,8 @@ func (m *keycloakManager) GetUser(ctx context.Context, id string) (*model.LoUser
 	return kcUserToModel(ku), nil
 }
 
-func (m *keycloakManager) ListUsers(ctx context.Context) ([]model.LoUser, error) {
-	status, body, err := m.do(ctx, http.MethodGet, m.adminURL("/users"), nil)
+func (rcvr *keycloakManager) ListUsers(ctx context.Context) ([]model.LoUser, error) {
+	status, body, err := rcvr.do(ctx, http.MethodGet, rcvr.adminURL("/users"), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -54,7 +54,7 @@ func (m *keycloakManager) ListUsers(ctx context.Context) ([]model.LoUser, error)
 	return users, nil
 }
 
-func (m *keycloakManager) CreateUser(ctx context.Context, input request.RrCreateUser) (*model.LoUser, error) {
+func (rcvr *keycloakManager) CreateUser(ctx context.Context, input request.RrCreateUser) (*model.LoUser, error) {
 	payload := model.KcUser{
 		Username:  input.Username,
 		Email:     input.Email,
@@ -68,7 +68,7 @@ func (m *keycloakManager) CreateUser(ctx context.Context, input request.RrCreate
 		}
 	}
 
-	token, err := m.getToken(ctx)
+	token, err := rcvr.getToken(ctx)
 	if err != nil {
 		return nil, err
 	}
@@ -76,14 +76,14 @@ func (m *keycloakManager) CreateUser(ctx context.Context, input request.RrCreate
 	if err != nil {
 		return nil, err
 	}
-	req, err := http.NewRequestWithContext(ctx, http.MethodPost, m.adminURL("/users"), bytes.NewReader(b))
+	req, err := http.NewRequestWithContext(ctx, http.MethodPost, rcvr.adminURL("/users"), bytes.NewReader(b))
 	if err != nil {
 		return nil, err
 	}
 	req.Header.Set("Authorization", "Bearer "+token)
 	req.Header.Set("Content-Type", "application/json")
 
-	resp, err := m.client.Do(req)
+	resp, err := rcvr.client.Do(req)
 	if err != nil {
 		return nil, fmt.Errorf("keycloak: create user: %w", err)
 	}
@@ -97,10 +97,10 @@ func (m *keycloakManager) CreateUser(ctx context.Context, input request.RrCreate
 	if newID == "" {
 		return nil, fmt.Errorf("keycloak: could not determine new user ID from Location header")
 	}
-	return m.GetUser(ctx, newID)
+	return rcvr.GetUser(ctx, newID)
 }
 
-func (m *keycloakManager) UpdateUser(ctx context.Context, id string, input request.RrUpdateUser) error {
+func (rcvr *keycloakManager) UpdateUser(ctx context.Context, id string, input request.RrUpdateUser) error {
 	payload := make(map[string]interface{})
 	if input.Email != nil {
 		payload["email"] = *input.Email
@@ -114,7 +114,7 @@ func (m *keycloakManager) UpdateUser(ctx context.Context, id string, input reque
 	if input.Enabled != nil {
 		payload["enabled"] = *input.Enabled
 	}
-	status, body, err := m.do(ctx, http.MethodPut, m.adminURL("/users/"+id), payload)
+	status, body, err := rcvr.do(ctx, http.MethodPut, rcvr.adminURL("/users/"+id), payload)
 	if err != nil {
 		return err
 	}
@@ -124,8 +124,8 @@ func (m *keycloakManager) UpdateUser(ctx context.Context, id string, input reque
 	return nil
 }
 
-func (m *keycloakManager) DeleteUser(ctx context.Context, id string) error {
-	status, body, err := m.do(ctx, http.MethodDelete, m.adminURL("/users/"+id), nil)
+func (rcvr *keycloakManager) DeleteUser(ctx context.Context, id string) error {
+	status, body, err := rcvr.do(ctx, http.MethodDelete, rcvr.adminURL("/users/"+id), nil)
 	if err != nil {
 		return err
 	}
@@ -136,12 +136,12 @@ func (m *keycloakManager) DeleteUser(ctx context.Context, id string) error {
 }
 
 // Login performs an ROPC grant on behalf of a user and returns the issued access token.
-func (m *keycloakManager) Login(ctx context.Context, username, password string) (string, error) {
-	tokenURL := fmt.Sprintf("%s/realms/%s/protocol/openid-connect/token", m.cfg.BaseURL, m.cfg.Realm)
+func (rcvr *keycloakManager) Login(ctx context.Context, username, password string) (string, error) {
+	tokenURL := fmt.Sprintf("%s/realms/%s/protocol/openid-connect/token", rcvr.cfg.BaseURL, rcvr.cfg.Realm)
 	form := url.Values{}
 	form.Set("grant_type", "password")
-	form.Set("client_id", m.cfg.AdminClientID)
-	form.Set("client_secret", m.cfg.AdminClientSecret)
+	form.Set("client_id", rcvr.cfg.AdminClientID)
+	form.Set("client_secret", rcvr.cfg.AdminClientSecret)
 	form.Set("username", username)
 	form.Set("password", password)
 
@@ -151,7 +151,7 @@ func (m *keycloakManager) Login(ctx context.Context, username, password string) 
 	}
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 
-	resp, err := m.client.Do(req)
+	resp, err := rcvr.client.Do(req)
 	if err != nil {
 		return "", fmt.Errorf("keycloak: login request: %w", err)
 	}

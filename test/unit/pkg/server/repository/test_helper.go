@@ -95,8 +95,8 @@ func createMockDB() (*gorm.DB, sqlmock.Sqlmock, *sql.DB) {
 }
 
 // CleanupDB cleans up the test database
-func (th *TestHelper) CleanupDB() {
-	if th.SqlDB != nil {
-		th.SqlDB.Close()
+func (rcvr *TestHelper) CleanupDB() {
+	if rcvr.SqlDB != nil {
+		rcvr.SqlDB.Close()
 	}
 }

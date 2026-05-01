@@ -398,13 +398,15 @@ func TestNewBaseConfigWithContext_SecretsManagerFallback(t *testing.T) {
 func TestClientConfig(t *testing.T) {
 	client := config.Client{
 		ServerEndpoint: "http://localhost:8080",
-		UserEmail:      "user@test.com",
-		UserPassword:   "password123",
+		Credentials: config.ClientCredentials{
+			Email:    "user@test.com",
+			Password: "password123",
+		},
 	}
 
 	assert.Equal(t, "http://localhost:8080", client.ServerEndpoint)
-	assert.Equal(t, "user@test.com", client.UserEmail)
-	assert.Equal(t, "password123", client.UserPassword)
+	assert.Equal(t, "user@test.com", client.Credentials.Email)
+	assert.Equal(t, "password123", client.Credentials.Password)
 }
 
 func TestAdminConfig(t *testing.T) {

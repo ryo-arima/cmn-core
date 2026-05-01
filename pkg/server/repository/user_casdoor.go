@@ -16,10 +16,10 @@ import (
 
 // ---- User management -------------------------------------------------------
 
-func (m *casdoorManager) GetUser(ctx context.Context, id string) (*model.LoUser, error) {
+func (rcvr *casdoorManager) GetUser(ctx context.Context, id string) (*model.LoUser, error) {
 	q := url.Values{}
-	q.Set("id", m.cfg.Organization+"/"+id)
-	status, body, err := m.do(ctx, http.MethodGet, m.apiURL("/api/get-user?"+q.Encode()), nil)
+	q.Set("id", rcvr.cfg.Organization+"/"+id)
+	status, body, err := rcvr.do(ctx, http.MethodGet, rcvr.apiURL("/api/get-user?"+q.Encode()), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -40,10 +40,10 @@ func (m *casdoorManager) GetUser(ctx context.Context, id string) (*model.LoUser,
 	return cdUserToModel(cu), nil
 }
 
-func (m *casdoorManager) ListUsers(ctx context.Context) ([]model.LoUser, error) {
+func (rcvr *casdoorManager) ListUsers(ctx context.Context) ([]model.LoUser, error) {
 	q := url.Values{}
-	q.Set("owner", m.cfg.Organization)
-	status, body, err := m.do(ctx, http.MethodGet, m.apiURL("/api/get-users?"+q.Encode()), nil)
+	q.Set("owner", rcvr.cfg.Organization)
+	status, body, err := rcvr.do(ctx, http.MethodGet, rcvr.apiURL("/api/get-users?"+q.Encode()), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -65,9 +65,9 @@ func (m *casdoorManager) ListUsers(ctx context.Context) ([]model.LoUser, error) 
 	return users, nil
 }
 
-func (m *casdoorManager) CreateUser(ctx context.Context, input request.RrCreateUser) (*model.LoUser, error) {
+func (rcvr *casdoorManager) CreateUser(ctx context.Context, input request.RrCreateUser) (*model.LoUser, error) {
 	payload := model.CdUser{
-		Owner:       m.cfg.Organization,
+		Owner:       rcvr.cfg.Organization,
 		Name:        input.Username,
 		Email:       input.Email,
 		FirstName:   input.FirstName,
@@ -75,7 +75,7 @@ func (m *casdoorManager) CreateUser(ctx context.Context, input request.RrCreateU
 		IsForbidden: !input.Enabled,
 		Password:    input.Password,
 	}
-	status, body, err := m.do(ctx, http.MethodPost, m.apiURL("/api/add-user"), payload)
+	status, body, err := rcvr.do(ctx, http.MethodPost, rcvr.apiURL("/api/add-user"), payload)
 	if err != nil {
 		return nil, err
 	}
@@ -85,17 +85,17 @@ func (m *casdoorManager) CreateUser(ctx context.Context, input request.RrCreateU
 	if _, err := checkCdResponse(body); err != nil {
 		return nil, err
 	}
-	return m.GetUser(ctx, input.Username)
+	return rcvr.GetUser(ctx, input.Username)
 }
 
-func (m *casdoorManager) UpdateUser(ctx context.Context, id string, input request.RrUpdateUser) error {
+func (rcvr *casdoorManager) UpdateUser(ctx context.Context, id string, input request.RrUpdateUser) error {
 	// Fetch first to preserve unchanged fields.
-	existing, err := m.GetUser(ctx, id)
+	existing, err := rcvr.GetUser(ctx, id)
 	if err != nil {
 		return err
 	}
 	payload := model.CdUser{
-		Owner:     m.cfg.Organization,
+		Owner:     rcvr.cfg.Organization,
 		Name:      id,
 		Email:     existing.Email,
 		FirstName: existing.FirstName,
@@ -114,8 +114,8 @@ func (m *casdoorManager) UpdateUser(ctx context.Context, id string, input reques
 		payload.IsForbidden = !*input.Enabled
 	}
 	q := url.Values{}
-	q.Set("id", m.cfg.Organization+"/"+id)
-	status, body, err := m.do(ctx, http.MethodPost, m.apiURL("/api/update-user?"+q.Encode()), payload)
+	q.Set("id", rcvr.cfg.Organization+"/"+id)
+	status, body, err := rcvr.do(ctx, http.MethodPost, rcvr.apiURL("/api/update-user?"+q.Encode()), payload)
 	if err != nil {
 		return err
 	}
@@ -126,9 +126,9 @@ func (m *casdoorManager) UpdateUser(ctx context.Context, id string, input reques
 	return err
 }
 
-func (m *casdoorManager) DeleteUser(ctx context.Context, id string) error {
-	payload := model.CdUser{Owner: m.cfg.Organization, Name: id}
-	status, body, err := m.do(ctx, http.MethodPost, m.apiURL("/api/delete-user"), payload)
+func (rcvr *casdoorManager) DeleteUser(ctx context.Context, id string) error {
+	payload := model.CdUser{Owner: rcvr.cfg.Organization, Name: id}
+	status, body, err := rcvr.do(ctx, http.MethodPost, rcvr.apiURL("/api/delete-user"), payload)
 	if err != nil {
 		return err
 	}
@@ -140,12 +140,12 @@ func (m *casdoorManager) DeleteUser(ctx context.Context, id string) error {
 }
 
 // Login performs an ROPC grant on behalf of a user and returns the issued access token.
-func (m *casdoorManager) Login(ctx context.Context, username, password string) (string, error) {
-	tokenURL := m.apiURL("/api/login/oauth/access_token")
+func (rcvr *casdoorManager) Login(ctx context.Context, username, password string) (string, error) {
+	tokenURL := rcvr.apiURL("/api/login/oauth/access_token")
 	form := url.Values{}
 	form.Set("grant_type", "password")
-	form.Set("client_id", m.cfg.ClientID)
-	form.Set("client_secret", m.cfg.ClientSecret)
+	form.Set("client_id", rcvr.cfg.ClientID)
+	form.Set("client_secret", rcvr.cfg.ClientSecret)
 	form.Set("username", username)
 	form.Set("password", password)
 
@@ -155,7 +155,7 @@ func (m *casdoorManager) Login(ctx context.Context, username, password string) (
 	}
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 
-	resp, err := m.client.Do(req)
+	resp, err := rcvr.client.Do(req)
 	if err != nil {
 		return "", fmt.Errorf("casdoor: login request: %w", err)
 	}

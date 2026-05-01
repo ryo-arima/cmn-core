@@ -34,13 +34,13 @@ func NewResourceInternal(ru usecase.Resource) ResourceInternal {
 
 // ListResources lists resources accessible to the caller.
 // GET /v1/internal/resources
-func (rc *resourceInternal) ListResources(c *gin.Context) {
+func (rcvr *resourceInternal) ListResources(c *gin.Context) {
 	claims, ok := share.GetUserClaims(c)
 	if !ok {
 		c.JSON(http.StatusUnauthorized, gin.H{"code": "RESOURCE_AUTH_001", "message": "Unauthorized"})
 		return
 	}
-	resources, err := rc.resourceUsecase.ListResources(c.Request.Context(), claims.UUID, claims.Groups)
+	resources, err := rcvr.resourceUsecase.ListResources(c.Request.Context(), claims.UUID, claims.Groups)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"code": "RESOURCE_LIST_001", "message": err.Error()})
 		return
@@ -54,13 +54,13 @@ func (rc *resourceInternal) ListResources(c *gin.Context) {
 
 // GetResource returns a single resource by UUID.
 // GET /v1/internal/resource?uuid=...
-func (rc *resourceInternal) GetResource(c *gin.Context) {
+func (rcvr *resourceInternal) GetResource(c *gin.Context) {
 	claims, ok := share.GetUserClaims(c)
 	if !ok {
 		c.JSON(http.StatusUnauthorized, gin.H{"code": "RESOURCE_AUTH_001", "message": "Unauthorized"})
 		return
 	}
-	res, err := rc.resourceUsecase.GetResource(c.Request.Context(), c.Query("uuid"), claims.UUID, claims.Groups, false)
+	res, err := rcvr.resourceUsecase.GetResource(c.Request.Context(), c.Query("uuid"), claims.UUID, claims.Groups, false)
 	if err != nil {
 		if err.Error() == "access denied" {
 			c.JSON(http.StatusForbidden, gin.H{"code": "RESOURCE_GET_403", "message": "Access denied"})
@@ -74,7 +74,7 @@ func (rc *resourceInternal) GetResource(c *gin.Context) {
 
 // CreateResource creates a new resource.
 // POST /v1/internal/resources
-func (rc *resourceInternal) CreateResource(c *gin.Context) {
+func (rcvr *resourceInternal) CreateResource(c *gin.Context) {
 	claims, ok := share.GetUserClaims(c)
 	if !ok {
 		c.JSON(http.StatusUnauthorized, gin.H{"code": "RESOURCE_AUTH_001", "message": "Unauthorized"})
@@ -85,7 +85,7 @@ func (rc *resourceInternal) CreateResource(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"code": "RESOURCE_CREATE_001", "message": "Invalid request body"})
 		return
 	}
-	res, err := rc.resourceUsecase.CreateResource(c.Request.Context(), req.Name, req.Description, claims.UUID, req.OwnerGroup)
+	res, err := rcvr.resourceUsecase.CreateResource(c.Request.Context(), req.Name, req.Description, claims.UUID, req.OwnerGroup)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"code": "RESOURCE_CREATE_002", "message": err.Error()})
 		return
@@ -95,7 +95,7 @@ func (rc *resourceInternal) CreateResource(c *gin.Context) {
 
 // UpdateResource updates an existing resource.
 // PUT /v1/internal/resources/:uuid
-func (rc *resourceInternal) UpdateResource(c *gin.Context) {
+func (rcvr *resourceInternal) UpdateResource(c *gin.Context) {
 	claims, ok := share.GetUserClaims(c)
 	if !ok {
 		c.JSON(http.StatusUnauthorized, gin.H{"code": "RESOURCE_AUTH_001", "message": "Unauthorized"})
@@ -106,7 +106,7 @@ func (rc *resourceInternal) UpdateResource(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"code": "RESOURCE_UPDATE_001", "message": "Invalid request body"})
 		return
 	}
-	res, err := rc.resourceUsecase.UpdateResource(c.Request.Context(), c.Param("uuid"), req.Name, req.Description, claims.UUID, claims.Groups, false)
+	res, err := rcvr.resourceUsecase.UpdateResource(c.Request.Context(), c.Param("uuid"), req.Name, req.Description, claims.UUID, claims.Groups, false)
 	if err != nil {
 		if err.Error() == "access denied" {
 			c.JSON(http.StatusForbidden, gin.H{"code": "RESOURCE_UPDATE_403", "message": "Access denied"})
@@ -120,13 +120,13 @@ func (rc *resourceInternal) UpdateResource(c *gin.Context) {
 
 // DeleteResource soft-deletes a resource.
 // DELETE /v1/internal/resources/:uuid
-func (rc *resourceInternal) DeleteResource(c *gin.Context) {
+func (rcvr *resourceInternal) DeleteResource(c *gin.Context) {
 	claims, ok := share.GetUserClaims(c)
 	if !ok {
 		c.JSON(http.StatusUnauthorized, gin.H{"code": "RESOURCE_AUTH_001", "message": "Unauthorized"})
 		return
 	}
-	if err := rc.resourceUsecase.DeleteResource(c.Request.Context(), c.Param("uuid"), claims.UUID, claims.Groups, false); err != nil {
+	if err := rcvr.resourceUsecase.DeleteResource(c.Request.Context(), c.Param("uuid"), claims.UUID, claims.Groups, false); err != nil {
 		if err.Error() == "access denied" {
 			c.JSON(http.StatusForbidden, gin.H{"code": "RESOURCE_DELETE_403", "message": "Access denied"})
 			return
@@ -139,13 +139,13 @@ func (rc *resourceInternal) DeleteResource(c *gin.Context) {
 
 // GetResourceGroupRoles lists the group-role entries for a resource.
 // GET /v1/internal/resource/groups?uuid=...
-func (rc *resourceInternal) GetResourceGroupRoles(c *gin.Context) {
+func (rcvr *resourceInternal) GetResourceGroupRoles(c *gin.Context) {
 	claims, ok := share.GetUserClaims(c)
 	if !ok {
 		c.JSON(http.StatusUnauthorized, gin.H{"code": "RESOURCE_AUTH_001", "message": "Unauthorized"})
 		return
 	}
-	roles, err := rc.resourceUsecase.GetGroupRoles(c.Request.Context(), c.Query("uuid"), claims.UUID, claims.Groups, false)
+	roles, err := rcvr.resourceUsecase.GetGroupRoles(c.Request.Context(), c.Query("uuid"), claims.UUID, claims.Groups, false)
 	if err != nil {
 		if err.Error() == "access denied" {
 			c.JSON(http.StatusForbidden, gin.H{"code": "RESOURCE_GROUP_403", "message": "Access denied"})
@@ -163,7 +163,7 @@ func (rc *resourceInternal) GetResourceGroupRoles(c *gin.Context) {
 
 // SetResourceGroupRole adds or updates a group-role entry.
 // PUT /v1/internal/resources/:uuid/groups
-func (rc *resourceInternal) SetResourceGroupRole(c *gin.Context) {
+func (rcvr *resourceInternal) SetResourceGroupRole(c *gin.Context) {
 	claims, ok := share.GetUserClaims(c)
 	if !ok {
 		c.JSON(http.StatusUnauthorized, gin.H{"code": "RESOURCE_AUTH_001", "message": "Unauthorized"})
@@ -174,7 +174,7 @@ func (rc *resourceInternal) SetResourceGroupRole(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"code": "RESOURCE_GROUP_SET_001", "message": "Invalid request body"})
 		return
 	}
-	if err := rc.resourceUsecase.SetGroupRole(c.Request.Context(), c.Param("uuid"), req.GroupID, req.Role, claims.UUID, claims.Groups, false); err != nil {
+	if err := rcvr.resourceUsecase.SetGroupRole(c.Request.Context(), c.Param("uuid"), req.GroupID, req.Role, claims.UUID, claims.Groups, false); err != nil {
 		if err.Error() == "access denied" {
 			c.JSON(http.StatusForbidden, gin.H{"code": "RESOURCE_GROUP_SET_403", "message": "Access denied"})
 			return
@@ -187,13 +187,13 @@ func (rc *resourceInternal) SetResourceGroupRole(c *gin.Context) {
 
 // DeleteResourceGroupRole removes a group-role entry.
 // DELETE /v1/internal/resources/:uuid/groups/:group_id
-func (rc *resourceInternal) DeleteResourceGroupRole(c *gin.Context) {
+func (rcvr *resourceInternal) DeleteResourceGroupRole(c *gin.Context) {
 	claims, ok := share.GetUserClaims(c)
 	if !ok {
 		c.JSON(http.StatusUnauthorized, gin.H{"code": "RESOURCE_AUTH_001", "message": "Unauthorized"})
 		return
 	}
-	if err := rc.resourceUsecase.DeleteGroupRole(c.Request.Context(), c.Param("uuid"), c.Param("group_id"), claims.UUID, claims.Groups, false); err != nil {
+	if err := rcvr.resourceUsecase.DeleteGroupRole(c.Request.Context(), c.Param("uuid"), c.Param("group_id"), claims.UUID, claims.Groups, false); err != nil {
 		if err.Error() == "access denied" {
 			c.JSON(http.StatusForbidden, gin.H{"code": "RESOURCE_GROUP_DEL_403", "message": "Access denied"})
 			return

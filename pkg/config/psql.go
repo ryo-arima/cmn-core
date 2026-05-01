@@ -18,15 +18,15 @@ type PostgreSQL struct {
 }
 
 // ConnectDB connects to PostgreSQL only when needed (safe to call multiple times).
-func (bc *BaseConfig) ConnectDB() error {
-	if bc.DBConnection != nil {
+func (rcvr *BaseConfig) ConnectDB() error {
+	if rcvr.DBConnection != nil {
 		return nil
 	}
-	db := NewDBConnection(bc.YamlConfig)
+	db := NewDBConnection(rcvr.YamlConfig)
 	if db == nil {
 		return fmt.Errorf("failed to connect database")
 	}
-	bc.DBConnection = db
+	rcvr.DBConnection = db
 	return nil
 }
 

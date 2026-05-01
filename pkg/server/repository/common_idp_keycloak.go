@@ -33,23 +33,23 @@ func newKeycloakManager(cfg config.KeycloakConfig) IdPManager {
 	}
 }
 
-func (m *keycloakManager) adminURL(path string) string {
-	return fmt.Sprintf("%s/admin/realms/%s%s", m.cfg.BaseURL, m.cfg.Realm, path)
+func (rcvr *keycloakManager) adminURL(path string) string {
+	return fmt.Sprintf("%s/admin/realms/%s%s", rcvr.cfg.BaseURL, rcvr.cfg.Realm, path)
 }
 
 // getToken obtains (or returns a cached) admin access token via client_credentials.
-func (m *keycloakManager) getToken(ctx context.Context) (string, error) {
-	m.mu.Lock()
-	defer m.mu.Unlock()
-	if m.token != "" && time.Now().Before(m.expiry) {
-		return m.token, nil
+func (rcvr *keycloakManager) getToken(ctx context.Context) (string, error) {
+	rcvr.mu.Lock()
+	defer rcvr.mu.Unlock()
+	if rcvr.token != "" && time.Now().Before(rcvr.expiry) {
+		return rcvr.token, nil
 	}
 
-	tokenURL := fmt.Sprintf("%s/realms/%s/protocol/openid-connect/token", m.cfg.BaseURL, m.cfg.Realm)
+	tokenURL := fmt.Sprintf("%s/realms/%s/protocol/openid-connect/token", rcvr.cfg.BaseURL, rcvr.cfg.Realm)
 	form := url.Values{}
 	form.Set("grant_type", "client_credentials")
-	form.Set("client_id", m.cfg.AdminClientID)
-	form.Set("client_secret", m.cfg.AdminClientSecret)
+	form.Set("client_id", rcvr.cfg.AdminClientID)
+	form.Set("client_secret", rcvr.cfg.AdminClientSecret)
 
 	req, err := http.NewRequestWithContext(ctx, http.MethodPost, tokenURL, strings.NewReader(form.Encode()))
 	if err != nil {
@@ -57,7 +57,7 @@ func (m *keycloakManager) getToken(ctx context.Context) (string, error) {
 	}
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 
-	resp, err := m.client.Do(req)
+	resp, err := rcvr.client.Do(req)
 	if err != nil {
 		return "", fmt.Errorf("keycloak: token request: %w", err)
 	}
@@ -72,15 +72,15 @@ func (m *keycloakManager) getToken(ctx context.Context) (string, error) {
 	if err := json.Unmarshal(body, &t); err != nil {
 		return "", fmt.Errorf("keycloak: parse token response: %w", err)
 	}
-	m.token = t.AccessToken
+	rcvr.token = t.AccessToken
 	// Subtract 10 s to avoid using an almost-expired token.
-	m.expiry = time.Now().Add(time.Duration(t.ExpiresIn-10) * time.Second)
-	return m.token, nil
+	rcvr.expiry = time.Now().Add(time.Duration(t.ExpiresIn-10) * time.Second)
+	return rcvr.token, nil
 }
 
 // do performs an authenticated request and returns status + response body.
-func (m *keycloakManager) do(ctx context.Context, method, rawURL string, payload interface{}) (int, []byte, error) {
-	token, err := m.getToken(ctx)
+func (rcvr *keycloakManager) do(ctx context.Context, method, rawURL string, payload interface{}) (int, []byte, error) {
+	token, err := rcvr.getToken(ctx)
 	if err != nil {
 		return 0, nil, err
 	}
@@ -103,7 +103,7 @@ func (m *keycloakManager) do(ctx context.Context, method, rawURL string, payload
 		req.Header.Set("Content-Type", "application/json")
 	}
 
-	resp, err := m.client.Do(req)
+	resp, err := rcvr.client.Do(req)
 	if err != nil {
 		return 0, nil, fmt.Errorf("keycloak: %s %s: %w", method, rawURL, err)
 	}

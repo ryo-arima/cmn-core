@@ -102,15 +102,15 @@ func canManage(roles []model.PgResourceGroupRole, res *model.PgResource, userUUI
 
 // ---- implementation --------------------------------------------------------
 
-func (uc *resourceUsecase) ListResources(ctx context.Context, userUUID string, groups []string) ([]model.PgResource, error) {
-	return uc.repo.ListResources(ctx, request.LoResourceQueryFilter{
+func (rcvr *resourceUsecase) ListResources(ctx context.Context, userUUID string, groups []string) ([]model.PgResource, error) {
+	return rcvr.repo.ListResources(ctx, request.LoResourceQueryFilter{
 		CreatedBy: userUUID,
 		GroupIDs:  groups,
 	})
 }
 
-func (uc *resourceUsecase) GetResource(ctx context.Context, resourceUUID, userUUID string, groups []string, isAdmin bool) (*model.PgResource, error) {
-	res, err := uc.repo.GetResourceByUUID(ctx, resourceUUID)
+func (rcvr *resourceUsecase) GetResource(ctx context.Context, resourceUUID, userUUID string, groups []string, isAdmin bool) (*model.PgResource, error) {
+	res, err := rcvr.repo.GetResourceByUUID(ctx, resourceUUID)
 	if err != nil {
 		return nil, err
 	}
@@ -118,7 +118,7 @@ func (uc *resourceUsecase) GetResource(ctx context.Context, resourceUUID, userUU
 		return res, nil
 	}
 	// Check group membership via DB
-	roles, err := uc.repo.GetGroupRoles(ctx, resourceUUID)
+	roles, err := rcvr.repo.GetGroupRoles(ctx, resourceUUID)
 	if err != nil {
 		return nil, err
 	}
@@ -128,7 +128,7 @@ func (uc *resourceUsecase) GetResource(ctx context.Context, resourceUUID, userUU
 	return nil, fmt.Errorf("access denied")
 }
 
-func (uc *resourceUsecase) CreateResource(ctx context.Context, name, description, userID, ownerGroup string) (*model.PgResource, error) {
+func (rcvr *resourceUsecase) CreateResource(ctx context.Context, name, description, userID, ownerGroup string) (*model.PgResource, error) {
 	res := &model.PgResource{
 		UUID:        uuid.New().String(),
 		Name:        name,
@@ -137,18 +137,18 @@ func (uc *resourceUsecase) CreateResource(ctx context.Context, name, description
 		CreatedBy:   userID,
 		UpdatedBy:   userID,
 	}
-	if err := uc.repo.CreateResource(ctx, res); err != nil {
+	if err := rcvr.repo.CreateResource(ctx, res); err != nil {
 		return nil, err
 	}
 	return res, nil
 }
 
-func (uc *resourceUsecase) UpdateResource(ctx context.Context, resourceUUID, name, description, userUUID string, groups []string, isAdmin bool) (*model.PgResource, error) {
-	res, err := uc.repo.GetResourceByUUID(ctx, resourceUUID)
+func (rcvr *resourceUsecase) UpdateResource(ctx context.Context, resourceUUID, name, description, userUUID string, groups []string, isAdmin bool) (*model.PgResource, error) {
+	res, err := rcvr.repo.GetResourceByUUID(ctx, resourceUUID)
 	if err != nil {
 		return nil, err
 	}
-	roles, err := uc.repo.GetGroupRoles(ctx, resourceUUID)
+	roles, err := rcvr.repo.GetGroupRoles(ctx, resourceUUID)
 	if err != nil {
 		return nil, err
 	}
@@ -162,45 +162,45 @@ func (uc *resourceUsecase) UpdateResource(ctx context.Context, resourceUUID, nam
 		res.Description = description
 	}
 	res.UpdatedBy = userUUID
-	if err := uc.repo.UpdateResource(ctx, res); err != nil {
+	if err := rcvr.repo.UpdateResource(ctx, res); err != nil {
 		return nil, err
 	}
 	return res, nil
 }
 
-func (uc *resourceUsecase) DeleteResource(ctx context.Context, resourceUUID, userUUID string, groups []string, isAdmin bool) error {
-	res, err := uc.repo.GetResourceByUUID(ctx, resourceUUID)
+func (rcvr *resourceUsecase) DeleteResource(ctx context.Context, resourceUUID, userUUID string, groups []string, isAdmin bool) error {
+	res, err := rcvr.repo.GetResourceByUUID(ctx, resourceUUID)
 	if err != nil {
 		return err
 	}
-	roles, err := uc.repo.GetGroupRoles(ctx, resourceUUID)
+	roles, err := rcvr.repo.GetGroupRoles(ctx, resourceUUID)
 	if err != nil {
 		return err
 	}
 	if !canManage(roles, res, userUUID, groups, isAdmin, "owner") {
 		return fmt.Errorf("access denied")
 	}
-	return uc.repo.SoftDeleteResource(ctx, res, userUUID)
+	return rcvr.repo.SoftDeleteResource(ctx, res, userUUID)
 }
 
-func (uc *resourceUsecase) ListAllResources(ctx context.Context) ([]model.PgResource, error) {
-	return uc.repo.ListAllResources(ctx)
+func (rcvr *resourceUsecase) ListAllResources(ctx context.Context) ([]model.PgResource, error) {
+	return rcvr.repo.ListAllResources(ctx)
 }
 
-func (uc *resourceUsecase) AdminDeleteResource(ctx context.Context, resourceUUID, userUUID string) error {
-	res, err := uc.repo.GetResourceByUUID(ctx, resourceUUID)
+func (rcvr *resourceUsecase) AdminDeleteResource(ctx context.Context, resourceUUID, userUUID string) error {
+	res, err := rcvr.repo.GetResourceByUUID(ctx, resourceUUID)
 	if err != nil {
 		return err
 	}
-	return uc.repo.SoftDeleteResource(ctx, res, userUUID)
+	return rcvr.repo.SoftDeleteResource(ctx, res, userUUID)
 }
 
-func (uc *resourceUsecase) GetGroupRoles(ctx context.Context, resourceUUID, userID string, groups []string, isAdmin bool) ([]model.PgResourceGroupRole, error) {
-	res, err := uc.repo.GetResourceByUUID(ctx, resourceUUID)
+func (rcvr *resourceUsecase) GetGroupRoles(ctx context.Context, resourceUUID, userID string, groups []string, isAdmin bool) ([]model.PgResourceGroupRole, error) {
+	res, err := rcvr.repo.GetResourceByUUID(ctx, resourceUUID)
 	if err != nil {
 		return nil, err
 	}
-	roles, err := uc.repo.GetGroupRoles(ctx, resourceUUID)
+	roles, err := rcvr.repo.GetGroupRoles(ctx, resourceUUID)
 	if err != nil {
 		return nil, err
 	}
@@ -210,36 +210,36 @@ func (uc *resourceUsecase) GetGroupRoles(ctx context.Context, resourceUUID, user
 	return roles, nil
 }
 
-func (uc *resourceUsecase) SetGroupRole(ctx context.Context, resourceUUID, groupID, role, userID string, groups []string, isAdmin bool) error {
-	res, err := uc.repo.GetResourceByUUID(ctx, resourceUUID)
+func (rcvr *resourceUsecase) SetGroupRole(ctx context.Context, resourceUUID, groupID, role, userID string, groups []string, isAdmin bool) error {
+	res, err := rcvr.repo.GetResourceByUUID(ctx, resourceUUID)
 	if err != nil {
 		return err
 	}
-	roles, err := uc.repo.GetGroupRoles(ctx, resourceUUID)
+	roles, err := rcvr.repo.GetGroupRoles(ctx, resourceUUID)
 	if err != nil {
 		return err
 	}
 	if !canManage(roles, res, userID, groups, isAdmin, "owner") {
 		return fmt.Errorf("access denied")
 	}
-	return uc.repo.SetGroupRole(ctx, &model.PgResourceGroupRole{
+	return rcvr.repo.SetGroupRole(ctx, &model.PgResourceGroupRole{
 		ResourceUUID: resourceUUID,
 		GroupID:      groupID,
 		Role:         role,
 	})
 }
 
-func (uc *resourceUsecase) DeleteGroupRole(ctx context.Context, resourceUUID, groupID, userID string, groups []string, isAdmin bool) error {
-	res, err := uc.repo.GetResourceByUUID(ctx, resourceUUID)
+func (rcvr *resourceUsecase) DeleteGroupRole(ctx context.Context, resourceUUID, groupID, userID string, groups []string, isAdmin bool) error {
+	res, err := rcvr.repo.GetResourceByUUID(ctx, resourceUUID)
 	if err != nil {
 		return err
 	}
-	roles, err := uc.repo.GetGroupRoles(ctx, resourceUUID)
+	roles, err := rcvr.repo.GetGroupRoles(ctx, resourceUUID)
 	if err != nil {
 		return err
 	}
 	if !canManage(roles, res, userID, groups, isAdmin, "owner") {
 		return fmt.Errorf("access denied")
 	}
-	return uc.repo.DeleteGroupRole(ctx, resourceUUID, groupID)
+	return rcvr.repo.DeleteGroupRole(ctx, resourceUUID, groupID)
 }

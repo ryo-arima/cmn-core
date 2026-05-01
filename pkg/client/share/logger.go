@@ -43,8 +43,8 @@ const (
 )
 
 // String returns string representation of log level
-func (l ClientLogLevel) String() string {
-	switch l {
+func (rcvr ClientLogLevel) String() string {
+	switch rcvr {
 	case CLIENT_DEBUG:
 		return "DEBUG  "
 	case CLIENT_INFO:
@@ -133,8 +133,8 @@ func formatClientWithOptional(mcode global.MCode, optionalMessage string) string
 }
 
 // log writes a log entry
-func (l *ClientLogger) log(level ClientLogLevel, mcode global.MCode, optionalMessage string, fields map[string]interface{}) {
-	if level < l.level {
+func (rcvr *ClientLogger) log(level ClientLogLevel, mcode global.MCode, optionalMessage string, fields map[string]interface{}) {
+	if level < rcvr.level {
 		return
 	}
 
@@ -147,19 +147,19 @@ func (l *ClientLogger) log(level ClientLogLevel, mcode global.MCode, optionalMes
 		Timestamp: timestamp,
 		Level:     level.String(),
 		Code:      mcode.Code,
-		Component: l.config.Component,
-		Service:   l.config.Service,
+		Component: rcvr.config.Component,
+		Service:   rcvr.config.Service,
 		Message:   finalMessage,
 		Fields:    fields,
 	}
 
-	l.writeLogEntry(entry)
+	rcvr.writeLogEntry(entry)
 }
 
 // writeLogEntry writes the actual log entry to output
-func (l *ClientLogger) writeLogEntry(entry ClientLogEntry) {
+func (rcvr *ClientLogger) writeLogEntry(entry ClientLogEntry) {
 	// Add caller information if enabled or DEBUG level
-	if l.config.EnableCaller || l.level == CLIENT_DEBUG {
+	if rcvr.config.EnableCaller || rcvr.level == CLIENT_DEBUG {
 		if pc, file, line, ok := runtime.Caller(4); ok {
 			entry.File = file
 			entry.Line = line
@@ -181,54 +181,54 @@ func (l *ClientLogger) writeLogEntry(entry ClientLogEntry) {
 		}
 	}
 
-	if l.config.Structured {
+	if rcvr.config.Structured {
 		// JSON format
 		if jsonBytes, err := json.Marshal(entry); err == nil {
-			fmt.Fprintln(l.output, string(jsonBytes))
+			fmt.Fprintln(rcvr.output, string(jsonBytes))
 		} else {
 			// Fallback
-			fmt.Fprintf(l.output, "[%s] [%s] [%s] %s\n",
+			fmt.Fprintf(rcvr.output, "[%s] [%s] [%s] %s\n",
 				entry.Timestamp, entry.Level, entry.Code, entry.Message)
 		}
 	} else {
 		// Human-readable format for CLI
-		fmt.Fprintf(l.output, "[%s] [%s] [%s] %s",
+		fmt.Fprintf(rcvr.output, "[%s] [%s] [%s] %s",
 			entry.Timestamp, entry.Level, entry.Code, entry.Message)
 		if len(entry.Fields) > 0 && entry.Level == "DEBUG  " {
 			if fieldsJSON, err := json.Marshal(entry.Fields); err == nil {
-				fmt.Fprintf(l.output, " %s", string(fieldsJSON))
+				fmt.Fprintf(rcvr.output, " %s", string(fieldsJSON))
 			}
 		}
-		fmt.Fprintln(l.output)
+		fmt.Fprintln(rcvr.output)
 	}
 }
 
 // DEBUG logs a debug message
-func (l *ClientLogger) DEBUG(mcode global.MCode, optionalMessage string, fields ...map[string]interface{}) {
+func (rcvr *ClientLogger) DEBUG(mcode global.MCode, optionalMessage string, fields ...map[string]interface{}) {
 	var f map[string]interface{}
 	if len(fields) > 0 {
 		f = fields[0]
 	}
-	l.log(CLIENT_DEBUG, mcode, optionalMessage, f)
+	rcvr.log(CLIENT_DEBUG, mcode, optionalMessage, f)
 }
 
 // INFO logs an info message
-func (l *ClientLogger) INFO(mcode global.MCode, optionalMessage string) {
-	l.log(CLIENT_INFO, mcode, optionalMessage, nil)
+func (rcvr *ClientLogger) INFO(mcode global.MCode, optionalMessage string) {
+	rcvr.log(CLIENT_INFO, mcode, optionalMessage, nil)
 }
 
 // WARN logs a warning message
-func (l *ClientLogger) WARN(mcode global.MCode, optionalMessage string) {
-	l.log(CLIENT_WARN, mcode, optionalMessage, nil)
+func (rcvr *ClientLogger) WARN(mcode global.MCode, optionalMessage string) {
+	rcvr.log(CLIENT_WARN, mcode, optionalMessage, nil)
 }
 
 // ERROR logs an error message
-func (l *ClientLogger) ERROR(mcode global.MCode, optionalMessage string) {
-	l.log(CLIENT_ERROR, mcode, optionalMessage, nil)
+func (rcvr *ClientLogger) ERROR(mcode global.MCode, optionalMessage string) {
+	rcvr.log(CLIENT_ERROR, mcode, optionalMessage, nil)
 }
 
 // FATAL logs a fatal message and exits
-func (l *ClientLogger) FATAL(mcode global.MCode, optionalMessage string) {
-	l.log(CLIENT_FATAL, mcode, optionalMessage, nil)
+func (rcvr *ClientLogger) FATAL(mcode global.MCode, optionalMessage string) {
+	rcvr.log(CLIENT_FATAL, mcode, optionalMessage, nil)
 	os.Exit(1)
 }

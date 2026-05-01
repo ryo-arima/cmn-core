@@ -56,16 +56,16 @@ func NewCommon(commonRepo repository.Common) Common {
 	return &common{commonRepo: commonRepo}
 }
 
-func (uc *common) GetBaseConfig() config.BaseConfig {
-	return uc.commonRepo.GetBaseConfig()
+func (rcvr *common) GetBaseConfig() config.BaseConfig {
+	return rcvr.commonRepo.GetBaseConfig()
 }
 
-func (uc *common) ValidateToken(ctx context.Context, tokenString string) (*model.LoJWTClaims, error) {
-	return uc.commonRepo.ValidateToken(ctx, tokenString)
+func (rcvr *common) ValidateToken(ctx context.Context, tokenString string) (*model.LoJWTClaims, error) {
+	return rcvr.commonRepo.ValidateToken(ctx, tokenString)
 }
 
-func (uc *common) ResolveRole(email string) string {
-	return uc.commonRepo.ResolveRole(email)
+func (rcvr *common) ResolveRole(email string) string {
+	return rcvr.commonRepo.ResolveRole(email)
 }
 
 

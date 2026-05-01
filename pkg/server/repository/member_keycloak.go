@@ -11,8 +11,8 @@ import (
 
 // ---- Group membership -------------------------------------------------------
 
-func (m *keycloakManager) ListGroupMembers(ctx context.Context, groupID string) ([]model.LoUser, error) {
-	status, body, err := m.do(ctx, http.MethodGet, m.adminURL("/groups/"+groupID+"/members"), nil)
+func (rcvr *keycloakManager) ListGroupMembers(ctx context.Context, groupID string) ([]model.LoUser, error) {
+	status, body, err := rcvr.do(ctx, http.MethodGet, rcvr.adminURL("/groups/"+groupID+"/members"), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -35,21 +35,21 @@ func (m *keycloakManager) ListGroupMembers(ctx context.Context, groupID string) 
 	return users, nil
 }
 
-func (m *keycloakManager) AddUserToGroup(ctx context.Context, userID, groupID, role string) error {
+func (rcvr *keycloakManager) AddUserToGroup(ctx context.Context, userID, groupID, role string) error {
 	path := fmt.Sprintf("/users/%s/groups/%s", userID, groupID)
-	status, body, err := m.do(ctx, http.MethodPut, m.adminURL(path), nil)
+	status, body, err := rcvr.do(ctx, http.MethodPut, rcvr.adminURL(path), nil)
 	if err != nil {
 		return err
 	}
 	if status != http.StatusNoContent {
 		return fmt.Errorf("keycloak: add user to group status %d: %s", status, body)
 	}
-	return m.setUserGroupRole(ctx, userID, groupID, role)
+	return rcvr.setUserGroupRole(ctx, userID, groupID, role)
 }
 
 // setUserGroupRole stores the group-specific role as a Keycloak user attribute.
-func (m *keycloakManager) setUserGroupRole(ctx context.Context, userID, groupID, role string) error {
-	status, body, err := m.do(ctx, http.MethodGet, m.adminURL("/users/"+userID), nil)
+func (rcvr *keycloakManager) setUserGroupRole(ctx context.Context, userID, groupID, role string) error {
+	status, body, err := rcvr.do(ctx, http.MethodGet, rcvr.adminURL("/users/"+userID), nil)
 	if err != nil {
 		return err
 	}
@@ -65,7 +65,7 @@ func (m *keycloakManager) setUserGroupRole(ctx context.Context, userID, groupID,
 	}
 	ku.Attributes["cmn_group_"+groupID+"_role"] = []string{role}
 	payload, _ := json.Marshal(map[string]interface{}{"attributes": ku.Attributes})
-	status, body, err = m.do(ctx, http.MethodPut, m.adminURL("/users/"+userID), payload)
+	status, body, err = rcvr.do(ctx, http.MethodPut, rcvr.adminURL("/users/"+userID), payload)
 	if err != nil {
 		return err
 	}
@@ -75,9 +75,9 @@ func (m *keycloakManager) setUserGroupRole(ctx context.Context, userID, groupID,
 	return nil
 }
 
-func (m *keycloakManager) RemoveUserFromGroup(ctx context.Context, userID, groupID string) error {
+func (rcvr *keycloakManager) RemoveUserFromGroup(ctx context.Context, userID, groupID string) error {
 	path := fmt.Sprintf("/users/%s/groups/%s", userID, groupID)
-	status, body, err := m.do(ctx, http.MethodDelete, m.adminURL(path), nil)
+	status, body, err := rcvr.do(ctx, http.MethodDelete, rcvr.adminURL(path), nil)
 	if err != nil {
 		return err
 	}
@@ -85,13 +85,13 @@ func (m *keycloakManager) RemoveUserFromGroup(ctx context.Context, userID, group
 		return fmt.Errorf("keycloak: remove user from group status %d: %s", status, body)
 	}
 	// Best-effort: clean up the role attribute.
-	_ = m.clearUserGroupRole(ctx, userID, groupID)
+	_ = rcvr.clearUserGroupRole(ctx, userID, groupID)
 	return nil
 }
 
 // clearUserGroupRole removes the group-specific role attribute from a Keycloak user.
-func (m *keycloakManager) clearUserGroupRole(ctx context.Context, userID, groupID string) error {
-	status, body, err := m.do(ctx, http.MethodGet, m.adminURL("/users/"+userID), nil)
+func (rcvr *keycloakManager) clearUserGroupRole(ctx context.Context, userID, groupID string) error {
+	status, body, err := rcvr.do(ctx, http.MethodGet, rcvr.adminURL("/users/"+userID), nil)
 	if err != nil || status != http.StatusOK {
 		return nil // best-effort
 	}
@@ -101,6 +101,6 @@ func (m *keycloakManager) clearUserGroupRole(ctx context.Context, userID, groupI
 	}
 	delete(ku.Attributes, "cmn_group_"+groupID+"_role")
 	payload, _ := json.Marshal(map[string]interface{}{"attributes": ku.Attributes})
-	m.do(ctx, http.MethodPut, m.adminURL("/users/"+userID), payload) //nolint:errcheck
+	rcvr.do(ctx, http.MethodPut, rcvr.adminURL("/users/"+userID), payload) //nolint:errcheck
 	return nil
 }

@@ -225,10 +225,10 @@ func newHostRewriteTransport(fromURL, toURL string) *hostRewriteTransport {
 	}
 }
 
-func (t *hostRewriteTransport) RoundTrip(req *http.Request) (*http.Response, error) {
-	if req.URL.Host == t.fromHost {
+func (rcvr *hostRewriteTransport) RoundTrip(req *http.Request) (*http.Response, error) {
+	if req.URL.Host == rcvr.fromHost {
 		req = req.Clone(req.Context())
-		req.URL.Host = t.toHost
+		req.URL.Host = rcvr.toHost
 	}
-	return t.base.RoundTrip(req)
+	return rcvr.base.RoundTrip(req)
 }

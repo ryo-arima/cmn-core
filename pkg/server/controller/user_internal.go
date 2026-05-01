@@ -32,7 +32,7 @@ func NewUserInternal(uu usecase.User, mu usecase.Member, cu usecase.Common) User
 // If the query param ?id= is provided, returns that user.
 // Otherwise returns the authenticated user's own profile.
 // GET /v1/internal/user
-func (ic *userInternal) GetMyUser(c *gin.Context) {
+func (rcvr *userInternal) GetMyUser(c *gin.Context) {
 	claims, ok := share.GetUserClaims(c)
 	if !ok {
 		c.JSON(http.StatusUnauthorized, gin.H{"code": "IDP_AUTH_001", "message": "Unauthorized"})
@@ -42,7 +42,7 @@ func (ic *userInternal) GetMyUser(c *gin.Context) {
 	if userID == "" {
 		userID = claims.UUID
 	}
-	u, err := ic.userUsecase.GetUser(c.Request.Context(), userID)
+	u, err := rcvr.userUsecase.GetUser(c.Request.Context(), userID)
 	if err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"code": "IDP_USER_GET_404", "message": "User not found"})
 		return
@@ -58,7 +58,7 @@ func (ic *userInternal) GetMyUser(c *gin.Context) {
 			FirstName: u.FirstName,
 			LastName:  u.LastName,
 			Enabled:   u.Enabled,
-			Role:      ic.commonUsecase.ResolveRole(u.Email),
+			Role:      rcvr.commonUsecase.ResolveRole(u.Email),
 			CreatedAt: u.CreatedAt,
 		},
 	})
@@ -67,7 +67,7 @@ func (ic *userInternal) GetMyUser(c *gin.Context) {
 // ListGroupUsers returns all users who are members of any group the caller belongs to.
 // Results are deduplicated. Group membership is read from the caller's JWT claims.
 // GET /v1/internal/users
-func (ic *userInternal) ListGroupUsers(c *gin.Context) {
+func (rcvr *userInternal) ListGroupUsers(c *gin.Context) {
 	claims, ok := share.GetUserClaims(c)
 	if !ok {
 		c.JSON(http.StatusUnauthorized, gin.H{"code": "IDP_AUTH_001", "message": "Unauthorized"})
@@ -76,7 +76,7 @@ func (ic *userInternal) ListGroupUsers(c *gin.Context) {
 	seen := make(map[string]struct{})
 	var users []response.RrIdPUser
 	for _, gid := range claims.Groups {
-		members, err := ic.memberUsecase.ListGroupMembers(c.Request.Context(), groupName(gid))
+		members, err := rcvr.memberUsecase.ListGroupMembers(c.Request.Context(), groupName(gid))
 		if err != nil {
 			continue
 		}
@@ -93,7 +93,7 @@ func (ic *userInternal) ListGroupUsers(c *gin.Context) {
 				FirstName: u.FirstName,
 				LastName:  u.LastName,
 				Enabled:   u.Enabled,
-				Role:      ic.commonUsecase.ResolveRole(u.Email),
+				Role:      rcvr.commonUsecase.ResolveRole(u.Email),
 				CreatedAt: u.CreatedAt,
 			})
 		}
@@ -103,7 +103,7 @@ func (ic *userInternal) ListGroupUsers(c *gin.Context) {
 
 // UpdateMyUser updates the authenticated user's own profile in the IdP.
 // PUT /v1/internal/user
-func (ic *userInternal) UpdateMyUser(c *gin.Context) {
+func (rcvr *userInternal) UpdateMyUser(c *gin.Context) {
 	claims, ok := share.GetUserClaims(c)
 	if !ok {
 		c.JSON(http.StatusUnauthorized, gin.H{"code": "IDP_AUTH_001", "message": "Unauthorized"})
@@ -114,7 +114,7 @@ func (ic *userInternal) UpdateMyUser(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"code": "IDP_USER_UPDATE_400", "message": "Invalid request body"})
 		return
 	}
-	if err := ic.userUsecase.UpdateUser(c.Request.Context(), claims.UUID, req); err != nil {
+	if err := rcvr.userUsecase.UpdateUser(c.Request.Context(), claims.UUID, req); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"code": "IDP_USER_UPDATE_001", "message": err.Error()})
 		return
 	}

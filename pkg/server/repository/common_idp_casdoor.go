@@ -28,30 +28,30 @@ func newCasdoorManager(cfg config.CasdoorConfig) IdPManager {
 	}
 }
 
-func (m *casdoorManager) apiURL(path string) string {
-	return fmt.Sprintf("%s%s", m.cfg.BaseURL, path)
+func (rcvr *casdoorManager) apiURL(path string) string {
+	return fmt.Sprintf("%s%s", rcvr.cfg.BaseURL, path)
 }
 
 // authParams appends clientId and clientSecret to query params.
 // Casdoor admin API authenticates via these query parameters.
-func (m *casdoorManager) authParams(q url.Values) url.Values {
+func (rcvr *casdoorManager) authParams(q url.Values) url.Values {
 	if q == nil {
 		q = url.Values{}
 	}
-	q.Set("clientId", m.cfg.ClientID)
-	q.Set("clientSecret", m.cfg.ClientSecret)
+	q.Set("clientId", rcvr.cfg.ClientID)
+	q.Set("clientSecret", rcvr.cfg.ClientSecret)
 	return q
 }
 
 // do performs an authenticated request to the Casdoor admin API.
 // Authentication is via clientId/clientSecret query parameters.
-func (m *casdoorManager) do(ctx context.Context, method, rawURL string, payload interface{}) (int, []byte, error) {
+func (rcvr *casdoorManager) do(ctx context.Context, method, rawURL string, payload interface{}) (int, []byte, error) {
 	// Append auth params to URL.
 	u, err := url.Parse(rawURL)
 	if err != nil {
 		return 0, nil, fmt.Errorf("casdoor: parse URL: %w", err)
 	}
-	u.RawQuery = m.authParams(u.Query()).Encode()
+	u.RawQuery = rcvr.authParams(u.Query()).Encode()
 
 	var bodyReader io.Reader
 	if payload != nil {
@@ -70,7 +70,7 @@ func (m *casdoorManager) do(ctx context.Context, method, rawURL string, payload 
 		req.Header.Set("Content-Type", "application/json")
 	}
 
-	resp, err := m.client.Do(req)
+	resp, err := rcvr.client.Do(req)
 	if err != nil {
 		return 0, nil, fmt.Errorf("casdoor: %s %s: %w", method, u.Path, err)
 	}

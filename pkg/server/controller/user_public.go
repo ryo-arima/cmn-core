@@ -27,13 +27,13 @@ func NewUserPublic(uu usecase.User) UserPublic {
 
 // RegisterUser creates a new user in the IdP without requiring authentication.
 // Route: POST /v1/public/user
-func (ic *userPublic) RegisterUser(c *gin.Context) {
+func (rcvr *userPublic) RegisterUser(c *gin.Context) {
 	var req request.RrCreateUser
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"code": "PUB_REGISTER_400", "message": err.Error()})
 		return
 	}
-	u, err := ic.userUsecase.CreateUser(c.Request.Context(), req)
+	u, err := rcvr.userUsecase.CreateUser(c.Request.Context(), req)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"code": "PUB_REGISTER_001", "message": err.Error()})
 		return
@@ -57,13 +57,13 @@ func (ic *userPublic) RegisterUser(c *gin.Context) {
 // Login authenticates a user via the IdP using the Resource Owner Password Credentials grant
 // and returns the issued access token.
 // Route: POST /v1/public/login
-func (ic *userPublic) Login(c *gin.Context) {
+func (rcvr *userPublic) Login(c *gin.Context) {
 	var req request.RrLogin
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"code": "PUB_LOGIN_400", "message": err.Error()})
 		return
 	}
-	token, err := ic.userUsecase.Login(c.Request.Context(), req.Email, req.Password)
+	token, err := rcvr.userUsecase.Login(c.Request.Context(), req.Email, req.Password)
 	if err != nil {
 		c.JSON(http.StatusUnauthorized, gin.H{"code": "PUB_LOGIN_401", "message": "invalid credentials"})
 		return

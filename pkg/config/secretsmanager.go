@@ -66,12 +66,12 @@ func NewSecretsManagerClient(ctx context.Context, useLocal bool) (*SecretsManage
 }
 
 // GetSecretString retrieves a secret string value
-func (sm *SecretsManagerClient) GetSecretString(ctx context.Context, secretID string) (string, error) {
+func (rcvr *SecretsManagerClient) GetSecretString(ctx context.Context, secretID string) (string, error) {
 	input := &secretsmanager.GetSecretValueInput{
 		SecretId: aws.String(secretID),
 	}
 
-	result, err := sm.client.GetSecretValue(ctx, input)
+	result, err := rcvr.client.GetSecretValue(ctx, input)
 	if err != nil {
 		return "", fmt.Errorf("failed to get secret: %w", err)
 	}
@@ -84,8 +84,8 @@ func (sm *SecretsManagerClient) GetSecretString(ctx context.Context, secretID st
 }
 
 // GetSecretAsJSON retrieves a secret and unmarshals it as JSON
-func (sm *SecretsManagerClient) GetSecretAsJSON(ctx context.Context, secretID string, v interface{}) error {
-	secretString, err := sm.GetSecretString(ctx, secretID)
+func (rcvr *SecretsManagerClient) GetSecretAsJSON(ctx context.Context, secretID string, v interface{}) error {
+	secretString, err := rcvr.GetSecretString(ctx, secretID)
 	if err != nil {
 		return err
 	}
@@ -98,8 +98,8 @@ func (sm *SecretsManagerClient) GetSecretAsJSON(ctx context.Context, secretID st
 }
 
 // GetSecretAsYAML retrieves a secret and unmarshals it as YAML
-func (sm *SecretsManagerClient) GetSecretAsYAML(ctx context.Context, secretID string, v interface{}) error {
-	secretString, err := sm.GetSecretString(ctx, secretID)
+func (rcvr *SecretsManagerClient) GetSecretAsYAML(ctx context.Context, secretID string, v interface{}) error {
+	secretString, err := rcvr.GetSecretString(ctx, secretID)
 	if err != nil {
 		return err
 	}
